@@ -1,4 +1,4 @@
-package hello;
+package com.subjecttochange.ghhelper.web;
 
 import java.util.Arrays;
 
