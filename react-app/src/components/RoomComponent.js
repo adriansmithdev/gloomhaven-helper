@@ -5,6 +5,7 @@ import MonsterList from './MonsterList';
 class RoomComponent extends Component {
   render() {
 
+    // Dummy object to be replaced with live data later.
     const monsters = [
       {
         name: "Skeleton",
