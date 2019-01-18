@@ -8,6 +8,8 @@
     <artifactId>gloomhavenhelper</artifactId>
     <version>0.1-SNAPSHOT</version>
 
+    <packaging>war</packaging>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -82,14 +84,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Selenium -->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>3.12.0</version>
-        </dependency>
-
-        <!-- Lombok for React -->
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
