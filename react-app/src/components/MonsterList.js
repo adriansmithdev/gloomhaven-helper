@@ -8,8 +8,13 @@ class MonsterList extends Component {
 
   constructor(props){
     super(props);
+    this.state = {
+      monsters: props.monsters
+    };
+
+    console.log(this.state.monsters);
     this.handleChange = this.handleChange.bind(this);
-    this.addMonster = this.handleChange.bind(this);
+    this.addMonster = this.addMonster.bind(this);
   }
 
   handleChange(event) {
@@ -23,22 +28,30 @@ class MonsterList extends Component {
       currentHealth: 0
     };
 
-    this.props.monsters.push(newMonster);
+    this.state.monsters.push(newMonster)
+
+    this.forceUpdate();
+  }
+
+  removeMonster(index) {
+    this.state.monsters.splice(index, 1)
+
+    this.forceUpdate();
   }
 
   render() {
     
-    let rows = this.props.monsters.reduce((html, monster) => 
+    let rows = this.state.monsters.map((monster, index) => 
     (
-      <li>
-        Name: <input type="text" value={monster.name} onChange={this.handleChange} />
+      <li key={index}>
+        Name: <input type="text" defaultValue={monster.name} onChange={this.handleChange} />
         HP
-          <input type="number" value={monster.currentHealth} max={monster.maxHealth} min="0" onChange={this.handleChange} />
+          <input type="number" defaultValue={monster.currentHealth} max={monster.maxHealth} min="0" onChange={this.handleChange} />
           /
-          <input type="number" value={monster.maxHealth} onChange={this.handleChange} />
-          <button type="button">X</button>
+          <input type="number" defaultValue={monster.maxHealth} onChange={this.handleChange} />
+          <button type="button" onClick={()=>{this.removeMonster(index)}}>X</button>
       </li>
-    ), "");
+    ));
 
     return (
       <div>
