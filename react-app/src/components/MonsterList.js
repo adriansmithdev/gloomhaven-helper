@@ -6,13 +6,25 @@ import './MonsterList.css';
 
 class MonsterList extends Component {
 
+  // Dummy object to be replaced with live data later.
+  monsters = [
+    {
+      name: "Skeleton",
+      maxHealth: 100,
+      currentHealth: 100
+    },
+    {
+      name: "Zombie",
+      maxHealth: 125,
+      currentHealth: 75
+    }
+  ];
+
   constructor(props){
     super(props);
     this.state = {
-      monsters: props.monsters
+      monsters: this.monsters
     };
-
-    console.log(this.state.monsters);
     this.handleChange = this.handleChange.bind(this);
     this.addMonster = this.addMonster.bind(this);
   }
