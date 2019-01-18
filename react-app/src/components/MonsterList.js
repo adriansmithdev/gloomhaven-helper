@@ -1,19 +1,20 @@
 
 
 import React, { Component } from 'react';
-import './MonsterList.css';
-
+import Monster from './Monster'
 
 class MonsterList extends Component {
 
   // Dummy object to be replaced with live data later.
   monsters = [
     {
+      id: 0,
       name: "Skeleton",
       maxHealth: 100,
       currentHealth: 100
     },
     {
+      id: 1,
       name: "Zombie",
       maxHealth: 125,
       currentHealth: 75
@@ -25,44 +26,88 @@ class MonsterList extends Component {
     this.state = {
       monsters: this.monsters
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.changeMonsterName = this.changeMonsterName.bind(this);
+    this.changeCurrentHealth = this.changeCurrentHealth.bind(this);
+    this.changeMaxHealth = this.changeMaxHealth.bind(this);
     this.addMonster = this.addMonster.bind(this);
+    this.removeMonster = this.removeMonster.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
+  changeMonsterName(value, index) {
+    console.log(value);
+    console.log(index);
+
+    
+
+    this.setState(state =>  {
+      let newMonster = this.state.monsters[index];
+      newMonster.name = value;
+      let newMonsters = this.state.monsters.splice(index, 1, newMonster);
+
+      return {monsters: newMonsters};
+    });
   }
+
+  changeCurrentHealth(value, index) {
+    this.setState(state =>  {
+      let newMonster = this.state.monsters[index];
+      newMonster.currentHealth = value;
+      let newMonsters = this.state.monsters.splice(index, 1, newMonster);
+
+      return {monsters: newMonsters};
+    });
+  }
+
+  changeMaxHealth(value, index) {
+    this.setState(state =>  {
+      let newMonster = this.state.monsters[index];
+      newMonster.maxHealth = value;
+      let newMonsters = this.state.monsters.splice(index, 1, newMonster);
+
+      return {monsters: newMonsters};
+    });
+  }
+
+  change
 
   addMonster(event) {
-    let newMonster = {
-      name: "",
-      maxHealth: 0,
-      currentHealth: 0
-    };
+    this.setState(state =>  {
+      let newMonster = {
+        id: Math.round(Math.random() * 99999),
+        name: "",
+        maxHealth: 0,
+        currentHealth: 0
+      };
+      let newMonsters = this.state.monsters.concat([newMonster]);
 
-    this.state.monsters.push(newMonster)
+      console.log(newMonsters);
+      
 
-    this.forceUpdate();
+      return {monsters: newMonsters};
+    });
+
   }
 
   removeMonster(index) {
-    this.state.monsters.splice(index, 1)
+    this.setState(state => {
+    
+      let newMonsters = this.state.monsters.splice(index, 1);
 
-    this.forceUpdate();
+      return {monsters: newMonsters};
+    });
   }
 
   render() {
     
     let rows = this.state.monsters.map((monster, index) => 
     (
-      <li key={index}>
-        Name: <input type="text" defaultValue={monster.name} onChange={this.handleChange} />
-        HP
-          <input type="number" defaultValue={monster.currentHealth} max={monster.maxHealth} min="0" onChange={this.handleChange} />
-          /
-          <input type="number" defaultValue={monster.maxHealth} onChange={this.handleChange} />
-          <button type="button" onClick={()=>{this.removeMonster(index)}}>X</button>
-      </li>
+      <Monster key={monster.id} monster={monster}
+        index={index} 
+        removeMonster={this.removeMonster}
+        changeMonsterName={this.changeMonsterName} 
+        changeCurrentHealth={this.changeCurrentHealth}
+        changeMaxHealth={this.changeMaxHealth}
+      />
     ));
 
     return (
