@@ -37,7 +37,8 @@ class MonsterList extends Component {
     this.setState(state => {
       let newMonster = this.state.monsters[index];
       newMonster.name = value;
-      let newMonsters = this.state.monsters.splice(index, 1, newMonster);
+      let newMonsters = this.state.monsters.slice();
+      newMonsters.splice(index, 1, newMonster);
 
       return {monsters: newMonsters};
     });
@@ -47,7 +48,8 @@ class MonsterList extends Component {
     this.setState(state =>  {
       let newMonster = this.state.monsters[index];
       newMonster.currentHealth = value;
-      let newMonsters = this.state.monsters.splice(index, 1, newMonster);
+      let newMonsters = this.state.monsters.slice();
+      newMonsters.splice(index, 1, newMonster);
 
       return {monsters: newMonsters};
     });
@@ -57,7 +59,8 @@ class MonsterList extends Component {
     this.setState(state =>  {
       let newMonster = this.state.monsters[index];
       newMonster.maxHealth = value;
-      let newMonsters = this.state.monsters.splice(index, 1, newMonster);
+      let newMonsters = this.state.monsters.slice();
+      newMonsters.splice(index, 1, newMonster);
 
       return {monsters: newMonsters};
     });
