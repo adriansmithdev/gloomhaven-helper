@@ -34,12 +34,7 @@ class MonsterList extends Component {
   }
 
   changeMonsterName(value, index) {
-    console.log(value);
-    console.log(index);
-
-    
-
-    this.setState(state =>  {
+    this.setState(state => {
       let newMonster = this.state.monsters[index];
       newMonster.name = value;
       let newMonsters = this.state.monsters.splice(index, 1, newMonster);
@@ -68,8 +63,6 @@ class MonsterList extends Component {
     });
   }
 
-  change
-
   addMonster(event) {
     this.setState(state =>  {
       let newMonster = {
@@ -80,9 +73,6 @@ class MonsterList extends Component {
       };
       let newMonsters = this.state.monsters.concat([newMonster]);
 
-      console.log(newMonsters);
-      
-
       return {monsters: newMonsters};
     });
 
@@ -90,15 +80,13 @@ class MonsterList extends Component {
 
   removeMonster(index) {
     this.setState(state => {
-    
-      let newMonsters = this.state.monsters.splice(index, 1);
-
+      let newMonsters = this.state.monsters.slice();
+      newMonsters.splice(index, 1);
       return {monsters: newMonsters};
     });
   }
 
   render() {
-    
     let rows = this.state.monsters.map((monster, index) => 
     (
       <Monster key={monster.id} monster={monster}

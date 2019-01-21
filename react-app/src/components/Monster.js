@@ -35,7 +35,7 @@ class Monster extends Component {
           <input type="number" value={this.props.monster.currentHealth} max={this.props.monster.maxHealth} min="0" onChange={this.changeCurrentHealth} />
           /
           <input type="number" value={this.props.monster.maxHealth} onChange={this.changeMaxHealth} />
-          <button type="button" onClick={()=>{this.props.removeMonster(this.props.index)}}>X</button>
+          <button type="button" onClick={this.removeMonster}>X</button>
       </li>
       
     );
