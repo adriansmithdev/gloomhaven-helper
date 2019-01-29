@@ -1,4 +1,4 @@
-package com.subjecttochange.ghhelper.web;
+package com.subjecttochange.ghhelper.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
