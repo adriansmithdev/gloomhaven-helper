@@ -33,6 +33,10 @@ public class Room {
     //private Monster[] monsterTypes;
 
 
+    public Room() {
+        this.roomHash = "";
+    }
+
     public Room(@NotBlank @Size(min = 3, max = 100) String roomHash) {
         this.roomHash = roomHash;
     }
