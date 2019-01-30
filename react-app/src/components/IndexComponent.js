@@ -10,9 +10,11 @@ class IndexComponent extends Component {
   }
 
   componentDidMount() {
-    axios.get('https://jsonplaceholder.typicode.com/users')
+    axios.get('http://localhost:5000/rooms')
       .then(response => {
         console.log(response);
+      }).catch(function (error) {
+        console.log(error);
       });
   }
 
