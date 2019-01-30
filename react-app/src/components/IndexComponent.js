@@ -11,11 +11,19 @@ class IndexComponent extends Component {
 
   componentDidMount() {
     axios.get('http://localhost:5000/rooms')
-      .then(response => {
-        console.log(response);
-      }).catch(function (error) {
-        console.log(error);
-      });
+    .then(response => {
+      console.log(response);
+    }).catch(function (error) {
+      console.log(error);
+    });
+
+    axios.get('http://localhost:5000/room/103')
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   render() {

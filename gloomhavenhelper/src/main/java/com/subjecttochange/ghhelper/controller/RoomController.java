@@ -22,6 +22,11 @@ public class RoomController {
         return roomRepository.findAll(pageable);
     }
 
+    @GetMapping("/room/{roomId}")
+    public Room getRoom(@PathVariable Long roomId) {
+        return roomRepository.findById(roomId).orElseThrow(() -> new ResourceNotFoundException("Room not found with id " + roomId));
+    }
+
     @PostMapping("/newroom")
     public Room newRoom() {
         //TODO generate & check ID
