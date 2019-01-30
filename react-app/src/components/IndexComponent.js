@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 
 class IndexComponent extends Component {
+
+  state = {
+    persons: []
+  }
+
+  componentDidMount() {
+    axios.get('https://jsonplaceholder.typicode.com/users')
+      .then(response => {
+        console.log(response);
+      });
+  }
+
   render() {
     var uuid = require("uuid");
     const mockRoomId = uuid.v4();
