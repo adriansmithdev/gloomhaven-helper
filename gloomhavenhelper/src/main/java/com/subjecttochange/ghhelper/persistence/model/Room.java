@@ -25,11 +25,18 @@ public class Room {
     @Column(columnDefinition = "text")
     private String description;
 
-    private Scenario scenario;
-    private int rounds;
-    private Elements elements;
-    private Player[] players;
-    private Monster[] monsterTypes;
+
+    //private Scenario scenario;
+    //private int rounds;
+    //private Elements elements;
+    //private Player[] players;
+    //private Monster[] monsterTypes;
+
+
+    public Room(@NotBlank @Size(min = 3, max = 100) String roomHash) {
+        this.roomHash = roomHash;
+    }
+
 
     public Long getId() {
         return id;

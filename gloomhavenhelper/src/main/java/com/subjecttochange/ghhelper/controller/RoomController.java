@@ -22,6 +22,12 @@ public class RoomController {
         return roomRepository.findAll(pageable);
     }
 
+    @PostMapping("newroom")
+    public Room newRoom() {
+        //TODO generate & check ID
+        Room newRoom = new Room("test");
+        return roomRepository.save(newRoom);
+    }
 
     @PostMapping("/rooms")
     public Room createRoom(@Valid @RequestBody Room room) {
