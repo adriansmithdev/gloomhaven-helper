@@ -40,20 +40,25 @@ class IndexComponent extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Gloomhaven Helper</h1>
+      <div className="container">
+        <div className="card">
+          <div className="card-content">
+            <h1 className="title themed-font level-item">Gloomhaven Helper</h1>
 
-        <p>
-            The Gloomhaven Helper is a tool for Gloomhaven Players who want assistance managing 
-            the game, the Gloomhaven Helper is a web-based board game assistance tool that speeds 
-            up the pace of play, while making it easier to manage all content. Unlike the base 
-            game out of the box, our project reduces the number of physical tokens and trackers 
-            players need to manage.
-        </p>
+            <p className="level">
+                The Gloomhaven Helper is a tool for Gloomhaven Players who want assistance managing 
+                the game, the Gloomhaven Helper is a web-based board game assistance tool that speeds 
+                up the pace of play, while making it easier to manage all content. Unlike the base 
+                game out of the box, our project reduces the number of physical tokens and trackers 
+                players need to manage.
+            </p>
 
-        <span className="input-group-btn">
-          <button type="button" onClick={this.requestRoom}>Create a Room!</button>
-        </span>
+            <span className="level-item">
+              <button className="button is-dark is-large themed-font m-2" type="button" onClick={this.requestRoom}>Create Room</button>
+              <button className="button is-dark is-large themed-font m-2" type="button" onClick={this.requestRoom}>Join Room</button>
+            </span>
+          </div>
+        </div>
       </div>
     );
   }
