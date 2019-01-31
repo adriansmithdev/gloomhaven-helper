@@ -9,7 +9,7 @@ class RoomComponent extends Component {
       <div>
         <h1>Gloomhaven Room # { this.props.match.params.roomid } </h1>
 
-        <MonsterList />>
+        <MonsterList />
 
         <span className="input-group-btn">
             <Link to={`/`}>Back to home!</Link>

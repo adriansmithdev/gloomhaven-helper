@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -9,13 +9,25 @@ class IndexComponent extends Component {
     persons: []
   }
 
-  componentDidMount() {
-    axios.get('http://localhost:5000/rooms')
-    .then(response => {
-      console.log(response);
-    }).catch(function (error) {
+  constructor() {
+    super();
+
+    this.requestRoom = this.requestRoom.bind(this);
+  }
+
+  requestRoom() {
+    axios.post('http://localhost:5000/newroom')
+    .then(function (response) {
+      console.log(response.data.roomHash);
+      window.location = `/room/${response.data.roomHash}`;
+    })
+    .catch(function (error) {
       console.log(error);
     });
+  }
+
+  componentDidMount() {
+    
 
     axios.get('http://localhost:5000/room/103')
     .then(function (response) {
@@ -27,9 +39,6 @@ class IndexComponent extends Component {
   }
 
   render() {
-    var uuid = require("uuid");
-    const mockRoomId = uuid.v4();
-
     return (
       <div>
         <h1>Gloomhaven Helper</h1>
@@ -43,7 +52,7 @@ class IndexComponent extends Component {
         </p>
 
         <span className="input-group-btn">
-            <Link to={`/room/${mockRoomId}`}>Create a Room!</Link>
+          <button type="button" onClick={this.requestRoom}>Create a Room!</button>
         </span>
       </div>
     );
