@@ -25,8 +25,9 @@ public class RoomController {
 
     @GetMapping("/room/{roomHash}")
     public Room getRoom(@PathVariable String roomHash) {
-        //TODO fix or else exception return roomRepository.findByRoomHash(roomHash).orElseThrow(() -> new ResourceNotFoundException("Room not found with id " + roomHash));
-        return roomRepository.findByRoomHash(roomHash);
+        Room room = roomRepository.findByRoomHash(roomHash);
+        if(room == null) throw new ResourceNotFoundException("Room not found with id " + roomHash);
+        return room;
     }
 
     @PostMapping("/newroom")
