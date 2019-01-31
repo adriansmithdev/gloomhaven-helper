@@ -2,6 +2,7 @@ package com.subjecttochange.ghhelper.controller;
 
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.Room;
+import com.subjecttochange.ghhelper.persistence.model.helpers.RoomHashGenerator;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,8 +30,11 @@ public class RoomController {
 
     @PostMapping("/newroom")
     public Room newRoom() {
-        //TODO generate & check ID
-        Room newRoom = new Room("test");
+        String newHash = RoomHashGenerator.generateNewHash();
+        while(roomRepository.existsByRoomHash(newHash)) {
+            newHash = RoomHashGenerator.generateNewHash();
+        }
+        Room newRoom = new Room(newHash);
         return roomRepository.save(newRoom);
     }
 
