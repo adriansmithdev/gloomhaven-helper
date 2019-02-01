@@ -42,7 +42,7 @@ public class RoomController {
 
 
 
-    @PostMapping("room/{roomHash}/scenario/{scenarioNum}")
+    @PostMapping("/room/{roomHash}/scenario/{scenarioNum}")
     public void updateMonster(@PathVariable String roomHash, @PathVariable int scenarioNum) {
         getRoom(roomHash).setScenarioNumber(scenarioNum);
     }
