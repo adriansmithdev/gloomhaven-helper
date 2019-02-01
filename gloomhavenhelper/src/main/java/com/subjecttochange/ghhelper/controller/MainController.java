@@ -18,8 +18,8 @@ public class MainController {
     private String appName;
 
     /**
-     * @param model
-     * @return
+     * @param model for holding app name
+     * @return route
      */
     @RequestMapping("/")
     public String index(Model model) {

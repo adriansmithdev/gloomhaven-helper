@@ -1,6 +1,6 @@
 package com.subjecttochange.ghhelper.persistence.model;
 
-public enum StatusEffects {
+public enum StatusEffect {
     POISON,
     WOUND,
     IMMOBILIZE,

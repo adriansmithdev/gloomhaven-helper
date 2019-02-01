@@ -30,7 +30,7 @@ public @Data class Room extends BaseModel {
 
     //private Scenario scenario;
     //private int rounds;
-    //private Elements elements;
+    //private ElementsActive elements;
     //private Player[] players;
     //private Monster[] monsterTypes;
 
@@ -41,32 +41,6 @@ public @Data class Room extends BaseModel {
 
     public Room(@NotBlank @Size(min = 3, max = 100) String roomHash) {
         this.roomHash = roomHash;
-    }
-
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getRoomHash() {
-        return roomHash;
-    }
-
-    public void setRoomHash(String roomHash) {
-        this.roomHash = roomHash;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
 }

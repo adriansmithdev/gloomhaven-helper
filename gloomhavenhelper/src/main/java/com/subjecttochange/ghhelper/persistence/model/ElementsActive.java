@@ -5,19 +5,10 @@ import lombok.Data;
 import java.util.HashMap;
 import java.util.Map;
 
-enum Element {
-    FIRE,
-    ICE,
-    AIR,
-    EARTH,
-    LIGHT,
-    DARK
-}
-
-public @Data class Elements {
+public @Data class ElementsActive {
     private Map<Element, Integer> elements;
 
-    public Elements() {
+    public ElementsActive() {
         this.elements = new HashMap<Element, Integer>(){{
             put(Element.FIRE, 0);
             put(Element.ICE, 0);

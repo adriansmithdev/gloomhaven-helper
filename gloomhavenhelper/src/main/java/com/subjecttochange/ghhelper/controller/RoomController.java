@@ -12,17 +12,31 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+/**
+ * @author subjecttochange
+ * @version 1
+ *
+ * Controls restful responses to room objects
+ */
 @RestController
 public class RoomController {
 
     @Autowired
     private RoomRepository roomRepository;
 
+    /**
+     * @param pageable
+     * @return
+     */
     @GetMapping("/rooms")
     public Page<Room> getRooms(Pageable pageable) {
         return roomRepository.findAll(pageable);
     }
 
+    /**
+     * @param roomHash
+     * @return
+     */
     @GetMapping("/room/{roomHash}")
     public Room getRoom(@PathVariable String roomHash) {
         Room room = roomRepository.findByRoomHash(roomHash);
@@ -40,13 +54,18 @@ public class RoomController {
         return roomRepository.save(newRoom);
     }
 
-
-
+    /**
+     * @param roomHash
+     * @param scenarioNum
+     */
     @PostMapping("/room/{roomHash}/scenario/{scenarioNum}")
     public void updateMonster(@PathVariable String roomHash, @PathVariable int scenarioNum) {
         getRoom(roomHash).setScenarioNumber(scenarioNum);
     }
 
+    /**
+     * @return
+     */
     @PostMapping("/rooms")
     public Room createRoom() {
         String hash = RoomHashGenerator.generateNewHash();
@@ -57,6 +76,11 @@ public class RoomController {
         return roomRepository.save(room);
     }
 
+    /**
+     * @param roomId
+     * @param roomRequest
+     * @return
+     */
     @PutMapping("/rooms/{roomId}")
     public Room updateRoom(@PathVariable Long roomId, @Valid @RequestBody Room roomRequest) {
         return roomRepository.findById(roomId)
@@ -68,6 +92,10 @@ public class RoomController {
     }
 
 
+    /**
+     * @param roomId
+     * @return
+     */
     @DeleteMapping("/rooms/{roomId}")
     public ResponseEntity<?> deleteRoom(@PathVariable Long roomId) {
         return roomRepository.findById(roomId)
@@ -75,5 +103,12 @@ public class RoomController {
                     roomRepository.delete(room);
                     return ResponseEntity.ok().build();
                 }).orElseThrow(() -> new ResourceNotFoundException("Room not found with id " + roomId));
+    }
+
+    @Override
+    public String toString() {
+        return "RoomController{" +
+                "roomRepository=" + roomRepository +
+                '}';
     }
 }
