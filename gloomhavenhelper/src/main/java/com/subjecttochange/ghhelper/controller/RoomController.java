@@ -36,6 +36,7 @@ public class RoomController {
         while(roomRepository.existsByRoomHash(hash)) {
             hash = RoomHashGenerator.generateNewHash();
         }
+        Room room = new Room();
         room.setRoomHash(hash);
         return roomRepository.save(room);
     }
