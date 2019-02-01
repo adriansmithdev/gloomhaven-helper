@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Routing from './components/Routing';
+import Routing from './pages/Routing';
 
 class App extends Component {
   render() {

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 
-class IndexComponent extends Component {
+class Home extends Component {
 
   state = {
     persons: []
@@ -64,4 +64,4 @@ class IndexComponent extends Component {
   }
 }
 
-export default IndexComponent;
+export default Home;

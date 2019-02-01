@@ -4,7 +4,7 @@ import MonsterList from './MonsterList';
 import axios from 'axios';
 
 
-class RoomComponent extends Component {
+class Room extends Component {
 
     constructor(props){
         super(props);
@@ -42,4 +42,4 @@ class RoomComponent extends Component {
 
 }
 
-export default RoomComponent;
+export default Room;
