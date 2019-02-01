@@ -12,6 +12,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+/**
+ *
+ * @author subjecttochange
+ * @version 1
+ *
+ * Runs the spring boot server
+ */
 @SpringBootApplication
 @EnableJpaAuditing
 @EnableJpaRepositories("com.subjecttochange.ghhelper.*")
@@ -19,22 +26,32 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan("com.subjecttochange.ghhelper.*")
 public class Application {
 
+    private static final boolean PRINTING_BEANS = false;
+
+    /**
+     * @param args parameters to start application with
+     */
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
 
+    /**
+     * Runs before the application starts
+     * @param context of the application
+     * @return inspection of project beans
+     */
     @Bean
-    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
+    public CommandLineRunner commandLineRunner(ApplicationContext context) {
         return args -> {
+            if (PRINTING_BEANS) {
+                System.out.println("Let's inspect the beans provided by Spring Boot:");
 
-            System.out.println("Let's inspect the beans provided by Spring Boot:");
-
-            String[] beanNames = ctx.getBeanDefinitionNames();
-            Arrays.sort(beanNames);
-            for (String beanName : beanNames) {
-                System.out.println(beanName);
+                String[] beanNames = context.getBeanDefinitionNames();
+                Arrays.sort(beanNames);
+                for (String beanName : beanNames) {
+                    System.out.println(beanName);
+                }
             }
-
         };
     }
 
