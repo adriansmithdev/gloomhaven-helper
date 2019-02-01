@@ -103,7 +103,7 @@ class MonsterList extends Component {
 
     return (
       <div>
-        <button onClick={this.addMonster}>Add Monster</button>
+        <button className="button is-dark is-large themed-font m-2" onClick={this.addMonster}>Add Monster</button>
         <ul>{ rows }</ul>
       </div>
       

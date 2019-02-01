@@ -102,8 +102,6 @@
             <artifactId>postgresql</artifactId>
         </dependency>
 
-        <!-- NewDependancy -->
-
     </dependencies>
 
     <properties>

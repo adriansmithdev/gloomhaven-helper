@@ -16,7 +16,7 @@ class IndexComponent extends Component {
   }
 
   requestRoom() {
-    axios.post('http://localhost:5000/newroom')
+    axios.post('http://localhost:5000/rooms')
     .then(function (response) {
       console.log(response.data.roomHash);
       window.location = `/room/${response.data.roomHash}`;

@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "rooms")
-public class Room {
+public class Room extends BaseModel {
     @Id
     @GeneratedValue(generator = "room_generator")
     @SequenceGenerator(
