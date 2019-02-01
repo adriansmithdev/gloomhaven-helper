@@ -6,6 +6,13 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ *
+ * @author subjecttochange
+ * @version 1
+ *
+ * Sets CORS headers for API calls
+ */
 @Component
 public class CORSFilter implements Filter {
 

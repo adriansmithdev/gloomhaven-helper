@@ -30,18 +30,8 @@ public class RoomController {
         return room;
     }
 
-    @PostMapping("/newroom")
-    public Room newRoom() {
-        String newHash = RoomHashGenerator.generateNewHash();
-        while(roomRepository.existsByRoomHash(newHash)) {
-            newHash = RoomHashGenerator.generateNewHash();
-        }
-        Room newRoom = new Room(newHash);
-        return roomRepository.save(newRoom);
-    }
-
     @PostMapping("/rooms")
-    public Room createRoom(@Valid @RequestBody Room room) {
+    public Room createRoom() {
         String hash = RoomHashGenerator.generateNewHash();
         while(roomRepository.existsByRoomHash(hash)) {
             hash = RoomHashGenerator.generateNewHash();
