@@ -40,6 +40,13 @@ public class RoomController {
         return roomRepository.save(newRoom);
     }
 
+
+
+    @PostMapping("room/{roomHash}/scenario/{scenarioNum}")
+    public void updateMonster(@PathVariable String roomHash, @PathVariable int scenarioNum) {
+        getRoom(roomHash).setScenarioNumber(scenarioNum);
+    }
+
     @PostMapping("/rooms")
     public Room createRoom(@Valid @RequestBody Room room) {
         String hash = RoomHashGenerator.generateNewHash();
