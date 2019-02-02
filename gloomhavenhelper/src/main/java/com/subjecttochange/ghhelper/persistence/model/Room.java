@@ -10,6 +10,8 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "rooms")
 public @Data class Room extends BaseModel {
+    private static final int DEFAULT_SCENARIO_NUMBER = 0;
+
     @Id
     @GeneratedValue(generator = "room_generator")
     @SequenceGenerator(
@@ -37,10 +39,17 @@ public @Data class Room extends BaseModel {
 
     public Room() {
         this.roomHash = "";
+        setScenarioNumber(DEFAULT_SCENARIO_NUMBER);
     }
 
     public Room(@NotBlank @Size(min = 3, max = 100) String roomHash) {
         this.roomHash = roomHash;
+        setScenarioNumber(DEFAULT_SCENARIO_NUMBER);
+    }
+
+    public Room(@NotBlank @Size(min = 3, max = 100) String roomHash, int scenarioNumber) {
+        this.roomHash = roomHash;
+        setScenarioNumber(scenarioNumber);  //use setter so monster population is triggered
     }
 
 }

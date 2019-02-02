@@ -46,12 +46,22 @@ public class RoomController {
 
     @PostMapping("/newroom")
     public Room newRoom() {
+        Room newRoom = new Room(newHash());
+        return roomRepository.save(newRoom);
+    }
+
+    @PostMapping("/newroom/{scenarioNum}")
+    public Room newRoom(@Valid @PathVariable int scenarioNum) {
+        Room newRoom = new Room(newHash());
+        return roomRepository.save(newRoom);
+    }
+
+    private String newHash() {
         String newHash = RoomHashGenerator.generateNewHash();
         while(roomRepository.existsByRoomHash(newHash)) {
             newHash = RoomHashGenerator.generateNewHash();
         }
-        Room newRoom = new Room(newHash);
-        return roomRepository.save(newRoom);
+        return newHash;
     }
 
     /**
