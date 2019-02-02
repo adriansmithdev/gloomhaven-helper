@@ -29,13 +29,14 @@ class Monster extends Component {
 
   render() {
     return (
-      <li>
-        Name: <input type="text" value={this.props.monster.name} onChange={this.changeMonsterName} />
+      <li className="has-text-light">
+        Name: 
+        <input className="input is-small input-short" type="text" value={this.props.monster.name} onChange={this.changeMonsterName} />
         HP
-          <input type="number" value={this.props.monster.currentHealth} max={this.props.monster.maxHealth} min="0" onChange={this.changeCurrentHealth} />
-          /
-          <input type="number" value={this.props.monster.maxHealth} onChange={this.changeMaxHealth} />
-          <button type="button" onClick={this.removeMonster}>X</button>
+        <input className="input is-small input-short" type="number" value={this.props.monster.currentHealth} max={this.props.monster.maxHealth} min="0" onChange={this.changeCurrentHealth} />
+        /
+        <input className="input is-small input-short" type="number" value={this.props.monster.maxHealth} onChange={this.changeMaxHealth} />
+        <button className="button is-dark is-small" type="button" onClick={this.removeMonster}>X</button>
       </li>
       
     );

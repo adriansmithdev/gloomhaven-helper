@@ -25,18 +25,39 @@ class Room extends Component {
 
     render() {
 
-        return (
-            <div>
-                <h1>Gloomhaven Room # {this.props.match.params.roomid} </h1>
-                <input type="number" onBlur={this.changeScenario} min="1" max="150"/>
+      return (
+        <div>
+          <nav className="navbar is-black">
+            <div class="navbar-brand">
+              <div className="navbar-item">
+                <h1 className="title themed-font has-text-light">Gloomhaven Helper</h1>
+              </div>
+              <div className="navbar-item">
+                <strong className="has-text-light">Room: {this.props.match.params.roomid}</strong>
 
-            <MonsterList/>
-
-            <span className="input-group-btn">
-            <Link className="button is-dark is-large themed-font m-2" to={`/`}>Back to home!</Link>
-        </span>
+              </div>
             </div>
-        );
+            <div className="navbar-end">
+              <div className="navbar-item">
+                  <div className="field has-addons mr-1">
+                    <div className="control">
+                      <span className="button is-static">Scenario</span>
+                    </div>
+                    <div className="control is-expanded">
+                      <input className="input" type="number" onBlur={this.changeScenario} min="1" max="150"/>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </nav>
+
+          <MonsterList/>
+
+          <span className="input-group-btn">
+            <Link className="button is-dark is-large themed-font m-2" to={`/`}>Back to home!</Link>
+          </span>
+        </div>
+      );
     }
 
 
