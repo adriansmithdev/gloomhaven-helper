@@ -3,6 +3,7 @@ package com.subjecttochange.ghhelper.persistence.model.monster;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 public @Data class Monster {
@@ -15,17 +16,28 @@ public @Data class Monster {
     )
     private Long id;
     private String name;
-    //private MonsterInstances[] instances;
+    private ArrayList<MonsterInstance> instances;
     //private MonsterTraits[] traits;
     //private MonsterAction[] abilityDeck;
     //private MonsterAction[] abilityDeckDiscard;
     private int maxHealth;
     private int moveRange;
-    private int attackDamage;
-    private int attackRange;
-    private int maxHealthElite;
-    private int moveRangeElite;
-    private int attackDamageElite;
-    private int attackRangeElite;
+    //private int attackDamage;
+    //private int attackRange;
+    //private int maxHealthElite;
+    //private int moveRangeElite;
+    //private int attackDamageElite;
+    //private int attackRangeElite;
 
+    public Monster() {
+
+    }
+
+    public Monster(String name, int maxHealth) {
+        this.name = name;
+        this.maxHealth = maxHealth;
+        this.instances = new ArrayList<>();
+        this.instances.add(new MonsterInstance(maxHealth));  //TODO update/remove once instances fully implemented
+        System.out.println("Monster: instances: " +instances.toString());
+    }
 }

@@ -44,6 +44,15 @@ public class RoomController {
         return room;
     }
 
+    /**
+     * @return
+     */
+    @PostMapping("/rooms")
+    public Room createRoom() {
+        Room room = new Room(newHash());
+        return roomRepository.save(room);
+    }
+
     @PostMapping("/newroom")
     public Room newRoom() {
         Room newRoom = new Room(newHash());
@@ -52,7 +61,7 @@ public class RoomController {
 
     @PostMapping("/newroom/{scenarioNum}")
     public Room newRoom(@Valid @PathVariable int scenarioNum) {
-        Room newRoom = new Room(newHash());
+        Room newRoom = new Room(newHash(), scenarioNum);
         return roomRepository.save(newRoom);
     }
 
@@ -64,27 +73,26 @@ public class RoomController {
         return newHash;
     }
 
+    @PostMapping("/room/{roomHash}/newMonster/{monsterName}/{maxHealth}")
+    public void newMonster(@PathVariable String roomHash,
+                           @PathVariable String monsterName,
+                           @PathVariable int maxHealth) {
+        System.out.println("RoomConNewMon: " + monsterName + " "+maxHealth);
+        Room room = getRoom(roomHash);
+        room.addNewMonster(monsterName, maxHealth);
+        roomRepository.save(room);
+    }
+
     /**
      * @param roomHash
      * @param scenarioNum
      */
     @PostMapping("/room/{roomHash}/scenario/{scenarioNum}")
-    public void updateMonster(@PathVariable String roomHash, @PathVariable int scenarioNum) {
+    public void updateScenario(@PathVariable String roomHash, @PathVariable int scenarioNum) {
         getRoom(roomHash).setScenarioNumber(scenarioNum);
     }
 
-    /**
-     * @return
-     */
-    @PostMapping("/rooms")
-    public Room createRoom() {
-        String hash = RoomHashGenerator.generateNewHash();
-        while(roomRepository.existsByRoomHash(hash)) {
-            hash = RoomHashGenerator.generateNewHash();
-        }
-        Room room = new Room(hash);
-        return roomRepository.save(room);
-    }
+
 
     /**
      * @param roomId

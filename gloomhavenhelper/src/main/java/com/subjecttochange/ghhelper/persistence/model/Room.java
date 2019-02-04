@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "rooms")
@@ -32,9 +33,9 @@ public @Data class Room extends BaseModel {
 
     //private Scenario scenario;
     //private int rounds;
-    //private ElementsActive elements;
+    //private ElementsActive elementsActive;
     //private Player[] players;
-    //private Monster[] monsterTypes;
+    private ArrayList<Monster> monsterGroup;
 
 
     public Room() {
@@ -50,6 +51,11 @@ public @Data class Room extends BaseModel {
     public Room(@NotBlank @Size(min = 3, max = 100) String roomHash, int scenarioNumber) {
         this.roomHash = roomHash;
         setScenarioNumber(scenarioNumber);  //use setter so monster population is triggered
+    }
+
+    public void addNewMonster(String monsterName, int maxHealth) {
+        if (monsterGroup == null) this.monsterGroup = new ArrayList<>();
+        this.monsterGroup.add(new Monster(monsterName, maxHealth));
     }
 
 }
