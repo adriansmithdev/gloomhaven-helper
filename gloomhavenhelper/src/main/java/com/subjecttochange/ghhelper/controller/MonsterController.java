@@ -1,5 +1,7 @@
 package com.subjecttochange.ghhelper.controller;
 
+import com.subjecttochange.ghhelper.persistence.model.monster.MonsterInstance;
+import com.subjecttochange.ghhelper.persistence.repository.MonsterInstancesRepository;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,10 +16,13 @@ public class MonsterController {
 
     @Autowired
     private MonsterRepository monsterRepository;
+    @Autowired
+    private MonsterInstancesRepository instancesRepository;
 
-    @PostMapping("/monster/{monsterID}/")
-    public void updateMonster(@Valid @PathVariable int monsterID, @RequestBody String bodyJson) {
-        //TODO parse Post Json data
-        //monsterRepository.findById(//monsterID);
+    @PostMapping("/monster/{monsterInstanceID}")
+    public void updateMonster(@Valid @PathVariable Long monsterInstanceID,
+                              @Valid @RequestBody MonsterInstance monsterInstance) {
+        instancesRepository.save(monsterInstance);
     }
+
 }
