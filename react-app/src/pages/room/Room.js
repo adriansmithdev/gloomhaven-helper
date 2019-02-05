@@ -28,7 +28,7 @@ class Room extends Component {
       return (
         <div>
           <nav className="navbar is-black">
-            <div class="navbar-brand">
+            <div className="navbar-brand">
               <div className="navbar-item">
                 <h1 className="title themed-font has-text-light">Gloomhaven Helper</h1>
               </div>
