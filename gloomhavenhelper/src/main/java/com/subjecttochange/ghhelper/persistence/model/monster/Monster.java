@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public @Data class Monster {
@@ -16,7 +17,8 @@ public @Data class Monster {
     )
     private Long id;
     private String name;
-    private ArrayList<MonsterInstance> instances;
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<MonsterInstance> instances;
     //private MonsterTraits[] traits;
     //private MonsterAction[] abilityDeck;
     //private MonsterAction[] abilityDeckDiscard;

@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "rooms")
@@ -35,7 +36,10 @@ public @Data class Room extends BaseModel {
     //private int rounds;
     //private ElementsActive elementsActive;
     //private Player[] players;
-    private ArrayList<Monster> monsterGroup;
+
+    //Cascade makes objects save other nested/related objects to db
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<Monster> monsterGroup;
 
 
     public Room() {
