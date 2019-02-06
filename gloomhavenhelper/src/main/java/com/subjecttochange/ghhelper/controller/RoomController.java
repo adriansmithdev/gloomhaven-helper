@@ -89,7 +89,9 @@ public class RoomController {
      */
     @PostMapping("/room/{roomHash}/scenario/{scenarioNum}")
     public void updateScenario(@PathVariable String roomHash, @PathVariable int scenarioNum) {
-        getRoom(roomHash).setScenarioNumber(scenarioNum);
+        Room room = getRoom(roomHash);
+        room.setScenarioNumber(scenarioNum);
+        roomRepository.save(room);
     }
 
 
