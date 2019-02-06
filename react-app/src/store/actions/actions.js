@@ -1,14 +1,14 @@
 import axios from 'axios';
 
 export const getRoom = (hash) => {
-  return dispach => {
+  return dispatch => {
     axios.get(`http://localhost:5000/api/room/${hash}`)
     .then((response) => {
       console.log(response);
-      dispach(setRoom(response.data));
+      dispatch(setRoom(response.data));
     })
     .catch((error) => {
-      dispach(setRoom(error));
+      dispatch(setRoom(error));
     });
     
   }
@@ -19,10 +19,10 @@ export const setRoom = (data) => {
 }
 
 export const changeScenario = (hash, value) => {
-  return dispach => {
+  return dispatch => {
     axios.post(`http://localhost:5000/api/room/${hash}/scenario/${value}`)
     .then(function (response){
-        console.log(response);
+        dispatch(setScenario(value));
     })
     .catch(function (error){
         console.log(error);
@@ -32,7 +32,7 @@ export const changeScenario = (hash, value) => {
 
 export const addMonster = (hash, monster) => {
 
-  return dispach => {
+  return dispatch => {
     axios.post(`http://localhost:5000/api/room/${hash}/newMonster/`, {
       monster: {...monster}
     })

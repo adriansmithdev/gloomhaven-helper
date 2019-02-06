@@ -27,6 +27,10 @@ class Room extends Component {
       this.props.createMonster(newMonster)
     }
 
+    componentWillMount() {
+      this.props.getRoom();
+    }
+
 
     render() {
       return (
@@ -48,7 +52,7 @@ class Room extends Component {
                       <span className="button is-static">Scenario</span>
                     </div>
                     <div className="control is-expanded">
-                    <input className="input input-short" type="number" onBlur={this.changeScenario} min="1" max="150" defaultValue={this.props.room.scenarioNumber}/>
+                    <input className="input input-short" type="number" onChange={this.changeScenario} min="1" max="150" defaultValue={this.props.room.scenarioNumber}/>
                     </div>
                   </div>
                 </div>
