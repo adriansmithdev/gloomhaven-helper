@@ -3,6 +3,7 @@ package com.subjecttochange.ghhelper.controller;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.Room;
 import com.subjecttochange.ghhelper.persistence.model.helpers.RoomHashGenerator;
+import com.subjecttochange.ghhelper.persistence.model.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,13 +81,12 @@ public class RoomController {
         return newHash;
     }
 
-    @PostMapping("/room/{roomHash}/newMonster/{monsterName}/{maxHealth}")
+    @PostMapping("/room/{roomHash}/newMonster")
     public void newMonster(@PathVariable String roomHash,
-                           @PathVariable String monsterName,
-                           @PathVariable int maxHealth) {
-        System.out.println("RoomConNewMon: " + monsterName + " "+maxHealth);
+                           @RequestBody Monster monster) {
+        System.out.println("RoomConNewMon: " + monster.getName() + " " + monster.getMaxHealth());
         Room room = getRoom(roomHash);
-        room.addNewMonster(monsterName, maxHealth);
+        room.addNewMonster(monster.getName(), monster.getMaxHealth());
         roomRepository.save(room);
     }
 
