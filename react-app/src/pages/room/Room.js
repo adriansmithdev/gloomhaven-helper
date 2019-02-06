@@ -1,30 +1,34 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import MonsterList from './MonsterList';
-import axios from 'axios';
-
-
+import { connect } from 'react-redux';
+import * as actionCreator from '../../store/actions/actions';
 class Room extends Component {
 
     constructor(props){
         super(props);
-
+        console.log(props);
         this.changeScenario = this.changeScenario.bind(this);
+        this.createMonster = this.createMonster.bind(this);
     }
 
     changeScenario(event) {
-        console.log("changeScenario called");
-        axios.post(`http://localhost:5000/api/room/${this.props.match.params.roomid}/scenario/${event.target.value}` )
-            .then(function (response){
-                console.log(response.data.scenarioNumber);
-            })
-            .catch(function (error){
-                console.log(error);
-            });
+      this.props.changeScenario(event.target.value);
+      this.props.getRoom();
     }
 
-    render() {
+    createMonster(event) {
+      let newMonster = {
+        name: "",
+        currentHealth: 8,
+        maxHealth: 8,
+      }
 
+      this.props.createMonster(newMonster)
+    }
+
+
+    render() {
       return (
         <div>
           <nav className="navbar is-black">
@@ -33,7 +37,7 @@ class Room extends Component {
                 <h1 className="title themed-font has-text-light">Gloomhaven Helper</h1>
               </div>
               <div className="navbar-item">
-                <strong className="has-text-light">Room: {this.props.match.params.roomid}</strong>
+                <strong className="has-text-light">Room: {this.props.match.params.roomHash}</strong>
 
               </div>
             </div>
@@ -44,13 +48,13 @@ class Room extends Component {
                       <span className="button is-static">Scenario</span>
                     </div>
                     <div className="control is-expanded">
-                      <input className="input" type="number" onBlur={this.changeScenario} min="1" max="150"/>
+                    <input className="input input-short" type="number" onBlur={this.changeScenario} min="1" max="150" defaultValue={this.props.room.scenarioNumber}/>
                     </div>
                   </div>
                 </div>
             </div>
           </nav>
-
+          <button className="button is-dark is-large themed-font m-2" onClick={this.createMonster}>Add Monster</button>
           <MonsterList/>
 
           <span className="input-group-btn">
@@ -63,4 +67,20 @@ class Room extends Component {
 
 }
 
-export default Room;
+const mapStateToProps = (state) => {
+  return { ...state };
+}
+
+const mapDispachToProps = (dispatch, ownProps) => {
+  console.log(ownProps);
+  const roomHash = ownProps.match.params.roomHash;
+  return {
+    getRoom: () => dispatch(actionCreator.getRoom(roomHash)),
+    changeScenario: (value) => dispatch(actionCreator.changeScenario(roomHash, value)),
+    createMonster: (monster) => dispatch(actionCreator.addMonster(roomHash, monster))
+  };
+}
+
+
+
+export default connect(mapStateToProps, mapDispachToProps)(Room);

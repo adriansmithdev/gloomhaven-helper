@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 
 class Home extends Component {
@@ -20,18 +20,6 @@ class Home extends Component {
     .then(function (response) {
       console.log(response.data.roomHash);
       window.location = `/room/${response.data.roomHash}`;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
-
-  componentDidMount() {
-    
-
-    axios.get('http://localhost:5000/api/rooms')
-    .then(function (response) {
-      console.log(response);
     })
     .catch(function (error) {
       console.log(error);
@@ -64,4 +52,18 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    
+  };
+}
+
+const mapDispachToProps = (dispach) => {
+  return {
+    //UI event functions
+  };
+}
+
+
+
+export default connect(mapStateToProps, mapDispachToProps)(Home);

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+
+
 import Home from './home/Home';
 import Room from './room/Room';
 
@@ -9,7 +11,7 @@ class Routes extends Component {
     <Router>
       <Switch>
         <Route path="/" exact={true} component={Home} />
-        <Route path="/room/:roomid" component={Room} /> 
+        <Route path="/room/:roomHash" component={Room} /> 
         <Redirect to="/" />
       </Switch>
     </Router>
