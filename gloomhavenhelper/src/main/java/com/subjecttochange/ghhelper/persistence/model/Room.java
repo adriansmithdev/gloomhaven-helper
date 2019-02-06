@@ -1,5 +1,6 @@
 package com.subjecttochange.ghhelper.persistence.model;
 
+import com.subjecttochange.ghhelper.persistence.model.helpers.RoomHashGenerator;
 import com.subjecttochange.ghhelper.persistence.model.monster.Monster;
 import lombok.Data;
 
@@ -9,9 +10,16 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author subjecttochange
+ * @version 1
+ *
+ * Room object which is the base container for all data
+ */
 @Entity
 @Table(name = "rooms")
-public @Data class Room extends BaseModel {
+@Data
+public class Room extends BaseModel {
     private static final int DEFAULT_SCENARIO_NUMBER = 0;
 
     @Id
@@ -42,23 +50,36 @@ public @Data class Room extends BaseModel {
     private List<Monster> monsterGroup;
 
 
+    /**
+     * Creates a new room object with random hash
+     */
     public Room() {
-        this.roomHash = "";
-        setScenarioNumber(DEFAULT_SCENARIO_NUMBER);
+        this(RoomHashGenerator.generateNewHash(), DEFAULT_SCENARIO_NUMBER);
     }
 
+    /**
+     * Creates new room object
+     * @param roomHash of room
+     */
     public Room(@NotBlank @Size(min = 3, max = 100) String roomHash) {
-        this.roomHash = roomHash;
-        setScenarioNumber(DEFAULT_SCENARIO_NUMBER);
+        this(roomHash, DEFAULT_SCENARIO_NUMBER);
     }
 
+    /**
+     * Create new room object
+     * @param roomHash of room
+     * @param scenarioNumber for monsters
+     */
     public Room(@NotBlank @Size(min = 3, max = 100) String roomHash, int scenarioNumber) {
+        super();
         this.roomHash = roomHash;
-        setScenarioNumber(scenarioNumber);  //use setter so monster population is triggered
+        setScenarioNumber(scenarioNumber);
     }
 
     public void addNewMonster(String monsterName, int maxHealth) {
-        if (monsterGroup == null) this.monsterGroup = new ArrayList<>();
+        if (monsterGroup == null) {
+            this.monsterGroup = new ArrayList<>();
+        }
         this.monsterGroup.add(new Monster(monsterName, maxHealth));
     }
 

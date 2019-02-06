@@ -4,6 +4,7 @@ import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.Room;
 import com.subjecttochange.ghhelper.persistence.model.helpers.RoomHashGenerator;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
+import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,14 +20,16 @@ import javax.validation.Valid;
  * Controls restful responses to room objects
  */
 @RestController
+@ToString
 public class RoomController {
 
     @Autowired
     private RoomRepository roomRepository;
 
     /**
-     * @param pageable
-     * @return
+     * Returns a list of all rooms
+     * @param pageable provides pagination in json response
+     * @return json list of rooms
      */
     @GetMapping("/rooms")
     public Page<Room> getRooms(Pageable pageable) {
@@ -34,18 +37,22 @@ public class RoomController {
     }
 
     /**
-     * @param roomHash
-     * @return
+     * Retrieves a room by its hash
+     * @param roomHash hash to search for
+     * @return json of room
      */
     @GetMapping("/room/{roomHash}")
     public Room getRoom(@PathVariable String roomHash) {
         Room room = roomRepository.findByRoomHash(roomHash);
-        if(room == null) throw new ResourceNotFoundException("Room not found with id " + roomHash);
+        if(room == null) {
+            throw new ResourceNotFoundException("Room not found with id " + roomHash);
+        }
         return room;
     }
 
     /**
-     * @return
+     * Creates a new room
+     * @return json object of created room
      */
     @PostMapping("/rooms")
     public Room createRoom() {
@@ -83,10 +90,6 @@ public class RoomController {
         roomRepository.save(room);
     }
 
-    /**
-     * @param roomHash
-     * @param scenarioNum
-     */
     @PostMapping("/room/{roomHash}/scenario/{scenarioNum}")
     public void updateScenario(@PathVariable String roomHash, @PathVariable int scenarioNum) {
         Room room = getRoom(roomHash);
@@ -97,38 +100,33 @@ public class RoomController {
 
 
     /**
-     * @param roomId
-     * @param roomRequest
-     * @return
+     * Updates a room object with passed parameters
+     * @param roomHash of room to update
+     * @param roomRequest json parameters passed in request
+     * @return updated object as response
      */
-    @PutMapping("/rooms/{roomId}")
-    public Room updateRoom(@PathVariable Long roomId, @Valid @RequestBody Room roomRequest) {
-        return roomRepository.findById(roomId)
+    @PutMapping("/rooms/{roomHash}")
+    public Room updateRoom(@PathVariable Long roomHash, @Valid @RequestBody Room roomRequest) {
+        return roomRepository.findById(roomHash)
                 .map(room -> {
                     room.setRoomHash(roomRequest.getRoomHash());
                     room.setDescription(roomRequest.getDescription());
                     return roomRepository.save(room);
-                }).orElseThrow(() -> new ResourceNotFoundException("Room not found with id " + roomId));
+                }).orElseThrow(() -> new ResourceNotFoundException("Room not found with hash " + roomHash));
     }
 
 
     /**
-     * @param roomId
-     * @return
+     * Deletes the room denoted by the hash
+     * @param roomHash of room to delete
+     * @return status code of operation
      */
-    @DeleteMapping("/rooms/{roomId}")
-    public ResponseEntity<?> deleteRoom(@PathVariable Long roomId) {
-        return roomRepository.findById(roomId)
+    @DeleteMapping("/rooms/{roomHash}")
+    public ResponseEntity<?> deleteRoom(@PathVariable Long roomHash) {
+        return roomRepository.findById(roomHash)
                 .map(room -> {
                     roomRepository.delete(room);
                     return ResponseEntity.ok().build();
-                }).orElseThrow(() -> new ResourceNotFoundException("Room not found with id " + roomId));
-    }
-
-    @Override
-    public String toString() {
-        return "RoomController{" +
-                "roomRepository=" + roomRepository +
-                '}';
+                }).orElseThrow(() -> new ResourceNotFoundException("Room not found with id " + roomHash));
     }
 }
