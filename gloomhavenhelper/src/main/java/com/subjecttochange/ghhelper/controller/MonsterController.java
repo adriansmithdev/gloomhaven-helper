@@ -1,7 +1,7 @@
 package com.subjecttochange.ghhelper.controller;
 
 import com.subjecttochange.ghhelper.persistence.model.monster.MonsterInstance;
-import com.subjecttochange.ghhelper.persistence.repository.MonsterInstancesRepository;
+import com.subjecttochange.ghhelper.persistence.repository.MonsterInstanceRepository;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +17,7 @@ public class MonsterController {
     @Autowired
     private MonsterRepository monsterRepository;
     @Autowired
-    private MonsterInstancesRepository instancesRepository;
+    private MonsterInstanceRepository instancesRepository;
 
     @PostMapping("/monster/{monsterInstanceID}")
     public void updateMonster(@Valid @PathVariable Long monsterInstanceID,
