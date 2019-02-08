@@ -3,7 +3,6 @@ package com.subjecttochange.ghhelper.controller;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.Room;
 import com.subjecttochange.ghhelper.persistence.model.helpers.RoomHashGenerator;
-import com.subjecttochange.ghhelper.persistence.model.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +23,8 @@ import javax.validation.Valid;
 @ToString
 public class RoomController {
 
+    private static final String NOT_FOUND = "Room not found with hash ";
+
     @Autowired
     private RoomRepository roomRepository;
 
@@ -39,16 +40,13 @@ public class RoomController {
 
     /**
      * Retrieves a room by its hash
-     * @param roomHash hash to search for
+     * @param hash hash to search for
      * @return json of room
      */
-    @GetMapping("/room/{roomHash}")
-    public Room getRoom(@PathVariable String roomHash) {
-        Room room = roomRepository.findByRoomHash(roomHash);
-        if(room == null) {
-            throw new ResourceNotFoundException("Room not found with id " + roomHash);
-        }
-        return room;
+    @GetMapping("/rooms/{hash}")
+    public Room getRoom(@PathVariable String hash) {
+        return roomRepository.findByHash(hash)
+                .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + hash));
     }
 
     /**
@@ -57,77 +55,44 @@ public class RoomController {
      */
     @PostMapping("/rooms")
     public Room createRoom() {
-        Room room = new Room(newHash());
-        return roomRepository.save(room);
+        return roomRepository.save(new Room(newHash()));
     }
-
-    @PostMapping("/newroom")
-    public Room newRoom() {
-        Room newRoom = new Room(newHash());
-        return roomRepository.save(newRoom);
-    }
-
-    @PostMapping("/newroom/{scenarioNum}")
-    public Room newRoom(@Valid @PathVariable int scenarioNum) {
-        Room newRoom = new Room(newHash(), scenarioNum);
-        return roomRepository.save(newRoom);
-    }
-
-    private String newHash() {
-        String newHash = RoomHashGenerator.generateNewHash();
-        while(roomRepository.existsByRoomHash(newHash)) {
-            newHash = RoomHashGenerator.generateNewHash();
-        }
-        return newHash;
-    }
-
-    @PostMapping("/room/{roomHash}/newMonster")
-    public void newMonster(@PathVariable String roomHash,
-                           @RequestBody Monster monster) {
-        System.out.println("RoomConNewMon: " + monster.getName() + " " + monster.getMaxHealth());
-        Room room = getRoom(roomHash);
-        room.addNewMonster(monster.getName(), monster.getMaxHealth());
-        roomRepository.save(room);
-    }
-
-    @PostMapping("/room/{roomHash}/scenario/{scenarioNum}")
-    public boolean updateScenario(@PathVariable String roomHash, @PathVariable int scenarioNum) {
-        Room room = getRoom(roomHash);
-        room.setScenarioNumber(scenarioNum);
-        roomRepository.save(room);
-        return true;
-    }
-
-
 
     /**
      * Updates a room object with passed parameters
-     * @param roomHash of room to update
+     * @param hash of room to update
      * @param roomRequest json parameters passed in request
      * @return updated object as response
      */
-    @PutMapping("/rooms/{roomHash}")
-    public Room updateRoom(@PathVariable Long roomHash, @Valid @RequestBody Room roomRequest) {
-        return roomRepository.findById(roomHash)
-                .map(room -> {
-                    room.setRoomHash(roomRequest.getRoomHash());
+    @PutMapping("/rooms/{hash}")
+    public Room updateRoom(@PathVariable String hash, @Valid @RequestBody Room roomRequest) {
+        return roomRepository.findByHash(hash).map(room -> {
+                    room.setHash(roomRequest.getHash());
                     room.setDescription(roomRequest.getDescription());
+                    room.setScenarioNumber(roomRequest.getScenarioNumber());
                     return roomRepository.save(room);
-                }).orElseThrow(() -> new ResourceNotFoundException("Room not found with hash " + roomHash));
+                }).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + hash));
     }
 
 
     /**
      * Deletes the room denoted by the hash
-     * @param roomHash of room to delete
+     * @param hash of room to delete
      * @return status code of operation
      */
-    @DeleteMapping("/rooms/{roomHash}")
-    public ResponseEntity<?> deleteRoom(@PathVariable Long roomHash) {
-        return roomRepository.findById(roomHash)
-                .map(room -> {
+    @DeleteMapping("/rooms/{hash}")
+    public ResponseEntity<?> deleteRoom(@PathVariable String hash) {
+        return roomRepository.findByHash(hash).map(room -> {
                     roomRepository.delete(room);
                     return ResponseEntity.ok().build();
-                }).orElseThrow(() -> new ResourceNotFoundException("Room not found with id " + roomHash));
+                }).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + hash));
+    }
+
+    private String newHash() {
+        String newHash = RoomHashGenerator.generateNewHash();
+        while(roomRepository.existsByHash(newHash)) {
+            newHash = RoomHashGenerator.generateNewHash();
+        }
+        return newHash;
     }
 }

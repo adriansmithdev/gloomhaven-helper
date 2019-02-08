@@ -33,7 +33,7 @@ public class Room extends BaseModel {
 
     @NotBlank
     @Size(min = 3, max = 100)
-    private String roomHash;
+    private String hash;
 
     @Column(columnDefinition = "text")
     private String description;
@@ -59,20 +59,20 @@ public class Room extends BaseModel {
 
     /**
      * Creates new room object
-     * @param roomHash of room
+     * @param hash of room
      */
-    public Room(@NotBlank @Size(min = 3, max = 100) String roomHash) {
-        this(roomHash, DEFAULT_SCENARIO_NUMBER);
+    public Room(@NotBlank @Size(min = 3, max = 100) String hash) {
+        this(hash, DEFAULT_SCENARIO_NUMBER);
     }
 
     /**
      * Create new room object
-     * @param roomHash of room
+     * @param hash of room
      * @param scenarioNumber for monsters
      */
-    public Room(@NotBlank @Size(min = 3, max = 100) String roomHash, int scenarioNumber) {
+    public Room(@NotBlank @Size(min = 3, max = 100) String hash, int scenarioNumber) {
         super();
-        this.roomHash = roomHash;
+        this.hash = hash;
         setScenarioNumber(scenarioNumber);
     }
 
