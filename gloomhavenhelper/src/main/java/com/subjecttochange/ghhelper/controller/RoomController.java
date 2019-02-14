@@ -68,7 +68,6 @@ public class RoomController {
     public Room updateRoom(@PathVariable String hash, @Valid @RequestBody Room roomRequest) {
         return roomRepository.findByHash(hash).map(room -> {
                     room.setHash(roomRequest.getHash());
-                    room.setDescription(roomRequest.getDescription());
                     room.setScenarioNumber(roomRequest.getScenarioNumber());
                     return roomRepository.save(room);
                 }).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + hash));

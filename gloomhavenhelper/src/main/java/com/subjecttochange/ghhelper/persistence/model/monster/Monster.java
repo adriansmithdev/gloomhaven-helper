@@ -1,5 +1,6 @@
 package com.subjecttochange.ghhelper.persistence.model.monster;
 
+import com.subjecttochange.ghhelper.persistence.model.BaseModel;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -7,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public @Data class Monster {
+@Data
+public class Monster extends BaseModel {
     @Id
     @GeneratedValue(generator = "monster_generator")
     @SequenceGenerator(
@@ -17,8 +19,6 @@ public @Data class Monster {
     )
     private Long id;
     private String name;
-    @OneToMany(cascade = {CascadeType.ALL})
-    private List<MonsterInstance> instances;
     //private MonsterTraits[] traits;
     //private MonsterAction[] abilityDeck;
     //private MonsterAction[] abilityDeckDiscard;
@@ -32,14 +32,11 @@ public @Data class Monster {
     //private int attackRangeElite;
 
     public Monster() {
-
+        this("", 0);
     }
 
     public Monster(String name, int maxHealth) {
         this.name = name;
         this.maxHealth = maxHealth;
-        this.instances = new ArrayList<>();
-        this.instances.add(new MonsterInstance(maxHealth));  //TODO update/remove once instances fully implemented
-        System.out.println("Monster: instances: " +instances.toString());
     }
 }

@@ -1,6 +1,7 @@
 package com.subjecttochange.ghhelper.persistence.model.monster;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.subjecttochange.ghhelper.persistence.model.BaseModel;
 import com.subjecttochange.ghhelper.persistence.model.Room;
 import com.subjecttochange.ghhelper.persistence.model.StatusEffect;
 import lombok.Data;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "monster_instance")
-public class MonsterInstance {
+public class MonsterInstance extends BaseModel {
     @Id
     @GeneratedValue(generator = "monster_instance_generator")
     @SequenceGenerator(
@@ -32,6 +33,16 @@ public class MonsterInstance {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Room room;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "monster_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Monster monster;
+
+    // This is strictly for querying the monster table and does not persist
+    @Transient
+    private String name;
 
     public MonsterInstance() {
         this(0);

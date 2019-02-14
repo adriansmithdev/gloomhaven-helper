@@ -35,9 +35,6 @@ public class Room extends BaseModel {
     @Size(min = 3, max = 100)
     private String hash;
 
-    @Column(columnDefinition = "text")
-    private String description;
-
     private int scenarioNumber;
 
     //private Scenario scenario;
