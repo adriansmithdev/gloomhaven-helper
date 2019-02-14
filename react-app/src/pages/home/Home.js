@@ -13,13 +13,26 @@ class Home extends Component {
     super();
 
     this.requestRoom = this.requestRoom.bind(this);
+    this.joinRoom = this.joinRoom.bind(this);
   }
+
+  joinRoom() {
+    axios.get('http://localhost:5000/api/rooms/CIPDKGA')
+        .then(function (response) {
+          console.log("ROOM FOUND SUCCESSFULLY");
+          window.location = `/room/${response.data.hash}`;
+        })
+        .catch(function(error) {
+          console.log("ROOM NOT FOUND");
+        });
+  }
+
 
   requestRoom() {
     axios.post('http://localhost:5000/api/rooms')
     .then(function (response) {
       console.log(response.data.roomHash);
-      window.location = `/room/${response.data.roomHash}`;
+      window.location = `/room/${response.data.hash}`;
     })
     .catch(function (error) {
       console.log(error);
@@ -43,7 +56,7 @@ class Home extends Component {
 
             <span className="level-item">
               <button className="button is-dark is-large themed-font m-2" type="button" onClick={this.requestRoom}>Create Room</button>
-              <button className="button is-dark is-large themed-font m-2" type="button" onClick={this.requestRoom}>Join Room</button>
+              <button className="button is-dark is-large themed-font m-2" type="button" onClick={this.joinRoom}>Join Room</button>
             </span>
           </div>
         </div>
