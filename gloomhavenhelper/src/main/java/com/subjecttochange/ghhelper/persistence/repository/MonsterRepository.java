@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface MonsterRepository extends JpaRepository<Monster, Long> {
     boolean existsByName(String name);
     Optional<Monster> findByName(String name);
+
 }

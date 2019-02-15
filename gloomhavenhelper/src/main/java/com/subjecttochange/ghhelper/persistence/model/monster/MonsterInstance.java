@@ -45,7 +45,7 @@ public class MonsterInstance extends BaseModel {
     private String name;
 
     public MonsterInstance() {
-        this(0);
+        this(66);
     }
 
     public MonsterInstance(int maxHealth) {
@@ -58,4 +58,9 @@ public class MonsterInstance extends BaseModel {
         this.room = room;
         this.monster = monster;
     }
+
+    public void setMonster() {
+
+    }
+
 }

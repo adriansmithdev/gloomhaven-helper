@@ -56,6 +56,7 @@ public class MonsterInstanceController {
             monsterRepository.findByName(monsterInstanceRequest.getName()).map(monster -> {
                 monsterInstanceRequest.setRoom(room);
                 monsterInstanceRequest.setMonster(monster);
+                monsterInstanceRequest.setCurrentHealth(monsterInstanceRequest.getMaxHealth());
                 return monsterInstanceRepository.save(monsterInstanceRequest);
             }).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_MONSTER + monsterInstanceRequest.getName()))
         ).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_ROOM + roomHash));
