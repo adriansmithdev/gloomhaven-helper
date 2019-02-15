@@ -1,7 +1,10 @@
 package com.subjecttochange.ghhelper.persistence.model.seeding;
 
+import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.Room;
 import com.subjecttochange.ghhelper.persistence.model.monster.Monster;
+import com.subjecttochange.ghhelper.persistence.model.monster.MonsterInstance;
+import com.subjecttochange.ghhelper.persistence.repository.MonsterInstanceRepository;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +21,21 @@ public class DataLoader implements ApplicationRunner {
 
     private MonsterRepository monsterRepository;
     private RoomRepository roomRepository;
+    private MonsterInstanceRepository monsterInstanceRepository;
 
     @Autowired
-    public DataLoader(MonsterRepository monsterRepository, RoomRepository roomRepository) {
+    public DataLoader(MonsterRepository monsterRepository, RoomRepository roomRepository,
+                      MonsterInstanceRepository monsterInstanceRepository) {
         this.monsterRepository = monsterRepository;
         this.roomRepository = roomRepository;
+        this.monsterInstanceRepository = monsterInstanceRepository;
     }
 
     @Override
     public void run(ApplicationArguments args) {
         seedMonsterRepository();
         seedRoomRepository();
+        seedMonsterInstanceRepository();
     }
 
     private void seedMonsterRepository() {
@@ -50,6 +57,28 @@ public class DataLoader implements ApplicationRunner {
             rooms.add(new Room("ZYXWVU"));
             rooms.add(new Room("OOMMOO"));
             roomRepository.saveAll(rooms);
+        }
+    }
+
+    private void seedMonsterInstanceRepository() {
+        if (isRepoEmpty(monsterInstanceRepository)) {
+            System.out.println("SEEDING: Monster Instances");
+
+            List<MonsterInstance> instances = new ArrayList<>();
+            Monster monster = monsterRepository.findByName("Living Bones")
+                    .orElseThrow(() -> new ResourceNotFoundException("Could not find monster"));
+
+            Room room = roomRepository.findByHash("ABCDEF")
+                    .orElseThrow(() -> new ResourceNotFoundException("Could not find room"));
+
+            instances.add(new MonsterInstance( 10, room, monster));
+
+            room = roomRepository.findByHash("OOMMOO")
+                    .orElseThrow(() -> new ResourceNotFoundException("Could not find room"));
+
+            instances.add(new MonsterInstance(5, room, monster));
+
+            monsterInstanceRepository.saveAll(instances);
         }
     }
 

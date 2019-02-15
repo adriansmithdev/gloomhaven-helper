@@ -52,4 +52,10 @@ public class MonsterInstance extends BaseModel {
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
     }
+
+    public MonsterInstance(int currentHealth, Room room, Monster monster) {
+        this.currentHealth = currentHealth;
+        this.room = room;
+        this.monster = monster;
+    }
 }
