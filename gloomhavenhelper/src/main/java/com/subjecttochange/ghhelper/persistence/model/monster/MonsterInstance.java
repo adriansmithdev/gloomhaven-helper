@@ -59,8 +59,10 @@ public class MonsterInstance extends BaseModel {
         this.monster = monster;
     }
 
-    public void setMonster() {
-
+    public void setMonster(Monster monster) {
+        this.monster = monster;
+        maxHealth = monster.getMaxHealth();
+        currentHealth = maxHealth;
     }
 
 }
