@@ -18,11 +18,13 @@ export const setRoom = (data) => {
   return { type: 'SET_ROOM', value: data }
 }
 
-export const changeScenario = (hash, value) => {
+export const changeScenario = (hash, room) => {
   return dispatch => {
-    axios.post(`http://localhost:5000/api/rooms/${hash}/scenario/${value}`)
+    console.log("ROOM BEING PUT");
+    console.log(room);
+    axios.put(`http://localhost:5000/api/rooms/${hash}`, room)
     .then(function (response){
-        dispatch(setScenario(value));
+        dispatch(setRoom(response.data));
     })
     .catch(function (error){
         console.log(error);
