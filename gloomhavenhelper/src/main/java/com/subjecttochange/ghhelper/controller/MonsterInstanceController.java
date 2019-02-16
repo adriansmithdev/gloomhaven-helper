@@ -73,7 +73,7 @@ public class MonsterInstanceController {
         }
 
         return monsterInstanceRepository.findById(monsterId).map(monsterInstance -> {
-            monsterInstance.setMaxHealth(monsterInstanceRequest.getMaxHealth());
+            //monsterInstance.setMaxHealth(monsterInstanceRequest.getMaxHealth());
             monsterInstance.setCurrentHealth(monsterInstanceRequest.getCurrentHealth());
             return monsterInstanceRepository.save(monsterInstance);
         }).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_INSTANCE + monsterId));
