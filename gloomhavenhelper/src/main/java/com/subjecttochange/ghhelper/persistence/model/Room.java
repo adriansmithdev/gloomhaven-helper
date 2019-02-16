@@ -7,8 +7,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author subjecttochange
@@ -45,6 +44,8 @@ public class Room extends BaseModel {
     //Cascade makes objects save other nested/related objects to db
     @OneToMany(cascade = {CascadeType.ALL})
     private List<Monster> monsterGroup;
+    @Transient
+    private Set<String> monsterNames;
 
 
     /**
@@ -78,6 +79,13 @@ public class Room extends BaseModel {
             this.monsterGroup = new ArrayList<>();
         }
         this.monsterGroup.add(new Monster(monsterName, maxHealth));
+    }
+
+    public void buildMonsterNameList(List<Monster> monsters) {
+        monsterNames = new TreeSet<String>();
+        for (Monster monster: monsters) {
+            monsterNames.add(monster.getName());
+        }
     }
 
 }

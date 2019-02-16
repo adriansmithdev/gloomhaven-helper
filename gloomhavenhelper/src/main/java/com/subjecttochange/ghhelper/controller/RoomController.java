@@ -3,6 +3,8 @@ package com.subjecttochange.ghhelper.controller;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.Room;
 import com.subjecttochange.ghhelper.persistence.model.helpers.RoomHashGenerator;
+import com.subjecttochange.ghhelper.persistence.model.monster.Monster;
+import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author subjecttochange
@@ -27,6 +30,8 @@ public class RoomController {
 
     @Autowired
     private RoomRepository roomRepository;
+    @Autowired
+    private MonsterRepository monsterRepository;
 
     /**
      * Returns a list of all rooms
@@ -45,8 +50,12 @@ public class RoomController {
      */
     @GetMapping("/rooms/{hash}")
     public Room getRoom(@PathVariable String hash) {
-        return roomRepository.findByHash(hash)
+
+        Room room = roomRepository.findByHash(hash)
                 .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + hash));
+        List<Monster> monsters = monsterRepository.findAll();
+        room.buildMonsterNameList(monsters);
+        return room;
     }
 
     /**
