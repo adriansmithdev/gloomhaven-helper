@@ -12,7 +12,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "monster_instance")
+@Table(name = "monster_instances")
 public class MonsterInstance extends BaseModel {
     @Id
     @GeneratedValue(generator = "monster_instance_generator")

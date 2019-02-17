@@ -2,6 +2,7 @@ package com.subjecttochange.ghhelper.persistence.model;
 
 import com.subjecttochange.ghhelper.persistence.model.helpers.RoomHashGenerator;
 import com.subjecttochange.ghhelper.persistence.model.monster.Monster;
+import com.subjecttochange.ghhelper.persistence.model.monster.MonsterInstance;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -42,11 +43,10 @@ public class Room extends BaseModel {
     //private Player[] players;
 
     //Cascade makes objects save other nested/related objects to db
-    @OneToMany(cascade = {CascadeType.ALL})
-    private List<Monster> monsterGroup;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "room")
+    private List<MonsterInstance> monsterInstances = new ArrayList<>();
     @Transient
     private Set<String> monsterNames;
-
 
     /**
      * Creates a new room object with random hash
@@ -74,18 +74,10 @@ public class Room extends BaseModel {
         setScenarioNumber(scenarioNumber);
     }
 
-    public void addNewMonster(String monsterName, int maxHealth) {
-        if (monsterGroup == null) {
-            this.monsterGroup = new ArrayList<>();
-        }
-        this.monsterGroup.add(new Monster(monsterName, maxHealth));
-    }
-
     public void buildMonsterNameList(List<Monster> monsters) {
         monsterNames = new TreeSet<String>();
         for (Monster monster: monsters) {
             monsterNames.add(monster.getName());
         }
     }
-
 }
