@@ -1,6 +1,8 @@
 package com.subjecttochange.ghhelper.persistence.model.monster;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.subjecttochange.ghhelper.persistence.model.BaseModel;
 import com.subjecttochange.ghhelper.persistence.model.Room;
 import com.subjecttochange.ghhelper.persistence.model.StatusEffect;
@@ -37,12 +39,21 @@ public class MonsterInstance extends BaseModel {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "monster_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private Monster monster;
 
     // This is strictly for querying the monster table and does not persist
     @Transient
     private String name;
+
+    @JsonProperty
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @JsonIgnore
+    public String getName() {
+        return name;
+    }
 
     public MonsterInstance() {
         this(66);
@@ -59,6 +70,12 @@ public class MonsterInstance extends BaseModel {
         this.monster = monster;
     }
 
+    @JsonProperty
+    public Monster getMonster() {
+        return monster;
+    }
+
+    @JsonIgnore
     public void setMonster(Monster monster) {
         this.monster = monster;
         maxHealth = monster.getMaxHealth();
