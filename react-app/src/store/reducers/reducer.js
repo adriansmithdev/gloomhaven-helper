@@ -9,7 +9,10 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
 
-  const newState = {...state };
+  const newState = {
+    ...state, 
+    room: { ...state.room }
+  };
 
   switch(action.type) {
       

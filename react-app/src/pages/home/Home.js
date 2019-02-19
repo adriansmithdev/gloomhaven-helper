@@ -8,10 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 class Home extends Component {
 
   state = {
-    persons: []
+    showHashInput: false
   }
-
-  showHashInput = false;
 
   constructor(props) {
     super(props);
@@ -42,9 +40,9 @@ class Home extends Component {
   joinRoom(event) {
     this.props.getRoom(event.target.value);
     if(this.props.room !== undefined && this.props.room.hash !== undefined) {
-      window.location = `/rooms/${this.props.room.hash}`;
+      this.props.history.push(`/rooms/${this.props.room.hash}`);
     }
-    this.showHashInput = false;
+    this.setState({showHashInput: false})
   }
 
 

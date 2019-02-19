@@ -21,7 +21,7 @@ class MonsterList extends Component {
 
     render() {
       const monsters = this.props.room.monsterInstances.map((monster, index) => 
-        <Monster monster={monster} key={index} index={index}/>
+        <Monster instance={monster} key={index} index={index}/>
       );
       const monsterType = this.props.room.monsterNames.map((monsterName, index) => 
         <option value={monsterName} key={index}>{monsterName}</option>

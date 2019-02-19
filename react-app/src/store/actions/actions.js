@@ -65,10 +65,9 @@ export const addMonster = function(hash, monsterName) {
 
     dispatch(pushMonster(response.data));
     dispatch(setStatus('ADDED_MONSTER'));
+    //dispatch(getRoom(hash));
     return response.data;
   }
-
-  
 }
 
 export const updateMonster = function(hash, monster) {
@@ -84,6 +83,7 @@ export const updateMonster = function(hash, monster) {
 
     dispatch(pushMonster(response.data));
     dispatch(setStatus('ADDED_MONSTER'));
+    dispatch(getRoom(hash));
     return response.data;
   }
 }
