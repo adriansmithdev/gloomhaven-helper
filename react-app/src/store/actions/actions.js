@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from "react-toastify"
 
 export const getRoom = function(hash) {
   return async (dispatch) => {
@@ -8,6 +9,7 @@ export const getRoom = function(hash) {
       console.log(error.response);
       dispatch(addError(error.response.data));
       dispatch(setStatus("ROOM_NOT_FOUND"));
+      toast.error("That room doesn't exist, please enter a valid room")
       return error.response.data;
     });
 
@@ -24,6 +26,7 @@ export const createRoom = function(callback) {
     .catch(function(error) {
       dispatch(addError(error.response.data));
       dispatch(setStatus("FAILED_TO_CREATE_ROOM"));
+      toast.error("There was an error trying to create that room, please try again later")
       return error.response.data;
     })
     dispatch(setRoom(response.data))
