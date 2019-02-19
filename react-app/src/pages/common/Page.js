@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import NotificationList from './NotificationList';
+import {ToastContainer} from 'react-toastify';
 
 class Page extends Component {
 
@@ -8,8 +8,8 @@ class Page extends Component {
         return (
             <div className="container">
                 {this.props.children}
-                <NotificationList />
-            </div>
+                <ToastContainer/>            
+                </div>
         );
     }
 }

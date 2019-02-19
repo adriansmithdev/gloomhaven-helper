@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Page from './../common/Page';
-
 import { createRoom, getRoom } from './../../store/actions/actions';
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";   
+
+
 class Home extends Component {
 
   state = {
@@ -48,7 +50,6 @@ class Home extends Component {
 
   render() {
     return (
-      <Page>
         <div className="card">
           <div className="card-content">
             <h1 className="title themed-font level-item">Gloomhaven Helper</h1>
@@ -68,9 +69,11 @@ class Home extends Component {
               </button>
               {this.state.showHashInput ? this.renderHashInput() : this.renderJoinRoomBtn()}
             </span>
+
+            <ToastContainer/>
+
           </div>
         </div>
-      </Page>
     );
   }
 }

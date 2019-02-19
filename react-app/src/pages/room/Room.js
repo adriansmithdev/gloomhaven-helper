@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Page from './../common/Page';
 import MonsterList from './MonsterList';
 import LoadingScreen from './../common/LoadingScreen';
 import { Redirect } from 'react-router';
@@ -41,7 +40,7 @@ class Room extends Component {
       <LoadingScreen /> 
       ) : (
 
-      <Page>
+       <>
         <nav className="navbar is-black">
           <div className="navbar-brand">
             <div className="navbar-item">
@@ -72,7 +71,7 @@ class Room extends Component {
         <span className="input-group-btn">
           <Link className="button is-dark is-large themed-font m-2" to={`/`}>Back to home!</Link>
         </span>
-      </Page>
+        </>
     );
   }
 
