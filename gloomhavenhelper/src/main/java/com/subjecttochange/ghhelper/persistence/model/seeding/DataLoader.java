@@ -53,9 +53,9 @@ public class DataLoader implements ApplicationRunner {
         if (isRepoEmpty(roomRepository)) {
             System.out.println("SEEDING: Rooms");
             List<Room> rooms = new ArrayList<>();
-            rooms.add(new Room("ABCDEF"));
-            rooms.add(new Room("ZYXWVU"));
-            rooms.add(new Room("OOMMOO"));
+            rooms.add(Room.createWithHash("ABCDEF"));
+            rooms.add(Room.createWithHash("ZYXWVU"));
+            rooms.add(Room.createWithHash("OOMMOO"));
             roomRepository.saveAll(rooms);
         }
     }

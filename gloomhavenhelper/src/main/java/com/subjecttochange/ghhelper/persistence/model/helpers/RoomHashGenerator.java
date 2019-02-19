@@ -1,20 +1,36 @@
 package com.subjecttochange.ghhelper.persistence.model.helpers;
 
-import java.util.Random;
+import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import java.util.UUID;
+
+@Component
 public class RoomHashGenerator {
 
     private static final int HASHLENGTH = 7;
-    private static final String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    @Autowired
+    private RoomRepository roomRepository0;
+    private static RoomRepository roomRepository;
 
-    public static String generateNewHash() {
-        StringBuilder salt = new StringBuilder();
-        Random random = new Random();
-        while (salt.length() < HASHLENGTH) { // length of the random string.
-            int index = (int) (random.nextFloat() * SALTCHARS.length());
-            salt.append(SALTCHARS.charAt(index));
+    @PostConstruct
+    private void initStaticRepo() {
+        roomRepository = this.roomRepository0;
+    }
+
+    public static String newHash() {
+        String hash = getRandomHash();
+
+        while(roomRepository.existsByHash(hash)) {
+            hash = getRandomHash();
         }
-        String saltStr = salt.toString();
-        return saltStr;
+
+        return hash;
+    }
+
+    private static String getRandomHash() {
+        return UUID.randomUUID().toString().substring(0, HASHLENGTH);
     }
 }

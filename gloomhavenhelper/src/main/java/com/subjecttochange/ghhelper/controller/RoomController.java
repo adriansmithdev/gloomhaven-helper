@@ -2,7 +2,6 @@ package com.subjecttochange.ghhelper.controller;
 
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.Room;
-import com.subjecttochange.ghhelper.persistence.model.helpers.RoomHashGenerator;
 import com.subjecttochange.ghhelper.persistence.model.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
@@ -50,7 +49,6 @@ public class RoomController {
      */
     @GetMapping("/rooms/{hash}")
     public Room getRoom(@PathVariable String hash) {
-
         Room room = roomRepository.findByHash(hash)
                 .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + hash));
         List<Monster> monsters = monsterRepository.findAll();
@@ -64,7 +62,7 @@ public class RoomController {
      */
     @PostMapping("/rooms")
     public Room createRoom() {
-        Room newRoom = roomRepository.save(new Room(newHash()));
+        Room newRoom = roomRepository.save(Room.createWithRandomHash());
         List<Monster> monsters = monsterRepository.findAll();
         newRoom.buildMonsterNameList(monsters);
         return newRoom;
@@ -100,13 +98,5 @@ public class RoomController {
                     roomRepository.delete(room);
                     return ResponseEntity.ok().build();
                 }).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + hash));
-    }
-
-    private String newHash() {
-        String newHash = RoomHashGenerator.generateNewHash();
-        while(roomRepository.existsByHash(newHash)) {
-            newHash = RoomHashGenerator.generateNewHash();
-        }
-        return newHash;
     }
 }
