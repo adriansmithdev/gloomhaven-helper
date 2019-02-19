@@ -64,7 +64,10 @@ public class RoomController {
      */
     @PostMapping("/rooms")
     public Room createRoom() {
-        return roomRepository.save(new Room(newHash()));
+        Room newRoom = roomRepository.save(new Room(newHash()));
+        List<Monster> monsters = monsterRepository.findAll();
+        newRoom.buildMonsterNameList(monsters);
+        return newRoom;
     }
 
     /**
