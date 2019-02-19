@@ -40,7 +40,7 @@ class Home extends Component {
   joinRoom(event) {
     this.props.getRoom(event.target.value);
     if(this.props.room !== undefined && this.props.room.hash !== undefined) {
-      window.location = `/room/${this.props.room.hash}`;
+      window.location = `/rooms/${this.props.room.hash}`;
     }
     this.showHashInput = false;
   }
@@ -83,7 +83,7 @@ const mapStateToProps = (state) => {
 const mapDispachToProps = (dispatch, ownProps) => {
   const rerouteToRoomPage = (response) => {
     console.log(response);
-    ownProps.history.push(`/room/${response.data.hash}`);
+    ownProps.history.push(`/rooms/${response.data.hash}`);
   }
 
   return {

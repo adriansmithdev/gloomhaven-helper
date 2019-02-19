@@ -6,6 +6,7 @@ class Monster extends Component {
     render() {
         return (
             <li className="">
+              {this.props.monster.name}
             </li>
         );
     }

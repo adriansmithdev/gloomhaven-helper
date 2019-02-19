@@ -62,8 +62,8 @@ export const updateScenario = function(room) {
 export const addMonster = (hash, monsterName) => {
 
   return async dispatch => {
-    return await axios.post(`http://localhost:5000/api/rooms/${hash}/monsterinstance/`, {
-      monsterName: monsterName
+    return await axios.post(`http://localhost:5000/api/rooms/${hash}/monsterinstances`, {
+      name: monsterName
     })
     .then(function (response){
       return response.data;
