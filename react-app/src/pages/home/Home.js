@@ -38,10 +38,7 @@ class Home extends Component {
   }
 
   joinRoom(event) {
-    this.props.getRoom(event.target.value);
-    if(this.props.room !== undefined && this.props.room.hash !== undefined) {
-      this.props.history.push(`/rooms/${this.props.room.hash}`);
-    }
+    this.props.history.push(`/rooms/${event.target.value}`);
     this.setState({showHashInput: false})
   }
 

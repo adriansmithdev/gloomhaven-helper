@@ -5,7 +5,7 @@ import MonsterList from './MonsterList';
 import LoadingScreen from './../common/LoadingScreen';
 import { Redirect } from 'react-router';
 
-import { getRoom, updateScenario, setStatus } from './../../store/actions/actions'
+import { getRoom, updateScenario, setStatus, clearRoom } from './../../store/actions/actions'
  
 class Room extends Component {
 
@@ -23,6 +23,7 @@ class Room extends Component {
     this.props.updateScenario(newRoom);
   }
 
+  // If room not in store, attempt to pull from hash.
   componentWillMount() {
     if(this.props.room.hash === undefined) {
       this.props.getRoom(this.props.match.params.hash);
@@ -70,7 +71,10 @@ class Room extends Component {
         <MonsterList />
 
         <span className="input-group-btn">
-          <Link className="button is-dark is-large themed-font m-2" to={`/`}>Back to home!</Link>
+          <Link className="button is-dark is-large themed-font m-2" to={"/"}
+            onClick={this.props.clearRoom}>
+            Leave Room
+          </Link>
         </span>
         </>
     );
@@ -87,9 +91,10 @@ const mapStateToProps = (state) => {
 
 const mapDispachToProps = (dispatch) => {
   return {
-    setStatus: (newStatus) => {dispatch(setStatus(newStatus))},
-    getRoom: (hash) => {dispatch(getRoom(hash))},
-    updateScenario: (room) => {dispatch(updateScenario(room))}
+    setStatus: (newStatus) => dispatch(setStatus(newStatus)),
+    getRoom: (hash) => dispatch(getRoom(hash)),
+    updateScenario: (room) => dispatch(updateScenario(room)),
+    clearRoom: () => dispatch(clearRoom())
   };
 }
 

@@ -107,3 +107,7 @@ export const setRoom = function(data) {
 export const setStatus = function(status) {
   return { type: 'SET_STATUS', value: status }
 }
+
+export const clearRoom = function() {
+  return { type: 'CLEAR_ROOM' };
+}
