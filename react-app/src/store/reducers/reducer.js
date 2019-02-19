@@ -3,12 +3,7 @@ import axios from 'axios';
 const initialState = {
   status: "INITIAL",
   room: {
-  },
-  notifications: {
-    errors: [
-
-    ]
-  },
+  }
   
 }
 
@@ -23,9 +18,6 @@ const reducer = (state = initialState, action) => {
       break;
     case "SET_ROOM": 
       newState.room = {...action.value};
-      break;
-    case "ADD_ERROR":
-      newState.notifications.errors.push(action.error);
       break;
     case "SET_STATUS":
       newState.status = action.value;

@@ -12,17 +12,9 @@ export const getRoom = function(hash) {
     });
 
     console.log(response);
-
-    if(response.data.status === 404) {
-      dispatch(setStatus("ROOM_NOT_FOUND"));
-      return response.data;
-    } else {
-      dispatch(setRoom(response.data));
-      return response.data;
-    }
-    
-    
-    
+    dispatch(setRoom(response.data));
+    dispatch(setStatus("ROOM_FOUND"));
+    return response.data;
   }
 }
 
@@ -35,6 +27,7 @@ export const createRoom = function(callback) {
       return error.response.data;
     })
     dispatch(setRoom(response.data))
+    dispatch(setStatus("ROOM_FOUND"));
     callback(response);
     return response.data;
   }
