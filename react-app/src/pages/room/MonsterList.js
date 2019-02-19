@@ -11,16 +11,16 @@ class MonsterList extends Component {
       const monsters = this.props.room.monsterInstances.map((monster, index) => 
         <Monster monster={monster} key={index} index={index}/>
       );
-      // const monsterType = this.props.room.monsterNames.map((monsterName, index) => 
-      //   <option value={monsterName} key={index}>{monsterName}</option>
-      // );
+      const monsterType = this.props.room.monsterNames.map((monsterName, index) => 
+        <option value={monsterName} key={index}>{monsterName}</option>
+      );
 
       return (
         <div className="monster-list m-2">
           <div className="control">
             <div className="select">
               <select className="input">
-                
+                {monsterType}
               </select>
             </div>
           </div>
