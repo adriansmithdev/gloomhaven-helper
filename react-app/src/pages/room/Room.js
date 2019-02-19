@@ -5,7 +5,7 @@ import MonsterList from './MonsterList';
 import LoadingScreen from './../common/LoadingScreen';
 import { Redirect } from 'react-router';
 
-import { getRoom, updateScenario } from './../../store/actions/actions'
+import { getRoom, updateScenario, setStatus } from './../../store/actions/actions'
  
 class Room extends Component {
 
@@ -33,6 +33,7 @@ class Room extends Component {
   render() {
 
     if(this.props.status === "ROOM_NOT_FOUND") {
+      this.props.setStatus("INITIAL");
       return <Redirect to="/" />
     }
     
@@ -86,6 +87,7 @@ const mapStateToProps = (state) => {
 
 const mapDispachToProps = (dispatch) => {
   return {
+    setStatus: (newStatus) => {dispatch(setStatus(newStatus))},
     getRoom: (hash) => {dispatch(getRoom(hash))},
     updateScenario: (room) => {dispatch(updateScenario(room))}
   };

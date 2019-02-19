@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 const initialState = {
-  status: "INITIAL",
+  status: 'INITIAL',
   room: {
-  }
-  
+  },
+  notifications: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -13,14 +13,20 @@ const reducer = (state = initialState, action) => {
 
   switch(action.type) {
       
-    case "CREATE_ROOM": 
+    case 'CREATE_ROOM': 
       requestRoom();
       break;
-    case "SET_ROOM": 
+    case 'SET_ROOM': 
       newState.room = {...action.value};
       break;
-    case "SET_STATUS":
+    case 'ADD_ERROR':
+      newState.notifications.push(action.error);
+      break;
+    case 'SET_STATUS':
       newState.status = action.value;
+      break;
+    case 'ADD_MONSTER':
+      newState.room.monsterInstances.push(action.monster);
       break;
     default: 
       break;

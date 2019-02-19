@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { toast } from "react-toastify"
+import { toast } from 'react-toastify'
 
 export const getRoom = function(hash) {
   return async (dispatch) => {
@@ -8,14 +8,14 @@ export const getRoom = function(hash) {
     .catch((error) => {
       console.log(error.response);
       dispatch(addError(error.response.data));
-      dispatch(setStatus("ROOM_NOT_FOUND"));
-      toast.error("That room doesn't exist, please enter a valid room")
+      dispatch(setStatus('ROOM_NOT_FOUND'));
+      toast.error('That room doesn\'t exist, please enter a valid room');
       return error.response.data;
     });
 
     console.log(response);
     dispatch(setRoom(response.data));
-    dispatch(setStatus("ROOM_FOUND"));
+    dispatch(setStatus('ROOM_FOUND'));
     return response.data;
   }
 }
@@ -25,12 +25,12 @@ export const createRoom = function(callback) {
     const response = await axios.post('http://localhost:5000/api/rooms')
     .catch(function(error) {
       dispatch(addError(error.response.data));
-      dispatch(setStatus("FAILED_TO_CREATE_ROOM"));
-      toast.error("There was an error trying to create that room, please try again later")
+      dispatch(setStatus('FAILED_TO_CREATE_ROOM'));
+      toast.error('There was an error trying to create that room, please try again later')
       return error.response.data;
     })
     dispatch(setRoom(response.data))
-    dispatch(setStatus("ROOM_FOUND"));
+    dispatch(setStatus('ROOM_FOUND'));
     callback(response);
     return response.data;
   }
@@ -50,32 +50,42 @@ export const setStatus = function(status) {
 
 export const updateScenario = function(room) {
   return async dispatch => {
-    return await axios.put(`http://localhost:5000/api/rooms/${room.hash}`, room)
-    .then(function (response){
-      dispatch(setRoom(response.data));
-      return response.data;
-    })
+    const response = await axios.put(`http://localhost:5000/api/rooms/${room.hash}`, room)
     .catch(function (error){
       dispatch(addError(error.response.data));
+      dispatch(setStatus('FAILED_TO_UPDATE_SCENARIO'));
+      toast.error('Failed to update scenario!')
       return error.response.data;
     });
+
+    dispatch(setRoom(response.data));
+    dispatch(setStatus('UPDATED_SCENARIO'));
+    return response.data;
   }
 }
 
 export const addMonster = (hash, monsterName) => {
 
   return async dispatch => {
-    return await axios.post(`http://localhost:5000/api/rooms/${hash}/monsterinstances`, {
+    const response = await axios.post(`http://localhost:5000/api/rooms/${hash}/monsterinstances`, {
       name: monsterName
-    })
-    .then(function (response){
-      return response.data;
-    })
-    .catch(function (error){
+    }).catch(function (error){
       dispatch(addError(error.response.data));
+      dispatch(setStatus('FAILED_TO_ADD_MONSTER'));
+      toast.error('Unable to add monster!')
       return error.response.data
     });
+
+    dispatch(pushMonster(response.data));
+    dispatch(setStatus('ADDED_MONSTER'));
+    return response.data;
   }
+
+  
+}
+
+export const pushMonster = (monster) => {
+  return {type: 'ADD_MONSTER', monster: monster}
 }
 
 export const setScenario = (val) => {
