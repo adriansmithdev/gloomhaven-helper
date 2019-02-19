@@ -78,11 +78,14 @@ public class RoomController {
      */
     @PutMapping("/rooms/{hash}")
     public Room updateRoom(@PathVariable String hash, @Valid @RequestBody Room roomRequest) {
-        return roomRepository.findByHash(hash).map(room -> {
+        Room newRoom = roomRepository.findByHash(hash).map(room -> {
                     room.setHash(roomRequest.getHash());
                     room.setScenarioNumber(roomRequest.getScenarioNumber());
                     return roomRepository.save(room);
                 }).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + hash));
+        List<Monster> monsters = monsterRepository.findAll();
+        newRoom.buildMonsterNameList(monsters);
+        return newRoom;
     }
 
 
