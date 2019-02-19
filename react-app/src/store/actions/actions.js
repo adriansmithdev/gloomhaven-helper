@@ -35,19 +35,6 @@ export const createRoom = function(callback) {
     return response.data;
   }
 }
-
-export const addError = function(err) {
-  return { type: 'ADD_ERROR', error: err}
-}
-
-export const setRoom = function(data) {
-  return { type: 'SET_ROOM', value: data }
-}
-
-export const setStatus = function(status) {
-  return { type: 'SET_STATUS', value: status }
-}
-
 export const updateScenario = function(room) {
   return async dispatch => {
     const response = await axios.put(`http://localhost:5000/api/rooms/${room.hash}`, room)
@@ -64,12 +51,12 @@ export const updateScenario = function(room) {
   }
 }
 
-export const addMonster = (hash, monsterName) => {
+export const addMonster = function(hash, monsterName) {
 
   return async dispatch => {
     const response = await axios.post(`http://localhost:5000/api/rooms/${hash}/monsterinstances`, {
       name: monsterName
-    }).catch(function (error){
+    }).catch(function (error) {
       dispatch(addError(error.response.data));
       dispatch(setStatus('FAILED_TO_ADD_MONSTER'));
       toast.error('Unable to add monster!')
@@ -84,10 +71,39 @@ export const addMonster = (hash, monsterName) => {
   
 }
 
-export const pushMonster = (monster) => {
+export const updateMonster = function(hash, monster) {
+  return async dispatch => {
+    const response = await axios.put(`http://localhost:5000/api/rooms/${hash}/monsterinstances`, {
+      monster
+    }).catch(function(error) {
+      dispatch(addError(error.response.data));
+      dispatch(setStatus('FAILED_TO_UPDATE_MONSTER'));
+      toast.error('Unable to update monster!')
+      return error.response.data
+    });
+
+    dispatch(pushMonster(response.data));
+    dispatch(setStatus('ADDED_MONSTER'));
+    return response.data;
+  }
+}
+
+export const pushMonster = function(monster) {
   return {type: 'ADD_MONSTER', monster: monster}
 }
 
-export const setScenario = (val) => {
+export const setScenario = function(val) {
   return {type: 'CHANGE_SCENARIO', value: val}
+}
+
+export const addError = function(err) {
+  return { type: 'ADD_ERROR', error: err}
+}
+
+export const setRoom = function(data) {
+  return { type: 'SET_ROOM', value: data }
+}
+
+export const setStatus = function(status) {
+  return { type: 'SET_STATUS', value: status }
 }
