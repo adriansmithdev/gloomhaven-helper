@@ -2,24 +2,45 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Page from './../common/Page';
+import MonsterList from './MonsterList';
+import LoadingScreen from './../common/LoadingScreen';
+import { Redirect } from 'react-router';
 
-import { getRoom } from './../../store/actions/actions'
+import { getRoom, updateScenario } from './../../store/actions/actions'
  
 class Room extends Component {
 
-  validateRoom() {
-    if(this.props.room.hash !== undefined) {
-      return true;
-    } else {
-      
-    }
+  constructor(props) {
+    super(props);
+
+    this.updateScenario = this.updateScenario.bind(this);
   }
 
-  render() {
+  updateScenario(event) {
+    // Create new object for sending to server.
+    const newRoom = {...this.props.room, scenarioNumber: event.target.value};
+
+    console.log(newRoom);
+    this.props.updateScenario(newRoom);
+  }
+
+  componentWillMount() {
     if(this.props.room.hash === undefined) {
       this.props.getRoom(this.props.match.params.hash);
     }
-    return (
+  }
+
+
+  render() {
+
+    if(this.props.status === "ROOM_NOT_FOUND") {
+      return <Redirect to="/" />
+    }
+    
+    return (this.props.room.hash === undefined) ? (
+      <LoadingScreen /> 
+      ) : (
+
       <Page>
         <nav className="navbar is-black">
           <div className="navbar-brand">
@@ -39,13 +60,14 @@ class Room extends Component {
                 </div>
                 <div className="control is-expanded">
                   <input className="input input-short" type="number" min="1" max="150"
-                    defaultValue={this.props.room.scenarioNumber}
+                    defaultValue={this.props.room.scenarioNumber} onChange={this.updateScenario}
                   />
                 </div>
               </div>
             </div>
           </div>
         </nav>
+        <MonsterList />
 
         <span className="input-group-btn">
           <Link className="button is-dark is-large themed-font m-2" to={`/`}>Back to home!</Link>
@@ -59,13 +81,14 @@ class Room extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    room: state.room
+    ...state
   };
 }
 
 const mapDispachToProps = (dispatch) => {
   return {
-    getRoom: (hash) => {dispatch(getRoom(hash))}
+    getRoom: (hash) => {dispatch(getRoom(hash))},
+    updateScenario: (room) => {dispatch(updateScenario(room))}
   };
 }
 

@@ -2,10 +2,49 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Page from './../common/Page';
 
-import { createRoom } from './../../store/actions/actions';
+import { createRoom, getRoom } from './../../store/actions/actions';
 class Home extends Component {
 
-    
+  state = {
+    persons: []
+  }
+
+  showHashInput = false;
+
+  constructor(props) {
+    super(props);
+
+    this.joinRoom = this.joinRoom.bind(this);
+    this.setShowHash = this.setShowHash.bind(this);
+  }  
+  renderJoinRoomBtn() {
+    return (
+      <button className="button is-dark is-large themed-font m-2" type="button"
+        onClick={this.setShowHash}>
+        Join Room
+      </button>
+    );
+  }
+
+  renderHashInput(){
+    return (
+      <input type="text" className="text-input" onBlur={this.joinRoom} name="hash"
+      placeholder="Room ID"/>
+    );
+  }
+
+  setShowHash(){
+    this.setState({showHashInput : true});
+  }
+
+  joinRoom(event) {
+    this.props.getRoom(event.target.value);
+    if(this.props.room !== undefined && this.props.room.hash !== undefined) {
+      window.location = `/room/${this.props.room.hash}`;
+    }
+    this.showHashInput = false;
+  }
+
 
   render() {
     return (
@@ -27,6 +66,7 @@ class Home extends Component {
                 onClick={this.props.createRoom}>
                 Create Room
               </button>
+              {this.state.showHashInput ? this.renderHashInput() : this.renderJoinRoomBtn()}
             </span>
           </div>
         </div>
@@ -47,7 +87,8 @@ const mapDispachToProps = (dispatch, ownProps) => {
   }
 
   return {
-    createRoom: () => dispatch(createRoom(rerouteToRoomPage))
+    createRoom: () => dispatch(createRoom(rerouteToRoomPage)),
+    getRoom: (hash) => dispatch(getRoom(hash))
   }
 }
 
