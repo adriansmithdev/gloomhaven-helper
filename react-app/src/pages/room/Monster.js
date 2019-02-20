@@ -1,20 +1,36 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { removeMonster } from './../../store/actions/actions';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {deleteMonster} from "../../store/actions/actions";
 
 class Monster extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.deleteMonster = this.deleteMonster.bind(this);
+  }
+
+  deleteMonster() {
+    this.props.deleteMonster(this.props.instance);
+  }
+
   render() {
-    console.log(this.props.instance)
     return (
-      <li className="">
-        Name: {this.props.instance.monster.name} HP: 
-          Current
-          <input type="number" defaultValue={this.props.instance.currentHealth} max={this.props.instance.maxHealth} min="0" />
-          /
-          Max: {this.props.instance.maxHealth}
-          <button type="button">X</button>
-      </li>
+      <>
+        <div className="has-text-weight-bold has-text-white">
+          {this.props.firstElement ? this.props.instance.monster.name : ''}
+        </div>
+        <li className="columns" key={this.props.key}>
+          <div className="column">ID: {this.props.id}</div>
+          <div className="column"> HP:<input type="number" defaultValue={this.props.instance.currentHealth}
+                                             max={this.props.instance.maxHealth} min="0"/>
+            /{this.props.instance.maxHealth}
+          </div>
+          <div className="column">
+            <button type="button" onClick={this.deleteMonster}>X</button>
+          </div>
+        </li>
+      </>
     );
   }
 }
@@ -25,7 +41,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    removeMonster: (monster) => dispatch(removeMonster(monster))
+    deleteMonster: (monster) => dispatch(deleteMonster(monster))
   };
 }
 

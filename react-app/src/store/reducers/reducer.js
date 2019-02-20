@@ -1,5 +1,3 @@
-import { toast } from 'react-toastify';
-
 const initialState = {
   status: 'INITIAL',
   room: {
@@ -27,21 +25,20 @@ const reducer = (state = initialState, action) => {
     case 'ADD_MONSTER':
       newState.room.monsterInstances.push(action.monster);
       break;
+    case 'DELETE_MONSTER':
+      let monsterIndex = newState.room.monsterInstances.indexOf(action.monster);
+      let array1 = newState.room.monsterInstances.slice(monsterIndex + 1)
+        .concat(newState.room.monsterInstances.slice(0, monsterIndex));
+      newState.room.monsterInstances = array1;
+      break;
     case 'CLEAR_ROOM':
       newState.room = {};
-      break;
-    case 'REMOVE_MONSTER':
-      const filteredInstances = newState.room.monsterInstances.filter(instance => 
-        instance.id !== action.monster.id
-      );
-      newState.room.monsterInstances = filteredInstances;
       break;
     default: 
       break;
   }
 
   return newState;
-
 };
 
 

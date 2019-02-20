@@ -78,12 +78,11 @@ public class MonsterInstanceController {
         }).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_INSTANCE + monsterId));
     }
 
-    @DeleteMapping("/rooms/{roomHash}/monsterinstances/{monsterId}")
-    public ResponseEntity<?> deleteMonster(@PathVariable String roomHash, @PathVariable Long monsterId) {
-        return monsterInstanceRepository.findByIdAndRoomHash(monsterId, roomHash).map(monsterInstance -> {
+    @DeleteMapping("/monsterinstances/{monsterId}")
+    public ResponseEntity<?> deleteMonster(@PathVariable Long monsterId) {
+        return monsterInstanceRepository.findById(monsterId).map(monsterInstance -> {
             monsterInstanceRepository.delete(monsterInstance);
             return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException("Monster instance not found with id " + monsterId
-                + " and room hash " + roomHash));
+        }).orElseThrow(() -> new ResourceNotFoundException("Monster instance not found with id " + monsterId));
     }
 }
