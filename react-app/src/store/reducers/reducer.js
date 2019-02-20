@@ -26,10 +26,13 @@ const reducer = (state = initialState, action) => {
       newState.room.monsterInstances.push(action.monster);
       break;
     case 'DELETE_MONSTER':
-      let monsterIndex = newState.room.monsterInstances.indexOf(action.monster);
-      let array1 = newState.room.monsterInstances.slice(monsterIndex + 1)
-        .concat(newState.room.monsterInstances.slice(0, monsterIndex));
-      newState.room.monsterInstances = array1;
+      // Filter out old monster.
+      let newMonsters = newState.room.monsterInstances.filter(monster =>
+        monster.id !== action.monster.id
+      );
+
+      // Replace old state.
+      newState.room.monsterInstances = newMonsters;
       break;
     case 'CLEAR_ROOM':
       newState.room = {};
