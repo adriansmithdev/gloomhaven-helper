@@ -50,7 +50,8 @@ const ProgressBar = (props) => {
     textSize: 12,
     color: '#ffffff',
     width: '100%',
-    textTransform: 'capitalize'
+    textTransform: 'capitalize',
+    textShadow: '0px 0px 4px #000000'
   }
 
   function getTitleText() {
