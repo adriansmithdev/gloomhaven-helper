@@ -57,10 +57,6 @@ class MonsterList extends Component {
         </div>
 
         <ul>
-          <div className="columns">
-            <li className="column is-one-third has-text-light is-size-6">Token ID</li>
-            <li className="column is-one-third has-text-light is-size-6">HP</li>
-          </div>
           {monsters}
         </ul>
       </div>
