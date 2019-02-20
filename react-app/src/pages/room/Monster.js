@@ -35,14 +35,14 @@ class Monster extends Component {
   }
 
   deleteMonster() {
-    this.props.deleteMonster(this.props.instance);
+    this.props.deleteMonster(this.props.hash, this.props.instance);
   }
 
   render() {
     return (
       <>
         <div className="title themed-font has-text-light is-size-4">
-          {this.props.firstElement ? this.props.instance.monster.name : ''}
+          {this.props.isFirstElement ? this.props.instance.monster.name : ''}
         </div>
         <li className="columns" key={this.props.key}>
           <div className="column has-text-light">Encountered #: {this.props.id}</div>
@@ -81,7 +81,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     updateMonster: (hash, monster) => dispatch(updateMonster(hash, monster)),
-    deleteMonster: (monster) => dispatch(deleteMonster(monster))
+    deleteMonster: (hash, monster) => dispatch(deleteMonster(hash, monster))
   };
 }
 

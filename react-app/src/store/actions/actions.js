@@ -87,9 +87,9 @@ export const updateMonster = function(hash, monster) {
   }
 };
 
-export const deleteMonster = function(monster) {
+export const deleteMonster = function(hash, monster) {
   return async dispatch => {
-    const response = await axios.delete(`http://localhost:5000/api/monsterinstances/${monster.id}`)
+    const response = await axios.delete(`http://localhost:5000/api/rooms/${hash}/monsterinstances/${monster.id}`)
       .catch(function (error) {
         dispatch(addError(error.response.data));
         dispatch(setStatus('FAILED_TO_UPDATE_MONSTER'));
@@ -98,7 +98,7 @@ export const deleteMonster = function(monster) {
       });
 
     dispatch(setStatus('DELETED_MONSTER'));
-    dispatch(popMonster(monster))
+    dispatch(popMonster(monster));
     return response.data;
   }
 };
@@ -113,7 +113,7 @@ export const popMonster = function(monster) {
 
 export const replaceMonster = function(monster) {
   return {type: 'UPDATE_MONSTER', monster: monster};
-}
+};
 
 export const setScenario = function(val) {
   return {type: 'CHANGE_SCENARIO', value: val}

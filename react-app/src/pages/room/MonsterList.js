@@ -28,16 +28,16 @@ class MonsterList extends Component {
     let idDisplayed = 1;
     const monsters = this.props.room.monsterInstances
       .sort((a, b) => {
-        a.monster.name.localeCompare(b.monster.name)
+        return a.monster.name.localeCompare(b.monster.name);
       })
       .map((monster, index) => {
           if (monsterName === monster.monster.name) {
             idDisplayed += 1;
-            return <Monster instance={monster} key={monster.id} id={idDisplayed} firstElement={false}/>
+            return <Monster instance={monster} key={monster.id} id={idDisplayed} isFirstElement={false}/>
           }
           monsterName = monster.monster.name;
           idDisplayed = 1;
-          return <Monster instance={monster} key={monster.id} id={idDisplayed} firstElement={true}/>
+          return <Monster instance={monster} key={monster.id} id={idDisplayed} isFirstElement={true}/>
         }
       );
     const monsterTypes = this.props.room.monsterNames.map((monsterName, index) =>
