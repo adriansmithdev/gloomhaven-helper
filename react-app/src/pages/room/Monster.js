@@ -17,17 +17,17 @@ class Monster extends Component {
   render() {
     return (
       <>
-        <div className="has-text-weight-bold has-text-white">
+        <div className="title themed-font has-text-light is-size-4">
           {this.props.firstElement ? this.props.instance.monster.name : ''}
         </div>
         <li className="columns" key={this.props.key}>
-          <div className="column">ID: {this.props.id}</div>
-          <div className="column"> HP:<input type="number" defaultValue={this.props.instance.currentHealth}
-                                             max={this.props.instance.maxHealth} min="0"/>
-            /{this.props.instance.maxHealth}
+          <div className="column has-text-light">Encountered #: {this.props.id}</div>
+          <div className="column has-text-light"> HP: <input className="input input-short" type="number" defaultValue={this.props.instance.currentHealth}
+                                             max={this.props.instance.maxHealth} min="0"/>   
+              &nbsp;/&nbsp;{this.props.instance.maxHealth}
           </div>
           <div className="column">
-            <button type="button" onClick={this.deleteMonster}>X</button>
+            <button type="button" className="button is-dark themed-font" onClick={this.deleteMonster}>X</button>
           </div>
         </li>
       </>
