@@ -68,8 +68,8 @@ public class MonsterInstanceController {
             throw new ResourceNotFoundException(NOT_FOUND_ROOM + roomHash);
         }
 
-        if (!monsterRepository.existsByName(monsterInstanceRequest.getName())) {
-            throw new ResourceNotFoundException(NOT_FOUND_MONSTER + monsterInstanceRequest.getName());
+        if (!monsterRepository.existsByName(monsterInstanceRequest.getMonster().getName())) {
+            throw new ResourceNotFoundException(NOT_FOUND_MONSTER + monsterInstanceRequest.getMonster().getName());
         }
 
         return monsterInstanceRepository.findById(monsterId).map(monsterInstance -> {

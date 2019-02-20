@@ -2,6 +2,7 @@ package com.subjecttochange.ghhelper.persistence.model.monster;
 
 import com.subjecttochange.ghhelper.persistence.model.BaseModel;
 import lombok.Data;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -39,4 +40,10 @@ public class Monster extends BaseModel {
         this.name = name;
         this.maxHealth = maxHealth;
     }
+
+    public String getName() {
+        return this.name;
+    }
+
+
 }

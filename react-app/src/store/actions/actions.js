@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {toast} from 'react-toastify'
 
-export const getRoom = function (hash) {
+export const getRoom = function(hash) {
   return async (dispatch) => {
 
     const response = await axios.get(`http://localhost:5000/api/rooms/${hash}`)
@@ -20,7 +20,7 @@ export const getRoom = function (hash) {
   }
 };
 
-export const createRoom = function (callback) {
+export const createRoom = function(callback) {
   return async (dispatch) => {
     const response = await axios.post('http://localhost:5000/api/rooms')
       .catch(function (error) {
@@ -36,7 +36,7 @@ export const createRoom = function (callback) {
   }
 };
 
-export const updateScenario = function (room) {
+export const updateScenario = function(room) {
   return async dispatch => {
     const response = await axios.put(`http://localhost:5000/api/rooms/${room.hash}`, room)
       .catch(function (error) {
@@ -52,7 +52,7 @@ export const updateScenario = function (room) {
   };
 };
 
-export const addMonster = function (hash, monsterName) {
+export const addMonster = function(hash, monsterName) {
 
   return async dispatch => {
     const response = await axios.post(`http://localhost:5000/api/rooms/${hash}/monsterinstances`, {
@@ -70,24 +70,24 @@ export const addMonster = function (hash, monsterName) {
   }
 };
 
-export const updateMonster = function (hash, monster) {
+export const updateMonster = function(hash, monster) {
   return async dispatch => {
-    const response = await axios.put(`http://localhost:5000/api/rooms/${hash}/monsterinstances`, {
-      monster
-    }).catch(function (error) {
+    const response = await axios.put(`http://localhost:5000/api/rooms/${hash}/monsterinstances/${monster.id}`, monster)
+    .catch(function (error) {
       dispatch(addError(error.response.data));
       dispatch(setStatus('FAILED_TO_UPDATE_MONSTER'));
       toast.error('Unable to update monster!');
       return error.response.data;
     });
 
-    dispatch(pushMonster(response.data));
-    dispatch(setStatus('ADDED_MONSTER'));
+    dispatch(replaceMonster(response.data));
+    dispatch(setStatus('UPDATED_MONSTER'));
+    //dispatch(getRoom(hash));
     return response.data;
   }
 };
 
-export const deleteMonster = function (monster) {
+export const deleteMonster = function(monster) {
   return async dispatch => {
     const response = await axios.delete(`http://localhost:5000/api/monsterinstances/${monster.id}`)
       .catch(function (error) {
@@ -103,30 +103,34 @@ export const deleteMonster = function (monster) {
   }
 };
 
-export const pushMonster = function (monster) {
+export const pushMonster = function(monster) {
   return {type: 'ADD_MONSTER', monster: monster}
 };
 
-export const popMonster = function (monster) {
+export const popMonster = function(monster) {
   return {type: 'DELETE_MONSTER', monster: monster}
 };
 
-export const setScenario = function (val) {
+export const replaceMonster = function(monster) {
+  return {type: 'UPDATE_MONSTER', monster: monster};
+}
+
+export const setScenario = function(val) {
   return {type: 'CHANGE_SCENARIO', value: val}
 };
 
-export const addError = function (err) {
+export const addError = function(err) {
   return {type: 'ADD_ERROR', error: err}
 };
 
-export const setRoom = function (data) {
+export const setRoom = function(data) {
   return {type: 'SET_ROOM', value: data}
 };
 
-export const setStatus = function (status) {
+export const setStatus = function(status) {
   return {type: 'SET_STATUS', value: status}
 };
 
-export const clearRoom = function () {
+export const clearRoom = function() {
   return {type: 'CLEAR_ROOM'};
 };
