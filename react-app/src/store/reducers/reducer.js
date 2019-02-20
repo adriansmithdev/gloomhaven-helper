@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const initialState = {
   status: 'INITIAL',
@@ -29,6 +29,12 @@ const reducer = (state = initialState, action) => {
       break;
     case 'CLEAR_ROOM':
       newState.room = {};
+      break;
+    case 'REMOVE_MONSTER':
+      const filteredInstances = newState.room.monsterInstances.filter(instance => 
+        instance.id !== action.monster.id
+      );
+      newState.room.monsterInstances = filteredInstances;
       break;
     default: 
       break;

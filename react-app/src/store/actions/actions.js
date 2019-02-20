@@ -65,7 +65,6 @@ export const addMonster = function(hash, monsterName) {
 
     dispatch(pushMonster(response.data));
     dispatch(setStatus('ADDED_MONSTER'));
-    //dispatch(getRoom(hash));
     return response.data;
   }
 }
@@ -83,9 +82,30 @@ export const updateMonster = function(hash, monster) {
 
     dispatch(pushMonster(response.data));
     dispatch(setStatus('ADDED_MONSTER'));
-    dispatch(getRoom(hash));
     return response.data;
   }
+}
+
+export const removeMonster = function(hash, monster) {
+  return async dispatch => {
+    const response = await axios.delete(`http://localhost:5000/api/rooms/${hash}/monsterinstances/${monster.id}`
+    ).catch(function(error) {
+      dispatch(addError(error.response.data));
+      dispatch(setStatus('FAILED_TO_DELETE_MONSTER'));
+      toast.error('Failed to remove monster!')
+      return error.response.data
+    });
+
+    dispatch(popMonster(monster));
+    dispatch(setStatus('REMOVED_MONSTER'));
+    return response.data;
+  }
+}
+
+export const popMonster = function(monster) {
+  return {
+    type: 'REMOVE_MONSTER', monster: monster
+  };
 }
 
 export const pushMonster = function(monster) {
