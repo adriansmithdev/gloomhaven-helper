@@ -10,7 +10,7 @@ import java.util.UUID;
 @Component
 public class RoomHashGenerator {
 
-    private static final int HASHLENGTH = 7;
+    public static final int HASHLENGTH = 7;
     @Autowired
     private RoomRepository roomRepository0;
     private static RoomRepository roomRepository;

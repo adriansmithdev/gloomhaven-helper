@@ -1,6 +1,7 @@
 package com.subjecttochange.ghhelper.persistence.model.monster;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.subjecttochange.ghhelper.persistence.model.BaseModel;
@@ -39,6 +40,7 @@ public class MonsterInstance extends BaseModel {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "monster_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Monster monster;
 
     // This is strictly for querying the monster table and does not persist

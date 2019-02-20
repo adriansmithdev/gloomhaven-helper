@@ -1,4 +1,4 @@
-package com.subjecttochange.ghhelper.controller;
+package com.subjecttochange.ghhelper;
 
 import java.util.Arrays;
 
