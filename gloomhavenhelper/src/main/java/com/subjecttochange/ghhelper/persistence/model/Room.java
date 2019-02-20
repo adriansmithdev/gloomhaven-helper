@@ -39,6 +39,7 @@ public class Room extends BaseModel {
 
     private int scenarioNumber;
 
+    @OrderBy("created_at")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "room")
     private List<MonsterInstance> monsterInstances = new ArrayList<>();
 

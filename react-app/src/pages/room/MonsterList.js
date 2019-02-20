@@ -19,11 +19,17 @@ class MonsterList extends Component {
     this.props.addMonster(this.props.room.hash, monsterName);
   }
 
+  sortMonsters() {
+    
+  }
+
   render() {
     let monsterName = '';
     let idDisplayed = 1;
     const monsters = this.props.room.monsterInstances
-      .sort((a, b) => a.monster.name.localeCompare(b.monster.name))
+      .sort((a, b) => {
+        a.monster.name.localeCompare(b.monster.name)
+      })
       .map((monster, index) => {
           if (monsterName === monster.monster.name) {
             idDisplayed += 1;

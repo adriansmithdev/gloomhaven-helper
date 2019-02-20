@@ -36,6 +36,8 @@ public class MonsterInstanceController {
 
     @GetMapping("/rooms/{roomHash}/monsterinstances")
     public Page<MonsterInstance> getMonsterInstances(@PathVariable String roomHash, Pageable pageable) {
+
+
         return monsterInstanceRepository.findByRoomHash(roomHash, pageable);
     }
 
