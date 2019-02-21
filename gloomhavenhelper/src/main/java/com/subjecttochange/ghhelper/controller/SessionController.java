@@ -1,0 +1,78 @@
+package com.subjecttochange.ghhelper.controller;
+
+import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
+import com.subjecttochange.ghhelper.persistence.model.Room;
+import com.subjecttochange.ghhelper.persistence.model.monster.Monster;
+import com.subjecttochange.ghhelper.persistence.model.monster.MonsterInstance;
+import com.subjecttochange.ghhelper.persistence.model.responsebodies.MonsterInstanceResponseBody;
+import com.subjecttochange.ghhelper.persistence.model.responsebodies.MonsterResponseBody;
+import com.subjecttochange.ghhelper.persistence.model.responsebodies.RoomResponseBody;
+import com.subjecttochange.ghhelper.persistence.model.responsebodies.SessionResponseBody;
+import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
+import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
+import lombok.ToString;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.*;
+
+@RestController
+@ToString
+public class SessionController {
+
+    private static final String NOT_FOUND = "Room not found with hash ";
+
+    @Autowired
+    private RoomRepository roomRepository;
+    @Autowired
+    private MonsterRepository monsterRepository;
+
+    @GetMapping("/session")
+    public @ResponseBody Page<SessionResponseBody>
+    getRooms(@RequestParam(value = "hash", required = false) String hash , Pageable pageable) {
+        Page<Room> rooms;
+        if (hash == null) {
+            rooms = roomRepository.findAll(pageable);
+        } else {
+            Room room = roomRepository.findByHash(hash).orElseThrow(() ->
+                    new ResourceNotFoundException(NOT_FOUND + hash));
+            rooms = new PageImpl<>(Collections.singletonList(room));
+        }
+
+        ArrayList<SessionResponseBody> sessionResponse = new ArrayList<>();
+
+        for (Room room : rooms) {
+            RoomResponseBody roomResponse = RoomResponseBody.create(room);
+
+            sessionResponse.add(SessionResponseBody.create(
+                    roomResponse,
+                    new ArrayList<>(buildMonsterResponses(room))));
+        }
+
+        return new PageImpl<>(sessionResponse);
+    }
+
+    private Collection<MonsterResponseBody> buildMonsterResponses(Room room) {
+        Map<String, MonsterResponseBody> namedMonsterBodies = new HashMap<>();
+
+        for (MonsterInstance monsterInstance : room.getMonsterInstances()) {
+            Monster monster = monsterInstance.getMonster();
+
+            if (!namedMonsterBodies.containsKey(monster.getName())) {
+                namedMonsterBodies.put(monster.getName(), MonsterResponseBody.create(monster));
+            }
+
+            namedMonsterBodies.get(monster.getName())
+                    .getMonsterInstances()
+                    .add(MonsterInstanceResponseBody.create(monsterInstance));
+        }
+
+        return namedMonsterBodies.values();
+    }
+}
