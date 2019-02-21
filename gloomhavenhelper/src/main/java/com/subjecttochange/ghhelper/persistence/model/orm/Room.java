@@ -1,8 +1,8 @@
-package com.subjecttochange.ghhelper.persistence.model;
+package com.subjecttochange.ghhelper.persistence.model.orm;
 
 import com.subjecttochange.ghhelper.persistence.model.helpers.RoomHashGenerator;
-import com.subjecttochange.ghhelper.persistence.model.monster.Monster;
-import com.subjecttochange.ghhelper.persistence.model.monster.MonsterInstance;
+import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
+import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
 import lombok.Data;
 
 import javax.persistence.*;

@@ -1,11 +1,8 @@
-package com.subjecttochange.ghhelper.persistence.model.responsebodies;
+package com.subjecttochange.ghhelper.persistence.model.jsonio.responsebodies;
 
-import com.subjecttochange.ghhelper.persistence.model.monster.Monster;
-import com.subjecttochange.ghhelper.persistence.model.monster.MonsterInstance;
+import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
 import lombok.Data;
 import lombok.NonNull;
-
-import java.util.ArrayList;
 
 @Data
 public class MonsterInstanceResponseBody {

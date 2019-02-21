@@ -1,12 +1,10 @@
-package com.subjecttochange.ghhelper.persistence.model.monster;
+package com.subjecttochange.ghhelper.persistence.model.orm.monster;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.subjecttochange.ghhelper.persistence.model.BaseModel;
-import com.subjecttochange.ghhelper.persistence.model.Room;
-import com.subjecttochange.ghhelper.persistence.model.StatusEffect;
+import com.subjecttochange.ghhelper.persistence.model.orm.BaseModel;
+import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;

@@ -1,7 +1,7 @@
 package com.subjecttochange.ghhelper.persistence.repository;
 
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
-import com.subjecttochange.ghhelper.persistence.model.Room;
+import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

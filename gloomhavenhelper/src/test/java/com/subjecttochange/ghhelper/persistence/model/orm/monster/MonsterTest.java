@@ -1,8 +1,6 @@
-package com.subjecttochange.ghhelper.persistence.model.monster;
+package com.subjecttochange.ghhelper.persistence.model.orm.monster;
 
 import org.junit.Before;
-
-import static org.junit.Assert.*;
 
 public class MonsterTest {
 

@@ -1,4 +1,4 @@
-package com.subjecttochange.ghhelper.persistence.model;
+package com.subjecttochange.ghhelper.persistence.model.orm;
 
 public enum StatusEffect {
     POISON,

@@ -1,12 +1,9 @@
-package com.subjecttochange.ghhelper.persistence.model.monster;
+package com.subjecttochange.ghhelper.persistence.model.orm.monster;
 
-import com.subjecttochange.ghhelper.persistence.model.BaseModel;
+import com.subjecttochange.ghhelper.persistence.model.orm.BaseModel;
 import lombok.Data;
-import lombok.Getter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Data

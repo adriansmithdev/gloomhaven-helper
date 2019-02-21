@@ -1,4 +1,4 @@
-package com.subjecttochange.ghhelper.persistence.model.monster;
+package com.subjecttochange.ghhelper.persistence.model.orm.monster;
 
 import lombok.Data;
 
