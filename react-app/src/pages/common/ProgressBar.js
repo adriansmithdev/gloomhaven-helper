@@ -1,16 +1,11 @@
 import React from 'react';
 
 
-function determinHealthColor(healthPercent) {
+function determineHealthHue(healthPercent) {
 
-  const red = (healthPercent < 50) ? 155 : calculateDamageFactor(healthPercent) * 200
-  const green = (healthPercent >= 50) ? 155 : (healthPercent / 100) * 200
+  const hue = healthPercent/100 * 125;
   
-  return `rgb(${red},${green},0)`;
-}
-
-function calculateDamageFactor(healthPercent) {
-  return Math.abs((healthPercent/100) - 1);
+  return hue;
 }
 
 function healthPercentage(current, max) {
@@ -21,6 +16,7 @@ function healthPercentage(current, max) {
 const ProgressBar = (props) => {
   
   const healthPercent = healthPercentage(props.current, props.max);
+  const healthHue = determineHealthHue(healthPercent);
   const defaultHeight = '2rem';
   const containerStyles = {
     position: 'relative',
@@ -34,8 +30,13 @@ const ProgressBar = (props) => {
 
   const barStyles = {
     position: 'absolute',
-
-    backgroundColor: determinHealthColor(healthPercent),
+    backgroundColor: `hsl(${healthHue}, 100%, 35%)`,
+    background: `-moz-linear-gradient(top,
+        hsl(${healthHue}, 100%, 35%) 0%,
+        hsl(${healthHue}, 100%, 20%) 50%, 
+        hsl(${healthHue}, 100%, 15%) 51%, 
+        hsl(${healthHue}, 100%, 25%) 100%
+      )`,
     height: (props.height || defaultHeight),
     width: `${healthPercent}%`,
     maxWidth: '100%',
