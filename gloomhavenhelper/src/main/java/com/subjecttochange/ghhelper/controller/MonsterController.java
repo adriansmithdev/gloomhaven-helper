@@ -1,15 +1,24 @@
 package com.subjecttochange.ghhelper.controller;
 
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
+import com.subjecttochange.ghhelper.persistence.model.jsonio.requestbodies.MonsterRequestBody;
+import com.subjecttochange.ghhelper.persistence.model.jsonio.requestbodies.RoomRequestBody;
+import com.subjecttochange.ghhelper.persistence.model.jsonio.responsebodies.MonsterResponseBody;
+import com.subjecttochange.ghhelper.persistence.model.jsonio.responsebodies.RoomResponseBody;
+import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
+import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Collections;
 
 @RestController
 public class MonsterController {
@@ -20,37 +29,50 @@ public class MonsterController {
     private MonsterRepository monsterRepository;
 
     @GetMapping("/monsters")
-    public Page<Monster> getMonsters(Pageable pageable) {
-        return monsterRepository.findAll(pageable);
-    }
+    @ResponseBody
+    public Page<MonsterResponseBody>
+    getMonsters(@RequestParam(value = "id", required = false) Long id, Pageable pageable) {
+        Page<Monster> monsters;
+        if (id == null) {
+            monsters = monsterRepository.findAll(pageable);
+        } else {
+            Monster monster = monsterRepository.findById(id).orElseThrow(() ->
+                    new ResourceNotFoundException(NOT_FOUND + id));
+            monsters = new PageImpl<>(Collections.singletonList(monster));
+        }
 
-    @GetMapping("/monsters/{id}")
-    public Monster getMonster(@PathVariable Long id) {
-        return monsterRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + id));
+        ArrayList<MonsterResponseBody> monsterResponseBodies = new ArrayList<>();
+
+        for (Monster monster : monsters) {
+            monsterResponseBodies.add(MonsterResponseBody.create(monster));
+        }
+
+        return new PageImpl<>(monsterResponseBodies);
     }
 
     @PostMapping("/monsters")
-    public Monster createMonster(@Valid @RequestBody Monster monster) {
-        return monsterRepository.save(monster);
+    @ResponseBody
+    public MonsterResponseBody createMonster(@Valid @RequestBody(required = false) MonsterRequestBody monsterRequest) {
+        Monster monster = new Monster();
+        monsterRequest.updateMonster(monster);
+        monster = monsterRepository.save(monster);
+        return MonsterResponseBody.create(monster);
     }
 
-    @PutMapping("/monsters/{id}")
-    public Monster updateMonster(@PathVariable Long id, @Valid @RequestBody Monster monsterRequest) {
-        return monsterRepository.findById(id).map(monster -> {
-                    monster.setName(monsterRequest.getName());
-                    monster.setMaxHealth(monsterRequest.getMaxHealth());
-                    monster.setMoveRange(monsterRequest.getMoveRange());
-                    return monsterRepository.save(monster);
-                }).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + id));
+    @PutMapping("/monsters")
+    @ResponseBody
+    public MonsterResponseBody updateMonster(@RequestParam(value = "id") Long id,
+                                       @Valid @RequestBody(required = false) MonsterRequestBody monsterRequest) {
+        Monster monster = monsterRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + id));
+        monsterRequest.updateMonster(monster);
+        monster = monsterRepository.save(monster);
+        return MonsterResponseBody.create(monster);
     }
 
-    @DeleteMapping("/monsters/{id}")
-    public ResponseEntity<?> deleteMonster(@PathVariable Long id) {
-        return monsterRepository.findById(id).map(monster -> {
-                    monsterRepository.delete(monster);
-                    return ResponseEntity.ok().build();
-                }).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + id));
+    @DeleteMapping("/monsters")
+    public ResponseEntity<?> deleteMonster(@RequestParam(value = "id") Long id) {
+        monsterRepository.delete(monsterRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + id)));
+        return ResponseEntity.ok().build();
     }
-
 }

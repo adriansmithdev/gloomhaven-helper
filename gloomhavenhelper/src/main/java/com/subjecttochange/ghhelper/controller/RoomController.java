@@ -59,6 +59,7 @@ public class RoomController {
         for (Room room : rooms) {
              roomResponseBodies.add(RoomResponseBody.create(room));
         }
+
         return new PageImpl<>(roomResponseBodies);
     }
 
@@ -79,14 +80,14 @@ public class RoomController {
      * @return updated object as response
      */
     @PutMapping("/rooms")
+    @ResponseBody
     public RoomResponseBody updateRoom(@RequestParam(value = "hash") String hash,
                                        @Valid @RequestBody(required = false) RoomRequestBody roomRequest) {
         Room room = roomRepository.findByHash(hash).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + hash));
         roomRequest.updateRoom(room);
-        roomRepository.save(room);
+        room = roomRepository.save(room);
         return RoomResponseBody.create(room);
     }
-
 
     /**
      * Deletes the room denoted by the hash
@@ -95,7 +96,8 @@ public class RoomController {
      */
     @DeleteMapping("/rooms")
     public ResponseEntity<?> deleteRoom(@RequestParam(value = "hash") String hash) {
-        roomRepository.delete(roomRepository.findByHash(hash).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + hash)));
+        roomRepository.delete(roomRepository.findByHash(hash)
+                .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + hash)));
         return ResponseEntity.ok().build();
     }
 }

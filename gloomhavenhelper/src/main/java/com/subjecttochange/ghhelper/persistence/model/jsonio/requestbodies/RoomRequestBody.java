@@ -12,12 +12,13 @@ public class RoomRequestBody {
     private boolean isScenarioNumberDirty;
 
     public Room updateRoom(Room room) {
-        if (hasHash()) {
-            room.setHash(getHash());
+        if (this.hasHash()) {
+            room.setHash(this.getHash());
         }
-        if (hasScenarioNumber()) {
-            room.setScenarioNumber(getScenarioNumber());
+        if (this.hasScenarioNumber()) {
+            room.setScenarioNumber(this.getScenarioNumber());
         }
+
         return room;
     }
 
