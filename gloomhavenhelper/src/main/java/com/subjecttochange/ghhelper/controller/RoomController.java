@@ -1,6 +1,9 @@
 package com.subjecttochange.ghhelper.controller;
 
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
+import com.subjecttochange.ghhelper.persistence.model.jsonio.requestbodies.RoomRequestBody;
+import com.subjecttochange.ghhelper.persistence.model.jsonio.responsebodies.RoomResponseBody;
+import com.subjecttochange.ghhelper.persistence.model.jsonio.responsebodies.SessionResponseBody;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
@@ -8,11 +11,14 @@ import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -29,8 +35,6 @@ public class RoomController {
 
     @Autowired
     private RoomRepository roomRepository;
-    @Autowired
-    private MonsterRepository monsterRepository;
 
     /**
      * Returns a list of all rooms
@@ -38,22 +42,24 @@ public class RoomController {
      * @return json list of rooms
      */
     @GetMapping("/rooms")
-    public Page<Room> getRooms(Pageable pageable) {
-        return roomRepository.findAll(pageable);
-    }
+    @ResponseBody
+    public Page<RoomResponseBody>
+    getRooms(@RequestParam(value = "hash", required = false) String hash, Pageable pageable) {
+        Page<Room> rooms;
+        if (hash == null) {
+            rooms = roomRepository.findAll(pageable);
+        } else {
+            Room room = roomRepository.findByHash(hash).orElseThrow(() ->
+                    new ResourceNotFoundException(NOT_FOUND + hash));
+            rooms = new PageImpl<>(Collections.singletonList(room));
+        }
 
-    /**
-     * Retrieves a room by its hash
-     * @param hash hash to search for
-     * @return json of room
-     */
-    @GetMapping("/rooms/{hash}")
-    public Room getRoom(@PathVariable String hash) {
-        Room room = roomRepository.findByHash(hash)
-                .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + hash));
-        List<Monster> monsters = monsterRepository.findAll();
-        room.buildMonsterNameList(monsters);
-        return room;
+        ArrayList<RoomResponseBody> roomResponseBodies = new ArrayList<>();
+
+        for (Room room : rooms) {
+             roomResponseBodies.add(RoomResponseBody.create(room));
+        }
+        return new PageImpl<>(roomResponseBodies);
     }
 
     /**
@@ -61,11 +67,9 @@ public class RoomController {
      * @return json object of created room
      */
     @PostMapping("/rooms")
-    public Room createRoom() {
-        Room newRoom = roomRepository.save(Room.createWithRandomHash());
-        List<Monster> monsters = monsterRepository.findAll();
-        newRoom.buildMonsterNameList(monsters);
-        return newRoom;
+    @ResponseBody
+    public RoomResponseBody createRoom() {
+        return RoomResponseBody.create(roomRepository.save(Room.createWithRandomHash()));
     }
 
     /**
@@ -74,16 +78,13 @@ public class RoomController {
      * @param roomRequest json parameters passed in request
      * @return updated object as response
      */
-    @PutMapping("/rooms/{hash}")
-    public Room updateRoom(@PathVariable String hash, @Valid @RequestBody Room roomRequest) {
-        Room newRoom = roomRepository.findByHash(hash).map(room -> {
-                    room.setHash(roomRequest.getHash());
-                    room.setScenarioNumber(roomRequest.getScenarioNumber());
-                    return roomRepository.save(room);
-                }).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + hash));
-        List<Monster> monsters = monsterRepository.findAll();
-        newRoom.buildMonsterNameList(monsters);
-        return newRoom;
+    @PutMapping("/rooms")
+    public RoomResponseBody updateRoom(@RequestParam(value = "hash") String hash,
+                                       @Valid @RequestBody(required = false) RoomRequestBody roomRequest) {
+        Room room = roomRepository.findByHash(hash).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + hash));
+        roomRequest.updateRoom(room);
+        roomRepository.save(room);
+        return RoomResponseBody.create(room);
     }
 
 
@@ -92,11 +93,9 @@ public class RoomController {
      * @param hash of room to delete
      * @return status code of operation
      */
-    @DeleteMapping("/rooms/{hash}")
-    public ResponseEntity<?> deleteRoom(@PathVariable String hash) {
-        return roomRepository.findByHash(hash).map(room -> {
-                    roomRepository.delete(room);
-                    return ResponseEntity.ok().build();
-                }).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + hash));
+    @DeleteMapping("/rooms")
+    public ResponseEntity<?> deleteRoom(@RequestParam(value = "hash") String hash) {
+        roomRepository.delete(roomRepository.findByHash(hash).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + hash)));
+        return ResponseEntity.ok().build();
     }
 }

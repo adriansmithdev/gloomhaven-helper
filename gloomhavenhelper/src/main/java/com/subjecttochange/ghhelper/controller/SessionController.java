@@ -33,7 +33,7 @@ public class SessionController {
     @Autowired
     private MonsterRepository monsterRepository;
 
-    @GetMapping("/session")
+    @GetMapping("/sessions")
     public @ResponseBody Page<SessionResponseBody>
     getRooms(@RequestParam(value = "hash", required = false) String hash , Pageable pageable) {
         Page<Room> rooms;

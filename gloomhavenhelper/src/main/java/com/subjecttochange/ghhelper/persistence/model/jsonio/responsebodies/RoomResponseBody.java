@@ -8,10 +8,13 @@ import lombok.NonNull;
 public class RoomResponseBody {
     @NonNull
     private String hash;
+    @NonNull
+    private int scenarioNumber;
 
     public static RoomResponseBody create(Room room) {
         return new RoomResponseBody(
-                room.getHash()
+                room.getHash(),
+                room.getScenarioNumber()
         );
     }
 }
