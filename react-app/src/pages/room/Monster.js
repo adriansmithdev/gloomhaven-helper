@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {deleteMonster, updateMonster} from "../../store/actions/actions";
 import ProgressBar from './../common/ProgressBar';
+import MonsterInfo from "./MonsterInfo";
 
 class Monster extends Component {
 
@@ -15,13 +16,13 @@ class Monster extends Component {
 
   increaseHealth() {
     const newHealth = this.props.instance.currentHealth + 1;
-    
+
     this.updateMonsterHealth(newHealth);
   }
 
   decreaseHealth() {
     const newHealth = this.props.instance.currentHealth - 1;
-    
+
     this.updateMonsterHealth(newHealth);
   }
 
@@ -41,20 +42,18 @@ class Monster extends Component {
   render() {
     return (
       <>
-        <div className="title themed-font has-text-light is-size-4">
-          <!-- replace this.props.instance.monster.name with a stats component-->
-          {this.props.isFirstElement ? this.props.instance.monster.name : ''}
-        </div>
+        <!-- replace this.props.instance.monster.name with a stats component-->
+        {this.props.isFirstElement ? <MonsterInfo monster={this.props.instance.monster}/> : ''}
         <li className="columns" key={this.props.key}>
           <div className="column has-text-light">Encountered #: {this.props.id}</div>
-          
+
           <div className="column">
-            <ProgressBar 
+            <ProgressBar
               title="HP"
               current={this.props.instance.currentHealth}
               max={this.props.instance.maxHealth}
             />
-            
+
           </div>
           <div className="column">
             <button type="button" className="button is-dark" onClick={this.decreaseHealth}>
@@ -62,7 +61,7 @@ class Monster extends Component {
             </button>
             <button type="button" className="button is-dark" onClick={this.increaseHealth}>
               +
-            </button>  
+            </button>
           </div>
           <div className="column">
             <button type="button" className="button is-dark themed-font" onClick={this.deleteMonster}>X</button>
