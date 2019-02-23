@@ -42,6 +42,7 @@ class Monster extends Component {
     return (
       <>
         <div className="title themed-font has-text-light is-size-4">
+          <!-- replace this.props.instance.monster.name with a stats component-->
           {this.props.isFirstElement ? this.props.instance.monster.name : ''}
         </div>
         <li className="columns" key={this.props.key}>
