@@ -1,18 +1,29 @@
 package com.subjecttochange.ghhelper.controller;
 
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
+import com.subjecttochange.ghhelper.persistence.model.jsonio.requestbodies.MonsterInstanceRequestBody;
+import com.subjecttochange.ghhelper.persistence.model.jsonio.requestbodies.MonsterRequestBody;
+import com.subjecttochange.ghhelper.persistence.model.jsonio.responsebodies.MonsterInstanceResponseBody;
+import com.subjecttochange.ghhelper.persistence.model.jsonio.responsebodies.MonsterResponseBody;
+import com.subjecttochange.ghhelper.persistence.model.orm.Room;
+import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterInstanceRepository;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
+import lombok.Data;
+import lombok.NonNull;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * @author subjecttochange
@@ -25,7 +36,7 @@ import javax.validation.Valid;
 public class MonsterInstanceController {
     private static final String NOT_FOUND_ROOM = "Room not found with hash ";
     private static final String NOT_FOUND_INSTANCE = "Monster instance not found with id ";
-    private static final String NOT_FOUND_MONSTER = "Monster not found with name ";
+    private static final String NOT_FOUND_MONSTER = "Monster not found with id ";
 
     @Autowired
     private MonsterInstanceRepository monsterInstanceRepository;
@@ -34,57 +45,102 @@ public class MonsterInstanceController {
     @Autowired
     private MonsterRepository monsterRepository;
 
-    @GetMapping("/rooms/{roomHash}/monsterinstances")
-    public Page<MonsterInstance> getMonsterInstances(@PathVariable String roomHash, Pageable pageable) {
+    @GetMapping("/monsterinstances")
+    @ResponseBody
+    public Page<MonsterInstanceResponseBody>
+    getMonsterInstances(@RequestParam(value = "hash") String hash,
+                        @RequestParam(value = "id", required = false) Long id,
+                        Pageable pageable) {
+        // if no hash - deny request
+        // if hash - no id - give all instances
+        // if hash - id - give sepecific instance
 
-
-        return monsterInstanceRepository.findByRoomHash(roomHash, pageable);
-    }
-
-    @GetMapping("/rooms/{roomHash}/monsterinstances/{monsterId}")
-    public MonsterInstance getMonster(@PathVariable String roomHash, @PathVariable Long monsterId) {
-        if (!roomRepository.existsByHash(roomHash)) {
-            throw new ResourceNotFoundException(NOT_FOUND_ROOM + roomHash);
+        Page<MonsterInstance> monsterInstances;
+        if (id == null) {
+            monsterInstances = monsterInstanceRepository.findByRoomHash(hash, pageable);
+        } else {
+            MonsterInstance monsterInstance = monsterInstanceRepository.findById(id).orElseThrow(() ->
+                    new ResourceNotFoundException(NOT_FOUND_INSTANCE + id));
+            checkHashMatchesGiven(monsterInstance, hash, id);
+            monsterInstances = new PageImpl<>(Collections.singletonList(monsterInstance));
         }
 
-        return monsterInstanceRepository.findById(monsterId)
-                .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_INSTANCE + monsterId));
-    }
+        ArrayList<MonsterInstanceResponseBody> monsterInstanceResponseBodies = new ArrayList<>();
 
-    @PostMapping("/rooms/{roomHash}/monsterinstances")
-    public MonsterInstance createMonsterInstance(@PathVariable String roomHash,
-                                                 @Valid @RequestBody MonsterInstance monsterInstanceRequest) {
-        return roomRepository.findByHash(roomHash).map(room ->
-            monsterRepository.findByName(monsterInstanceRequest.getName()).map(monster -> {
-                monsterInstanceRequest.setRoom(room);
-                monsterInstanceRequest.setMonster(monster);
-                return monsterInstanceRepository.save(monsterInstanceRequest);
-            }).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_MONSTER + monsterInstanceRequest.getName()))
-        ).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_ROOM + roomHash));
-    }
-
-    @PutMapping("/rooms/{roomHash}/monsterinstances/{monsterId}")
-    public MonsterInstance updateMonster(@PathVariable String roomHash, @PathVariable Long monsterId,
-                                 @Valid @RequestBody MonsterInstance monsterInstanceRequest) {
-        if (!roomRepository.existsByHash(roomHash)) {
-            throw new ResourceNotFoundException(NOT_FOUND_ROOM + roomHash);
+        for (MonsterInstance monsterInstance : monsterInstances) {
+            monsterInstanceResponseBodies.add(MonsterInstanceResponseBody.create(monsterInstance));
         }
 
-        if (!monsterRepository.existsByName(monsterInstanceRequest.getMonster().getName())) {
-            throw new ResourceNotFoundException(NOT_FOUND_MONSTER + monsterInstanceRequest.getMonster().getName());
-        }
-
-        return monsterInstanceRepository.findById(monsterId).map(monsterInstance -> {
-            monsterInstance.setCurrentHealth(monsterInstanceRequest.getCurrentHealth());
-            return monsterInstanceRepository.save(monsterInstance);
-        }).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_INSTANCE + monsterId));
+        return new PageImpl<>(monsterInstanceResponseBodies);
     }
 
-    @DeleteMapping("/rooms/{roomHash}/monsterinstances/{monsterId}")
-    public ResponseEntity<?> deleteMonster(@PathVariable String roomHash, @PathVariable Long monsterId) {
-        return monsterInstanceRepository.findByIdAndRoomHash(monsterId, roomHash).map(monsterInstance -> {
-            monsterInstanceRepository.delete(monsterInstance);
-            return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException("Monster instance not found with id " + monsterId));
+    @PostMapping("/monsterinstances")
+    public MonsterInstanceResponseBody createMonsterInstance(@RequestParam(value = "hash") String hash,
+                                                 @Valid @RequestBody(required = false) MonsterInstanceRequestBody monsterInstanceRequest) {
+        RoomMonsterComposite roomMonsterComposite = assembleMonsterInstanceDependencies(monsterInstanceRequest, hash);
+        MonsterInstance monsterInstance = new MonsterInstance();
+        monsterInstanceRequest.updateMonsterInstance(
+                monsterInstance,
+                roomMonsterComposite.getMonster(),
+                roomMonsterComposite.getRoom()
+        );
+        monsterInstance = monsterInstanceRepository.save(monsterInstance);
+        return MonsterInstanceResponseBody.create(monsterInstance);
+    }
+
+    @PutMapping("/monsterinstances")
+    public MonsterInstanceResponseBody updateMonsterInstance(
+            @RequestParam(value = "hash") String hash,
+            @RequestParam(value = "id") Long id,
+            @Valid @RequestBody(required = false) MonsterInstanceRequestBody monsterInstanceRequest) {
+        RoomMonsterComposite roomMonsterComposite = assembleMonsterInstanceDependencies(monsterInstanceRequest, hash);
+        MonsterInstance monsterInstance = monsterInstanceRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_INSTANCE + id));
+
+        checkHashMatchesGiven(monsterInstance, hash, id);
+
+        monsterInstanceRequest.updateMonsterInstance(
+                monsterInstance,
+                roomMonsterComposite.getMonster(),
+                roomMonsterComposite.getRoom()
+        );
+        monsterInstance = monsterInstanceRepository.save(monsterInstance);
+        return MonsterInstanceResponseBody.create(monsterInstance);
+    }
+
+    @DeleteMapping("/monsterinstances")
+    public ResponseEntity<?> deleteMonsterInstance(@RequestParam(value = "hash") String hash,
+                                                   @RequestParam(value = "id") Long id) {
+        MonsterInstance monsterInstance = monsterInstanceRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_MONSTER + id));
+        checkHashMatchesGiven(monsterInstance, hash, id);
+
+        monsterInstanceRepository.delete(monsterInstance);
+        return ResponseEntity.ok().build();
+    }
+
+    private void checkHashMatchesGiven(MonsterInstance monsterInstance, String hash, Long id) {
+        if (!monsterInstance.getRoom().getHash().equals(hash)) {
+            throw new ResourceNotFoundException("Wrong hash for id " + id);
+        }
+    }
+
+    private RoomMonsterComposite assembleMonsterInstanceDependencies(MonsterInstanceRequestBody monsterInstanceRequest, String hash) {
+        if (!monsterInstanceRequest.hasMonsterId()) {
+            throw new ResourceNotFoundException("monsterId is required!");
+        }
+        Room room = roomRepository.findByHash(hash).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_ROOM + hash));
+        Monster monster = monsterRepository.findById((long)monsterInstanceRequest.getMonsterId())
+                .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_MONSTER + monsterInstanceRequest.getMonsterId()));
+
+        return new RoomMonsterComposite(room, monster);
+    }
+
+    @Data
+    private class RoomMonsterComposite {
+        @NonNull
+        private Room room;
+        @NonNull
+        private Monster monster;
     }
 }

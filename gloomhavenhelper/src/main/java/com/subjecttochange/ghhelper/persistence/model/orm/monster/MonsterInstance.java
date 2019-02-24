@@ -41,19 +41,8 @@ public class MonsterInstance extends BaseModel {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Monster monster;
 
-    // This is strictly for querying the monster table and does not persist
     @Transient
-    private String name;
-
-    @JsonProperty
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @JsonIgnore
-    public String getName() {
-        return name;
-    }
+    private int monsterId;
 
     public MonsterInstance() {
         this(66);
