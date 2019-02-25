@@ -42,7 +42,6 @@ class Monster extends Component {
   render() {
     return (
       <>
-        <!-- replace this.props.instance.monster.name with a stats component-->
         {this.props.isFirstElement ? <MonsterInfo monster={this.props.instance.monster}/> : ''}
         <li className="columns" key={this.props.key}>
           <div className="column has-text-light">Encountered #: {this.props.id}</div>
