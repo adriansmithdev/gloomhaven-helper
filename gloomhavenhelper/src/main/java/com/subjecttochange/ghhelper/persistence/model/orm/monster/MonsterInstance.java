@@ -42,7 +42,7 @@ public class MonsterInstance extends BaseModel {
     private Monster monster;
 
     @Transient
-    private int monsterId;
+    private Long monsterId;
 
     public MonsterInstance() {
         this(66);

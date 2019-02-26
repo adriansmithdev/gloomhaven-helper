@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class MonsterInstanceRequestBody {
 
-    private int monsterId;
+    private Long monsterId;
     private boolean isMonsterIdDirty;
 
     private int currentHealth;
@@ -28,12 +28,14 @@ public class MonsterInstanceRequestBody {
         return monsterInstance;
     }
 
-    public void setMonsterId(int monsterId) {
+    public void setMonsterId(Long monsterId) {
         this.monsterId = monsterId;
+        this.isMonsterIdDirty = true;
     }
 
     public void setCurrentHealth(int currentHealth) {
         this.currentHealth = currentHealth;
+        this.isCurrentHealthDirty = true;
     }
 
     public boolean hasMonsterId() {
