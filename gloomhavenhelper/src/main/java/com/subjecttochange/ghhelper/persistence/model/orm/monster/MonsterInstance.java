@@ -68,7 +68,6 @@ public class MonsterInstance extends BaseModel {
     public void setMonster(Monster monster) {
         this.monster = monster;
         maxHealth = monster.getMaxHealth();
-        currentHealth = maxHealth;
     }
 
 }
