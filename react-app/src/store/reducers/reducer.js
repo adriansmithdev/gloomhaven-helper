@@ -1,6 +1,9 @@
 const initialState = {
   status: 'INITIAL',
-  room: {
+  session: {
+    room: {
+
+    }
   },
   notifications: []
 }
@@ -9,12 +12,20 @@ const reducer = (state = initialState, action) => {
 
   const newState = {
     ...state, 
-    room: { ...state.room }
+    session: { 
+      ...state.session, 
+      room: {
+        ...state.session.room
+      }
+    }
   };
 
   switch(action.type) {
     case 'SET_ROOM': 
-      newState.room = {...action.value};
+      newState.session.room = {...action.value};
+      break;
+    case 'SET_SESSION': 
+      newState.session = {...action.value};
       break;
     case 'ADD_ERROR':
       newState.notifications.push(action.error);
@@ -23,23 +34,23 @@ const reducer = (state = initialState, action) => {
       newState.status = action.value;
       break;
     case 'ADD_MONSTER':
-      newState.room.monsterInstances.push(action.monster);
+      newState.session.monsters.push(action.monster);
       break;
     case 'DELETE_MONSTER':
       // Filter out old monster.
-      const newMonsters = newState.room.monsterInstances.filter(monster =>
+      const newMonsters = newState.monsters.filter(monster =>
         monster.id !== action.monster.id
       );
 
       // Replace old state.
-      newState.room.monsterInstances = newMonsters;
+      newState.session.room.monsters = newMonsters;
       break;
     case 'UPDATE_MONSTER':
-      const targetIndex = newState.room.monsterInstances.findIndex(current => 
+      const targetIndex = newState.monsters.findIndex(current => 
         current.id === action.monster.id
       );
 
-      newState.room.monsterInstances.splice(targetIndex, 1, action.monster);
+      newState.session.monsters.splice(targetIndex, 1, action.monster);
       break;
     case 'CLEAR_ROOM':
       newState.room = {};

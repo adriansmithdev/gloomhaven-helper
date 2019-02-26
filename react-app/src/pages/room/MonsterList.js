@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import Monster from './Monster';
+import MonsterType from './MonsterType';
 
 import {addMonster} from './../../store/actions/actions';
 
@@ -19,28 +19,18 @@ class MonsterList extends Component {
     this.props.addMonster(this.props.room.hash, monsterName);
   }
 
-  sortMonsters() {
-    
+  generateTypes() {
+    const types = this.props.monsters.map(type => {
+      return <MonsterType type={type} />;
+    });
   }
 
   render() {
+    console.log(this.props);
     let monsterName = '';
     let idDisplayed = 1;
-    const monsters = this.props.room.monsterInstances
-      .sort((a, b) => {
-        return a.monster.name.localeCompare(b.monster.name);
-      })
-      .map((monster, index) => {
-          if (monsterName === monster.monster.name) {
-            idDisplayed += 1;
-            return <Monster instance={monster} key={monster.id} id={idDisplayed} isFirstElement={false}/>
-          }
-          monsterName = monster.monster.name;
-          idDisplayed = 1;
-          return <Monster instance={monster} key={monster.id} id={idDisplayed} isFirstElement={true}/>
-        }
-      );
-    const monsterTypes = this.props.room.monsterNames.map((monsterName, index) =>
+    
+    const monsterTypes = this.props.allMonsterNames.map((monsterName, index) =>
       <option value={monsterName} key={index}>{monsterName}</option>
     );
 
@@ -63,7 +53,7 @@ class MonsterList extends Component {
         </div>
 
         <ul>
-          {monsters}
+          {this.generateTypes()}
         </ul>
       </div>
     );
@@ -72,7 +62,7 @@ class MonsterList extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    room: state.room
+    ...state.session
   };
 }
 
