@@ -7,10 +7,13 @@ import lombok.NonNull;
 @Data
 public class MonsterInstanceResponseBody {
     @NonNull
+    private Long id;
+    @NonNull
     private int currentHealth;
 
     public static MonsterInstanceResponseBody create(MonsterInstance monsterInstance) {
         return new MonsterInstanceResponseBody(
+                monsterInstance.getId(),
                 monsterInstance.getCurrentHealth()
         );
     }

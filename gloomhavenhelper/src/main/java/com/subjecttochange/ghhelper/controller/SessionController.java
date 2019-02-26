@@ -59,16 +59,17 @@ public class SessionController {
     }
 
     private Collection<MonsterResponseBody> buildMonsterResponses(Room room) {
-        Map<String, MonsterResponseBody> namedMonsterBodies = new HashMap<>();
+        Map<Long, MonsterResponseBody> namedMonsterBodies = new HashMap<>();
+        List<Monster> monsters = monsterRepository.findAll();
+
+        for (Monster monster : monsters) {
+            namedMonsterBodies.put(monster.getId(), MonsterResponseBody.create(monster));
+        }
 
         for (MonsterInstance monsterInstance : room.getMonsterInstances()) {
             Monster monster = monsterInstance.getMonster();
 
-            if (!namedMonsterBodies.containsKey(monster.getName())) {
-                namedMonsterBodies.put(monster.getName(), MonsterResponseBody.create(monster));
-            }
-
-            namedMonsterBodies.get(monster.getName())
+            namedMonsterBodies.get(monster.getId())
                     .getMonsterInstances()
                     .add(MonsterInstanceResponseBody.create(monsterInstance));
         }
