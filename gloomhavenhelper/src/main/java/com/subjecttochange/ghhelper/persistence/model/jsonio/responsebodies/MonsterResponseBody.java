@@ -10,6 +10,8 @@ import java.util.List;
 @Data
 public class MonsterResponseBody {
     @NonNull
+    private Long id;
+    @NonNull
     private String name;
     @NonNull
     private int maxHealth;
@@ -20,6 +22,7 @@ public class MonsterResponseBody {
 
     public static MonsterResponseBody create(Monster monster) {
         return new MonsterResponseBody(
+                monster.getId(),
                 monster.getName(),
                 monster.getMaxHealth(),
                 monster.getMoveRange(),
