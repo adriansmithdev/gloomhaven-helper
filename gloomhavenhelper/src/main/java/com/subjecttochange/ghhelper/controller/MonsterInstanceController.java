@@ -89,8 +89,7 @@ public class MonsterInstanceController {
 
     @PutMapping("/monsterinstances")
     public MonsterInstanceResponseBody updateMonsterInstance(
-            @RequestParam(value = "hash") String hash,
-            @RequestParam(value = "id") Long id,
+            @RequestParam(value = "hash") String hash
             @Valid @RequestBody(required = false) MonsterInstanceRequestBody monsterInstanceRequest) {
         RoomMonsterComposite roomMonsterComposite = assembleMonsterInstanceDependencies(monsterInstanceRequest, hash);
         MonsterInstance monsterInstance = monsterInstanceRepository.findById(id)

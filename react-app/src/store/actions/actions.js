@@ -4,6 +4,7 @@ import {
   addError, setStatus, setRoom,
   pushMonster, replaceMonster, popMonster
  } from './storeActions';
+import { getSession } from './session';
 
 export const getRoom = function(hash) {
   return async (dispatch) => {
@@ -14,7 +15,6 @@ export const getRoom = function(hash) {
         toast.error('That room doesn\'t exist, please enter a valid room');
         return error.response.data;
       });
-    dispatch(setRoom(response.data));
     dispatch(setStatus('ROOM_FOUND'));
     return response.data;
   }
@@ -54,11 +54,11 @@ export const updateScenario = function(room) {
   };
 };
 
-export const addMonster = function(hash, monsterName) {
+export const addMonster = function(hash, monsterId) {
 
   return async dispatch => {
     const response = await axios.post(`http://localhost:5000/api/monsterinstances?hash=${hash}`, {
-      name: monsterName
+      monsterId: monsterId
     }).catch(function (error) {
       dispatch(addError(error.response.data));
       dispatch(setStatus('FAILED_TO_ADD_MONSTER'));
@@ -66,15 +66,16 @@ export const addMonster = function(hash, monsterName) {
       return error.response.data;
     });
 
-    dispatch(pushMonster(response.data));
+    dispatch(getSession(hash));
     dispatch(setStatus('ADDED_MONSTER'));
     return response.data;
   }
 };
 
 export const updateMonster = function(hash, monster) {
+  console.log(monster)
   return async dispatch => {
-    const response = await axios.put(`http://localhost:5000/api/monsterinstances?hash=${hash}`, monster)
+    const response = await axios.put(`http://localhost:5000/api/monsterinstances?hash=${hash}&id=${monster.id}`, monster)
     .catch(function (error) {
       dispatch(addError(error.response.data));
       dispatch(setStatus('FAILED_TO_UPDATE_MONSTER'));
@@ -82,9 +83,8 @@ export const updateMonster = function(hash, monster) {
       return error.response.data;
     });
 
-    dispatch(replaceMonster(response.data));
+    dispatch(getSession(hash));
     dispatch(setStatus('UPDATED_MONSTER'));
-    //dispatch(getRoom(hash));
     return response.data;
   }
 };
@@ -100,7 +100,7 @@ export const deleteMonster = function(hash, monster) {
       });
 
     dispatch(setStatus('DELETED_MONSTER'));
-    dispatch(popMonster(monster));
+    dispatch(getSession(hash));
     return response.data;
   }
 };

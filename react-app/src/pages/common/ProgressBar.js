@@ -31,12 +31,12 @@ const ProgressBar = (props) => {
   const barStyles = {
     position: 'absolute',
     backgroundColor: `hsl(${healthHue}, 100%, 35%)`,
-    background: `-moz-linear-gradient(top,
-        hsl(${healthHue}, 100%, 35%) 0%,
-        hsl(${healthHue}, 100%, 20%) 50%, 
-        hsl(${healthHue}, 100%, 15%) 51%, 
-        hsl(${healthHue}, 100%, 25%) 100%
-      )`,
+    background: `-webkit-linear-gradient(top,
+      hsl(${healthHue}, 100%, 35%) 0%,
+      hsl(${healthHue}, 100%, 20%) 50%, 
+      hsl(${healthHue}, 100%, 15%) 51%, 
+      hsl(${healthHue}, 100%, 25%) 100%
+    )`,
     height: (props.height || defaultHeight),
     width: `${healthPercent}%`,
     maxWidth: '100%',
