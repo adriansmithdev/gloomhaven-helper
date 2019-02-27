@@ -20,12 +20,13 @@ class MonsterList extends Component {
   }
 
   generateTypes() {
-    return this.props.monsters.map(type => 
-      <MonsterType type={type} />
+    return this.props.monsters.map(type =>
+      <MonsterType key={type.id} type={type} />
     );
   }
 
   render() {
+    console.log("THIS>PROPS");
     console.log(this.props);
     
     const monsterTypes = this.props.monsters.map((type, index) =>

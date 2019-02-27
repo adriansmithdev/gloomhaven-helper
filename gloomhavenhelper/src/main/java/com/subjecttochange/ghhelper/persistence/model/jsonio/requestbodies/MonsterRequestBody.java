@@ -22,7 +22,7 @@ public class MonsterRequestBody {
             monster.setMaxHealth(this.getMaxHealth());
         }
         if (this.hasMoveRange()) {
-            monster.setMoveRange(this.getMoveRange());
+            monster.setMovement(this.getMoveRange());
         }
 
         return monster;

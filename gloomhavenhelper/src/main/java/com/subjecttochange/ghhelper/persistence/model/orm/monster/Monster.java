@@ -22,9 +22,9 @@ public class Monster extends BaseModel {
     //private MonsterAction[] abilityDeck;
     //private MonsterAction[] abilityDeckDiscard;
     private int maxHealth;
-    private int moveRange;
-    //private int attackDamage;
-    //private int attackRange;
+    private int movement;
+    private int attack;
+    private int range;
     //private int maxHealthElite;
     //private int moveRangeElite;
     //private int attackDamageElite;
