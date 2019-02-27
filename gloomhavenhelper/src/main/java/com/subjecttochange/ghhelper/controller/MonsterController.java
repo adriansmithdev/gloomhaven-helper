@@ -53,7 +53,7 @@ public class MonsterController {
     @PostMapping("/monsters")
     @ResponseBody
     public MonsterResponseBody createMonster(@Valid @RequestBody(required = false) MonsterRequestBody monsterRequest) {
-        Monster monster = new Monster();
+        Monster monster = Monster.create("", 0);
         monsterRequest.updateMonster(monster);
         monster = monsterRepository.save(monster);
         return MonsterResponseBody.create(monster);

@@ -78,12 +78,11 @@ public class MonsterInstanceController {
     public MonsterInstanceResponseBody createMonsterInstance(@RequestParam(value = "hash") String hash,
                                                  @Valid @RequestBody(required = false) MonsterInstanceRequestBody monsterInstanceRequest) {
         RoomMonsterComposite roomMonsterComposite = assembleMonsterInstanceDependencies(monsterInstanceRequest, hash);
-        MonsterInstance monsterInstance = new MonsterInstance();
-        monsterInstanceRequest.updateMonsterInstance(
-                monsterInstance,
-                roomMonsterComposite.getMonster(),
-                roomMonsterComposite.getRoom()
+        MonsterInstance monsterInstance = MonsterInstance.create(
+                roomMonsterComposite.getRoom(),
+                roomMonsterComposite.getMonster()
         );
+        monsterInstanceRequest.updateMonsterInstance(monsterInstance, roomMonsterComposite.getMonster());
         monsterInstance = monsterInstanceRepository.save(monsterInstance);
         return MonsterInstanceResponseBody.create(monsterInstance);
     }
@@ -101,8 +100,7 @@ public class MonsterInstanceController {
 
         monsterInstanceRequest.updateMonsterInstance(
                 monsterInstance,
-                roomMonsterComposite.getMonster(),
-                roomMonsterComposite.getRoom()
+                roomMonsterComposite.getMonster()
         );
         monsterInstance = monsterInstanceRepository.save(monsterInstance);
         return MonsterInstanceResponseBody.create(monsterInstance);

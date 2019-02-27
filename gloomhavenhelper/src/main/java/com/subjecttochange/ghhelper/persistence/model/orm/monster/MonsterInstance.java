@@ -23,7 +23,6 @@ public class MonsterInstance extends BaseModel {
             initialValue = 1
     )
     private Long id;
-    private int maxHealth;
     private int currentHealth;
     //private StatusEffect[] activeStatusEffects;
     //private boolean isElite;
@@ -32,42 +31,27 @@ public class MonsterInstance extends BaseModel {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "room_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private Room room;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "monster_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Monster monster;
 
-    @Transient
-    private Long monsterId;
-
     public MonsterInstance() {
-        this(66);
+        super();
     }
 
-    public MonsterInstance(int maxHealth) {
-        this.maxHealth = maxHealth;
-        this.currentHealth = maxHealth;
+    public static MonsterInstance create(Room room, Monster monster) {
+        return MonsterInstance.create(monster.getMaxHealth(), room, monster);
     }
 
-    public MonsterInstance(int currentHealth, Room room, Monster monster) {
-        this.currentHealth = currentHealth;
-        this.room = room;
-        this.monster = monster;
-    }
-
-    @JsonProperty
-    public Monster getMonster() {
-        return monster;
-    }
-
-    @JsonIgnore
-    public void setMonster(Monster monster) {
-        this.monster = monster;
-        maxHealth = monster.getMaxHealth();
+    public static MonsterInstance create(int currentHealth, Room room, Monster monster) {
+        MonsterInstance monsterInstance = new MonsterInstance();
+        monsterInstance.setRoom(room);
+        monsterInstance.setMonster(monster);
+        monsterInstance.setCurrentHealth(currentHealth);
+        return monsterInstance;
     }
 
 }

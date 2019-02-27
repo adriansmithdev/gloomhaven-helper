@@ -10,11 +10,14 @@ public class MonsterInstanceResponseBody {
     private Long id;
     @NonNull
     private int currentHealth;
+    @NonNull
+    private Long monsterId;
 
     public static MonsterInstanceResponseBody create(MonsterInstance monsterInstance) {
         return new MonsterInstanceResponseBody(
                 monsterInstance.getId(),
-                monsterInstance.getCurrentHealth()
+                monsterInstance.getCurrentHealth(),
+                monsterInstance.getMonster().getId()
         );
     }
 }

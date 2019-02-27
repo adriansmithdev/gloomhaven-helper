@@ -14,16 +14,13 @@ public class MonsterInstanceRequestBody {
     private int currentHealth;
     private boolean isCurrentHealthDirty;
 
-    public MonsterInstance updateMonsterInstance(MonsterInstance monsterInstance, Monster monster, Room room) {
+    public MonsterInstance updateMonsterInstance(MonsterInstance monsterInstance, Monster monster) {
         if (this.hasMonsterId()) {
-            monsterInstance.setMonsterId(this.getMonsterId());
+            monsterInstance.setMonster(monster);
         }
         if (this.hasCurrentHealth()) {
             monsterInstance.setCurrentHealth(this.getCurrentHealth());
         }
-
-        monsterInstance.setMonster(monster);
-        monsterInstance.setRoom(room);
 
         return monsterInstance;
     }

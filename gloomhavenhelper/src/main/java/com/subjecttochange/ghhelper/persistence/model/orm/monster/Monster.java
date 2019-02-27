@@ -1,6 +1,7 @@
 package com.subjecttochange.ghhelper.persistence.model.orm.monster;
 
 import com.subjecttochange.ghhelper.persistence.model.orm.BaseModel;
+import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -30,17 +31,14 @@ public class Monster extends BaseModel {
     //private int attackRangeElite;
 
     public Monster() {
-        this("", 0);
+        super();
     }
 
-    public Monster(String name, int maxHealth) {
-        this.name = name;
-        this.maxHealth = maxHealth;
+    public static Monster create(String name, int maxHealth) {
+        Monster monster = new Monster();
+        monster.setName(name);
+        monster.setMaxHealth(maxHealth);
+        return monster;
     }
-
-    public String getName() {
-        return this.name;
-    }
-
 
 }

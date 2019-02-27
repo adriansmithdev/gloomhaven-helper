@@ -33,43 +33,29 @@ public class Room extends BaseModel {
     @SequenceGenerator(name = "room_generator", sequenceName = "room_sequence", initialValue = 1)
     private Long id;
 
-    @NotBlank
-    @Size(min = 3, max = 100)
     private String hash;
-
     private int scenarioNumber;
 
     @OrderBy("created_at")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "room")
     private List<MonsterInstance> monsterInstances = new ArrayList<>();
 
-    @Transient
-    private Set<String> monsterNames;
-
     public Room() {
         super();
     }
 
-    public Room(@NotBlank @Size(min = 3, max = 100) String hash, int scenarioNumber) {
-        super();
-        this.hash = hash;
-        this.scenarioNumber = scenarioNumber;
-    }
-
     public static Room createWithRandomHash() {
-        return new Room(RoomHashGenerator.newHash(), DEFAULT_SCENARIO_NUMBER);
+        return Room.createRoom(RoomHashGenerator.newHash(), DEFAULT_SCENARIO_NUMBER);
     }
 
     public static Room createWithHash(String hash) {
-        return new Room(hash, DEFAULT_SCENARIO_NUMBER);
+        return Room.createRoom(hash, DEFAULT_SCENARIO_NUMBER);
     }
 
     public static Room createRoom(String hash, int scenarioNumber) {
-        return new Room(hash, scenarioNumber);
-    }
-
-    public void buildMonsterNameList(List<Monster> monsters) {
-        monsterNames = new TreeSet<>();
-        monsterNames = monsters.stream().map(Monster::getName).collect(Collectors.toSet());
+        Room room = new Room();
+        room.setHash(hash);
+        room.setScenarioNumber(scenarioNumber);
+        return room;
     }
 }
