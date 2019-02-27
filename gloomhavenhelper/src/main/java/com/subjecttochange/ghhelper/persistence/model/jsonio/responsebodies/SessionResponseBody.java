@@ -17,14 +17,11 @@ public class SessionResponseBody {
     private RoomResponseBody room;
     @NonNull
     private List<MonsterResponseBody> monsters;
-    @NonNull
-    private Set<String> allMonsterNames;
 
     public static SessionResponseBody create(RoomResponseBody room, List<MonsterResponseBody> monsters) {
         return new SessionResponseBody(
                 room,
-                monsters,
-                new TreeSet<>(RepoHelper.findAllMonsterNames())
+                monsters
         );
     }
 }

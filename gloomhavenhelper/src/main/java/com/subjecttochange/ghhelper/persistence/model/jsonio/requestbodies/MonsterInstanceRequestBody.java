@@ -8,32 +8,31 @@ import lombok.Data;
 @Data
 public class MonsterInstanceRequestBody {
 
-    private int monsterId;
+    private Long monsterId;
     private boolean isMonsterIdDirty;
 
     private int currentHealth;
     private boolean isCurrentHealthDirty;
 
-    public MonsterInstance updateMonsterInstance(MonsterInstance monsterInstance, Monster monster, Room room) {
+    public MonsterInstance updateMonsterInstance(MonsterInstance monsterInstance, Monster monster) {
         if (this.hasMonsterId()) {
-            monsterInstance.setMonsterId(this.getMonsterId());
+            monsterInstance.setMonster(monster);
         }
         if (this.hasCurrentHealth()) {
             monsterInstance.setCurrentHealth(this.getCurrentHealth());
         }
 
-        monsterInstance.setMonster(monster);
-        monsterInstance.setRoom(room);
-
         return monsterInstance;
     }
 
-    public void setMonsterId(int monsterId) {
+    public void setMonsterId(Long monsterId) {
         this.monsterId = monsterId;
+        this.isMonsterIdDirty = true;
     }
 
     public void setCurrentHealth(int currentHealth) {
         this.currentHealth = currentHealth;
+        this.isCurrentHealthDirty = true;
     }
 
     public boolean hasMonsterId() {

@@ -23,7 +23,7 @@ class Routes extends Component {
 
 const mapStateToProps = (state) => {
   return  {
-    roomHash: state.room.hash
+    roomHash: state.session.room.hash
   };
 }
 

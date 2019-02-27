@@ -42,9 +42,9 @@ public class DataLoader implements ApplicationRunner {
         if (isRepoEmpty(monsterRepository)) {
             System.out.println("SEEDING: Monsters");
             List<Monster> monsters = new ArrayList<>();
-            monsters.add(new Monster("Living Bones", 10));
-            monsters.add(new Monster("Dancing Bones", 1));
-            monsters.add(new Monster("Dead Bones", 0));
+            monsters.add(Monster.create("Living Bones", 10));
+            monsters.add(Monster.create("Dancing Bones", 1));
+            monsters.add(Monster.create("Dead Bones", 0));
             monsterRepository.saveAll(monsters);
         }
     }
@@ -71,12 +71,12 @@ public class DataLoader implements ApplicationRunner {
             Room room = roomRepository.findByHash("ABCDEF")
                     .orElseThrow(() -> new ResourceNotFoundException("Could not find room"));
 
-            instances.add(new MonsterInstance( 10, room, monster));
+            instances.add(MonsterInstance.create( 10, room, monster));
 
             room = roomRepository.findByHash("OOMMOO")
                     .orElseThrow(() -> new ResourceNotFoundException("Could not find room"));
 
-            instances.add(new MonsterInstance(5, room, monster));
+            instances.add(MonsterInstance.create(5, room, monster));
 
             monsterInstanceRepository.saveAll(instances);
         }

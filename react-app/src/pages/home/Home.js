@@ -1,9 +1,7 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {createRoom, getRoom} from './../../store/actions/actions';
-import {ToastContainer} from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
-
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { createRoom } from './../../store/actions/actions';
+import { getSession } from './../../store/actions/session';
 
 class Home extends Component {
 
@@ -14,8 +12,9 @@ class Home extends Component {
   constructor(props) {
     super(props);
 
-    this.joinRoom = this.joinRoom.bind(this);
+    
     this.setShowHash = this.setShowHash.bind(this);
+    this.joinRoom = this.joinRoom.bind(this);
   }
 
   renderJoinRoomBtn() {
@@ -73,8 +72,6 @@ class Home extends Component {
             {this.state.showHashInput ? this.renderHashInput() : this.renderJoinRoomBtn()}
             </span>
 
-          <ToastContainer/>
-
         </div>
       </div>
     );
@@ -83,18 +80,20 @@ class Home extends Component {
 
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    ...state
+  };
 }
 
 const mapDispachToProps = (dispatch, ownProps) => {
   const rerouteToRoomPage = (response) => {
     console.log(response);
-    ownProps.history.push(`/rooms/${response.data.hash}`);
+    ownProps.history.push(`/rooms/${response.data.hash}/`);
   }
 
   return {
     createRoom: () => dispatch(createRoom(rerouteToRoomPage)),
-    getRoom: (hash) => dispatch(getRoom(hash))
+    getSession: (hash) => dispatch(getSession(hash))
   }
 }
 

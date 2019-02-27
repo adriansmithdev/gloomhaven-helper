@@ -5,7 +5,10 @@ import MonsterList from './MonsterList';
 import LoadingScreen from './../common/LoadingScreen';
 import { Redirect } from 'react-router';
 
-import { getRoom, updateScenario, setStatus, clearRoom } from './../../store/actions/actions'
+import { getSession } from './../../store/actions/session';
+import { updateScenario } from './../../store/actions/actions';
+import { clearRoom, setStatus } from './../../store/actions/storeActions';
+
  
 class Room extends Component {
 
@@ -17,7 +20,7 @@ class Room extends Component {
 
   updateScenario(event) {
     // Create new object for sending to server.
-    const newRoom = {...this.props.room, scenarioNumber: event.target.value};
+    const newRoom = {...this.props.session.room, scenarioNumber: event.target.value};
 
     console.log(newRoom);
     this.props.updateScenario(newRoom);
@@ -25,20 +28,18 @@ class Room extends Component {
 
   // If room not in store, attempt to pull from hash.
   componentWillMount() {
-    if(this.props.room.hash === undefined) {
-      this.props.getRoom(this.props.match.params.hash);
-    }
+    this.props.getSession(this.props.match.params.hash);
   }
 
 
   render() {
 
-    if(this.props.status === "ROOM_NOT_FOUND") {
+    if(this.props.status === "SESSION_NOT_FOUND") {
       this.props.setStatus("INITIAL");
       return <Redirect to="/" />
     }
     
-    return (this.props.room.hash === undefined) ? (
+    return (this.props.session.room.hash === undefined) ? (
       <LoadingScreen /> 
       ) : (
 
@@ -49,7 +50,7 @@ class Room extends Component {
               <h1 className="title themed-font has-text-light">Gloomhaven Helper</h1>
             </div>
             <div className="navbar-item">
-              <strong className="has-text-light">Room: {this.props.room.hash}</strong>
+              <strong className="has-text-light">Room: {this.props.session.room.hash}</strong>
 
             </div>
           </div>
@@ -61,7 +62,7 @@ class Room extends Component {
                 </div>
                 <div className="control is-expanded">
                   <input className="input input-short" type="number" min="1" max="150"
-                    defaultValue={this.props.room.scenarioNumber} onChange={this.updateScenario}
+                    defaultValue={this.props.session.room.scenarioNumber} onChange={this.updateScenario}
                   />
                 </div>
               </div>
@@ -92,7 +93,7 @@ const mapStateToProps = (state) => {
 const mapDispachToProps = (dispatch) => {
   return {
     setStatus: (newStatus) => dispatch(setStatus(newStatus)),
-    getRoom: (hash) => dispatch(getRoom(hash)),
+    getSession: (hash) => dispatch(getSession(hash)),
     updateScenario: (room) => dispatch(updateScenario(room)),
     clearRoom: () => dispatch(clearRoom())
   };
