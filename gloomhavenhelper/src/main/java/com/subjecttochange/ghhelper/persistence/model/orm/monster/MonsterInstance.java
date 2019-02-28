@@ -10,6 +10,10 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -24,19 +28,27 @@ public class MonsterInstance extends BaseModel {
     )
     private Long id;
     private int currentHealth;
-    //private StatusEffect[] activeStatusEffects;
-    //private boolean isElite;
-    //private boolean takenTurn;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "status_active",
+            joinColumns = @JoinColumn(name = "monsterinstance_id"),
+            inverseJoinColumns = @JoinColumn(name = "statuseffect_id"))
+    @JsonIgnore
+    private Set<StatusEffect> statuses = new HashSet<>();
+    private Boolean isElite = false;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "room_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Room room;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "monster_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Monster monster;
+    @Transient
+    private Long monsterId;
 
     public MonsterInstance() {
         super();
@@ -51,7 +63,12 @@ public class MonsterInstance extends BaseModel {
         monsterInstance.setRoom(room);
         monsterInstance.setMonster(monster);
         monsterInstance.setCurrentHealth(currentHealth);
+        monsterInstance.setMonsterId(monster.getId());
         return monsterInstance;
     }
 
+    @JsonProperty(required = true)
+    public void setMonsterId(Long monsterId) {
+        this.monsterId = monsterId;
+    }
 }

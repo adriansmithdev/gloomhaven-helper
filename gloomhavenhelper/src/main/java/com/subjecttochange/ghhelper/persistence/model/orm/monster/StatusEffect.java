@@ -5,10 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Data
@@ -23,6 +21,9 @@ public class StatusEffect {
     private Long id;
     private String name;
     private String tooltip;
+    @ManyToMany(mappedBy = "statuses")
+    @JsonIgnore
+    private Set<MonsterInstance> monsterInstances;
 
     public StatusEffect() {
         super();
