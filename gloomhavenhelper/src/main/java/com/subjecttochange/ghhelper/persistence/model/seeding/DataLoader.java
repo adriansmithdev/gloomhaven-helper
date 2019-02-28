@@ -1,6 +1,7 @@
 package com.subjecttochange.ghhelper.persistence.model.seeding;
 
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
+import com.subjecttochange.ghhelper.persistence.model.helpers.JsonFileParser;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
@@ -46,11 +47,8 @@ public class DataLoader implements ApplicationRunner {
     private void seedMonsterRepository() {
         if (isRepoEmpty(monsterRepository)) {
             System.out.println("SEEDING: Monsters");
-            List<Monster> monsters = new ArrayList<>();
-            monsters.add(Monster.create("Living Bones", 10));
-            monsters.add(Monster.create("Dancing Bones", 1));
-            monsters.add(Monster.create("Dead Bones", 0));
-            monsterRepository.saveAll(monsters);
+            JsonFileParser monsterSeed = new JsonFileParser("monsterseed.json");
+            monsterRepository.saveAll(monsterSeed.getMonsters());
         }
     }
 
@@ -88,7 +86,7 @@ public class DataLoader implements ApplicationRunner {
             System.out.println("SEEDING: Monster Instances");
 
             List<MonsterInstance> instances = new ArrayList<>();
-            Monster monster = monsterRepository.findByName("Living Bones")
+            Monster monster = monsterRepository.findByName("Lurker")
                     .orElseThrow(() -> new ResourceNotFoundException("Could not find monster"));
 
             Room room = roomRepository.findByHash("ABCDEF")
