@@ -19,10 +19,10 @@ public class MonsterRequestBody {
             monster.setName(this.getName());
         }
         if (this.hasMaxHealth()) {
-            monster.setMaxHealth(this.getMaxHealth());
+            monster.setHealth(this.getMaxHealth());
         }
         if (this.hasMoveRange()) {
-            monster.setMoveRange(this.getMoveRange());
+            monster.setMove(this.getMoveRange());
         }
 
         return monster;

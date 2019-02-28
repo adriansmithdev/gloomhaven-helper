@@ -24,8 +24,8 @@ public class MonsterResponseBody {
         return new MonsterResponseBody(
                 monster.getId(),
                 monster.getName(),
-                monster.getMaxHealth(),
-                monster.getMoveRange(),
+                monster.getHealth(),
+                monster.getRange(),
                 new ArrayList<>()
         );
     }

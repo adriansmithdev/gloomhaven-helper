@@ -43,7 +43,7 @@ public class MonsterInstance extends BaseModel {
     }
 
     public static MonsterInstance create(Room room, Monster monster) {
-        return MonsterInstance.create(monster.getMaxHealth(), room, monster);
+        return MonsterInstance.create(monster.getHealth(), room, monster);
     }
 
     public static MonsterInstance create(int currentHealth, Room room, Monster monster) {
