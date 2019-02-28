@@ -4,9 +4,11 @@ import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
+import com.subjecttochange.ghhelper.persistence.model.orm.monster.StatusEffect;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterInstanceRepository;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
+import com.subjecttochange.ghhelper.persistence.repository.StatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -22,19 +24,22 @@ public class DataLoader implements ApplicationRunner {
     private MonsterRepository monsterRepository;
     private RoomRepository roomRepository;
     private MonsterInstanceRepository monsterInstanceRepository;
+    private StatusRepository statusRepository;
 
     @Autowired
     public DataLoader(MonsterRepository monsterRepository, RoomRepository roomRepository,
-                      MonsterInstanceRepository monsterInstanceRepository) {
+                      MonsterInstanceRepository monsterInstanceRepository, StatusRepository statusRepository) {
         this.monsterRepository = monsterRepository;
         this.roomRepository = roomRepository;
         this.monsterInstanceRepository = monsterInstanceRepository;
+        this.statusRepository = statusRepository;
     }
 
     @Override
     public void run(ApplicationArguments args) {
         seedMonsterRepository();
         seedRoomRepository();
+        seedStatusRepository();
         seedMonsterInstanceRepository();
     }
 
@@ -57,6 +62,24 @@ public class DataLoader implements ApplicationRunner {
             rooms.add(Room.createWithHash("ZYXWVU"));
             rooms.add(Room.createWithHash("OOMMOO"));
             roomRepository.saveAll(rooms);
+        }
+    }
+
+    private void seedStatusRepository() {
+        if (isRepoEmpty(statusRepository)) {
+            System.out.println("SEEDING: Statuses");
+            List<StatusEffect> statusEffects = new ArrayList<>();
+            statusEffects.add(StatusEffect.create("Poison", "+1 Attack vs figures. Heal removes poison and heal has no other effect."));
+            statusEffects.add(StatusEffect.create("Wound", "Suffers 1 damage at the star of each turn. Heals removes and heals continues normal."));
+            statusEffects.add(StatusEffect.create("Immobilize", "Cannot perform move abilities. Removed at end of its next turn."));
+            statusEffects.add(StatusEffect.create("Disarm", "Cannot perform any attack abilities. Removed at end of its next turn."));
+            statusEffects.add(StatusEffect.create("Stun", "Cannot perform any abilities/items. Must play cards like normal. Removed at end of next turn."));
+            statusEffects.add(StatusEffect.create("Muddle", "Gains disadvantage on all attacks. Removed at end of next turn."));
+            statusEffects.add(StatusEffect.create("Curse", "Must shuffle curse into attack modifier deck."));
+            statusEffects.add(StatusEffect.create("Invisible", "Cannot be focused or targeted by enemy. Removed at end of next turn."));
+            statusEffects.add(StatusEffect.create("Strengthen", "Figure gains advantage on all of its attacks. Removed at end of next turn."));
+            statusEffects.add(StatusEffect.create("Bless", "Must shuffle bless into attack modifier deck."));
+            statusRepository.saveAll(statusEffects);
         }
     }
 

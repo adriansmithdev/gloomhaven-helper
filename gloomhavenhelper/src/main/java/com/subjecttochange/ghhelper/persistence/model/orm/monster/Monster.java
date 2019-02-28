@@ -21,8 +21,6 @@ public class Monster extends BaseModel {
     private String name;
     private String attributes;
     private String eliteAttributes;
-    //private MonsterAction[] abilityDeck;
-    //private MonsterAction[] abilityDeckDiscard;
     private int level;
     private int health;
     private int move;
