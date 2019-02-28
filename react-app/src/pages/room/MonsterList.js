@@ -15,23 +15,22 @@ class MonsterList extends Component {
   }
 
   addMonster() {
-    const monsterName = this.monsterSelect.current.value;
-    this.props.addMonster(this.props.room.hash, monsterName);
+    const monsterId = this.monsterSelect.current.value;
+    this.props.addMonster(this.props.room.hash, monsterId);
   }
 
   generateTypes() {
-    const types = this.props.monsters.map(type => {
-      return <MonsterType type={type} />;
-    });
+    return this.props.monsters.map(type =>
+      <MonsterType key={type.id} type={type} />
+    );
   }
 
   render() {
+    console.log("THIS>PROPS");
     console.log(this.props);
-    let monsterName = '';
-    let idDisplayed = 1;
     
-    const monsterTypes = this.props.allMonsterNames.map((monsterName, index) =>
-      <option value={monsterName} key={index}>{monsterName}</option>
+    const monsterTypes = this.props.monsters.map((type, index) =>
+      <option value={type.id} key={index}>{type.name}</option>
     );
 
     return (
@@ -68,7 +67,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addMonster: (hash, monsterName) => dispatch(addMonster(hash, monsterName))
+    addMonster: (hash, monsterId) => dispatch(addMonster(hash, monsterId))
   };
 }
 

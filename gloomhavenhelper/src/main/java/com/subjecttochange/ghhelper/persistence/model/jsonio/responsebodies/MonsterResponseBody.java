@@ -14,9 +14,13 @@ public class MonsterResponseBody {
     @NonNull
     private String name;
     @NonNull
-    private int maxHealth;
+    private int health;
     @NonNull
-    private int moveRange;
+    private int range;
+    @NonNull
+    private int attack;
+    @NonNull
+    private int move;
     @NonNull
     private List<MonsterInstanceResponseBody> monsterInstances;
 
@@ -26,6 +30,8 @@ public class MonsterResponseBody {
                 monster.getName(),
                 monster.getHealth(),
                 monster.getRange(),
+                monster.getAttack(),
+                monster.getMove(),
                 new ArrayList<>()
         );
     }

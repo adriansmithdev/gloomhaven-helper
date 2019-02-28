@@ -42,15 +42,14 @@ class Monster extends Component {
   render() {
     return (
       <>
-        {this.props.isFirstElement ? <MonsterInfo monster={this.props.instance.monster}/> : ''}
         <li className="columns" key={this.props.key}>
-          <div className="column has-text-light">Encountered #: {this.props.id}</div>
+          <div className="column has-text-light">#: {this.props.index}</div>
 
           <div className="column">
             <ProgressBar
               title="HP"
               current={this.props.instance.currentHealth}
-              max={this.props.instance.maxHealth}
+              max={this.props.type.maxHealth}
             />
 
           </div>
@@ -73,7 +72,7 @@ class Monster extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    hash: state.room.hash
+    hash: state.session.room.hash
   };
 }
 
