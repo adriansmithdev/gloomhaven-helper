@@ -23,7 +23,7 @@ public class Monster extends BaseModel {
     private String eliteAttributes;
     private int level;
     private int health;
-    private int move;
+    private int movement;
     private int attack;
     private int range;
     private int eliteHealth;
@@ -50,7 +50,7 @@ public class Monster extends BaseModel {
         monster.setHealth(levelStats.getAsJsonObject("normal").get("health").getAsInt());
         monster.setEliteHealth(levelStats.getAsJsonObject("elite").get("health").getAsInt());
 
-        monster.setMove(levelStats.getAsJsonObject("normal").get("move").getAsInt());
+        monster.setMovement(levelStats.getAsJsonObject("normal").get("move").getAsInt());
         monster.setEliteMove(levelStats.getAsJsonObject("elite").get("move").getAsInt());
 
         monster.setAttack(levelStats.getAsJsonObject("normal").get("attack").getAsInt());

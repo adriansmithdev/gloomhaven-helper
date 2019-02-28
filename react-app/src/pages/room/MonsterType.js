@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Monster from './Monster';
+import MonsterInfo from "./MonsterInfo";
 
 class MonsterType extends Component{
 
@@ -13,9 +14,14 @@ class MonsterType extends Component{
   render() {
     return (
       <>
+        {this.props.type.monsterInstances.length !== 0 ? this.generateMonsterInfoHeader() : ''}
         {this.generateMonsterInstances()}
       </>
     );
+  }
+
+  generateMonsterInfoHeader() {
+    return <MonsterInfo monster={this.props.type}/>;
   }
 }
 

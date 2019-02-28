@@ -20,7 +20,7 @@ public class MonsterResponseBody {
     @NonNull
     private int attack;
     @NonNull
-    private int move;
+    private int movement;
     @NonNull
     private List<MonsterInstanceResponseBody> monsterInstances;
 
@@ -31,7 +31,7 @@ public class MonsterResponseBody {
                 monster.getHealth(),
                 monster.getRange(),
                 monster.getAttack(),
-                monster.getMove(),
+                monster.getMovement(),
                 new ArrayList<>()
         );
     }
