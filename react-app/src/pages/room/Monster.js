@@ -30,7 +30,6 @@ class Monster extends Component {
       ...this.props.instance,
       currentHealth: newHealth
     }
-    console.log(newMonster);
     this.props.updateMonster(this.props.hash, newMonster);
   }
 
