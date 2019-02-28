@@ -40,6 +40,7 @@ const ProgressBar = (props) => {
     height: (props.height || defaultHeight),
     width: `${healthPercent}%`,
     maxWidth: '100%',
+    transition: 'background 0.5s, width 0.1s'
 
   }
 
