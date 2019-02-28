@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createRoom } from './../../store/actions/actions';
 import { getSession } from './../../store/actions/session';
+import { clearSession } from './../../store/actions/storeActions';
 
 class Home extends Component {
 
@@ -49,6 +50,7 @@ class Home extends Component {
   }
 
   joinRoom(event) {
+    this.props.clearSession();
     this.props.history.push(`/rooms/${event.target.value}`);
     this.setState({showHashInput: false})
   }
@@ -92,7 +94,8 @@ const mapDispachToProps = (dispatch, ownProps) => {
 
   return {
     createRoom: () => dispatch(createRoom(rerouteToRoomPage)),
-    getSession: (hash) => dispatch(getSession(hash))
+    getSession: (hash) => dispatch(getSession(hash)),
+    clearSession: () => dispatch(clearSession)
   }
 }
 

@@ -30,7 +30,6 @@ export const createRoom = function(callback) {
         toast.error('There was an error trying to create that room, please try again later');
         return error.response.data;
       });
-    dispatch(getSession(response.data.hash));
     dispatch(setStatus('ROOM_FOUND'));
     callback(response);
     return response.data;

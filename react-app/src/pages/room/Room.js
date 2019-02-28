@@ -7,7 +7,7 @@ import { Redirect } from 'react-router';
 
 import { getSession } from './../../store/actions/session';
 import { updateScenario } from './../../store/actions/actions';
-import { clearRoom, setStatus } from './../../store/actions/storeActions';
+import { setStatus } from './../../store/actions/storeActions';
 
  
 class Room extends Component {
@@ -71,8 +71,7 @@ class Room extends Component {
         <MonsterList />
 
         <span className="input-group-btn">
-          <Link className="button is-dark is-large themed-font m-2" to={"/"}
-            onClick={this.props.clearRoom}>
+          <Link className="button is-dark is-large themed-font m-2" to={"/"}>
             Leave Room
           </Link>
         </span>
@@ -93,8 +92,7 @@ const mapDispachToProps = (dispatch) => {
   return {
     setStatus: (newStatus) => dispatch(setStatus(newStatus)),
     getSession: (hash) => dispatch(getSession(hash)),
-    updateScenario: (room) => dispatch(updateScenario(room)),
-    clearRoom: () => dispatch(clearRoom())
+    updateScenario: (room) => dispatch(updateScenario(room))
   };
 }
 

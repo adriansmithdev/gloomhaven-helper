@@ -10,7 +10,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
 
-  const newState = {
+  let newState = {
     ...state, 
     session: { 
       ...state.session, 
@@ -52,8 +52,8 @@ const reducer = (state = initialState, action) => {
 
       newState.session.monsters.splice(targetIndex, 1, action.monster);
       break;
-    case 'CLEAR_ROOM':
-      newState.room = {};
+    case 'CLEAR_SESSION':
+      newState = initialState;
       break;
     default: 
       break;
