@@ -47,7 +47,7 @@ class Monster extends Component {
             <ProgressBar
               title="HP"
               current={this.props.instance.currentHealth}
-              max={this.props.type.maxHealth}
+              max={this.props.type.health}
             />
 
           </div>
