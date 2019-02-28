@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {deleteMonster, updateMonster} from "../../store/actions/actions";
 import ProgressBar from './../common/ProgressBar';
-import MonsterInfo from "./MonsterInfo";
 
 class Monster extends Component {
 
