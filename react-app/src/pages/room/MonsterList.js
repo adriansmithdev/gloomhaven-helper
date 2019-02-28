@@ -26,8 +26,6 @@ class MonsterList extends Component {
   }
 
   render() {
-    console.log("THIS>PROPS");
-    console.log(this.props);
     
     const monsterTypes = this.props.monsters.map((type, index) =>
       <option value={type.id} key={index}>{type.name}</option>

@@ -87,7 +87,6 @@ const mapStateToProps = (state) => {
 
 const mapDispachToProps = (dispatch, ownProps) => {
   const rerouteToRoomPage = (response) => {
-    console.log(response);
     ownProps.history.push(`/rooms/${response.data.hash}/`);
   }
 

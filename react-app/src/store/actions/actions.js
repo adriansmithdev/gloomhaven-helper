@@ -73,7 +73,6 @@ export const addMonster = function(hash, monsterId) {
 };
 
 export const updateMonster = function(hash, monster) {
-  console.log(monster)
   return async dispatch => {
     const response = await axios.put(`http://localhost:5000/api/monsterinstances?hash=${hash}&id=${monster.id}`, monster)
     .catch(function (error) {

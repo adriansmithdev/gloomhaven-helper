@@ -22,7 +22,6 @@ class Room extends Component {
     // Create new object for sending to server.
     const newRoom = {...this.props.session.room, scenarioNumber: event.target.value};
 
-    console.log(newRoom);
     this.props.updateScenario(newRoom);
   }
 

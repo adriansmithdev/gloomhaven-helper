@@ -11,7 +11,6 @@ export const getSession = function(hash) {
       toast.error('That room doesn\'t exist, please enter a valid room');
       return error.response.data;
     });
-    console.log(response);
     dispatch(setSession(response.data.content[0]));
     dispatch(setStatus('ROOM_FOUND'));
     return response.data;
