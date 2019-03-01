@@ -1,10 +1,13 @@
 package com.subjecttochange.ghhelper.persistence.model.orm.monster;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.subjecttochange.ghhelper.persistence.model.orm.BaseModel;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @Data
@@ -18,8 +21,8 @@ public class Monster extends BaseModel {
     )
     private Long id;
     private String name;
-    private String attributes;
-    private String eliteAttributes;
+    private ArrayList<String> attributes;
+    private ArrayList<String> eliteAttributes;
     private Integer level;
     private Integer health;
     private Integer movement;
@@ -58,8 +61,10 @@ public class Monster extends BaseModel {
         monster.setRange(levelStats.getAsJsonObject("normal").get("range").getAsInt());
         monster.setEliteRange(levelStats.getAsJsonObject("elite").get("range").getAsInt());
 
-        //monster.setAttributes(levelStats.getAsJsonObject("normal").get("attributes").getAsString());
-        //monster.setEliteAttributes(levelStats.getAsJsonObject("elite").get("attributes").getAsString());
+        monster.setAttributes(new ArrayList<>());
+        monster.addAttributes(levelStats.getAsJsonObject("normal").get("attributes").getAsJsonArray());
+        monster.setEliteAttributes(new ArrayList<>());
+        monster.addEliteAttributes(levelStats.getAsJsonObject("elite").get("attributes").getAsJsonArray());
         System.out.println(monster.toString());
 
         return monster;
@@ -80,4 +85,16 @@ public class Monster extends BaseModel {
         setEliteHealth(monsterRequest.getEliteHealth());
         return this;
     }
+    private void addAttributes(JsonArray attributesArray) {
+        for (JsonElement attribute : attributesArray) {
+            attributes.add(attribute.getAsString());
+        }
+    }
+
+    private void addEliteAttributes(JsonArray attributesArray) {
+        for (JsonElement attribute : attributesArray) {
+            eliteAttributes.add(attribute.getAsString());
+        }
+    }
+
 }
