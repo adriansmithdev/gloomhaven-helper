@@ -53,7 +53,7 @@ public class MonsterInstanceController {
         } else {
             MonsterInstance monsterInstance = monsterInstanceRepository.findById(id).orElseThrow(() ->
                     new ResourceNotFoundException(NOT_FOUND_INSTANCE + id));
-            checkHashMatchesGiven(monsterInstance, hash, id);
+            MonsterInstance.checkHashMatchesGiven(monsterInstance, hash, id);
             return new PageImpl<>(Collections.singletonList(monsterInstance));
         }
     }
@@ -79,7 +79,7 @@ public class MonsterInstanceController {
         Monster monster = monsterRepository.findById(request.getMonsterId())
                 .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_MONSTER + request.getMonsterId()));
 
-        checkHashMatchesGiven(monsterInstance, hash, id);
+        MonsterInstance.checkHashMatchesGiven(monsterInstance, hash, id);
 
         monsterInstance.setMonster(monster);
         monsterInstance.setCurrentHealth(request.getCurrentHealth());
@@ -92,15 +92,10 @@ public class MonsterInstanceController {
                                                    @RequestParam(value = "id") Long id) {
         MonsterInstance monsterInstance = monsterInstanceRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_MONSTER + id));
-        checkHashMatchesGiven(monsterInstance, hash, id);
+        MonsterInstance.checkHashMatchesGiven(monsterInstance, hash, id);
 
         monsterInstanceRepository.delete(monsterInstance);
         return ResponseEntity.ok().build();
     }
 
-    private void checkHashMatchesGiven(MonsterInstance monsterInstance, String hash, Long id) {
-        if (!monsterInstance.getRoom().getHash().equals(hash)) {
-            throw new ResourceNotFoundException("Wrong hash for id " + id);
-        }
-    }
 }

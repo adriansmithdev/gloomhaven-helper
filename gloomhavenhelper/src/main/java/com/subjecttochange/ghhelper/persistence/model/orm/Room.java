@@ -34,7 +34,7 @@ public class Room extends BaseModel {
     private Long id;
 
     private String hash;
-    private int scenarioNumber;
+    private Integer scenarioNumber;
 
     @OrderBy("created_at")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "room")
@@ -52,7 +52,7 @@ public class Room extends BaseModel {
         return Room.createRoom(hash, DEFAULT_SCENARIO_NUMBER);
     }
 
-    public static Room createRoom(String hash, int scenarioNumber) {
+    public static Room createRoom(String hash, Integer scenarioNumber) {
         Room room = new Room();
         room.setHash(hash);
         room.setScenarioNumber(scenarioNumber);

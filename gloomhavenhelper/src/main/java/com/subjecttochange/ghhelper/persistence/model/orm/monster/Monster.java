@@ -21,21 +21,21 @@ public class Monster extends BaseModel {
     private String name;
     private String attributes;
     private String eliteAttributes;
-    private int level;
-    private int health;
-    private int movement;
-    private int attack;
-    private int range;
-    private int eliteHealth;
-    private int eliteMove;
-    private int eliteAttack;
-    private int eliteRange;
+    private Integer level;
+    private Integer health;
+    private Integer movement;
+    private Integer attack;
+    private Integer range;
+    private Integer eliteHealth;
+    private Integer eliteMove;
+    private Integer eliteAttack;
+    private Integer eliteRange;
 
     public Monster() {
         super();
     }
 
-    public static Monster create(String name, int maxHealth) {
+    public static Monster create(String name, Integer maxHealth) {
         Monster monster = new Monster();
         monster.setName(name);
         monster.setHealth(maxHealth);
