@@ -1,14 +1,9 @@
 package com.subjecttochange.ghhelper.controller;
 
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
-import com.subjecttochange.ghhelper.persistence.model.jsonio.requestbodies.MonsterRequestBody;
-import com.subjecttochange.ghhelper.persistence.model.jsonio.requestbodies.RoomRequestBody;
-import com.subjecttochange.ghhelper.persistence.model.jsonio.responsebodies.MonsterResponseBody;
-import com.subjecttochange.ghhelper.persistence.model.jsonio.responsebodies.RoomResponseBody;
-import com.subjecttochange.ghhelper.persistence.model.orm.Room;
+import com.subjecttochange.ghhelper.persistence.model.responsebodies.MonsterResponseBody;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
-import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -52,9 +47,9 @@ public class MonsterController {
 
     @PostMapping("/monsters")
     @ResponseBody
-    public MonsterResponseBody createMonster(@Valid @RequestBody(required = false) MonsterRequestBody monsterRequest) {
+    public MonsterResponseBody createMonster(@Valid @RequestBody(required = false) Monster monsterRequest) {
         Monster monster = Monster.create("", 0);
-        monsterRequest.updateMonster(monster);
+        monster = monster.updateMonster(monsterRequest);
         monster = monsterRepository.save(monster);
         return MonsterResponseBody.create(monster);
     }
@@ -62,9 +57,9 @@ public class MonsterController {
     @PutMapping("/monsters")
     @ResponseBody
     public MonsterResponseBody updateMonster(@RequestParam(value = "id") Long id,
-                                       @Valid @RequestBody(required = false) MonsterRequestBody monsterRequest) {
+                                       @Valid @RequestBody(required = false) Monster monsterRequest) {
         Monster monster = monsterRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + id));
-        monsterRequest.updateMonster(monster);
+        monster = monster.updateMonster(monster);
         monster = monsterRepository.save(monster);
         return MonsterResponseBody.create(monster);
     }

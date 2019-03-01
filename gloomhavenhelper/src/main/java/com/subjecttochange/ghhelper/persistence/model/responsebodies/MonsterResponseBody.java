@@ -1,4 +1,4 @@
-package com.subjecttochange.ghhelper.persistence.model.jsonio.responsebodies;
+package com.subjecttochange.ghhelper.persistence.model.responsebodies;
 
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import lombok.Data;

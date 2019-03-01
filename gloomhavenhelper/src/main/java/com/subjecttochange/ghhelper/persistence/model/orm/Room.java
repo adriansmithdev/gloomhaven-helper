@@ -58,4 +58,10 @@ public class Room extends BaseModel {
         room.setScenarioNumber(scenarioNumber);
         return room;
     }
+
+    public Room updateRoom(Room roomRequest){
+        setHash(roomRequest.getHash());
+        setScenarioNumber(roomRequest.getScenarioNumber());
+        return this;
+    }
 }

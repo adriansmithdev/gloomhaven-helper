@@ -2,7 +2,6 @@ package com.subjecttochange.ghhelper.persistence.model.orm.monster;
 
 import com.google.gson.JsonObject;
 import com.subjecttochange.ghhelper.persistence.model.orm.BaseModel;
-import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -66,4 +65,19 @@ public class Monster extends BaseModel {
         return monster;
     }
 
+    public Monster updateMonster(Monster monsterRequest) {
+        setName(monsterRequest.getName());
+        setAttributes(monsterRequest.getAttributes());
+        setEliteAttributes(monsterRequest.getEliteAttributes());
+        setLevel(monsterRequest.getLevel());
+        setHealth(monsterRequest.getHealth());
+        setMovement(monsterRequest.getMovement());
+        setAttack(monsterRequest.getAttack());
+        setRange(monsterRequest.getRange());
+        setEliteHealth(monsterRequest.getEliteHealth());
+        setEliteMove(monsterRequest.getEliteMove());
+        setEliteAttack(monsterRequest.getEliteAttack());
+        setEliteHealth(monsterRequest.getEliteHealth());
+        return this;
+    }
 }

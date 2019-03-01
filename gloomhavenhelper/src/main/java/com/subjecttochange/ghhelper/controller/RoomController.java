@@ -2,25 +2,20 @@ package com.subjecttochange.ghhelper.controller;
 
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.jsonio.requestbodies.RoomRequestBody;
-import com.subjecttochange.ghhelper.persistence.model.jsonio.responsebodies.RoomResponseBody;
-import com.subjecttochange.ghhelper.persistence.model.jsonio.responsebodies.SessionResponseBody;
+import com.subjecttochange.ghhelper.persistence.model.responsebodies.RoomResponseBody;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
-import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
-import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 /**
  * @author subjecttochange
@@ -83,9 +78,9 @@ public class RoomController {
     @PutMapping("/rooms")
     @ResponseBody
     public RoomResponseBody updateRoom(@RequestParam(value = "hash") String hash,
-                                       @Valid @RequestBody(required = false) RoomRequestBody roomRequest) {
+                                       @Valid @RequestBody(required = false) Room roomRequest) {
         Room room = roomRepository.findByHash(hash).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + hash));
-        roomRequest.updateRoom(room);
+        room = room.updateRoom(roomRequest);
         room = roomRepository.save(room);
         return RoomResponseBody.create(room);
     }
