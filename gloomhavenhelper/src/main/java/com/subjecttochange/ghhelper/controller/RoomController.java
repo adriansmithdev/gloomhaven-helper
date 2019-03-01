@@ -1,7 +1,6 @@
 package com.subjecttochange.ghhelper.controller;
 
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
-import com.subjecttochange.ghhelper.persistence.model.jsonio.requestbodies.RoomRequestBody;
 import com.subjecttochange.ghhelper.persistence.model.responsebodies.RoomResponseBody;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;

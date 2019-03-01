@@ -9,7 +9,7 @@ class MonsterInfo extends Component {
       <>
         {console.log("MONSTER")}
         {console.log(monster)}
-        <div className="columns">
+        <div className="columns has-text-light">
           <div className="title themed-font has-text-light is-size-4 column">
             {monster.name}
           </div>
@@ -21,6 +21,9 @@ class MonsterInfo extends Component {
           </div>
           <div className="column">
             Range: {monster.range}
+          </div>
+          <div className="column">
+            {monster.attributes !== undefined ? "Traits: " + monster.attributes : ''}
           </div>
         </div>
       </>

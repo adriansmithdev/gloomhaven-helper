@@ -41,7 +41,7 @@ class Monster extends Component {
     return (
       <>
         <li className="columns" key={this.props.key}>
-          <div className="column has-text-light">#: {this.props.index}</div>
+          <div className="column has-text-light">#: {this.props.index + 1}</div>
 
           <div className="column">
             <ProgressBar
