@@ -30,6 +30,14 @@ export const setStatus = function(status) {
   return {type: 'SET_STATUS', value: status}
 };
 
+export const setShowModal = function(status) {
+  return {type: 'SHOW_MODAL', value: status}
+};
+
+export const setHideModal = function(status) {
+  return {type: 'HIDE_MODAL', value: status}
+};
+
 export const clearSession = function() {
   return {type: 'CLEAR_SESSION'};
 };

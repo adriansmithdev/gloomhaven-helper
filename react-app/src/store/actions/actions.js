@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { 
-  addError, setStatus, setRoom
+  addError, setStatus, setRoom, setShowModal, setHideModal
  } from './storeActions';
 import { getSession } from './session';
 
@@ -101,5 +101,15 @@ export const deleteMonster = function(hash, monster) {
     return response.data;
   }
 };
+
+export const showModal = () => dispatch => {
+  dispatch(setShowModal("SHOW_MODAL"))
+}
+
+export const hideModal = () => dispatch => {
+  dispatch(setHideModal("HIDE_MODAL"))
+}
+
+
 
 

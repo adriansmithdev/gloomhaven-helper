@@ -5,7 +5,8 @@ const initialState = {
 
     }
   },
-  notifications: []
+  notifications: [],
+  modalIsOpen: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -41,7 +42,6 @@ const reducer = (state = initialState, action) => {
       const newMonsters = newState.monsters.filter(monster =>
         monster.id !== action.monster.id
       );
-
       // Replace old state.
       newState.session.room.monsters = newMonsters;
       break;
@@ -49,12 +49,20 @@ const reducer = (state = initialState, action) => {
       const targetIndex = newState.monsters.findIndex(current => 
         current.id === action.monster.id
       );
-
       newState.session.monsters.splice(targetIndex, 1, action.monster);
       break;
     case 'CLEAR_SESSION':
       newState = initialState;
       break;
+
+    case 'SHOW_MODAL':
+      newState.modalIsOpen = true;
+      break;
+
+    case 'HIDE_MODAL':
+      newState.modalIsOpen = false;
+      break;
+
     default: 
       break;
   }
