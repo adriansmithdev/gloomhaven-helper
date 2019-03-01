@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {deleteMonster, updateMonster} from "../../store/actions/actions";
 import ProgressBar from './../common/ProgressBar';
+import StatusCheckbox from '../room/StatusCheckbox';
 
 class Monster extends Component {
   activeStatuses = ["Poison"];
@@ -61,7 +62,7 @@ class Monster extends Component {
             </button>
           </div>
           <div className="column">
-            <StatusCheckbox activeStatuses={this.activeStatuses}/>
+            <StatusCheckbox activeStatuses={this.activeStatuses}/> 
           </div>
           <div className="column">
             <button type="button" className="button is-dark themed-font" onClick={this.deleteMonster}>X</button>
