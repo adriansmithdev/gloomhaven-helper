@@ -8,7 +8,7 @@ class MonsterType extends Component{
 
   generateMonsterInstances() {
     return this.props.type.monsterInstances.map((instance, index) =>
-      <Monster instance={instance} type={this.props.type} key={instance.id} index={index}/>
+      <Monster instance={instance} type={this.props.type} key={instance.id} index={index} activeStatuses={instance.activeStatues}/>
     );
   }
   render() {

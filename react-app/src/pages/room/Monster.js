@@ -4,6 +4,7 @@ import {deleteMonster, updateMonster} from "../../store/actions/actions";
 import ProgressBar from './../common/ProgressBar';
 
 class Monster extends Component {
+  activeStatuses = ["Poison"];
 
   constructor(props) {
     super(props);
@@ -58,6 +59,9 @@ class Monster extends Component {
             <button type="button" className="button is-dark" onClick={this.increaseHealth}>
               +
             </button>
+          </div>
+          <div className="column">
+            <StatusCheckbox activeStatuses={this.activeStatuses}/>
           </div>
           <div className="column">
             <button type="button" className="button is-dark themed-font" onClick={this.deleteMonster}>X</button>
