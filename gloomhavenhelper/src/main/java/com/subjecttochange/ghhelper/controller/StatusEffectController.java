@@ -38,27 +38,27 @@ public class StatusEffectController {
         this.conditionRepository = conditionRepository;
     }
 
-    @GetMapping("/statuseffects")
-    @ResponseBody
-    public Page<MonsterCondition> getStatusEffects(@RequestParam(value = "hash") String hash,
-                                           @RequestParam(value = "monsterInstanceId", required = false) Long monsterInstanceId,
-                                           @RequestParam(value = "id", required = false) Long id) {
-        if (id == null && monsterInstanceId == null) {
-            throw new BadRequestException(BAD_REQUEST);
-        }
-
-        if (id == null) {
-            MonsterInstance instance = monsterInstanceRepository.findById(monsterInstanceId)
-                    .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_INSTANCE));
-            MonsterInstance.checkHashMatchesGiven(instance, hash, monsterInstanceId);
-            return new PageImpl<>(new ArrayList<>(instance.getStatuses()));
-        } else {
-            MonsterCondition monsterCondition = statusEffectRepository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_STATUS_EFFECT));
-            MonsterInstance.checkHashMatchesGiven(monsterCondition.getInstance(), hash, id);
-            return new PageImpl<>(Collections.singletonList(monsterCondition));
-        }
-    }
+//    @GetMapping("/statuseffects")
+//    @ResponseBody
+//    public Page<MonsterCondition> getStatusEffects(@RequestParam(value = "hash") String hash,
+//                                           @RequestParam(value = "monsterInstanceId", required = false) Long monsterInstanceId,
+//                                           @RequestParam(value = "id", required = false) Long id) {
+//        if (id == null && monsterInstanceId == null) {
+//            throw new BadRequestException(BAD_REQUEST);
+//        }
+//
+//        if (id == null) {
+//            MonsterInstance instance = monsterInstanceRepository.findById(monsterInstanceId)
+//                    .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_INSTANCE));
+//            MonsterInstance.checkHashMatchesGiven(instance, hash, monsterInstanceId);
+//            return new PageImpl<>(new ArrayList<>(instance.getStatuses()));
+//        } else {
+//            MonsterCondition monsterCondition = statusEffectRepository.findById(id)
+//                    .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_STATUS_EFFECT));
+//            MonsterInstance.checkHashMatchesGiven(monsterCondition.getInstance(), hash, id);
+//            return new PageImpl<>(Collections.singletonList(monsterCondition));
+//        }
+//    }
 
     @PostMapping("/statuseffects")
     @ResponseBody
