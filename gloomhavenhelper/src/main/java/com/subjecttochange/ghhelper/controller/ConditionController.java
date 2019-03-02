@@ -26,9 +26,9 @@ public class ConditionController {
         this.conditionRepository = conditionRepository;
     }
 
-    @GetMapping("/condition")
+    @GetMapping("/conditions")
     @ResponseBody
-    public Page<Condition> getRooms(@RequestParam(value = "id", required = false) Long id, Pageable pageable) {
+    public Page<Condition> getConditions(@RequestParam(value = "id", required = false) Long id, Pageable pageable) {
         if (id == null) {
             return conditionRepository.findAll(pageable);
         } else {
@@ -38,13 +38,13 @@ public class ConditionController {
         }
     }
 
-    @PostMapping("/condition")
+    @PostMapping("/conditions")
     @ResponseBody
-    public Condition createRoom(@Valid @RequestBody Condition condition) {
+    public Condition createCondition(@Valid @RequestBody Condition condition) {
         return conditionRepository.save(condition);
     }
 
-    @PutMapping("/condition")
+    @PutMapping("/conditions")
     @ResponseBody
     public Condition updateRoom(@RequestParam(value = "id") Long id, @Valid @RequestBody Condition condition) {
         Condition conditionResult = conditionRepository.findById(id).orElseThrow(() ->
@@ -55,8 +55,8 @@ public class ConditionController {
         return conditionResult;
     }
 
-    @DeleteMapping("/condition")
-    public ResponseEntity<?> deleteRoom(@RequestParam(value = "id") Long id) {
+    @DeleteMapping("/conditions")
+    public ResponseEntity<?> deleteCondition(@RequestParam(value = "id") Long id) {
         conditionRepository.delete(conditionRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException(NOT_FOUND + id)));
         return ResponseEntity.ok().build();

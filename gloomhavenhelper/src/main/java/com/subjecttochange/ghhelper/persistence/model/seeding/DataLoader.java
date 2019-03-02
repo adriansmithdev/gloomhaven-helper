@@ -6,10 +6,7 @@ import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Condition;
-import com.subjecttochange.ghhelper.persistence.repository.MonsterInstanceRepository;
-import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
-import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
-import com.subjecttochange.ghhelper.persistence.repository.ConditionRepository;
+import com.subjecttochange.ghhelper.persistence.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -26,14 +23,17 @@ public class DataLoader implements ApplicationRunner {
     private RoomRepository roomRepository;
     private MonsterInstanceRepository monsterInstanceRepository;
     private ConditionRepository conditionRepository;
+    private StatusEffectRepository statusEffectRepository;
 
     @Autowired
     public DataLoader(MonsterRepository monsterRepository, RoomRepository roomRepository,
-                      MonsterInstanceRepository monsterInstanceRepository, ConditionRepository conditionRepository) {
+                      MonsterInstanceRepository monsterInstanceRepository, ConditionRepository conditionRepository,
+                      StatusEffectRepository statusEffectRepository) {
         this.monsterRepository = monsterRepository;
         this.roomRepository = roomRepository;
         this.monsterInstanceRepository = monsterInstanceRepository;
         this.conditionRepository = conditionRepository;
+        this.statusEffectRepository = statusEffectRepository;
     }
 
     @Override
