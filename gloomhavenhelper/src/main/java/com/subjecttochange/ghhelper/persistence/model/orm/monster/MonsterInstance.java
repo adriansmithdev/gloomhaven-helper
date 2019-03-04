@@ -25,10 +25,10 @@ public class MonsterInstance extends BaseModel {
             initialValue = 1
     )
     private Long id;
-    private Integer currentHealth;
+    private Integer currentHealth = 0;
     private Boolean isElite = false;
-    @ElementCollection(targetClass=Integer.class)
-    private Set<Integer> statuses = new HashSet<>();
+    @ElementCollection(targetClass=String.class)
+    private Set<String> statuses = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "room_id", nullable = false)

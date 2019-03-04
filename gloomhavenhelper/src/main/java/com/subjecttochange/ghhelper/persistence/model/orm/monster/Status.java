@@ -18,8 +18,8 @@ public class Status {
             initialValue = 1
     )
     private Long id;
-    private String name;
-    private String tooltip;
+    private String name = "";
+    private String tooltip = "";
 
     public Status() {
         super();

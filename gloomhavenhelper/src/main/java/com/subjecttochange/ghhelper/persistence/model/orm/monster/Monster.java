@@ -20,18 +20,18 @@ public class Monster extends BaseModel {
             initialValue = 1
     )
     private Long id;
-    private String name;
-    private ArrayList<String> attributes;
-    private ArrayList<String> eliteAttributes;
-    private Integer level;
-    private Integer health;
-    private Integer movement;
-    private Integer attack;
-    private Integer range;
-    private Integer eliteHealth;
-    private Integer eliteMove;
-    private Integer eliteAttack;
-    private Integer eliteRange;
+    private String name = "";
+    private ArrayList<String> attributes = new ArrayList<>();
+    private ArrayList<String> eliteAttributes = new ArrayList<>();
+    private Integer level = 0;
+    private Integer health = 0;
+    private Integer movement = 0;
+    private Integer attack = 0;
+    private Integer range = 0;
+    private Integer eliteHealth = 0;
+    private Integer eliteMove = 0;
+    private Integer eliteAttack = 0;
+    private Integer eliteRange = 0;
 
     public Monster() {
         super();
