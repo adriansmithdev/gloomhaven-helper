@@ -27,10 +27,8 @@ public class MonsterInstance extends BaseModel {
     private Long id;
     private Integer currentHealth;
     private Boolean isElite = false;
-
-    @OneToMany(mappedBy = "instance")
-    @JsonIgnore
-    private Set<MonsterCondition> statuses = new HashSet<>();
+    @ElementCollection(targetClass=Integer.class)
+    private Set<Integer> statuses = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "room_id", nullable = false)
@@ -61,6 +59,13 @@ public class MonsterInstance extends BaseModel {
         monsterInstance.setCurrentHealth(currentHealth);
         monsterInstance.setMonsterId(monster.getId());
         return monsterInstance;
+    }
+
+    public MonsterInstance updateMonsterInstance(MonsterInstance monsterRequest) {
+        setCurrentHealth(monsterRequest.getCurrentHealth());
+        setIsElite(monsterRequest.getIsElite());
+        setStatuses(monsterRequest.getStatuses());
+        return this;
     }
 
     @JsonProperty(required = true)

@@ -85,6 +85,7 @@ public class Monster extends BaseModel {
         setEliteHealth(monsterRequest.getEliteHealth());
         return this;
     }
+
     private void addAttributes(JsonArray attributesArray) {
         for (JsonElement attribute : attributesArray) {
             attributes.add(attribute.getAsString());

@@ -59,7 +59,7 @@ public class MonsterController {
     public MonsterResponseBody updateMonster(@RequestParam(value = "id") Long id,
                                        @Valid @RequestBody(required = false) Monster monsterRequest) {
         Monster monster = monsterRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + id));
-        monster = monster.updateMonster(monster);
+        monster = monster.updateMonster(monsterRequest);
         monster = monsterRepository.save(monster);
         return MonsterResponseBody.create(monster);
     }

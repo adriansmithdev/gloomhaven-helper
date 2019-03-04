@@ -5,7 +5,7 @@ import com.subjecttochange.ghhelper.persistence.model.helpers.JsonFileParser;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
-import com.subjecttochange.ghhelper.persistence.model.orm.monster.Condition;
+import com.subjecttochange.ghhelper.persistence.model.orm.monster.Status;
 import com.subjecttochange.ghhelper.persistence.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -22,18 +22,15 @@ public class DataLoader implements ApplicationRunner {
     private MonsterRepository monsterRepository;
     private RoomRepository roomRepository;
     private MonsterInstanceRepository monsterInstanceRepository;
-    private ConditionRepository conditionRepository;
-    private StatusEffectRepository statusEffectRepository;
+    private StatusRepository statusRepository;
 
     @Autowired
     public DataLoader(MonsterRepository monsterRepository, RoomRepository roomRepository,
-                      MonsterInstanceRepository monsterInstanceRepository, ConditionRepository conditionRepository,
-                      StatusEffectRepository statusEffectRepository) {
+                      MonsterInstanceRepository monsterInstanceRepository, StatusRepository statusRepository) {
         this.monsterRepository = monsterRepository;
         this.roomRepository = roomRepository;
         this.monsterInstanceRepository = monsterInstanceRepository;
-        this.conditionRepository = conditionRepository;
-        this.statusEffectRepository = statusEffectRepository;
+        this.statusRepository = statusRepository;
     }
 
     @Override
@@ -64,20 +61,20 @@ public class DataLoader implements ApplicationRunner {
     }
 
     private void seedStatusRepository() {
-        if (isRepoEmpty(conditionRepository)) {
+        if (isRepoEmpty(statusRepository)) {
             System.out.println("SEEDING: Statuses");
-            List<Condition> conditions = new ArrayList<>();
-            conditions.add(Condition.create("Poison", "+1 Attack vs figures. Heal removes poison and heal has no other effect."));
-            conditions.add(Condition.create("Wound", "Suffers 1 damage at the star of each turn. Heals removes and heals continues normal."));
-            conditions.add(Condition.create("Immobilize", "Cannot perform move abilities. Removed at end of its next turn."));
-            conditions.add(Condition.create("Disarm", "Cannot perform any attack abilities. Removed at end of its next turn."));
-            conditions.add(Condition.create("Stun", "Cannot perform any abilities/items. Must play cards like normal. Removed at end of next turn."));
-            conditions.add(Condition.create("Muddle", "Gains disadvantage on all attacks. Removed at end of next turn."));
-            conditions.add(Condition.create("Curse", "Must shuffle curse into attack modifier deck."));
-            conditions.add(Condition.create("Invisible", "Cannot be focused or targeted by enemy. Removed at end of next turn."));
-            conditions.add(Condition.create("Strengthen", "Figure gains advantage on all of its attacks. Removed at end of next turn."));
-            conditions.add(Condition.create("Bless", "Must shuffle bless into attack modifier deck."));
-            conditionRepository.saveAll(conditions);
+            List<Status> statuses = new ArrayList<>();
+            statuses.add(Status.create("Poison", "+1 Attack vs figures. Heal removes poison and heal has no other effect."));
+            statuses.add(Status.create("Wound", "Suffers 1 damage at the star of each turn. Heals removes and heals continues normal."));
+            statuses.add(Status.create("Immobilize", "Cannot perform move abilities. Removed at end of its next turn."));
+            statuses.add(Status.create("Disarm", "Cannot perform any attack abilities. Removed at end of its next turn."));
+            statuses.add(Status.create("Stun", "Cannot perform any abilities/items. Must play cards like normal. Removed at end of next turn."));
+            statuses.add(Status.create("Muddle", "Gains disadvantage on all attacks. Removed at end of next turn."));
+            statuses.add(Status.create("Curse", "Must shuffle curse into attack modifier deck."));
+            statuses.add(Status.create("Invisible", "Cannot be focused or targeted by enemy. Removed at end of next turn."));
+            statuses.add(Status.create("Strengthen", "Figure gains advantage on all of its attacks. Removed at end of next turn."));
+            statuses.add(Status.create("Bless", "Must shuffle bless into attack modifier deck."));
+            statusRepository.saveAll(statuses);
         }
     }
 

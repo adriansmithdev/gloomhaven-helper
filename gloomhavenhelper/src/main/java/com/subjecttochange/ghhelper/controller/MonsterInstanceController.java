@@ -67,6 +67,7 @@ public class MonsterInstanceController {
                 .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_MONSTER + request.getMonsterId()));
 
         MonsterInstance monsterInstance = MonsterInstance.create(room, monster);
+        monsterInstance = monsterInstance.updateMonsterInstance(request);
         return monsterInstanceRepository.save(monsterInstance);
     }
 
@@ -82,8 +83,7 @@ public class MonsterInstanceController {
         MonsterInstance.checkHashMatchesGiven(monsterInstance, hash, id);
 
         monsterInstance.setMonster(monster);
-        monsterInstance.setCurrentHealth(request.getCurrentHealth());
-        monsterInstance.setIsElite(request.getIsElite());
+        monsterInstance = monsterInstance.updateMonsterInstance(request);
         return monsterInstanceRepository.save(monsterInstance);
     }
 
