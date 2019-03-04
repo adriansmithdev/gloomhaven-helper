@@ -38,7 +38,7 @@ export const createRoom = function(callback) {
 
 export const updateScenario = function(room) {
   return async dispatch => {
-    const response = await axios.put(`http://localhost:5000/api/rooms/${room.hash}`, room)
+    const response = await axios.put(`http://localhost:5000/api/rooms?hash=${room.hash}`, room)
       .catch(function (error) {
         dispatch(addError(error.response.data));
         dispatch(setStatus('FAILED_TO_UPDATE_SCENARIO'));
@@ -53,7 +53,6 @@ export const updateScenario = function(room) {
 };
 
 export const addMonster = function(hash, monsterId) {
-
   return async dispatch => {
     const response = await axios.post(`http://localhost:5000/api/monsterinstances?hash=${hash}`, {
       monsterId: monsterId
