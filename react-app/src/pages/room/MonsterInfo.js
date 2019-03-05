@@ -18,15 +18,15 @@ class MonsterInfo extends Component {
             {monster.name}
           </div>
           <div className="column">
-            <img src={Attack} className="icon-small" /> 
+            <img src={Attack} className="icon-small" alt="Attack: "/> 
             <span className="is-size-4">{monster.attack}</span>
           </div>
           <div className="column">
-            <img src={Movement} className="icon-small" /> 
+            <img src={Movement} className="icon-small" alt="Movement: "/> 
             <span className="is-size-4">{monster.movement}</span>
           </div>
           <div className="column">
-            <img src={Range} className="icon-small" /> 
+            <img src={Range} className="icon-small" alt="Range: "/> 
             <span className="is-size-4">{monster.range}</span>
           </div>
           
