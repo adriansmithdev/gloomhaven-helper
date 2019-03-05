@@ -20,7 +20,10 @@ class MonsterList extends Component {
   }
 
   generateTypes() {
-    return this.props.monsters.map(type =>
+    // Filter out types without any instances
+    return this.props.monsters.filter(type =>
+      type.monsterInstances.length > 0
+    ).map(type =>
       <MonsterType key={type.id} type={type} />
     );
   }

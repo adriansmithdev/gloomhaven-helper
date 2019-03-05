@@ -11,15 +11,11 @@ class MonsterType extends Component{
       <Monster instance={instance} type={this.props.type} key={instance.id} index={index} activeStatuses={instance.activeStatues}/>
     );
   }
-
-  generateMonsterInfoHeader() {
-    return <MonsterInfo monster={this.props.type}/>;
-  }
   
   render() {
     return (
       <>
-        {this.props.type.monsterInstances.length !== 0 ? this.generateMonsterInfoHeader() : ''}
+        <MonsterInfo monster={this.props.type}/>
         {this.generateMonsterInstances()}
       </>
     );
