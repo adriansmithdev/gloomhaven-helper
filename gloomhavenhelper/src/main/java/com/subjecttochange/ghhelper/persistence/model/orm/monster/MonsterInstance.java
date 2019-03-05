@@ -28,7 +28,7 @@ public class MonsterInstance extends BaseModel {
     private Integer currentHealth = 0;
     private Boolean isElite = false;
     @ElementCollection(targetClass=String.class)
-    private Set<String> statuses = new HashSet<>();
+    private Set<String> activeStatuses = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "room_id", nullable = false)
@@ -64,7 +64,7 @@ public class MonsterInstance extends BaseModel {
     public MonsterInstance updateMonsterInstance(MonsterInstance monsterRequest) {
         setCurrentHealth(monsterRequest.getCurrentHealth());
         setIsElite(monsterRequest.getIsElite());
-        setStatuses(monsterRequest.getStatuses());
+        setActiveStatuses(monsterRequest.getActiveStatuses());
         return this;
     }
 
