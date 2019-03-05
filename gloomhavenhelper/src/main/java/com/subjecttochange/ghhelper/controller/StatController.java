@@ -1,5 +1,6 @@
 package com.subjecttochange.ghhelper.controller;
 
+import com.subjecttochange.ghhelper.exception.BadRequestException;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.Stat;
 import com.subjecttochange.ghhelper.persistence.repository.StatRepository;
@@ -40,17 +41,20 @@ public class StatController {
 
     @PostMapping("/stats")
     @ResponseBody
-    public Stat createStat(@Valid @RequestBody Stat stat) {
+    public Stat createStat(@Valid @RequestBody Stat statRequest) {
+        if (statRequest.getName() == null || statRequest.getTooltip() == null) {
+            throw new BadRequestException("Name and tooltip are both required!");
+        }
+        Stat stat = Stat.create(statRequest.getName(), statRequest.getTooltip());
         return statRepository.save(stat);
     }
 
     @PutMapping("/stats")
     @ResponseBody
-    public Stat updateStat(@RequestParam(value = "id") Long id, @Valid @RequestBody Stat stat) {
+    public Stat updateStat(@RequestParam(value = "id") Long id, @Valid @RequestBody Stat statRequest) {
         Stat statResult = statRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException(NOT_FOUND + id));
-        statResult.setName(stat.getName());
-        statResult.setTooltip(stat.getTooltip());
+        statResult = statResult.updateStat(statRequest);
         statResult = statRepository.save(statResult);
         return statResult;
     }

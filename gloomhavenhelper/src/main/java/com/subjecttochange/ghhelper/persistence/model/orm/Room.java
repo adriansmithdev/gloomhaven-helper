@@ -23,11 +23,6 @@ import java.util.stream.Collectors;
 public class Room extends BaseModel {
     private static final int DEFAULT_SCENARIO_NUMBER = 0;
 
-    //private Scenario scenario;
-    //private int rounds;
-    //private ElementsActive elementsActive;
-    //private Player[] players;
-
     @Id
     @GeneratedValue(generator = "room_generator")
     @SequenceGenerator(name = "room_generator", sequenceName = "room_sequence", initialValue = 1)
@@ -60,8 +55,12 @@ public class Room extends BaseModel {
     }
 
     public Room updateRoom(Room roomRequest){
-        setHash(roomRequest.getHash());
-        setScenarioNumber(roomRequest.getScenarioNumber());
+        if (roomRequest.getHash() != null) {
+            setHash(roomRequest.getHash());
+        }
+        if (roomRequest.getScenarioNumber() != null) {
+            setScenarioNumber(roomRequest.getScenarioNumber());
+        }
         return this;
     }
 }

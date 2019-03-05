@@ -1,5 +1,6 @@
 package com.subjecttochange.ghhelper.controller;
 
+import com.subjecttochange.ghhelper.exception.BadRequestException;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Status;
 import com.subjecttochange.ghhelper.persistence.repository.StatusRepository;
@@ -40,17 +41,20 @@ public class StatusController {
 
     @PostMapping("/statuses")
     @ResponseBody
-    public Status createStatus(@Valid @RequestBody Status status) {
+    public Status createStatus(@Valid @RequestBody Status statusRequest) {
+        if (statusRequest.getName() == null || statusRequest.getTooltip() == null) {
+            throw new BadRequestException("Name and tooltip are both required!");
+        }
+        Status status = Status.create(statusRequest.getName(), statusRequest.getTooltip());
         return statusRepository.save(status);
     }
 
     @PutMapping("/statuses")
     @ResponseBody
-    public Status updateStatus(@RequestParam(value = "id") Long id, @Valid @RequestBody Status status) {
+    public Status updateStatus(@RequestParam(value = "id") Long id, @Valid @RequestBody Status statusRequest) {
         Status statusResult = statusRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException(NOT_FOUND + id));
-        statusResult.setName(status.getName());
-        statusResult.setTooltip(status.getTooltip());
+        statusResult = statusResult.updateStatus(statusRequest);
         statusResult = statusRepository.save(statusResult);
         return statusResult;
     }

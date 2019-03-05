@@ -6,8 +6,12 @@ import com.google.gson.JsonObject;
 import com.subjecttochange.ghhelper.persistence.model.orm.BaseModel;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,18 +24,18 @@ public class Monster extends BaseModel {
             initialValue = 1
     )
     private Long id;
-    private String name = "";
-    private ArrayList<String> attributes = new ArrayList<>();
-    private ArrayList<String> eliteAttributes = new ArrayList<>();
-    private Integer level = 0;
-    private Integer health = 0;
-    private Integer movement = 0;
-    private Integer attack = 0;
-    private Integer range = 0;
-    private Integer eliteHealth = 0;
-    private Integer eliteMove = 0;
-    private Integer eliteAttack = 0;
-    private Integer eliteRange = 0;
+    private String name;
+    private List<String> attributes;
+    private List<String> eliteAttributes;
+    private Integer level;
+    private Integer health;
+    private Integer movement;
+    private Integer attack;
+    private Integer range;
+    private Integer eliteHealth;
+    private Integer eliteMove;
+    private Integer eliteAttack;
+    private Integer eliteRange;
 
     public Monster() {
         super();
@@ -41,6 +45,18 @@ public class Monster extends BaseModel {
         Monster monster = new Monster();
         monster.setName(name);
         monster.setHealth(maxHealth);
+        monster.setName(name);
+        monster.setAttributes(new ArrayList<>());
+        monster.setEliteAttributes(new ArrayList<>());
+        monster.setLevel(0);
+        monster.setHealth(maxHealth);
+        monster.setMovement(0);
+        monster.setAttack(0);
+        monster.setRange(0);
+        monster.setEliteHealth(0);
+        monster.setEliteMove(0);
+        monster.setEliteAttack(0);
+        monster.setEliteRange(0);
         return monster;
     }
 
@@ -71,18 +87,42 @@ public class Monster extends BaseModel {
     }
 
     public Monster updateMonster(Monster monsterRequest) {
-        setName(monsterRequest.getName());
-        setAttributes(monsterRequest.getAttributes());
-        setEliteAttributes(monsterRequest.getEliteAttributes());
-        setLevel(monsterRequest.getLevel());
-        setHealth(monsterRequest.getHealth());
-        setMovement(monsterRequest.getMovement());
-        setAttack(monsterRequest.getAttack());
-        setRange(monsterRequest.getRange());
-        setEliteHealth(monsterRequest.getEliteHealth());
-        setEliteMove(monsterRequest.getEliteMove());
-        setEliteAttack(monsterRequest.getEliteAttack());
-        setEliteHealth(monsterRequest.getEliteHealth());
+        if(monsterRequest.getName() != null) {
+            setName(monsterRequest.getName());
+        }
+        if(monsterRequest.getAttributes() != null) {
+            setAttributes(monsterRequest.getAttributes());
+        }
+        if(monsterRequest.getEliteAttributes() != null) {
+            setEliteAttributes(monsterRequest.getEliteAttributes());
+        }
+        if(monsterRequest.getLevel() != null) {
+            setLevel(monsterRequest.getLevel());
+        }
+        if(monsterRequest.getHealth() != null) {
+            setHealth(monsterRequest.getHealth());
+        }
+        if(monsterRequest.getMovement() != null) {
+            setMovement(monsterRequest.getMovement());
+        }
+        if(monsterRequest.getAttack() != null) {
+            setAttack(monsterRequest.getAttack());
+        }
+        if(monsterRequest.getRange() != null) {
+            setRange(monsterRequest.getRange());
+        }
+        if(monsterRequest.getEliteHealth() != null) {
+            setEliteHealth(monsterRequest.getEliteHealth());
+        }
+        if(monsterRequest.getEliteMove() != null) {
+            setEliteMove(monsterRequest.getEliteMove());
+        }
+        if(monsterRequest.getEliteAttack() != null) {
+            setEliteAttack(monsterRequest.getEliteAttack());
+        }
+        if(monsterRequest.getEliteRange() != null) {
+            setEliteHealth(monsterRequest.getEliteRange());
+        }
         return this;
     }
 

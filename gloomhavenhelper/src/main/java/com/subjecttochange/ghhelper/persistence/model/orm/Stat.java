@@ -32,4 +32,13 @@ public class Stat extends BaseModel {
         return stat;
     }
 
+    public Stat updateStat(Stat statRequest){
+        if (statRequest.getName() != null) {
+            setName(statRequest.getName());
+        }
+        if (statRequest.getTooltip() != null) {
+            setTooltip(statRequest.getTooltip());
+        }
+        return this;
+    }
 }
