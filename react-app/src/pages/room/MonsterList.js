@@ -33,20 +33,22 @@ class MonsterList extends Component {
 
     return (
       <div className="monster-list m-2">
-        <div className="control">
-          <div className="select">
-            <select className="input" ref={this.monsterSelect}>
-              {monsterTypes}
-            </select>
+        <div className="toolbar columns">
+          <div className="control col">
+            <div className="select">
+              <select className="input" ref={this.monsterSelect}>
+                {monsterTypes}
+              </select>
+            </div>
           </div>
-        </div>
-        <div className="control">
+          <div className="control col">
           <div className="level-right">
             <button className="button is-dark themed-font" onClick={this.addMonster}>
               + Add Monster
             </button>
           </div>
 
+        </div>
         </div>
         {this.generateTypes()}
       </div>
