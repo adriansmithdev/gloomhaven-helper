@@ -11,8 +11,6 @@ class MonsterInfo extends Component {
     let monster = this.props.monster;
     return (
       <>
-        {console.log("MONSTER")}
-        {console.log(monster)}
         <div className="columns has-text-light themed-font">
           <div className="column is-size-4">
             {monster.name}
@@ -20,12 +18,8 @@ class MonsterInfo extends Component {
           <div className="column">
             <img src={Attack} className="icon-small" alt="Attack: "/> 
             <span className="is-size-4">{monster.attack}</span>
-          </div>
-          <div className="column">
             <img src={Movement} className="icon-small" alt="Movement: "/> 
             <span className="is-size-4">{monster.movement}</span>
-          </div>
-          <div className="column">
             <img src={Range} className="icon-small" alt="Range: "/> 
             <span className="is-size-4">{monster.range}</span>
           </div>
