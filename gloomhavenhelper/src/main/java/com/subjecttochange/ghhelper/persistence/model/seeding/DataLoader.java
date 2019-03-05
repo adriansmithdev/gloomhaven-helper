@@ -89,8 +89,14 @@ public class DataLoader implements ApplicationRunner {
         if (isRepoEmpty(statRepository)) {
             System.out.println("SEEDING: Stats");
             List<Stat> stat = new ArrayList<>();
-            stat.add(Stat.create("Movement", "Describes how far a target can move."));
             stat.add(Stat.create("Attack", "The amount of damage done."));
+            stat.add(Stat.create("Flying", "Fly from units."));
+            stat.add(Stat.create("Heal", "Recover lost health."));
+            stat.add(Stat.create("Jump", "Walk over obstacles."));
+            stat.add(Stat.create("Movement", "Distance a target can move."));
+            stat.add(Stat.create("Range", "The in block spaces."));
+            stat.add(Stat.create("Retaliate", "Damage reflected when hurt."));
+            stat.add(Stat.create("Shield", "The amount of damage absorbed."));
             statRepository.saveAll(stat);
         }
     }
