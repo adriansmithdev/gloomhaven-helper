@@ -25,14 +25,7 @@ const customStyles = {
 
   Modal.setAppElement(this);
 
-class StatusCheckbox extends Component {
-
-    constructor() {
-        super();
-        }
-
-
-    
+class StatusCheckbox extends Component { 
 
     checkboxes = [
         {
@@ -71,11 +64,11 @@ class StatusCheckbox extends Component {
         return(
             <div>
                 <button onClick={this.props.showModal}>Open Modal</button>
-                <Modal
-                isOpen={this.props. modalIsOpen}
-                onRequestClose={this.props.hideModal}
-                style={customStyles}
-                contentLabel="Modal"
+                <Modal 
+                  isOpen={this.props.modalIsOpen}
+                  onRequestClose={this.props.hideModal}
+                  style={customStyles}
+                  contentLabel="Modal"
                 >
                 
                 {statuses}
