@@ -6,10 +6,7 @@ import com.google.gson.JsonObject;
 import com.subjecttochange.ghhelper.persistence.model.orm.BaseModel;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +22,9 @@ public class Monster extends BaseModel {
     )
     private Long id;
     private String name;
+    @ElementCollection(targetClass=String.class)
     private List<String> attributes;
+    @ElementCollection(targetClass=String.class)
     private List<String> eliteAttributes;
     private Integer level;
     private Integer health;
