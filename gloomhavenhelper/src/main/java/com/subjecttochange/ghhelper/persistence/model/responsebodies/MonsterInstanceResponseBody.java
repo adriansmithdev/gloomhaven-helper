@@ -4,12 +4,18 @@ import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstanc
 import lombok.Data;
 import lombok.NonNull;
 
+import java.util.Set;
+
 @Data
 public class MonsterInstanceResponseBody {
     @NonNull
     private Long id;
     @NonNull
-    private int currentHealth;
+    private Integer currentHealth;
+    @NonNull
+    private Boolean isElite;
+    @NonNull
+    private Set<String> activeStatuses;
     @NonNull
     private Long monsterId;
 
@@ -17,6 +23,8 @@ public class MonsterInstanceResponseBody {
         return new MonsterInstanceResponseBody(
                 monsterInstance.getId(),
                 monsterInstance.getCurrentHealth(),
+                monsterInstance.getIsElite(),
+                monsterInstance.getActiveStatuses(),
                 monsterInstance.getMonster().getId()
         );
     }

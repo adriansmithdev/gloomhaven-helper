@@ -15,7 +15,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class DataLoader implements ApplicationRunner {
@@ -104,7 +106,13 @@ public class DataLoader implements ApplicationRunner {
             Room room = roomRepository.findByHash("ABCDEF")
                     .orElseThrow(() -> new ResourceNotFoundException("Could not find room"));
 
-            instances.add(MonsterInstance.create( 10, room, monster));
+            MonsterInstance monsterInstance = MonsterInstance.create( 10, room, monster);
+            Set<String> activeStatus = new HashSet<>();
+            activeStatus.add("Bless");
+            activeStatus.add("Curse");
+            activeStatus.add("Stun");
+            monsterInstance.setActiveStatuses(activeStatus);
+            instances.add(monsterInstance);
 
             room = roomRepository.findByHash("OOMMOO")
                     .orElseThrow(() -> new ResourceNotFoundException("Could not find room"));

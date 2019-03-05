@@ -14,13 +14,27 @@ public class MonsterResponseBody {
     @NonNull
     private String name;
     @NonNull
-    private int health;
+    private List<String> attributes;
     @NonNull
-    private int range;
+    private List<String> eliteAttributes;
     @NonNull
-    private int attack;
+    private Integer level;
     @NonNull
-    private int movement;
+    private Integer health;
+    @NonNull
+    private Integer movement;
+    @NonNull
+    private Integer attack;
+    @NonNull
+    private Integer range;
+    @NonNull
+    private Integer eliteHealth;
+    @NonNull
+    private Integer eliteMove;
+    @NonNull
+    private Integer eliteAttack;
+    @NonNull
+    private Integer eliteRange;
     @NonNull
     private List<MonsterInstanceResponseBody> monsterInstances;
 
@@ -28,10 +42,17 @@ public class MonsterResponseBody {
         return new MonsterResponseBody(
                 monster.getId(),
                 monster.getName(),
+                monster.getAttributes(),
+                monster.getEliteAttributes(),
+                monster.getLevel(),
                 monster.getHealth(),
-                monster.getRange(),
-                monster.getAttack(),
                 monster.getMovement(),
+                monster.getAttack(),
+                monster.getRange(),
+                monster.getEliteHealth(),
+                monster.getEliteMove(),
+                monster.getEliteAttack(),
+                monster.getEliteRange(),
                 new ArrayList<>()
         );
     }

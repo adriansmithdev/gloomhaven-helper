@@ -9,7 +9,7 @@ public class RoomResponseBody {
     @NonNull
     private String hash;
     @NonNull
-    private int scenarioNumber;
+    private Integer scenarioNumber;
 
     public static RoomResponseBody create(Room room) {
         return new RoomResponseBody(
