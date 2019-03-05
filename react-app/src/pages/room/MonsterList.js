@@ -48,10 +48,7 @@ class MonsterList extends Component {
           </div>
 
         </div>
-
-        <ul>
-          {this.generateTypes()}
-        </ul>
+        {this.generateTypes()}
       </div>
     );
   }
