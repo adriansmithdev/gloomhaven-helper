@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {deleteMonster, updateMonster} from "../../store/actions/actions";
 import ProgressBar from './../common/ProgressBar';
 import StatusCheckbox from '../room/StatusCheckbox';
+import StatusEffect from './StatusEffect';
 
 class Monster extends Component {
   activeStatuses = ["Poison"];
@@ -40,6 +41,11 @@ class Monster extends Component {
   }
 
   render() {
+    const poison = {
+      id: 152,
+      name: 'Poison',
+      tooltip: "+1 Attack vs figures. Heal removes poison and heal has no other effect."
+    }
     return (
       <>
         <li className="columns" key={this.props.key}>
@@ -62,6 +68,9 @@ class Monster extends Component {
             </button>
           </div>
           <div className="column">
+            {this.props.statuses.map(status => 
+              <StatusEffect status={status} active={false} />
+            )}
             <StatusCheckbox activeStatuses={this.activeStatuses}/> 
           </div>
           <div className="column">
@@ -75,7 +84,8 @@ class Monster extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    hash: state.session.room.hash
+    hash: state.session.room.hash,
+    statuses: state.session.statuses
   };
 }
 
