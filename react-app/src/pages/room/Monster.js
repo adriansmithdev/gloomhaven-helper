@@ -41,11 +41,6 @@ class Monster extends Component {
   }
 
   render() {
-    const poison = {
-      id: 152,
-      name: 'Poison',
-      tooltip: "+1 Attack vs figures. Heal removes poison and heal has no other effect."
-    }
     return (
       <>
         <li className="columns" key={this.props.key}>
