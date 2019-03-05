@@ -24,6 +24,12 @@ input.input-short, select.input-short {
   max-width: 80px;
 }
 
+.icon-small {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+}
+
 .m-2 {
   margin: 2rem;
 }
@@ -34,5 +40,9 @@ input.input-short, select.input-short {
 
 .mr-2 {
   margin-right: 2rem;
+}
+
+.m-0 {
+  margin: 0;
 }
 

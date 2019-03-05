@@ -13,18 +13,21 @@ class MonsterInfo extends Component {
       <>
         {console.log("MONSTER")}
         {console.log(monster)}
-        <div className="row has-text-light">
-          <div className="title themed-font has-text-light is-size-4 column">
+        <div className="columns has-text-light themed-font">
+          <div className="column is-size-4">
             {monster.name}
           </div>
           <div className="column">
-            <img src={Attack} className="icon-small" /> {monster.attack}
+            <img src={Attack} className="icon-small" /> 
+            <span className="is-size-4">{monster.attack}</span>
           </div>
           <div className="column">
-            <img src={Movement} className="icon-small" /> {monster.movement}
+            <img src={Movement} className="icon-small" /> 
+            <span className="is-size-4">{monster.movement}</span>
           </div>
           <div className="column">
-            <img src={Range} className="icon-small" /> {monster.range}
+            <img src={Range} className="icon-small" /> 
+            <span className="is-size-4">{monster.range}</span>
           </div>
           
           
