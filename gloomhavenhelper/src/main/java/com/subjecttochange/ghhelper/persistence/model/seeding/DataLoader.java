@@ -3,6 +3,7 @@ package com.subjecttochange.ghhelper.persistence.model.seeding;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.helpers.JsonFileParser;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
+import com.subjecttochange.ghhelper.persistence.model.orm.Stat;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Status;
@@ -23,14 +24,17 @@ public class DataLoader implements ApplicationRunner {
     private RoomRepository roomRepository;
     private MonsterInstanceRepository monsterInstanceRepository;
     private StatusRepository statusRepository;
+    private StatRepository statRepository;
 
     @Autowired
     public DataLoader(MonsterRepository monsterRepository, RoomRepository roomRepository,
-                      MonsterInstanceRepository monsterInstanceRepository, StatusRepository statusRepository) {
+                      MonsterInstanceRepository monsterInstanceRepository, StatusRepository statusRepository,
+                      StatRepository statRepository) {
         this.monsterRepository = monsterRepository;
         this.roomRepository = roomRepository;
         this.monsterInstanceRepository = monsterInstanceRepository;
         this.statusRepository = statusRepository;
+        this.statRepository = statRepository;
     }
 
     @Override
@@ -38,6 +42,7 @@ public class DataLoader implements ApplicationRunner {
         seedMonsterRepository();
         seedRoomRepository();
         seedStatusRepository();
+        seedStatRepository();
         seedMonsterInstanceRepository();
     }
 
@@ -75,6 +80,16 @@ public class DataLoader implements ApplicationRunner {
             statuses.add(Status.create("Strengthen", "Figure gains advantage on all of its attacks. Removed at end of next turn."));
             statuses.add(Status.create("Bless", "Must shuffle bless into attack modifier deck."));
             statusRepository.saveAll(statuses);
+        }
+    }
+
+    private void seedStatRepository() {
+        if (isRepoEmpty(statRepository)) {
+            System.out.println("SEEDING: Stats");
+            List<Stat> stat = new ArrayList<>();
+            stat.add(Stat.create("Movement", "Describes how far a target can move."));
+            stat.add(Stat.create("Attack", "The amount of damage done."));
+            statRepository.saveAll(stat);
         }
     }
 

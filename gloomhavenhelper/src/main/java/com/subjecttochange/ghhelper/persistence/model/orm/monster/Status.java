@@ -1,6 +1,7 @@
 package com.subjecttochange.ghhelper.persistence.model.orm.monster;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.subjecttochange.ghhelper.persistence.model.orm.BaseModel;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Data
-public class Status {
+public class Status extends BaseModel {
     @Id
     @GeneratedValue(generator = "status_generator")
     @SequenceGenerator(

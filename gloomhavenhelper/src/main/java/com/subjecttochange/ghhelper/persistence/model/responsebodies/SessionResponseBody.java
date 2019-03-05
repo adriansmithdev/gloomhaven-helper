@@ -1,5 +1,6 @@
 package com.subjecttochange.ghhelper.persistence.model.responsebodies;
 
+import com.subjecttochange.ghhelper.persistence.model.orm.Stat;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Status;
 import lombok.Data;
 import lombok.NonNull;
@@ -14,17 +15,18 @@ public class SessionResponseBody {
     private List<MonsterResponseBody> monsters;
     @NonNull
     private List<Status> statuses;
+    @NonNull
+    private List<Stat> stats;
 
-    public static SessionResponseBody create(
-            RoomResponseBody room,
-            List<MonsterResponseBody> monsters,
-            List<Status> statuses
-
-    ) {
+    public static SessionResponseBody create(RoomResponseBody room,
+                                             List<MonsterResponseBody> monsters,
+                                             List<Status> statuses,
+                                             List<Stat> stats) {
         return new SessionResponseBody(
                 room,
                 monsters,
-                statuses
+                statuses,
+                stats
         );
     }
 }

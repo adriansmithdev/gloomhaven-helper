@@ -2,6 +2,7 @@ package com.subjecttochange.ghhelper.controller;
 
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
+import com.subjecttochange.ghhelper.persistence.model.orm.Stat;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Status;
@@ -11,6 +12,7 @@ import com.subjecttochange.ghhelper.persistence.model.responsebodies.RoomRespons
 import com.subjecttochange.ghhelper.persistence.model.responsebodies.SessionResponseBody;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
+import com.subjecttochange.ghhelper.persistence.repository.StatRepository;
 import com.subjecttochange.ghhelper.persistence.repository.StatusRepository;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,8 @@ public class SessionController {
     private MonsterRepository monsterRepository;
     @Autowired
     private StatusRepository statusRepository;
+    @Autowired
+    private StatRepository statRepository;
 
     @GetMapping("/sessions")
     public @ResponseBody Page<SessionResponseBody>
@@ -50,6 +54,7 @@ public class SessionController {
         }
 
         List<Status> statuses = statusRepository.findAll();
+        List<Stat> stats = statRepository.findAll();
 
         ArrayList<SessionResponseBody> sessionResponse = new ArrayList<>();
 
@@ -59,8 +64,9 @@ public class SessionController {
             sessionResponse.add(SessionResponseBody.create(
                     roomResponse,
                     new ArrayList<>(buildMonsterResponses(room)),
-                    statuses)
-            );
+                    statuses,
+                    stats
+            ));
         }
 
 
