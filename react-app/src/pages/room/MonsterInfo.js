@@ -11,8 +11,12 @@ class MonsterInfo extends Component {
     let monster = this.props.monster;
     return (
       <div className="columns has-text-light themed-font">
-        <div className="column is-size-4">
-          {monster.name}
+        <div className="column">
+          <img src={require(`./../../assets/portraits/monsters/${monster.name}.png`)} 
+            className="portrait"
+            alt=""
+          />
+          <span className="is-size-4">{monster.name}</span>
         </div>
         <div className="column">
           <img src={Attack} className="icon-small" alt="Attack: "/> 
