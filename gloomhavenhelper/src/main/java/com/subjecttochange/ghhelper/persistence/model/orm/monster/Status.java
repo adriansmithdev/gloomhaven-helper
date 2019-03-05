@@ -19,8 +19,8 @@ public class Status extends BaseModel {
             initialValue = 1
     )
     private Long id;
-    private String name = "";
-    private String tooltip = "";
+    private String name;
+    private String tooltip;
 
     public Status() {
         super();
@@ -33,4 +33,13 @@ public class Status extends BaseModel {
         return status;
     }
 
+    public Status updateStatus(Status statusRequest){
+        if (statusRequest.getName() != null) {
+            setName(statusRequest.getName());
+        }
+        if (statusRequest.getTooltip() != null) {
+            setTooltip(statusRequest.getTooltip());
+        }
+        return this;
+    }
 }

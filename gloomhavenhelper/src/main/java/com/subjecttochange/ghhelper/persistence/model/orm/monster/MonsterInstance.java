@@ -25,10 +25,10 @@ public class MonsterInstance extends BaseModel {
             initialValue = 1
     )
     private Long id;
-    private Integer currentHealth = 0;
-    private Boolean isElite = false;
+    private Integer currentHealth;
+    private Boolean isElite;
     @ElementCollection(targetClass=String.class)
-    private Set<String> activeStatuses = new HashSet<>();
+    private Set<String> activeStatuses;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "room_id", nullable = false)
@@ -54,17 +54,25 @@ public class MonsterInstance extends BaseModel {
 
     public static MonsterInstance create(Integer currentHealth, Room room, Monster monster) {
         MonsterInstance monsterInstance = new MonsterInstance();
+        monsterInstance.setCurrentHealth(currentHealth);
+        monsterInstance.setIsElite(false);
+        monsterInstance.setActiveStatuses(new HashSet<>());
         monsterInstance.setRoom(room);
         monsterInstance.setMonster(monster);
-        monsterInstance.setCurrentHealth(currentHealth);
         monsterInstance.setMonsterId(monster.getId());
         return monsterInstance;
     }
 
     public MonsterInstance updateMonsterInstance(MonsterInstance monsterRequest) {
-        setCurrentHealth(monsterRequest.getCurrentHealth());
-        setIsElite(monsterRequest.getIsElite());
-        setActiveStatuses(monsterRequest.getActiveStatuses());
+        if (monsterRequest.getCurrentHealth() != null) {
+            setCurrentHealth(monsterRequest.getCurrentHealth());
+        }
+        if (monsterRequest.getIsElite() != null) {
+            setIsElite(monsterRequest.getIsElite());
+        }
+        if (monsterRequest.getActiveStatuses() != null) {
+            setActiveStatuses(monsterRequest.getActiveStatuses());
+        }
         return this;
     }
 
