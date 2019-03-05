@@ -66,7 +66,7 @@ class Monster extends Component {
             {this.props.statuses.map(status => 
               <StatusEffect status={status} active={false} />
             )}
-            <StatusCheckbox activeStatuses={this.activeStatuses}/> 
+            <StatusCheckbox activeStatuses={this.activeStatuses} statuses={this.props.statuses}/> 
           </div>
           <div className="column">
             <button type="button" className="button is-dark themed-font" onClick={this.deleteMonster}>X</button>

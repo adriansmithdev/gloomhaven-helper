@@ -6,12 +6,12 @@ import {showModal, hideModal} from './../../store/actions/actions'
 
 const customStyles = {
     overlay: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(255, 255, 255, 0)'
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(255, 255, 255, 0)'
     },
     content : {
       top                   : '50%',
@@ -25,53 +25,53 @@ const customStyles = {
 
   Modal.setAppElement(this);
 
-class StatusCheckbox extends Component { 
+class StatusCheckbox extends Component {
 
-    checkboxes = [
-        {
-          name: 'poison-check',
-          key: 'poison-check',
-          label: 'Poison',
-        },
-        {
-          name: 'check-box-2',
-          key: 'checkBox2',
-          label: 'Check Box 2',
-        },
-        {
-          name: 'check-box-3',
-          key: 'checkBox3',
-          label: 'Check Box 3',
-        },
-        {
-          name: 'check-box-4',
-          key: 'checkBox4',
-          label: 'Check Box 4',
-        },
-    ];
+        baseStyles = {
+            display: 'inline-block',
+            width: '2.5rem',
+            height: '2.5rem',
+          }
+          inactiveStyles = {
+            opacity: 0.25
+          }
 
     render() {
 
-        const statuses = this.checkboxes.map(checkbox => (
+        const usedStyles = (this.props.activeStatuses === true) ? {
+            ...this.baseStyles,
+          } : {
+            ...this.baseStyles,
+            ...this.inactiveStyles
+          }
 
-                <label key={checkbox.key}>
-                {checkbox.label}
-                <input type="checkbox" checked={this.props.activeStatuses.includes(checkbox.label)} name={checkbox.name} />
-                </label>
+        const statuses = this.props.statuses.map(status => (
+                <td>
+                <div style={usedStyles} className="status-toggle">
+                    <img src={require(`./../../assets/icons/statuses/${status.name}.svg`)} alt={status.name} title={status.tooltip}/>
+                </div>
+                </td>
+        ));
 
+        const statusesNames = this.props.statuses.map(status => (
+            <th>{status.name}</th>
         ));
 
         return(
             <div>
-                <button onClick={this.props.showModal}>Open Modal</button>
-                <Modal 
-                  isOpen={this.props.modalIsOpen}
-                  onRequestClose={this.props.hideModal}
-                  style={customStyles}
-                  contentLabel="Modal"
+                <button className="button is-dark themed-font" onClick={this.props.showModal}>Open Modal</button>
+                <Modal
+                isOpen={this.props.modalIsOpen}
+                onRequestClose={this.props.hideModal}
+                style={customStyles}
+                contentLabel="Modal"
                 >
                 
-                {statuses}
+
+                <table class="table">
+                    <thead><tr>{statusesNames}</tr></thead>
+                    <tbody><tr class="has-text-centered">{statuses}</tr></tbody>
+                </table>
 
                 </Modal>
             </div>
