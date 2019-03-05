@@ -4,12 +4,14 @@ import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
+import com.subjecttochange.ghhelper.persistence.model.orm.monster.Status;
 import com.subjecttochange.ghhelper.persistence.model.responsebodies.MonsterInstanceResponseBody;
 import com.subjecttochange.ghhelper.persistence.model.responsebodies.MonsterResponseBody;
 import com.subjecttochange.ghhelper.persistence.model.responsebodies.RoomResponseBody;
 import com.subjecttochange.ghhelper.persistence.model.responsebodies.SessionResponseBody;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
+import com.subjecttochange.ghhelper.persistence.repository.StatusRepository;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,6 +34,8 @@ public class SessionController {
     private RoomRepository roomRepository;
     @Autowired
     private MonsterRepository monsterRepository;
+    @Autowired
+    private StatusRepository statusRepository;
 
     @GetMapping("/sessions")
     public @ResponseBody Page<SessionResponseBody>
@@ -45,6 +49,8 @@ public class SessionController {
             rooms = new PageImpl<>(Collections.singletonList(room));
         }
 
+        List<Status> statuses = statusRepository.findAll();
+
         ArrayList<SessionResponseBody> sessionResponse = new ArrayList<>();
 
         for (Room room : rooms) {
@@ -52,8 +58,12 @@ public class SessionController {
 
             sessionResponse.add(SessionResponseBody.create(
                     roomResponse,
-                    new ArrayList<>(buildMonsterResponses(room))));
+                    new ArrayList<>(buildMonsterResponses(room)),
+                    statuses)
+            );
         }
+
+
 
         return new PageImpl<>(sessionResponse);
     }
