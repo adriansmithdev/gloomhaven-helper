@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 import MonsterType from './MonsterType';
 
-import {addMonster} from './../../store/actions/actions';
+import {addMonster} from './../../../store/actions/actions';
 
 class MonsterList extends Component {
 

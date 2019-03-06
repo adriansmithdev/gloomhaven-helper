@@ -23,9 +23,7 @@ const ProgressBar = (props) => {
     width: '100%',
     backgroundColor: '#262626',
     height: props.height || defaultHeight,
-    padding: 0,
-    border: '2px ridge gray',
-    boxSizing: 'content-box'
+    padding: 0
   }
 
   const barStyles = {

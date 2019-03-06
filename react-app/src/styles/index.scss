@@ -1,3 +1,9 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;  
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -9,6 +15,7 @@ body {
   background-color: #222222;
   width: 100vw;
   min-height: 100vh;
+  
 }
 
 code {
@@ -22,12 +29,6 @@ code {
 
 input.input-short, select.input-short {
   max-width: 80px;
-}
-
-.icon-small {
-  display: inline-block;
-  width: 2rem;
-  height: 2rem;
 }
 
 .m-2 {
@@ -50,4 +51,6 @@ input.input-short, select.input-short {
   width: 4rem;
   height: 4rem;
 }
+
+
 

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 import Monster from './Monster';
-import MonsterInfo from "./MonsterInfo";
+import MonsterTypeHeader from './MonsterTypeHeader';
+import './monster.scss';
 
 class MonsterType extends Component{
 
@@ -14,10 +15,12 @@ class MonsterType extends Component{
   
   render() {
     return (
-      <>
-        <MonsterInfo monster={this.props.type}/>
-        {this.generateMonsterInstances()}
-      </>
+      <div className="monster-type">
+        <MonsterTypeHeader monster={this.props.type}/>
+        <table>
+          {this.generateMonsterInstances()}
+        </table>
+      </div>
     );
   }
 

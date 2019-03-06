@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import Modal from 'react-modal';
-import {showModal, hideModal} from './../../store/actions/actions'
+import {showModal, hideModal} from '../../../store/actions/actions'
 
 
 const customStyles = {
@@ -25,7 +25,7 @@ const customStyles = {
 
   Modal.setAppElement(this);
 
-class StatusCheckbox extends Component {
+class StatusContainer extends Component {
 
         baseStyles = {
             display: 'inline-block',
@@ -48,7 +48,7 @@ class StatusCheckbox extends Component {
         const statuses = this.props.statuses.map(status => (
                 <td>
                 <div style={usedStyles} className="status-toggle">
-                    <img src={require(`./../../assets/icons/statuses/${status.name}.svg`)} alt={status.name} title={status.tooltip}/>
+                    <img src={require(`./../../../assets/icons/statuses/${status.name}.svg`)} alt={status.name} title={status.tooltip}/>
                 </div>
                 </td>
         ));
@@ -96,6 +96,6 @@ const mapStateToProps = (state) => {
   }
   
   
-export default connect(mapStateToProps, mapDispatchToProps)(StatusCheckbox);
+export default connect(mapStateToProps, mapDispatchToProps)(StatusContainer);
 
 
