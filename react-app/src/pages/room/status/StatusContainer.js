@@ -46,7 +46,7 @@ class StatusContainer extends Component {
           }
 
         const statuses = this.props.statuses.map(status => (
-                <td>
+                <td key={status.id}>
                 <div style={usedStyles} className="status-toggle">
                     <img src={require(`./../../../assets/icons/statuses/${status.name}.svg`)} alt={status.name} title={status.tooltip}/>
                 </div>
@@ -54,7 +54,7 @@ class StatusContainer extends Component {
         ));
 
         const statusesNames = this.props.statuses.map(status => (
-            <th>{status.name}</th>
+            <th key={status.id}>{status.name}</th>
         ));
 
         return(

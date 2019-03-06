@@ -41,6 +41,7 @@ class Monster extends Component {
 
   render() {
     return (
+      <tbody>
       <tr className="monster-instance" key={this.props.key}>
         <td className="monster-identifier">
           #: {this.props.index + 1}
@@ -62,12 +63,13 @@ class Monster extends Component {
           </button>
         </td>
         <td className="monster-statuses">
-          <StatusContainer activeStatuses={this.activeStatuses} statuses={this.props.statuses}/> 
+          <StatusContainer activeStatuses={this.activeStatuses} statuses={this.props.statuses}/>
         </td>
         <td className="monster-remove">
           <button type="button" onClick={this.deleteMonster}>X</button>
         </td>
       </tr>
+      </tbody>
     );
   }
 }

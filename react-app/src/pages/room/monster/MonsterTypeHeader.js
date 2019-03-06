@@ -6,7 +6,6 @@ import Range from './../../../assets/icons/stats/range.svg';
 
 
 class MonsterTypeHeader extends Component {
-
   render() {
     let monster = this.props.monster;
     let portrait;
@@ -27,15 +26,15 @@ class MonsterTypeHeader extends Component {
         </div>
         <div className="monster-stats">
           <div className="monster-stat">
-            <img src={Attack} className="inline-icon" alt="Attack: "/>
+            <img src={Attack} className="inline-icon" alt="Attack: " title="Allows a character to do a base X amount of damage to an enemy within their range." />
             {monster.attack}
           </div>
           <div className="monster-stat">
-            <img src={Movement} className="inline-icon" alt="Movement: "/>
+            <img src={Movement} className="inline-icon" alt="Movement: " title="Allows a character to move up to X number of hexes on the map."/>
             {monster.movement}
           </div>
           <div className="monster-stat">
-            <img src={Range} className="inline-icon" alt="Range: "/>
+            <img src={Range} className="inline-icon" alt="Range: " title="Any enemy within Y hexes can be targeted by the attack."/>
             {monster.range}
           </div>
           
@@ -51,7 +50,7 @@ class MonsterTypeHeader extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    //state needed as props like stats
+
   };
 }
 
