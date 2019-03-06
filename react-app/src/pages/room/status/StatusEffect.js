@@ -21,21 +21,24 @@ class StatusEffect extends Component {
   }
 
   toggleStatus() {
-    let newStatuses = [...this.props.instance.activeStatuses];
+    let newStatuses;
     if(this.statusIsActive()) {
-      const indexOfActive = newStatuses.indexOf(this.props.status);
-      newStatuses.splice(indexOfActive, 1);
+      newStatuses = this.props.instance.activeStatuses.filter(current =>
+         this.props.status.name !== current
+      );
+        
     } else {
-      newStatuses.push(this.props.status.name);
+      newStatuses = [
+        ...this.props.instance.activeStatuses,
+        this.props.status.name
+      ];
     }
 
     const newMonster = {
       ...this.props.instance,
       activeStatuses: newStatuses
     }
-
-    console.log(newMonster);
-
+    
     this.props.updateMonster(this.props.hash, newMonster);
     
   }
