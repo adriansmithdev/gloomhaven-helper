@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {deleteMonster, updateMonster} from "../../../store/actions/actions";
 import ProgressBar from './../../common/ProgressBar';
 import StatusContainer from '../status/StatusContainer';
+import StatusEffect from '../status/StatusEffect';
 
 class Monster extends Component {
 
@@ -38,7 +39,14 @@ class Monster extends Component {
     this.props.deleteMonster(this.props.hash, this.props.instance);
   }
 
+  
+
   render() {
+
+    const statuses = this.props.statuses.map(status => (
+        <StatusEffect key={status.id} instance={this.props.instance} status={status}/>
+    ));
+
     return (
       <tbody>
       <tr className="monster-instance" key={this.props.key}>
@@ -66,6 +74,9 @@ class Monster extends Component {
             activeStatuses={this.props.instance.activeStatuses} 
             statuses={this.props.statuses}
           /> 
+        </td>
+        <td>
+          {statuses}
         </td>
         <td className="monster-remove">
           <button type="button" onClick={this.deleteMonster}>X</button>
