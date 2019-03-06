@@ -2,13 +2,16 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {deleteMonster, updateMonster} from "../../../store/actions/actions";
 import ProgressBar from './../../common/ProgressBar';
-import StatusContainer from '../status/StatusContainer';
 import StatusEffect from '../status/StatusEffect';
 
 class Monster extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      showInactiveConditions: true
+    }
 
     this.increaseHealth = this.increaseHealth.bind(this);
     this.decreaseHealth = this.decreaseHealth.bind(this);
@@ -39,12 +42,23 @@ class Monster extends Component {
     this.props.deleteMonster(this.props.hash, this.props.instance);
   }
 
+  toggleInactiveStatuses() {
+    this.setState({
+      ...this.state,
+      showInactiveConditions: !this.state.showInactiveConditions
+    });
+  }
+
   
 
   render() {
 
     const statuses = this.props.statuses.map(status => (
-        <StatusEffect key={status.id} instance={this.props.instance} status={status}/>
+        <StatusEffect key={status.id} 
+          showInactive={this.state.showInactiveConditions} 
+          instance={this.props.instance} 
+          status={status}
+        />
     ));
 
     return (
@@ -71,6 +85,10 @@ class Monster extends Component {
         </td>
         <td>
           {statuses}
+          <button className="button is-dark is-small" 
+            onClick={this.toggleInactiveStatuses.bind(this)}>
+            Statuses
+          </button>
         </td>
         <td className="monster-remove">
           <button type="button" onClick={this.deleteMonster}>X</button>

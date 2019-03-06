@@ -50,7 +50,9 @@ class StatusEffect extends Component {
       ...this.baseStyles,
       ...this.inactiveStyles
     }
-    return (
+    return (this.props.showInactive && !this.statusIsActive()) ? (
+      <></>
+    ) : (
       <div style={usedStyles} className="status-toggle">
         <img src={require(`./../../../assets/icons/statuses/${this.props.status.name}.svg`)} 
           alt={this.props.status.name} 
