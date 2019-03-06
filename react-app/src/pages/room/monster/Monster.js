@@ -5,7 +5,6 @@ import ProgressBar from './../../common/ProgressBar';
 import StatusContainer from '../status/StatusContainer';
 
 class Monster extends Component {
-  activeStatuses = ["Poison"];
 
   constructor(props) {
     super(props);
@@ -63,7 +62,10 @@ class Monster extends Component {
           </button>
         </td>
         <td className="monster-statuses">
-          <StatusContainer activeStatuses={this.activeStatuses} statuses={this.props.statuses}/>
+          <StatusContainer instance={this.props.instance} 
+            activeStatuses={this.props.instance.activeStatuses} 
+            statuses={this.props.statuses}
+          /> 
         </td>
         <td className="monster-remove">
           <button type="button" onClick={this.deleteMonster}>X</button>
