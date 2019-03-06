@@ -69,12 +69,6 @@ class Monster extends Component {
             +
           </button>
         </td>
-        <td className="monster-statuses">
-          <StatusContainer instance={this.props.instance} 
-            activeStatuses={this.props.instance.activeStatuses} 
-            statuses={this.props.statuses}
-          /> 
-        </td>
         <td>
           {statuses}
         </td>
