@@ -9,9 +9,16 @@ class MonsterTypeHeader extends Component {
 
   render() {
     let monster = this.props.monster;
+    let portrait;
+    try {
+      portrait = require(`./../../../assets/portraits/monsters/${monster.name}.png`);
+    } catch(e) {
+      console.log('Failed to find portrait!');
+      portrait = require('./../../../assets/portraits/monsters/default.svg');
+    }
     return (
       <div className="monster-type-header themed-font">
-        <img src={require(`./../../../assets/portraits/monsters/${monster.name}.png`)} 
+        <img src={portrait} 
           className="portrait"
           alt=""
         />
