@@ -86,7 +86,9 @@ div.monster-type {
           }
         }
         &.monster-statuses {
+          width: 408px;
           button {
+            float: right;
           }
         }
         &.monster-remove {

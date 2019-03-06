@@ -83,9 +83,9 @@ class Monster extends Component {
             +
           </button>
         </td>
-        <td>
+        <td className="monster-statuses">
           {statuses}
-          <button className="button is-dark is-small" 
+          <button className="button is-dark" 
             onClick={this.toggleInactiveStatuses.bind(this)}>
             Statuses
           </button>
