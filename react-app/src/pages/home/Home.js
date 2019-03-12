@@ -58,24 +58,27 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="card">
-        <div className="card-content">
-          <h1 className="title themed-font level-item">Gloomhaven Helper</h1>
+      <div className="container">
+        <div className="card">
+          <div className="card-content">
+            <h1 className="title themed-font level-item">Gloomhaven Helper</h1>
 
-          <p className="level">
-            The Gloomhaven Helper is a tool for Gloomhaven Players who want assistance managing
-            the game, the Gloomhaven Helper is a web-based board game assistance tool that speeds
-            up the pace of play, while making it easier to manage all content. Unlike the base
-            game out of the box, our project reduces the number of physical tokens and trackers
-            players need to manage.
-          </p>
+            <p className="level">
+              The Gloomhaven Helper is a tool for Gloomhaven Players who want assistance managing
+              the game, the Gloomhaven Helper is a web-based board game assistance tool that speeds
+              up the pace of play, while making it easier to manage all content. Unlike the base
+              game out of the box, our project reduces the number of physical tokens and trackers
+              players need to manage.
+            </p>
 
-          <span className="level-item">
-            {this.state.showHashInput ? this.renderHashInput() : this.renderJoinRoomBtn()}
-            </span>
+            <span className="level-item">
+              {this.state.showHashInput ? this.renderHashInput() : this.renderJoinRoomBtn()}
+              </span>
 
+          </div>
         </div>
       </div>
+      
     );
   }
 }
