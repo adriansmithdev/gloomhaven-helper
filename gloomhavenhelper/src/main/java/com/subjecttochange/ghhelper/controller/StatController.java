@@ -1,6 +1,7 @@
 package com.subjecttochange.ghhelper.controller;
 
 import com.subjecttochange.ghhelper.exception.BadRequestException;
+import com.subjecttochange.ghhelper.exception.Errors;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.Stat;
 import com.subjecttochange.ghhelper.persistence.repository.StatRepository;
@@ -20,7 +21,6 @@ import java.util.Collections;
 public class StatController {
 
     private StatRepository statRepository;
-    private static final String NOT_FOUND = "Stat not found with id ";
 
     @Autowired
     public StatController(StatRepository statRepository) {
@@ -35,7 +35,7 @@ public class StatController {
         } else {
             return new PageImpl<>(Collections.singletonList(
                     statRepository.findById(id).orElseThrow(() ->
-                            new ResourceNotFoundException(NOT_FOUND + id))));
+                            new ResourceNotFoundException(Errors.NO_ID_STAT + id))));
         }
     }
 
@@ -53,7 +53,7 @@ public class StatController {
     @ResponseBody
     public Stat updateStat(@RequestParam(value = "id") Long id, @Valid @RequestBody Stat statRequest) {
         Stat statResult = statRepository.findById(id).orElseThrow(() ->
-                new ResourceNotFoundException(NOT_FOUND + id));
+                new ResourceNotFoundException(Errors.NO_ID_STAT + id));
         statResult = statResult.updateStat(statRequest);
         statResult = statRepository.save(statResult);
         return statResult;
@@ -62,7 +62,7 @@ public class StatController {
     @DeleteMapping("/stats")
     public ResponseEntity<?> deleteStat(@RequestParam(value = "id") Long id) {
         statRepository.delete(statRepository.findById(id).orElseThrow(() ->
-                new ResourceNotFoundException(NOT_FOUND + id)));
+                new ResourceNotFoundException(Errors.NO_ID_STAT + id)));
         return ResponseEntity.ok().build();
     }
 }

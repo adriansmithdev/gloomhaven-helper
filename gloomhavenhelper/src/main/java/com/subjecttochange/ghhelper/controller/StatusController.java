@@ -1,6 +1,7 @@
 package com.subjecttochange.ghhelper.controller;
 
 import com.subjecttochange.ghhelper.exception.BadRequestException;
+import com.subjecttochange.ghhelper.exception.Errors;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Status;
 import com.subjecttochange.ghhelper.persistence.repository.StatusRepository;
@@ -20,7 +21,6 @@ import java.util.Collections;
 public class StatusController {
 
     private StatusRepository statusRepository;
-    private static final String NOT_FOUND = "Status not found with id ";
 
     @Autowired
     public StatusController(StatusRepository statusRepository) {
@@ -35,7 +35,7 @@ public class StatusController {
         } else {
             return new PageImpl<>(Collections.singletonList(
                     statusRepository.findById(id).orElseThrow(() ->
-                            new ResourceNotFoundException(NOT_FOUND + id))));
+                            new ResourceNotFoundException(Errors.NO_ID_STATUS + id))));
         }
     }
 
@@ -53,7 +53,7 @@ public class StatusController {
     @ResponseBody
     public Status updateStatus(@RequestParam(value = "id") Long id, @Valid @RequestBody Status statusRequest) {
         Status statusResult = statusRepository.findById(id).orElseThrow(() ->
-                new ResourceNotFoundException(NOT_FOUND + id));
+                new ResourceNotFoundException(Errors.NO_ID_STATUS + id));
         statusResult = statusResult.updateStatus(statusRequest);
         statusResult = statusRepository.save(statusResult);
         return statusResult;
@@ -62,7 +62,7 @@ public class StatusController {
     @DeleteMapping("/statuses")
     public ResponseEntity<?> deleteStatus(@RequestParam(value = "id") Long id) {
         statusRepository.delete(statusRepository.findById(id).orElseThrow(() ->
-                new ResourceNotFoundException(NOT_FOUND + id)));
+                new ResourceNotFoundException(Errors.NO_ID_STATUS + id)));
         return ResponseEntity.ok().build();
     }
 }

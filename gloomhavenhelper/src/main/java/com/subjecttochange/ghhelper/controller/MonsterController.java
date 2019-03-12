@@ -1,5 +1,6 @@
 package com.subjecttochange.ghhelper.controller;
 
+import com.subjecttochange.ghhelper.exception.Errors;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.responsebodies.MonsterResponseBody;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
@@ -18,8 +19,6 @@ import java.util.Collections;
 @RestController
 public class MonsterController {
 
-    private static final String NOT_FOUND = "Monster not found with id ";
-
     @Autowired
     private MonsterRepository monsterRepository;
 
@@ -32,7 +31,7 @@ public class MonsterController {
             monsters = monsterRepository.findAll(pageable);
         } else {
             Monster monster = monsterRepository.findById(id).orElseThrow(() ->
-                    new ResourceNotFoundException(NOT_FOUND + id));
+                    new ResourceNotFoundException(Errors.NO_ID_MONSTER + id));
             monsters = new PageImpl<>(Collections.singletonList(monster));
         }
 
@@ -58,7 +57,7 @@ public class MonsterController {
     @ResponseBody
     public MonsterResponseBody updateMonster(@RequestParam(value = "id") Long id,
                                        @Valid @RequestBody(required = false) Monster monsterRequest) {
-        Monster monster = monsterRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + id));
+        Monster monster = monsterRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Errors.NO_ID_MONSTER + id));
         monster = monster.updateMonster(monsterRequest);
         monster = monsterRepository.save(monster);
         return MonsterResponseBody.create(monster);
@@ -67,7 +66,7 @@ public class MonsterController {
     @DeleteMapping("/monsters")
     public ResponseEntity<?> deleteMonster(@RequestParam(value = "id") Long id) {
         monsterRepository.delete(monsterRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + id)));
+                .orElseThrow(() -> new ResourceNotFoundException(Errors.NO_ID_MONSTER + id)));
         return ResponseEntity.ok().build();
     }
 }

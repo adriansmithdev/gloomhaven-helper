@@ -1,5 +1,6 @@
 package com.subjecttochange.ghhelper.controller;
 
+import com.subjecttochange.ghhelper.exception.Errors;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.responsebodies.RoomResponseBody;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
@@ -26,8 +27,6 @@ import java.util.Collections;
 @ToString
 public class RoomController {
 
-    private static final String NOT_FOUND = "Room not found with hash ";
-
     @Autowired
     private RoomRepository roomRepository;
 
@@ -45,7 +44,7 @@ public class RoomController {
             rooms = roomRepository.findAll(pageable);
         } else {
             Room room = roomRepository.findByHash(hash).orElseThrow(() ->
-                    new ResourceNotFoundException(NOT_FOUND + hash));
+                    new ResourceNotFoundException(Errors.NO_HASH_ROOM + hash));
             rooms = new PageImpl<>(Collections.singletonList(room));
         }
 
@@ -78,7 +77,7 @@ public class RoomController {
     @ResponseBody
     public RoomResponseBody updateRoom(@RequestParam(value = "hash") String hash,
                                        @Valid @RequestBody(required = false) Room roomRequest) {
-        Room room = roomRepository.findByHash(hash).orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + hash));
+        Room room = roomRepository.findByHash(hash).orElseThrow(() -> new ResourceNotFoundException(Errors.NO_HASH_ROOM + hash));
         room = room.updateRoom(roomRequest);
         room = roomRepository.save(room);
         return RoomResponseBody.create(room);
@@ -92,7 +91,7 @@ public class RoomController {
     @DeleteMapping("/rooms")
     public ResponseEntity<?> deleteRoom(@RequestParam(value = "hash") String hash) {
         roomRepository.delete(roomRepository.findByHash(hash)
-                .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + hash)));
+                .orElseThrow(() -> new ResourceNotFoundException(Errors.NO_HASH_ROOM + hash)));
         return ResponseEntity.ok().build();
     }
 }

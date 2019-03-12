@@ -1,5 +1,6 @@
 package com.subjecttochange.ghhelper.controller;
 
+import com.subjecttochange.ghhelper.exception.Errors;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.model.orm.Stat;
@@ -30,8 +31,6 @@ import java.util.*;
 @ToString
 public class SessionController {
 
-    private static final String NOT_FOUND = "Room not found with hash ";
-
     @Autowired
     private RoomRepository roomRepository;
     @Autowired
@@ -49,7 +48,7 @@ public class SessionController {
             rooms = roomRepository.findAll(pageable);
         } else {
             Room room = roomRepository.findByHash(hash).orElseThrow(() ->
-                    new ResourceNotFoundException(NOT_FOUND + hash));
+                    new ResourceNotFoundException(Errors.NO_HASH_ROOM + hash));
             rooms = new PageImpl<>(Collections.singletonList(room));
         }
 

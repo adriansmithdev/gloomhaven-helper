@@ -1,5 +1,6 @@
 package com.subjecttochange.ghhelper.controller;
 
+import com.subjecttochange.ghhelper.exception.Errors;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
@@ -27,9 +28,6 @@ import java.util.Collections;
 @RestController
 @ToString
 public class MonsterInstanceController {
-    private static final String NOT_FOUND_ROOM = "Room not found with hash ";
-    private static final String NOT_FOUND_INSTANCE = "Monster instance not found with id ";
-    private static final String NOT_FOUND_MONSTER = "Monster not found with id ";
 
     private RoomRepository roomRepository;
     private MonsterRepository monsterRepository;
@@ -52,7 +50,7 @@ public class MonsterInstanceController {
             return monsterInstanceRepository.findByRoomHash(hash, pageable);
         } else {
             MonsterInstance monsterInstance = monsterInstanceRepository.findById(id).orElseThrow(() ->
-                    new ResourceNotFoundException(NOT_FOUND_INSTANCE + id));
+                    new ResourceNotFoundException(Errors.NO_ID_INSTANCE + id));
             MonsterInstance.checkHashMatchesGiven(monsterInstance, hash, id);
             return new PageImpl<>(Collections.singletonList(monsterInstance));
         }
@@ -62,9 +60,9 @@ public class MonsterInstanceController {
     public MonsterInstance createMonsterInstance(@RequestParam(value = "hash") String hash,
                                                  @Valid @RequestBody(required = false) MonsterInstance request) {
         Room room = roomRepository.findByHash(hash)
-                .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_ROOM + request.getMonsterId()));
+                .orElseThrow(() -> new ResourceNotFoundException(Errors.NO_HASH_ROOM + request.getMonsterId()));
         Monster monster = monsterRepository.findById(request.getMonsterId())
-                .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_MONSTER + request.getMonsterId()));
+                .orElseThrow(() -> new ResourceNotFoundException(Errors.NO_ID_MONSTER + request.getMonsterId()));
 
         MonsterInstance monsterInstance = MonsterInstance.create(room, monster);
         monsterInstance = monsterInstance.updateMonsterInstance(request);
@@ -76,9 +74,9 @@ public class MonsterInstanceController {
                                                  @RequestParam(value = "id") Long id,
                                                  @Valid @RequestBody(required = false) MonsterInstance request) {
         MonsterInstance monsterInstance = monsterInstanceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_INSTANCE + id));
+                .orElseThrow(() -> new ResourceNotFoundException(Errors.NO_ID_INSTANCE + id));
         Monster monster = monsterRepository.findById(request.getMonsterId())
-                .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_MONSTER + request.getMonsterId()));
+                .orElseThrow(() -> new ResourceNotFoundException(Errors.NO_ID_MONSTER + request.getMonsterId()));
 
         MonsterInstance.checkHashMatchesGiven(monsterInstance, hash, id);
 
@@ -91,7 +89,7 @@ public class MonsterInstanceController {
     public ResponseEntity<?> deleteMonsterInstance(@RequestParam(value = "hash") String hash,
                                                    @RequestParam(value = "id") Long id) {
         MonsterInstance monsterInstance = monsterInstanceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_MONSTER + id));
+                .orElseThrow(() -> new ResourceNotFoundException(Errors.NO_ID_MONSTER + id));
         MonsterInstance.checkHashMatchesGiven(monsterInstance, hash, id);
 
         monsterInstanceRepository.delete(monsterInstance);
