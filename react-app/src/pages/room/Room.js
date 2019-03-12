@@ -46,7 +46,9 @@ class Room extends Component {
         <nav className="navbar is-black">
           <div className="navbar-brand">
             <div className="navbar-item">
-              <h1 className="title themed-font has-text-light">Gloomhaven Helper</h1>
+              <a href="/"  className="title themed-font has-text-light">
+                Gloomhaven Helper
+              </a>
             </div>
             <div className="navbar-item">
               <strong className="has-text-light">Room: {this.props.session.room.hash}</strong>
