@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+
+// Components
+import ElementList from './elements/ElementList';
 import MonsterList from './monster/MonsterList';
 import LoadingScreen from './../common/LoadingScreen';
 import { Redirect } from 'react-router';
 
+// Actions
 import { getSession } from './../../store/actions/session';
 import { updateScenario } from './../../store/actions/actions';
 import { setStatus } from './../../store/actions/storeActions';
@@ -70,14 +74,16 @@ class Room extends Component {
             </div>
           </div>
         </nav>
-        <MonsterList />
+        <div className="container">
+          <MonsterList />
 
-        <span className="input-group-btn">
-          <Link className="button is-dark is-large themed-font m-2" to={"/"}>
-            Leave Room
-          </Link>
-        </span>
-        </>
+          <span className="input-group-btn">
+            <Link className="button is-dark is-large themed-font m-2" to={"/"}>
+              Leave Room
+            </Link>
+          </span>
+        </div>
+      </>
     );
   }
 
