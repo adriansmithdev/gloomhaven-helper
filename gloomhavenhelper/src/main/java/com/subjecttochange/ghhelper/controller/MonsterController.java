@@ -19,8 +19,12 @@ import java.util.Collections;
 @RestController
 public class MonsterController {
 
-    @Autowired
     private MonsterRepository monsterRepository;
+
+    @Autowired
+    public MonsterController(MonsterRepository monsterRepository) {
+        this.monsterRepository = monsterRepository;
+    }
 
     @GetMapping("/monsters")
     @ResponseBody

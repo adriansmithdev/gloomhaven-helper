@@ -31,14 +31,19 @@ import java.util.*;
 @ToString
 public class SessionController {
 
-    @Autowired
     private RoomRepository roomRepository;
-    @Autowired
     private MonsterRepository monsterRepository;
-    @Autowired
     private StatusRepository statusRepository;
-    @Autowired
     private StatRepository statRepository;
+
+    @Autowired
+    public SessionController(RoomRepository roomRepository, MonsterRepository monsterRepository,
+                             StatusRepository statusRepository, StatRepository statRepository) {
+        this.roomRepository = roomRepository;
+        this.monsterRepository = monsterRepository;
+        this.statusRepository = statusRepository;
+        this.statRepository = statRepository;
+    }
 
     @GetMapping("/sessions")
     public @ResponseBody Page<SessionResponseBody>

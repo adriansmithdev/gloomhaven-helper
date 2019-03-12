@@ -27,8 +27,12 @@ import java.util.Collections;
 @ToString
 public class RoomController {
 
-    @Autowired
     private RoomRepository roomRepository;
+
+    @Autowired
+    public RoomController(RoomRepository roomRepository) {
+        this.roomRepository = roomRepository;
+    }
 
     /**
      * Returns a list of all rooms
