@@ -30,6 +30,7 @@ public class Room extends BaseModel {
 
     private String hash;
     private Integer scenarioNumber;
+    private Integer round;
 
     @OrderBy("created_at")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "room")
@@ -48,9 +49,14 @@ public class Room extends BaseModel {
     }
 
     public static Room createRoom(String hash, Integer scenarioNumber) {
+        return createRoom(hash, scenarioNumber, 0);
+    }
+
+    public static Room createRoom(String hash, Integer scenarioNumber, Integer round) {
         Room room = new Room();
         room.setHash(hash);
         room.setScenarioNumber(scenarioNumber);
+        room.setRound(round);
         return room;
     }
 
@@ -60,6 +66,9 @@ public class Room extends BaseModel {
         }
         if (roomRequest.getScenarioNumber() != null) {
             setScenarioNumber(roomRequest.getScenarioNumber());
+        }
+        if (roomRequest.getRound() != null) {
+            setRound(roomRequest.getRound());
         }
         return this;
     }

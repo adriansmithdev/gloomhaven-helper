@@ -10,11 +10,14 @@ public class RoomResponseBody {
     private String hash;
     @NonNull
     private Integer scenarioNumber;
+    @NonNull
+    private Integer round;
 
     public static RoomResponseBody create(Room room) {
         return new RoomResponseBody(
                 room.getHash(),
-                room.getScenarioNumber()
+                room.getScenarioNumber(),
+                room.getRound()
         );
     }
 }
