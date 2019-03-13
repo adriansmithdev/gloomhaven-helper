@@ -41,24 +41,15 @@ public class RoomController {
      */
     @GetMapping("/rooms")
     @ResponseBody
-    public Page<RoomResponseBody>
+    public Page<Room>
     getRooms(@RequestParam(value = "hash", required = false) String hash, Pageable pageable) {
-        Page<Room> rooms;
         if (hash == null) {
-            rooms = roomRepository.findAll(pageable);
+            return roomRepository.findAll(pageable);
         } else {
             Room room = roomRepository.findByHash(hash).orElseThrow(() ->
                     new ResourceNotFoundException(Errors.NO_HASH_ROOM + hash));
-            rooms = new PageImpl<>(Collections.singletonList(room));
+            return new PageImpl<>(Collections.singletonList(room));
         }
-
-        ArrayList<RoomResponseBody> roomResponseBodies = new ArrayList<>();
-
-        for (Room room : rooms) {
-             roomResponseBodies.add(RoomResponseBody.create(room));
-        }
-
-        return new PageImpl<>(roomResponseBodies);
     }
 
     /**
@@ -67,8 +58,8 @@ public class RoomController {
      */
     @PostMapping("/rooms")
     @ResponseBody
-    public RoomResponseBody createRoom() {
-        return RoomResponseBody.create(roomRepository.save(Room.createWithRandomHash()));
+    public Room createRoom() {
+        return roomRepository.save(Room.createWithRandomHash());
     }
 
     /**
@@ -79,12 +70,11 @@ public class RoomController {
      */
     @PutMapping("/rooms")
     @ResponseBody
-    public RoomResponseBody updateRoom(@RequestParam(value = "hash") String hash,
+    public Room updateRoom(@RequestParam(value = "hash") String hash,
                                        @Valid @RequestBody(required = false) Room roomRequest) {
         Room room = roomRepository.findByHash(hash).orElseThrow(() -> new ResourceNotFoundException(Errors.NO_HASH_ROOM + hash));
         room = room.updateRoom(roomRequest);
-        room = roomRepository.save(room);
-        return RoomResponseBody.create(room);
+        return roomRepository.save(room);
     }
 
     /**

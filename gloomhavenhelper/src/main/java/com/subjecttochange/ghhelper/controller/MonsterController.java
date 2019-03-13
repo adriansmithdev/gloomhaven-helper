@@ -28,43 +28,31 @@ public class MonsterController {
 
     @GetMapping("/monsters")
     @ResponseBody
-    public Page<MonsterResponseBody>
-    getMonsters(@RequestParam(value = "id", required = false) Long id, Pageable pageable) {
-        Page<Monster> monsters;
+    public Page<Monster> getMonsters(@RequestParam(value = "id", required = false) Long id, Pageable pageable) {
         if (id == null) {
-            monsters = monsterRepository.findAll(pageable);
+            return monsterRepository.findAll(pageable);
         } else {
             Monster monster = monsterRepository.findById(id).orElseThrow(() ->
                     new ResourceNotFoundException(Errors.NO_ID_MONSTER + id));
-            monsters = new PageImpl<>(Collections.singletonList(monster));
+            return new PageImpl<>(Collections.singletonList(monster));
         }
-
-        ArrayList<MonsterResponseBody> monsterResponseBodies = new ArrayList<>();
-
-        for (Monster monster : monsters) {
-            monsterResponseBodies.add(MonsterResponseBody.create(monster));
-        }
-
-        return new PageImpl<>(monsterResponseBodies);
     }
 
     @PostMapping("/monsters")
     @ResponseBody
-    public MonsterResponseBody createMonster(@Valid @RequestBody(required = false) Monster monsterRequest) {
+    public Monster createMonster(@Valid @RequestBody(required = false) Monster monsterRequest) {
         Monster monster = Monster.create("", 0);
         monster = monster.updateMonster(monsterRequest);
-        monster = monsterRepository.save(monster);
-        return MonsterResponseBody.create(monster);
+        return monsterRepository.save(monster);
     }
 
     @PutMapping("/monsters")
     @ResponseBody
-    public MonsterResponseBody updateMonster(@RequestParam(value = "id") Long id,
-                                       @Valid @RequestBody(required = false) Monster monsterRequest) {
+    public Monster updateMonster(@RequestParam(value = "id") Long id,
+                                 @Valid @RequestBody(required = false) Monster monsterRequest) {
         Monster monster = monsterRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Errors.NO_ID_MONSTER + id));
         monster = monster.updateMonster(monsterRequest);
-        monster = monsterRepository.save(monster);
-        return MonsterResponseBody.create(monster);
+        return monsterRepository.save(monster);
     }
 
     @DeleteMapping("/monsters")

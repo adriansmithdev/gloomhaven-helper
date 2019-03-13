@@ -59,32 +59,6 @@ public class Monster extends BaseModel {
         return monster;
     }
 
-    public static Monster create(JsonObject levelStats, String monsterName) {
-        Monster monster = new Monster();
-        monster.setLevel(levelStats.get("level").getAsInt());
-
-        monster.setName(monsterName);
-        monster.setHealth(levelStats.getAsJsonObject("normal").get("health").getAsInt());
-        monster.setEliteHealth(levelStats.getAsJsonObject("elite").get("health").getAsInt());
-
-        monster.setMovement(levelStats.getAsJsonObject("normal").get("move").getAsInt());
-        monster.setEliteMove(levelStats.getAsJsonObject("elite").get("move").getAsInt());
-
-        monster.setAttack(levelStats.getAsJsonObject("normal").get("attack").getAsInt());
-        monster.setEliteAttack(levelStats.getAsJsonObject("elite").get("attack").getAsInt());
-
-        monster.setRange(levelStats.getAsJsonObject("normal").get("range").getAsInt());
-        monster.setEliteRange(levelStats.getAsJsonObject("elite").get("range").getAsInt());
-
-        monster.setAttributes(new ArrayList<>());
-        monster.addAttributes(levelStats.getAsJsonObject("normal").get("attributes").getAsJsonArray());
-        monster.setEliteAttributes(new ArrayList<>());
-        monster.addEliteAttributes(levelStats.getAsJsonObject("elite").get("attributes").getAsJsonArray());
-        System.out.println(monster.toString());
-
-        return monster;
-    }
-
     public Monster updateMonster(Monster monsterRequest) {
         if(monsterRequest.getName() != null) {
             setName(monsterRequest.getName());
@@ -123,6 +97,32 @@ public class Monster extends BaseModel {
             setEliteHealth(monsterRequest.getEliteRange());
         }
         return this;
+    }
+
+    public static Monster create(JsonObject levelStats, String monsterName) {
+        Monster monster = new Monster();
+        monster.setLevel(levelStats.get("level").getAsInt());
+
+        monster.setName(monsterName);
+        monster.setHealth(levelStats.getAsJsonObject("normal").get("health").getAsInt());
+        monster.setEliteHealth(levelStats.getAsJsonObject("elite").get("health").getAsInt());
+
+        monster.setMovement(levelStats.getAsJsonObject("normal").get("move").getAsInt());
+        monster.setEliteMove(levelStats.getAsJsonObject("elite").get("move").getAsInt());
+
+        monster.setAttack(levelStats.getAsJsonObject("normal").get("attack").getAsInt());
+        monster.setEliteAttack(levelStats.getAsJsonObject("elite").get("attack").getAsInt());
+
+        monster.setRange(levelStats.getAsJsonObject("normal").get("range").getAsInt());
+        monster.setEliteRange(levelStats.getAsJsonObject("elite").get("range").getAsInt());
+
+        monster.setAttributes(new ArrayList<>());
+        monster.addAttributes(levelStats.getAsJsonObject("normal").get("attributes").getAsJsonArray());
+        monster.setEliteAttributes(new ArrayList<>());
+        monster.addEliteAttributes(levelStats.getAsJsonObject("elite").get("attributes").getAsJsonArray());
+        System.out.println(monster.toString());
+
+        return monster;
     }
 
     private void addAttributes(JsonArray attributesArray) {
