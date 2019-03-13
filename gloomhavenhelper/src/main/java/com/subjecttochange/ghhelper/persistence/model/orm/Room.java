@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @Data
 public class Room extends BaseModel {
     private static final int DEFAULT_SCENARIO_NUMBER = 0;
+    private static final int DEFAULT_ROUND_NUMBER = 0;
 
     @Id
     @GeneratedValue(generator = "room_generator")
@@ -29,7 +30,7 @@ public class Room extends BaseModel {
     private Long id;
 
     private String hash;
-    private Integer scenarioNumber;
+    private Integer scenario;
     private Integer round;
 
     @OrderBy("created_at")
@@ -41,21 +42,17 @@ public class Room extends BaseModel {
     }
 
     public static Room createWithRandomHash() {
-        return Room.createRoom(RoomHashGenerator.newHash(), DEFAULT_SCENARIO_NUMBER);
+        return Room.createRoom(RoomHashGenerator.newHash(), DEFAULT_SCENARIO_NUMBER, DEFAULT_ROUND_NUMBER);
     }
 
     public static Room createWithHash(String hash) {
-        return Room.createRoom(hash, DEFAULT_SCENARIO_NUMBER);
+        return Room.createRoom(hash, DEFAULT_SCENARIO_NUMBER, DEFAULT_ROUND_NUMBER);
     }
 
-    public static Room createRoom(String hash, Integer scenarioNumber) {
-        return createRoom(hash, scenarioNumber, 0);
-    }
-
-    public static Room createRoom(String hash, Integer scenarioNumber, Integer round) {
+    public static Room createRoom(String hash, Integer scenario, Integer round) {
         Room room = new Room();
         room.setHash(hash);
-        room.setScenarioNumber(scenarioNumber);
+        room.setScenario(scenario);
         room.setRound(round);
         return room;
     }
@@ -64,10 +61,10 @@ public class Room extends BaseModel {
         if (roomRequest.getHash() != null) {
             setHash(roomRequest.getHash());
         }
-        if (roomRequest.getScenarioNumber() != null) {
-            setScenarioNumber(roomRequest.getScenarioNumber());
+        if (roomRequest.getScenario() != null) {
+            setScenario(roomRequest.getScenario());
         }
-        if (roomRequest.getRound() != null) {
+        if(roomRequest.getRound() != null){
             setRound(roomRequest.getRound());
         }
         return this;
