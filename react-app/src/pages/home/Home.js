@@ -73,7 +73,7 @@ class Home extends Component {
 
             <span className="level-item">
               {this.state.showHashInput ? this.renderHashInput() : this.renderJoinRoomBtn()}
-              </span>
+            </span>
 
           </div>
         </div>
