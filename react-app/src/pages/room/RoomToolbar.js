@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ElementList from './elements/ElementList';
 
 import { addMonster } from './../../store/actions/actions';
-import EliteSwitch from './elements/EliteSwitch';
+import EliteSwitch from './elements/EliteSwitch.js';
 
 
 class RoomToolbar extends Component {
@@ -12,15 +12,30 @@ class RoomToolbar extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      isElite: false
+    }
+
     this.monsterSelect = React.createRef();
     this.addMonster = this.addMonster.bind(this);
+    this.eliteToggle = React.createRef();
+    this.updateEliteStatus = this.updateEliteStatus.bind(this);
+
   }
 
   addMonster() {
     const monsterId = this.monsterSelect.current.value;
-    this.props.addMonster(this.props.room.hash, monsterId);
+    this.props.addMonster(this.props.room.hash, monsterId, this.state.isElite);
   }
 
+  updateEliteStatus() {
+    console.log("test1")
+    this.setState({
+        ...this.state,
+        isElite: !this.state.isElite
+
+    })
+}
 
   render() {
     const monsterTypes = this.props.monsters.map((type, index) =>
@@ -44,7 +59,7 @@ class RoomToolbar extends Component {
           </div>
         </div>
         <ElementList />
-        <EliteSwitch />
+        <EliteSwitch updateEliteStatus={this.updateEliteStatus}/>
       </div>
     );
   }
@@ -59,7 +74,7 @@ const mapStateToProps = (state) => {
 
 const mapDispachToProps = (dispatch) => {
   return {
-    addMonster: (hash, monsterId) => dispatch(addMonster(hash, monsterId))
+    addMonster: (hash, monsterId, isElite) => dispatch(addMonster(hash, monsterId, isElite))
   };
 }
 

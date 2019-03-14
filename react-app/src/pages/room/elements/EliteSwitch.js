@@ -1,17 +1,22 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
-import './switch.css';
+import './switch.scss';
 
-const Element = (props) => {
-  
+class EliteSwitch extends Component {
 
-  return (
-    <div>
-        <span className="themed-font has-text-white subtitle is-3 toggle-button-label">Elite: </span>
-        <input class="toggle" type="checkbox"  />
-    </div>
-  );
+    render(){ 
+
+
+        return (
+            <div>
+                <span className="themed-font has-text-white subtitle is-3 toggle-button-label">Elite: </span>
+                <input class="toggle" type="checkbox" onClick={ this.props.updateEliteStatus } />
+            </div>
+        );
+
+    }
+    
 }
 
 const mapStateToProps = (state) => {
@@ -25,4 +30,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Element);
+export default connect(mapStateToProps, mapDispatchToProps)(EliteSwitch);

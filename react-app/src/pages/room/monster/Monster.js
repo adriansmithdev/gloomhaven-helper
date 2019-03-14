@@ -61,6 +61,10 @@ class Monster extends Component {
         />
     ));
 
+    const maxHealth = this.props.instance.isElite ?
+      this.props.type.eliteHealth : this.props.type.health;
+
+
     return (
       <tbody>
       <tr className="monster-instance" key={this.props.key}>
@@ -72,7 +76,7 @@ class Monster extends Component {
           <ProgressBar
             title="HP"
             current={this.props.instance.currentHealth}
-            max={this.props.type.health}
+            max={maxHealth}
           />
         </td>
         <td className="monster-health-buttons">

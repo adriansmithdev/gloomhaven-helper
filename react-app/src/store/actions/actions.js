@@ -52,10 +52,11 @@ export const updateScenario = function(room) {
   };
 };
 
-export const addMonster = function(hash, monsterId) {
+export const addMonster = function(hash, monsterId, isElite) {
   return async dispatch => {
     const response = await axios.post(`http://localhost:5000/api/monsterinstances?hash=${hash}`, {
-      monsterId: monsterId
+      monsterId: monsterId,
+      isElite: isElite
     }).catch(function (error) {
       dispatch(addError(error.response.data));
       dispatch(setStatus('FAILED_TO_ADD_MONSTER'));
