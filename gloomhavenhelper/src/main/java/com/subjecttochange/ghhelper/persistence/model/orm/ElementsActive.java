@@ -5,18 +5,20 @@ import lombok.Data;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.subjecttochange.ghhelper.persistence.model.orm.Element.ElementType;
+
 @Data
 public class ElementsActive {
-    private Map<Element, Integer> elements;
+    private Map<ElementType, Integer> elements;
 
     public ElementsActive() {
-        this.elements = new HashMap<Element, Integer>(){{
-            put(Element.FIRE, 0);
-            put(Element.ICE, 0);
-            put(Element.AIR, 0);
-            put(Element.EARTH, 0);
-            put(Element.LIGHT, 0);
-            put(Element.DARK, 0);
+        this.elements = new HashMap<ElementType, Integer>(){{
+            put(ElementType.FIRE, 0);
+            put(ElementType.ICE, 0);
+            put(ElementType.AIR, 0);
+            put(ElementType.EARTH, 0);
+            put(ElementType.LIGHT, 0);
+            put(ElementType.DARK, 0);
         }};
     }
 
@@ -25,7 +27,7 @@ public class ElementsActive {
      * Will decrease every element by 1 but won't go lower than 0
      */
     public void decrementAllElements() {
-        for (Map.Entry<Element, Integer> element: elements.entrySet()) {
+        for (Map.Entry<ElementType, Integer> element: elements.entrySet()) {
             element.setValue(Math.max(0, element.getValue() - 1));
         }
     }
@@ -43,6 +45,6 @@ public class ElementsActive {
         } else {
             elementStrength--;
         }
-        elements.put(Element.valueOf(elementName.toUpperCase()), elementStrength);
+        elements.put(ElementType.valueOf(elementName.toUpperCase()), elementStrength);
     }
 }

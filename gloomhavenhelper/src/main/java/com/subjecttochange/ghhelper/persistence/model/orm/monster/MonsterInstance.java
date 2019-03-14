@@ -2,6 +2,7 @@ package com.subjecttochange.ghhelper.persistence.model.orm.monster;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.subjecttochange.ghhelper.exception.Errors;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.BaseModel;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
@@ -83,7 +84,7 @@ public class MonsterInstance extends BaseModel {
 
     public static void checkHashMatchesGiven(MonsterInstance monsterInstance, String hash, Long id) {
         if (!monsterInstance.getRoom().getHash().equals(hash)) {
-            throw new ResourceNotFoundException("Wrong hash for id " + id);
+            throw new ResourceNotFoundException(Errors.WRONG_HASH_FOR_ID + id);
         }
     }
 }

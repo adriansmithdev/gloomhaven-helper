@@ -33,9 +33,8 @@ public class StatusController {
         if (id == null) {
             return statusRepository.findAll(pageable);
         } else {
-            return new PageImpl<>(Collections.singletonList(
-                    statusRepository.findById(id).orElseThrow(() ->
-                            new ResourceNotFoundException(Errors.NO_ID_STATUS + id))));
+            return new PageImpl<>(Collections.singletonList(statusRepository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException(Errors.NO_ID_STATUS + id))));
         }
     }
 
@@ -55,8 +54,7 @@ public class StatusController {
         Status statusResult = statusRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException(Errors.NO_ID_STATUS + id));
         statusResult = statusResult.updateStatus(statusRequest);
-        statusResult = statusRepository.save(statusResult);
-        return statusResult;
+        return statusRepository.save(statusResult);
     }
 
     @DeleteMapping("/statuses")

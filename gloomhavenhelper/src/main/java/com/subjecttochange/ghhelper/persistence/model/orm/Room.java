@@ -1,5 +1,6 @@
 package com.subjecttochange.ghhelper.persistence.model.orm;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.subjecttochange.ghhelper.persistence.model.helpers.RoomHashGenerator;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
@@ -35,7 +36,12 @@ public class Room extends BaseModel {
 
     @OrderBy("created_at")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "room")
+    @JsonIgnore
     private List<MonsterInstance> monsterInstances = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "room")
+    @JsonIgnore
+    private Set<Element> elements = new HashSet<>();
 
     public Room() {
         super();

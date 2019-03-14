@@ -33,9 +33,8 @@ public class StatController {
         if (id == null) {
             return statRepository.findAll(pageable);
         } else {
-            return new PageImpl<>(Collections.singletonList(
-                    statRepository.findById(id).orElseThrow(() ->
-                            new ResourceNotFoundException(Errors.NO_ID_STAT + id))));
+            return new PageImpl<>(Collections.singletonList(statRepository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException(Errors.NO_ID_STAT + id))));
         }
     }
 
@@ -55,8 +54,7 @@ public class StatController {
         Stat statResult = statRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException(Errors.NO_ID_STAT + id));
         statResult = statResult.updateStat(statRequest);
-        statResult = statRepository.save(statResult);
-        return statResult;
+        return statRepository.save(statResult);
     }
 
     @DeleteMapping("/stats")

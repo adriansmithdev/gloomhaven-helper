@@ -28,10 +28,12 @@ import java.util.Collections;
 public class RoomController {
 
     private RoomRepository roomRepository;
+    private ElementController elementController;
 
     @Autowired
-    public RoomController(RoomRepository roomRepository) {
+    public RoomController(RoomRepository roomRepository, ElementController elementController) {
         this.roomRepository = roomRepository;
+        this.elementController = elementController;
     }
 
     /**
@@ -59,7 +61,9 @@ public class RoomController {
     @PostMapping("/rooms")
     @ResponseBody
     public Room createRoom() {
-        return roomRepository.save(Room.createWithRandomHash());
+        Room room = roomRepository.save(Room.createWithRandomHash());
+        elementController.createElements(room);
+        return room;
     }
 
     /**
