@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import ElementList from './elements/ElementList';
 
 import { addMonster } from './../../store/actions/actions';
+import EliteSwitch from './elements/EliteSwitch';
 
 
 class RoomToolbar extends Component {
@@ -43,6 +44,7 @@ class RoomToolbar extends Component {
           </div>
         </div>
         <ElementList />
+        <EliteSwitch />
       </div>
     );
   }

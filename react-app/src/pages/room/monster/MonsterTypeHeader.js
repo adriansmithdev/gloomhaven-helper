@@ -37,7 +37,19 @@ class MonsterTypeHeader extends Component {
             <img src={Range} className="inline-icon" alt="Range: " />
             {monster.range}
           </div>
-          
+          <div className="monster-stat has-text-warning" title={`Allows an Elite character to do a base ${monster.eliteAttack} damage with each attack.`}>
+           <img src={Attack} className="inline-icon" alt="Elite Attack: " />
+           {monster.eliteAttack}
+         </div>
+         <div className="monster-stat has-text-warning" title={`Allows a character to move up to ${monster.eliteMove} hex(es) on the map.`}>
+           <img src={Movement} className="inline-icon" alt="Elite Movement: " />
+           {monster.eliteMove}
+         </div>
+         <div className="monster-stat has-text-warning" title={`Allows a character to attack other characters within ${monster.eliteRange} hex(es) of distance.`}>
+           <img src={Range} className="inline-icon" alt="Elite Range: " />
+           {monster.eliteRange}
+         </div>
+
         </div>
     
         <div className="">
