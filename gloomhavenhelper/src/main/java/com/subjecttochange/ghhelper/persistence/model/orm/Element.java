@@ -49,10 +49,14 @@ public class Element extends BaseModel {
         return elements;
     }
 
-    public void decrementElements(Room room) {
+    public static void decrementElementsByFixed(Room room) {
+        decrementElementsByQuantity(room, 1);
+    }
+
+    public static void decrementElementsByQuantity(Room room, Integer decrementQuantity) {
         Set<Element> elementSet = room.getElements();
         for (Element element : elementSet) {
-            element.setStrength(Math.max(element.getStrength() - 1, 0));
+            element.setStrength(Math.max(element.getStrength() - decrementQuantity, 0));
         }
     }
 

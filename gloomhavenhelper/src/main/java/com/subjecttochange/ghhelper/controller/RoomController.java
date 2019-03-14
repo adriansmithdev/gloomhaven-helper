@@ -76,7 +76,14 @@ public class RoomController {
     public Room updateRoom(@RequestParam(value = "hash") String hash,
                                        @Valid @RequestBody(required = false) Room roomRequest) {
         Room room = roomRepository.findByHash(hash).orElseThrow(() -> new ResourceNotFoundException(Errors.NO_HASH_ROOM + hash));
+        int prevRoundNum = room.getRound();
+
         room = room.updateRoom(roomRequest);
+        int curRoundNum = room.getRound();
+
+        int roundDifference = Math.abs(curRoundNum - prevRoundNum);
+        Element.decrementElementsByQuantity(room, roundDifference);
+
         return roomRepository.save(room);
     }
 
