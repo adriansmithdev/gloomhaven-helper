@@ -5,23 +5,27 @@ div.element-list {
   
   display: inline-flex;
   div.element {
+    background-color: #0a0a0a;
+    margin-left: 4px;
     position: relative;
     display: inline-block;
     width: $element-size;
     height: $element-size;
+    
 
     div {
       position: absolute;
       display: block;
       bottom: 0;
-      width: $element-size;
+      width: $element-size - 3px;
       max-height: $element-size;
       transition: height 0.4s;
+      
     }
     img {
       position: absolute;
-      width: $element-size;
-      height: $element-size;
+      width: $element-size -3px;
+      height: $element-size - 2px;
     }
   }
 }
