@@ -9,12 +9,6 @@ class MonsterList extends Component {
     super(props);
 
     this.monsterSelect = React.createRef();
-    this.addMonster = this.addMonster.bind(this);
-  }
-
-  addMonster() {
-    const monsterId = this.monsterSelect.current.value;
-    this.props.addMonster(this.props.room.hash, monsterId);
   }
 
   generateTypes() {
