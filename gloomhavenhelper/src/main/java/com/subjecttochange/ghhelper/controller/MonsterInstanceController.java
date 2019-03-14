@@ -64,7 +64,13 @@ public class MonsterInstanceController {
         Monster monster = monsterRepository.findById(request.getMonsterId())
                 .orElseThrow(() -> new ResourceNotFoundException(Errors.NO_ID_MONSTER + request.getMonsterId()));
 
-        MonsterInstance monsterInstance = MonsterInstance.create(room, monster);
+        MonsterInstance monsterInstance;
+        Boolean eliteStatus = request.getIsElite();
+        if (eliteStatus != null) {
+            monsterInstance = MonsterInstance.create(true, room, monster);
+        } else {
+            monsterInstance = MonsterInstance.create(false, room, monster);
+        }
         monsterInstance = monsterInstance.updateMonsterInstance(request);
         return monsterInstanceRepository.save(monsterInstance);
     }

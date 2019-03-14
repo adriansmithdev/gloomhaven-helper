@@ -11,8 +11,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @Entity
@@ -44,19 +43,24 @@ public class MonsterInstance extends BaseModel {
     private Monster monster;
     @Transient
     private Long monsterId;
+    private Integer token;
 
     public MonsterInstance() {
         super();
     }
 
-    public static MonsterInstance create(Room room, Monster monster) {
-        return MonsterInstance.create(monster.getHealth(), room, monster);
+    public static MonsterInstance create(Boolean isElite, Room room, Monster monster) {
+        if (isElite) {
+            return MonsterInstance.create(monster.getEliteHealth(), isElite, room, monster);
+        } else {
+            return MonsterInstance.create(monster.getHealth(), isElite, room, monster);
+        }
     }
 
-    public static MonsterInstance create(Integer currentHealth, Room room, Monster monster) {
+    public static MonsterInstance create(Integer currentHealth, Boolean isElite, Room room, Monster monster) {
         MonsterInstance monsterInstance = new MonsterInstance();
         monsterInstance.setCurrentHealth(currentHealth);
-        monsterInstance.setIsElite(false);
+        monsterInstance.setIsElite(isElite);
         monsterInstance.setActiveStatuses(new HashSet<>());
         monsterInstance.setRoom(room);
         monsterInstance.setMonster(monster);
@@ -74,12 +78,27 @@ public class MonsterInstance extends BaseModel {
         if (monsterRequest.getActiveStatuses() != null) {
             setActiveStatuses(monsterRequest.getActiveStatuses());
         }
+        if (monsterRequest.getToken() != null) {
+            setToken(monsterRequest.getToken());
+        }
         return this;
     }
 
     @JsonProperty(required = true)
     public void setMonsterId(Long monsterId) {
         this.monsterId = monsterId;
+    }
+
+    public static Integer nextAvailableToken(List<MonsterInstance> monsterInstanceList) {
+        monsterInstanceList.sort(Comparator.comparing(MonsterInstance::getToken));
+
+        for (int i = 1; i <= monsterInstanceList.size(); i++) {
+            if (i != monsterInstanceList.get(i).getToken()) {
+                return i;
+            }
+        }
+
+        return monsterInstanceList.size() + 1;
     }
 
     public static void checkHashMatchesGiven(MonsterInstance monsterInstance, String hash, Long id) {

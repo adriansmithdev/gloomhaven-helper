@@ -119,7 +119,7 @@ public class DataLoader implements ApplicationRunner {
             Room room = roomRepository.findByHash("ABCDEF")
                     .orElseThrow(() -> new ResourceNotFoundException("Could not find room"));
 
-            MonsterInstance monsterInstance = MonsterInstance.create( 10, room, monster);
+            MonsterInstance monsterInstance = MonsterInstance.create( 10, false, room, monster);
             Set<String> activeStatus = new HashSet<>();
             activeStatus.add("Bless");
             activeStatus.add("Curse");
@@ -130,7 +130,7 @@ public class DataLoader implements ApplicationRunner {
             room = roomRepository.findByHash("OOMMOO")
                     .orElseThrow(() -> new ResourceNotFoundException("Could not find room"));
 
-            instances.add(MonsterInstance.create(5, room, monster));
+            instances.add(MonsterInstance.create(5, false, room, monster));
 
             monsterInstanceRepository.saveAll(instances);
         }
