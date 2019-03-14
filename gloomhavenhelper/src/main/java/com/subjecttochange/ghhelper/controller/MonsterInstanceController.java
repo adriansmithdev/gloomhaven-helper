@@ -66,7 +66,7 @@ public class MonsterInstanceController {
 
         MonsterInstance monsterInstance;
         Boolean eliteStatus = request.getIsElite();
-        if (eliteStatus != null) {
+        if (eliteStatus != null && eliteStatus) {
             monsterInstance = MonsterInstance.create(true, room, monster);
         } else {
             monsterInstance = MonsterInstance.create(false, room, monster);
