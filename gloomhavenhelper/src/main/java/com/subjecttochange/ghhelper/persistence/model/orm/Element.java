@@ -8,6 +8,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -35,6 +37,23 @@ public class Element extends BaseModel {
         element.setStrength(strength);
         element.setRoom(room);
         return element;
+    }
+
+    public static Set<Element> createElementsForRoom(Integer strength, Room room) {
+        Set<Element> elements = new HashSet<>();
+
+        for (ElementType type : ElementType.values()) {
+            elements.add(createElement(type, strength, room));
+        }
+
+        return elements;
+    }
+
+    public void decrementElements(Room room) {
+        Set<Element> elementSet = room.getElements();
+        for (Element element : elementSet) {
+            element.setStrength(Math.max(element.getStrength() - 1, 0));
+        }
     }
 
     public enum ElementType {

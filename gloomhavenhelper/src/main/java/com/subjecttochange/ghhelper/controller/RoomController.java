@@ -2,6 +2,7 @@ package com.subjecttochange.ghhelper.controller;
 
 import com.subjecttochange.ghhelper.exception.Errors;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
+import com.subjecttochange.ghhelper.persistence.model.orm.Element;
 import com.subjecttochange.ghhelper.persistence.model.responsebodies.RoomResponseBody;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
@@ -28,12 +29,10 @@ import java.util.Collections;
 public class RoomController {
 
     private RoomRepository roomRepository;
-    private ElementController elementController;
 
     @Autowired
-    public RoomController(RoomRepository roomRepository, ElementController elementController) {
+    public RoomController(RoomRepository roomRepository) {
         this.roomRepository = roomRepository;
-        this.elementController = elementController;
     }
 
     /**
@@ -62,7 +61,7 @@ public class RoomController {
     @ResponseBody
     public Room createRoom() {
         Room room = roomRepository.save(Room.createWithRandomHash());
-        elementController.createElements(room);
+        Element.createElementsForRoom(0, room);
         return room;
     }
 

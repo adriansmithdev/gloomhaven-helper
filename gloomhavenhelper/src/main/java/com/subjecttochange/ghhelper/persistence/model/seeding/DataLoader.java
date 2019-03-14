@@ -2,6 +2,7 @@ package com.subjecttochange.ghhelper.persistence.model.seeding;
 
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.helpers.JsonFileParser;
+import com.subjecttochange.ghhelper.persistence.model.orm.Element;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.model.orm.Stat;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
@@ -27,16 +28,18 @@ public class DataLoader implements ApplicationRunner {
     private MonsterInstanceRepository monsterInstanceRepository;
     private StatusRepository statusRepository;
     private StatRepository statRepository;
+    private ElementRepository elementRepository;
 
     @Autowired
     public DataLoader(MonsterRepository monsterRepository, RoomRepository roomRepository,
                       MonsterInstanceRepository monsterInstanceRepository, StatusRepository statusRepository,
-                      StatRepository statRepository) {
+                      StatRepository statRepository, ElementRepository elementRepository) {
         this.monsterRepository = monsterRepository;
         this.roomRepository = roomRepository;
         this.monsterInstanceRepository = monsterInstanceRepository;
         this.statusRepository = statusRepository;
         this.statRepository = statRepository;
+        this.elementRepository = elementRepository;
     }
 
     @Override
@@ -64,6 +67,10 @@ public class DataLoader implements ApplicationRunner {
             rooms.add(Room.createWithHash("ZYXWVU"));
             rooms.add(Room.createWithHash("OOMMOO"));
             roomRepository.saveAll(rooms);
+
+            for (Room room : rooms) {
+                elementRepository.saveAll(Element.createElementsForRoom(0, room));
+            }
         }
     }
 

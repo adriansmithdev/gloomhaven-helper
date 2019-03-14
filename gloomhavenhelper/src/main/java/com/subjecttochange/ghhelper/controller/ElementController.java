@@ -61,18 +61,4 @@ public class ElementController {
         return elementRepository.save(element);
     }
 
-    public void createElements(Room room) {
-        Element.ElementType[] elementTypes = Element.ElementType.values();
-
-        for (int i = 0; i < elementTypes.length; i++) {
-            elementRepository.save(Element.createElement(elementTypes[i], 0, room));
-        }
-    }
-
-    public void decrementElements(Room room) {
-        Set<Element> elementSet = room.getElements();
-        for (Element element : elementSet) {
-            element.setStrength(Math.max(element.getStrength() - 1, 0));
-        }
-    }
 }
