@@ -64,11 +64,14 @@ class Monster extends Component {
     const maxHealth = this.props.instance.isElite ?
       this.props.type.eliteHealth : this.props.type.health;
 
+    const eliteColor =  this.props.instance.isElite ?
+      'has-text-warning monster-identifier' : 'monster-identifier';
+
 
     return (
       <tbody>
       <tr className="monster-instance" key={this.props.key}>
-        <td className="monster-identifier">
+        <td className={eliteColor} >
           #: {this.props.index + 1}
         </td>
 
