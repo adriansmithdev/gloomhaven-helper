@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Components
-import ElementList from './elements/ElementList';
+import RoomToolbar from './RoomToolbar';
 import MonsterList from './monster/MonsterList';
 import LoadingScreen from './../common/LoadingScreen';
 import { Redirect } from 'react-router';
@@ -12,6 +12,9 @@ import { Redirect } from 'react-router';
 import { getSession } from './../../store/actions/session';
 import { updateScenario } from './../../store/actions/actions';
 import { setStatus } from './../../store/actions/storeActions';
+
+// Styles
+import './room.scss';
 
  
 class Room extends Component {
@@ -74,7 +77,8 @@ class Room extends Component {
             </div>
           </div>
         </nav>
-        <div className="container">
+        <div className="container room-content">
+          <RoomToolbar />
           <MonsterList />
 
           <span className="input-group-btn">

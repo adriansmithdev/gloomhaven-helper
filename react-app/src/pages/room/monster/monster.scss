@@ -20,7 +20,7 @@ div.monster-type {
     div {
       margin-top: $padding;
       margin-bottom: $padding;
-      margin-left: $padding;
+      margin-left: $padding/2;
       line-height: $header-font-size;
 
       &.monster-stats {
@@ -29,7 +29,7 @@ div.monster-type {
         div.monster-stat {
           padding: 0;
           margin: 0;
-          margin-left: $padding;
+          margin-left: $padding/2;
           display: inline-flex;
 
           img {

@@ -6,10 +6,10 @@ class Page extends Component {
 
     render() {
         return (
-            <div className="">
+            <>
               {this.props.children}
               <ToastContainer/>            
-            </div>
+            </>
         );
     }
 }

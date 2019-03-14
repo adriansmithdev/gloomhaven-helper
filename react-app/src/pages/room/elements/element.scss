@@ -1,0 +1,27 @@
+
+$element-size: 36px;
+
+div.element-list {
+  
+  display: inline-flex;
+  div.element {
+    position: relative;
+    display: inline-block;
+    width: $element-size;
+    height: $element-size;
+
+    div {
+      position: absolute;
+      display: block;
+      bottom: 0;
+      width: $element-size;
+      max-height: $element-size;
+      transition: height 0.4s;
+    }
+    img {
+      position: absolute;
+      width: $element-size;
+      height: $element-size;
+    }
+  }
+}
