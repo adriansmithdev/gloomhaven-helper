@@ -22,7 +22,6 @@ import * as serviceWorker from './serviceWorker';
 const store = createStore(reducer, applyMiddleware(thunk));
 
 
-document.body.classList.add("has-navbar-fixed-top");
 ReactDOM.render(<Provider store={store}><Page><Routes/></Page></Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
