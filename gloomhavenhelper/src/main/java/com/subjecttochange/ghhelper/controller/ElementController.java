@@ -58,7 +58,7 @@ public class ElementController {
         Element element = elementRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException(Errors.NO_ID_ELEMENT + id));
         Element.checkHashMatchesGiven(element, hash, id);
-        element = element.updateElement(element);
+        element = element.updateElement(request);
         return elementRepository.save(element);
     }
 
