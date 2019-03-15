@@ -8,11 +8,11 @@ const ElementList = (props) => {
   console.log(props);
   const generateElements = () => {
     return props.elements.map(element => 
-      <Element element={element} />)
+      <Element key={element.name} element={element} />)
   }
 
   return (
-    <div className="element-list">
+    <div className="element-list column">
       { generateElements() }
     </div>
   );

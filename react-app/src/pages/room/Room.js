@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
-// Components
-import RoomToolbar from './RoomToolbar';
 import MonsterList from './monster/MonsterList';
 import LoadingScreen from './../common/LoadingScreen';
 import { Redirect } from 'react-router';
 
-// Actions
 import { getSession } from './../../store/actions/session';
-import { updateScenario } from './../../store/actions/actions';
+import { updateRoom } from './../../store/actions/actions';
 import { setStatus } from './../../store/actions/storeActions';
-
-// Styles
-import './room.scss';
+import RoomToolbar from "./RoomToolbar";
 
  
 class Room extends Component {
@@ -27,7 +21,7 @@ class Room extends Component {
 
   updateScenario(event) {
     // Create new object for sending to server.
-    const newRoom = {...this.props.session.room, scenarioNumber: event.target.value};
+    const newRoom = {...this.props.session.room, scenario: event.target.value};
 
     this.props.updateScenario(newRoom);
   }
@@ -50,7 +44,7 @@ class Room extends Component {
       ) : (
 
        <>
-        <nav className="navbar is-black">
+        <nav className="navbar is-fixed-top is-black">
           <div className="navbar-brand">
             <div className="navbar-item">
               <a href="/"  className="title themed-font has-text-light">
@@ -70,7 +64,7 @@ class Room extends Component {
                 </div>
                 <div className="control is-expanded">
                   <input className="input input-short" type="number" min="1" max="150"
-                    defaultValue={this.props.session.room.scenarioNumber} onChange={this.updateScenario}
+                         defaultValue={this.props.session.room.scenario} onChange={this.updateScenario}
                   />
                 </div>
               </div>
@@ -100,13 +94,13 @@ const mapStateToProps = (state) => {
   };
 }
 
-const mapDispachToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     setStatus: (newStatus) => dispatch(setStatus(newStatus)),
     getSession: (hash) => dispatch(getSession(hash)),
-    updateScenario: (room) => dispatch(updateScenario(room))
+    updateScenario: (room) => dispatch(updateRoom(room))
   };
 }
 
 
-export default connect(mapStateToProps, mapDispachToProps)(Room);
+export default connect(mapStateToProps, mapDispatchToProps)(Room);

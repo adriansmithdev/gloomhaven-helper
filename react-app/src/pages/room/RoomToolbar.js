@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
 import ElementList from './elements/ElementList';
 
-import { addMonster } from './../../store/actions/actions';
+import {addMonster} from './../../store/actions/actions';
 import EliteSwitch from './elements/EliteSwitch.js';
+import RoundManager from "./RoundManager";
 
 
 class RoomToolbar extends Component {
@@ -31,11 +32,11 @@ class RoomToolbar extends Component {
   updateEliteStatus() {
     console.log("test1")
     this.setState({
-        ...this.state,
-        isElite: !this.state.isElite
+      ...this.state,
+      isElite: !this.state.isElite
 
     })
-}
+  }
 
   render() {
     const monsterTypes = this.props.monsters.map((type, index) =>
@@ -43,27 +44,30 @@ class RoomToolbar extends Component {
     );
 
     return (
-      <div className="room-toolbar">
-        <div className="control">
-          <div className="select">
-            <select className="input" ref={this.monsterSelect}>
-              {monsterTypes || ''}
-            </select>
+      <div className="room-toolbar columns">
+        <div className="column is-horizontal field">
+          <div className="control">
+            <div className="select">
+              <select className="input" ref={this.monsterSelect}>
+                {monsterTypes || ''}
+              </select>
+            </div>
+          </div>
+          <div className="control">
+            <div className="level-right">
+              <button className="button is-dark themed-font" onClick={this.addMonster}>
+                + Add Monster
+              </button>
+            </div>
           </div>
         </div>
-        <div className="control">
-          <div className="level-right">
-            <button className="button is-dark themed-font" onClick={this.addMonster}>
-              + Add Monster
-            </button>
-          </div>
-        </div>
-        <ElementList />
         <EliteSwitch updateEliteStatus={this.updateEliteStatus}/>
+        <ElementList/>
+        <RoundManager round={this.props.room.round}/>
       </div>
     );
   }
-  
+
 }
 
 const mapStateToProps = (state) => {
