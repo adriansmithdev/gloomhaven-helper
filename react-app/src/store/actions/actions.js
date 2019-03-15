@@ -36,7 +36,7 @@ export const createRoom = function(callback) {
   }
 };
 
-export const updateScenario = function(room) {
+export const updateRoom = function(room) {
   return async dispatch => {
     const response = await axios.put(`http://localhost:5000/api/rooms?hash=${room.hash}`, room)
       .catch(function (error) {
@@ -104,12 +104,24 @@ export const deleteMonster = function(hash, monster) {
 
 export const showModal = () => dispatch => {
   dispatch(setShowModal("SHOW_MODAL"))
-}
+};
 
 export const hideModal = () => dispatch => {
   dispatch(setHideModal("HIDE_MODAL"))
-}
+};
 
+export const incrementRound = function(room) {
+  return async dispatch => {
+    const response = await axios.put(`http://localhost:5000/api/rooms?hash=${room.hash}`, room)
+      .catch(function (error) {
+        dispatch(addError(error.response.data));
+        dispatch(setStatus('FAILED_TO_INCREMENT_ROUND'));
+        toast.error('Failed to increment round!');
+        return error.response.data;
+      });
 
-
-
+    dispatch(setRoom(response.data));
+    dispatch(setStatus('INCREMENTED_ROUND'));
+    return response.data;
+  }
+};
