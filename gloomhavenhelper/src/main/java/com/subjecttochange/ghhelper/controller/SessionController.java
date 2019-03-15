@@ -2,15 +2,13 @@ package com.subjecttochange.ghhelper.controller;
 
 import com.subjecttochange.ghhelper.exception.Errors;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
+import com.subjecttochange.ghhelper.persistence.model.orm.Element;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.model.orm.Stat;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Status;
-import com.subjecttochange.ghhelper.persistence.model.responsebodies.MonsterInstanceResponseBody;
-import com.subjecttochange.ghhelper.persistence.model.responsebodies.MonsterResponseBody;
-import com.subjecttochange.ghhelper.persistence.model.responsebodies.RoomResponseBody;
-import com.subjecttochange.ghhelper.persistence.model.responsebodies.SessionResponseBody;
+import com.subjecttochange.ghhelper.persistence.model.responsebodies.*;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
 import com.subjecttochange.ghhelper.persistence.repository.StatRepository;
@@ -63,7 +61,12 @@ public class SessionController {
         ArrayList<SessionResponseBody> sessionResponse = new ArrayList<>();
 
         for (Room room : rooms) {
-            RoomResponseBody roomResponse = RoomResponseBody.create(room);
+            List<ElementResponseBody> elementResponses = new ArrayList<>();
+            for (Element element : room.getElements()) {
+                elementResponses.add(ElementResponseBody.create(element));
+            }
+
+            RoomResponseBody roomResponse = RoomResponseBody.create(room, elementResponses);
 
             sessionResponse.add(SessionResponseBody.create(
                     roomResponse,
