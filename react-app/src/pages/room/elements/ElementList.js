@@ -1,14 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { updateElement } from './../../../store/actions/actions';
+
 import Element from './Element';
 import './element.scss';
 
 const ElementList = (props) => {
-  console.log(props);
+
+  
+
   const generateElements = () => {
-    return props.elements.map(element => 
-      <Element key={element.name} element={element} />)
+    return props.elements.map(element => {
+
+      const cycleElementStatus = () => {
+        props.updateElement(props.hash, element);
+      }
+
+      return (
+        <Element key={element.id} 
+          element={element} 
+          cycleElementStatus={cycleElementStatus} 
+        />
+      )     
+    });
   }
 
   return (
@@ -18,15 +33,22 @@ const ElementList = (props) => {
   );
 }
 
+
+
+
+
+// Redux interactions.
 const mapStateToProps = (state) => {
   return {
+    hash: state.session.room.hash,
     elements: [...state.session.room.elements]
   }
 }
 
+
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    updateElement: (hash, element) => dispatch(updateElement(hash, element))
   }
 }
 

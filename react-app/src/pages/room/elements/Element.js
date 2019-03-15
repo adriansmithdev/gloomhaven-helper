@@ -25,7 +25,7 @@ const Element = (props) => {
   }
 
   return (
-    <div style={containerStyles} className="element">  
+    <div style={containerStyles} className="element" onClick={props.cycleElementStatus}>  
       <div style={barStyles}></div>     
       <img src={require(`./../../../assets/icons/elements/${props.element.type.toLowerCase()}.svg`)} alt={props.element.type} />
        
