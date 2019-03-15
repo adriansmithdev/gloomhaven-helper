@@ -61,7 +61,8 @@ public class RoomController {
     @ResponseBody
     public Room createRoom() {
         Room room = roomRepository.save(Room.createWithRandomHash());
-        Element.createElementsForRoom(0, room);
+        room.setElements(Element.createElementsForRoom(0, room));
+        room = roomRepository.save(room);
         return room;
     }
 
