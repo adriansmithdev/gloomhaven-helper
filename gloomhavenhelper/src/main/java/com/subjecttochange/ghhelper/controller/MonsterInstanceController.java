@@ -93,19 +93,6 @@ public class MonsterInstanceController {
 
         monsterInstance.setMonster(monster);
         monsterInstance = monsterInstance.updateMonsterInstance(request);
-
-        if (request.getToken() != null) {
-            Room room = monsterInstance.getRoom();
-            List<MonsterInstance> instances = room.getMonsterInstances();
-            List<MonsterInstance> instancesCopy = new ArrayList<>(instances);
-            instancesCopy.remove(monsterInstance);
-            if (MonsterInstance.isAvailableToken(instancesCopy, request.getToken())) {
-                monsterInstance.setToken(request.getToken());
-            } else {
-                throw new BadRequestException(Errors.DUPLICATE_TOKEN + request.getToken());
-            }
-        }
-
         return monsterInstanceRepository.save(monsterInstance);
     }
 
