@@ -7,35 +7,6 @@ const initialState = {
   },
   notifications: [],
   modalIsOpen: false,
-
-  // Temp until database is setup.
-  elements: [
-    {
-      name: 'wind',
-      strength: 0,
-    },
-    {
-      name: 'fire',
-      strength: 1,
-    },
-    {
-      name: 'earth',
-      strength: 0,
-    },
-    {
-      name: 'ice',
-      strength: 2,
-    },
-    {
-      name: 'light',
-      strength: 0,
-    },
-    {
-      name: 'dark',
-      strength: 0,
-    }
-  ]
-
   
 }
 
