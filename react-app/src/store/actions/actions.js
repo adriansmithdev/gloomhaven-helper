@@ -46,7 +46,7 @@ export const updateRoom = function(room) {
         return error.response.data;
       });
 
-    dispatch(setRoom(response.data));
+    dispatch(getSession(room.hash));
     dispatch(setStatus('UPDATED_SCENARIO'));
     return response.data;
   };
@@ -128,7 +128,7 @@ export const incrementRound = function(room) {
         return error.response.data;
       });
 
-    dispatch(setRoom(response.data));
+    dispatch(getSession(room.hash));
     dispatch(setStatus('INCREMENTED_ROUND'));
     return response.data;
   }

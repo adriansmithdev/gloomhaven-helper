@@ -14,7 +14,15 @@ const ElementList = (props) => {
     return props.elements.map(element => {
 
       const cycleElementStatus = () => {
-        props.updateElement(props.hash, element);
+        // Pick next element strength in cycle.
+        const newVal = 
+          (element.strength === 1) ? (0) : 
+          (element.strength === 2) ? (1) : (2);
+        const newElement = {
+          ...element,
+          strength: newVal
+        }
+        props.updateElement(props.hash, newElement);
       }
 
       return (
