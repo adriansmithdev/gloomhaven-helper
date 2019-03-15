@@ -20,8 +20,8 @@ class RoundManager extends Component {
     return(
     <div className="column">
       <div>
-        <strong className="has-text-light">Round {this.props.round}</strong>
-        <button onClick={this.incrementRound}>Next Round</button>
+        <strong className="themed-font has-text-white subtitle is-3">Round {this.props.round} </strong>
+        <button className="button is-dark themed-font" onClick={this.incrementRound}>Next Round</button>
       </div>
     </div>
     )}
