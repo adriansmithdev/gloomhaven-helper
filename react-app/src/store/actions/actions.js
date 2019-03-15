@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { 
-  addError, setStatus, setRoom, setShowModal, setHideModal
+  addError, setStatus, setRoom
  } from './storeActions';
 import { getSession } from './session';
 
