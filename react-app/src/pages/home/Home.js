@@ -90,7 +90,7 @@ const mapStateToProps = (state) => {
   };
 }
 
-const mapDispachToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   const rerouteToRoomPage = (response) => {
     ownProps.history.push(`/rooms/${response.data.hash}/`);
   }
@@ -103,4 +103,4 @@ const mapDispachToProps = (dispatch, ownProps) => {
 }
 
 
-export default connect(mapStateToProps, mapDispachToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

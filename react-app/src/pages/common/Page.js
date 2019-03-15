@@ -18,11 +18,11 @@ const mapStateToProps = (state) => {
     return {};
 }
 
-const mapDispachToProps = (dispach) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         //UI event functions
     };
 }
 
 
-export default connect(mapStateToProps, mapDispachToProps)(Page);
+export default connect(mapStateToProps, mapDispatchToProps)(Page);
