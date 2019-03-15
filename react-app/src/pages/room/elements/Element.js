@@ -8,27 +8,27 @@ const Element = (props) => {
   ];
 
   const elementColor = {
-      wind: '#98b0b5',
-      fire: '#e2421f',
-      earth: '#7da82a',
-      ice: '#56c8ef',
-      light: '#eca610',
-      dark: '#202830'
+      AIR: '#98b0b5',
+      FIRE: '#e2421f',
+      EARTH: '#7da82a',
+      ICE: '#56c8ef',
+      LIGHT: '#eca610',
+      DARK: '#202830'
   }
 
   const containerStyles = {
-    border: `2px solid ${elementColor[props.element.name]}aa`
+    border: `2px solid ${elementColor[props.element.type]}aa`
   }
 
   const barStyles = {
-    backgroundColor: elementColor[props.element.name],
+    backgroundColor: elementColor[props.element.type],
     height: (fillStrength[props.element.strength] - 3)
   }
 
   return (
     <div style={containerStyles} className="element">  
       <div style={barStyles}></div>     
-      <img src={require(`./../../../assets/icons/elements/${props.element.name}.svg`)} alt={props.element.name} />
+      <img src={require(`./../../../assets/icons/elements/${props.element.type.toLowerCase()}.svg`)} alt={props.element.type} />
        
     </div>
   );

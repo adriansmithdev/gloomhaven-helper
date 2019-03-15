@@ -20,7 +20,7 @@ const ElementList = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    elements: [...state.elements]
+    elements: [...state.session.room.elements]
   }
 }
 
