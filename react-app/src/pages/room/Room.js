@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+
+// Components.
+import { Redirect } from 'react-router';
+import RoomToolbar from "./RoomToolbar";
 import MonsterList from './monster/MonsterList';
 import LoadingScreen from './../common/LoadingScreen';
-import { Redirect } from 'react-router';
 
+// Redux Store Actions.
 import { getSession } from './../../store/actions/session';
 import { updateRoom } from './../../store/actions/actions';
 import { setStatus } from './../../store/actions/storeActions';
-import RoomToolbar from "./RoomToolbar";
 
  
 class Room extends Component {
