@@ -30,7 +30,6 @@ class RoomToolbar extends Component {
   }
 
   updateEliteStatus() {
-    console.log("test1")
     this.setState({
       ...this.state,
       isElite: !this.state.isElite
