@@ -1,5 +1,6 @@
 package com.subjecttochange.ghhelper.controller;
 
+import com.subjecttochange.ghhelper.exception.BadRequestException;
 import com.subjecttochange.ghhelper.exception.Errors;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
@@ -17,7 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @author subjecttochange
@@ -72,6 +75,8 @@ public class MonsterInstanceController {
             monsterInstance = MonsterInstance.create(false, room, monster);
         }
         monsterInstance = monsterInstance.updateMonsterInstance(request);
+        int token = MonsterInstance.nextAvailableToken(room.getMonsterInstances());
+        monsterInstance.setToken(token);
         return monsterInstanceRepository.save(monsterInstance);
     }
 
@@ -88,6 +93,19 @@ public class MonsterInstanceController {
 
         monsterInstance.setMonster(monster);
         monsterInstance = monsterInstance.updateMonsterInstance(request);
+
+        if (request.getToken() != null) {
+            Room room = monsterInstance.getRoom();
+            List<MonsterInstance> instances = room.getMonsterInstances();
+            List<MonsterInstance> instancesCopy = new ArrayList<>(instances);
+            instancesCopy.remove(monsterInstance);
+            if (MonsterInstance.isAvailableToken(instancesCopy, request.getToken())) {
+                monsterInstance.setToken(request.getToken());
+            } else {
+                throw new BadRequestException(Errors.DUPLICATE_TOKEN + request.getToken());
+            }
+        }
+
         return monsterInstanceRepository.save(monsterInstance);
     }
 

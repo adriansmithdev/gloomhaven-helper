@@ -101,6 +101,15 @@ public class MonsterInstance extends BaseModel {
         return monsterInstanceList.size() + 1;
     }
 
+    public static boolean isAvailableToken(List<MonsterInstance> monsterInstanceList, Integer token) {
+        for (MonsterInstance instance : monsterInstanceList) {
+            if (instance.getToken().equals(token)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static void checkHashMatchesGiven(MonsterInstance monsterInstance, String hash, Long id) {
         if (!monsterInstance.getRoom().getHash().equals(hash)) {
             throw new ResourceNotFoundException(Errors.WRONG_HASH_FOR_ID + id);

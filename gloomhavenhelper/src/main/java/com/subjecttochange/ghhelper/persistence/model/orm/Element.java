@@ -52,10 +52,6 @@ public class Element extends BaseModel {
         return elements;
     }
 
-    public static void decrementElementsByFixed(Room room) {
-        decrementElementsByQuantity(room, 1);
-    }
-
     public static void decrementElementsByQuantity(Room room, Integer decrementQuantity) {
         List<Element> elementList = room.getElements();
         for (Element element : elementList) {
