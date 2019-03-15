@@ -39,9 +39,10 @@ public class Room extends BaseModel {
     @JsonIgnore
     private List<MonsterInstance> monsterInstances = new ArrayList<>();
 
+    @OrderBy("created_at")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "room")
     @JsonIgnore
-    private Set<Element> elements = new HashSet<>();
+    private List<Element> elements = new ArrayList<>();
 
     public Room() {
         super();

@@ -5,6 +5,7 @@ import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import lombok.Data;
 import lombok.NonNull;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -16,14 +17,14 @@ public class RoomResponseBody {
     @NonNull
     private Integer round;
     @NonNull
-    private Set<Element> elements;
+    private List<ElementResponseBody> elements;
 
-    public static RoomResponseBody create(Room room) {
+    public static RoomResponseBody create(Room room, List<ElementResponseBody> elements) {
         return new RoomResponseBody(
                 room.getHash(),
                 room.getScenario(),
                 room.getRound(),
-                room.getElements()
+                elements
         );
     }
 }

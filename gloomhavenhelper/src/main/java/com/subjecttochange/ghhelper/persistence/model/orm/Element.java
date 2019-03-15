@@ -8,7 +8,9 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -21,6 +23,7 @@ public class Element extends BaseModel {
     private Long id;
     private ElementType type;
     private Integer strength;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "room_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -39,8 +42,8 @@ public class Element extends BaseModel {
         return element;
     }
 
-    public static Set<Element> createElementsForRoom(Integer strength, Room room) {
-        Set<Element> elements = new HashSet<>();
+    public static List<Element> createElementsForRoom(Integer strength, Room room) {
+        List<Element> elements = new ArrayList<>();
 
         for (ElementType type : ElementType.values()) {
             elements.add(createElement(type, strength, room));
@@ -54,8 +57,8 @@ public class Element extends BaseModel {
     }
 
     public static void decrementElementsByQuantity(Room room, Integer decrementQuantity) {
-        Set<Element> elementSet = room.getElements();
-        for (Element element : elementSet) {
+        List<Element> elementList = room.getElements();
+        for (Element element : elementList) {
             element.setStrength(Math.max(element.getStrength() - decrementQuantity, 0));
         }
     }
