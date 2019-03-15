@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 const Element = (props) => {
   // Convert the fill status to array index.
@@ -34,15 +33,5 @@ const Element = (props) => {
   );
 }
 
-const mapStateToProps = (state) => {
-    return {};
-}
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        //UI event functions
-    };
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Element);
+export default Element;
