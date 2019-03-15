@@ -102,12 +102,20 @@ export const deleteMonster = function(hash, monster) {
   }
 };
 
-export const showModal = () => dispatch => {
-  dispatch(setShowModal("SHOW_MODAL"))
-};
+export const updateElement = function(hash, element) {
+  return async dispatch => {
+    const response = await axios.put(`http://localhost:5000/api/monsterinstances?hash=${hash}&id=${element.id}`, element)
+    .catch(function (error) {
+      dispatch(addError(error.response.data));
+      dispatch(setStatus('FAILED_TO_UPDATE_ELEMENT'));
+      toast.error('Unable to update element!');
+      return error.response.data;
+    });
 
-export const hideModal = () => dispatch => {
-  dispatch(setHideModal("HIDE_MODAL"))
+    dispatch(getSession(hash));
+    dispatch(setStatus('UPDATED_ELEMENT'));
+    return response.data;
+  }
 };
 
 export const incrementRound = function(room) {
