@@ -90,15 +90,18 @@ public class MonsterInstance extends BaseModel {
     }
 
     public static Integer nextAvailableToken(List<MonsterInstance> monsterInstanceList) {
-        monsterInstanceList.sort(Comparator.comparing(MonsterInstance::getToken));
+        Set<Integer> tokensGiven = new TreeSet<>();
+        for (MonsterInstance monsterInstance : monsterInstanceList) {
+            tokensGiven.add(monsterInstance.getToken());
+        }
 
-        for (int i = 0; i < monsterInstanceList.size(); i++) {
-            if (i + 1 != monsterInstanceList.get(i).getToken()) {
+        for (int i = 0; i < tokensGiven.size(); i++) {
+            if (!tokensGiven.contains(i + 1)) {
                 return i + 1;
             }
         }
 
-        return monsterInstanceList.size() + 1;
+        return tokensGiven.size() + 1;
     }
 
     public static boolean isAvailableToken(List<MonsterInstance> monsterInstanceList, Integer token) {
