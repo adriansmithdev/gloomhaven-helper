@@ -104,7 +104,7 @@ export const deleteMonster = function(hash, monster) {
 
 export const updateElement = function(hash, element) {
   return async dispatch => {
-    const response = await axios.put(`http://localhost:5000/api/monsterinstances?hash=${hash}&id=${element.id}`, element)
+    const response = await axios.put(`http://localhost:5000/api/elements?hash=${hash}&id=${element.id}`, element)
     .catch(function (error) {
       dispatch(addError(error.response.data));
       dispatch(setStatus('FAILED_TO_UPDATE_ELEMENT'));
