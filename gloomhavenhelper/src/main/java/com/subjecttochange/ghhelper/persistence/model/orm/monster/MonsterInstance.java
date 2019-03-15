@@ -92,9 +92,9 @@ public class MonsterInstance extends BaseModel {
     public static Integer nextAvailableToken(List<MonsterInstance> monsterInstanceList) {
         monsterInstanceList.sort(Comparator.comparing(MonsterInstance::getToken));
 
-        for (int i = 1; i <= monsterInstanceList.size(); i++) {
-            if (i != monsterInstanceList.get(i).getToken()) {
-                return i;
+        for (int i = 0; i < monsterInstanceList.size(); i++) {
+            if (i + 1 != monsterInstanceList.get(i).getToken()) {
+                return i + 1;
             }
         }
 

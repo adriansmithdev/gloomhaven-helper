@@ -120,6 +120,7 @@ public class DataLoader implements ApplicationRunner {
                     .orElseThrow(() -> new ResourceNotFoundException("Could not find room"));
 
             MonsterInstance monsterInstance = MonsterInstance.create( 10, false, room, monster);
+            monsterInstance.setToken(1);
             Set<String> activeStatus = new HashSet<>();
             activeStatus.add("Bless");
             activeStatus.add("Curse");
