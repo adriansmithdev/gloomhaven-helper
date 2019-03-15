@@ -2,15 +2,12 @@ package com.subjecttochange.ghhelper.persistence.model.orm;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.subjecttochange.ghhelper.persistence.model.helpers.RoomHashGenerator;
-import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author subjecttochange

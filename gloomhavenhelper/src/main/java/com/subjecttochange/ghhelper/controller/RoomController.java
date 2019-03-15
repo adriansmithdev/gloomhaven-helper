@@ -3,7 +3,6 @@ package com.subjecttochange.ghhelper.controller;
 import com.subjecttochange.ghhelper.exception.Errors;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.Element;
-import com.subjecttochange.ghhelper.persistence.model.responsebodies.RoomResponseBody;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
 import lombok.ToString;
@@ -15,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.Collections;
 
 /**

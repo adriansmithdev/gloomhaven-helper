@@ -1,12 +1,12 @@
 package com.subjecttochange.ghhelper.persistence.model.orm.monster;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.subjecttochange.ghhelper.persistence.model.orm.BaseModel;
 import lombok.Data;
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 @Data

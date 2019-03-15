@@ -2,7 +2,6 @@ package com.subjecttochange.ghhelper.controller;
 
 import com.subjecttochange.ghhelper.exception.Errors;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
-import com.subjecttochange.ghhelper.persistence.model.responsebodies.MonsterResponseBody;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.Collections;
 
 @RestController

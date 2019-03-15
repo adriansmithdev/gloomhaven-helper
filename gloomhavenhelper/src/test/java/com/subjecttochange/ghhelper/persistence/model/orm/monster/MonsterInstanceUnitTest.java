@@ -9,13 +9,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class MonsterInstanceUnitTest {
 
-    List<MonsterInstance> monsterInstances;
-    Room room;
-    Monster monster;
+    private List<MonsterInstance> monsterInstances;
+    private Room room;
+    private Monster monster;
 
     @Before
     public void setUp() throws Exception {
