@@ -69,10 +69,9 @@ class Monster extends Component {
 
 
     return (
-      <tbody>
       <tr className="monster-instance" key={this.props.key}>
         <td className={eliteColor} >
-          #: {this.props.index + 1}
+          #: {this.props.instance.token}
         </td>
 
         <td className="monster-healthbar">
@@ -101,7 +100,6 @@ class Monster extends Component {
           <button type="button" onClick={this.deleteMonster}>X</button>
         </td>
       </tr>
-      </tbody>
     );
   }
 }

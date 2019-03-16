@@ -6,27 +6,43 @@ import './monster.scss';
 
 class MonsterType extends Component{
 
-
-  generateMonsterInstances() {
-    return this.props.type.monsterInstances.map((instance, index) =>
-      isNormalTest(this.props, instance, index)
-    );
-  }
-  generateEliteInstances() {
-    return this.props.type.monsterInstances.map((instance, index) =>
-      isEliteTest(this.props, instance, index)
+  sortByToken(instances) {
+    return instances.sort((i1, i2) =>
+      i1.token - i2.token
     );
   }
 
-
+  generateInstances(instances) {
+    return instances.map(instance => 
+      <Monster instance={instance} 
+        type={this.props.type} 
+        key={instance.id}
+      />
+    );
+  }
 
   render() {
+    const eliteInstances = [];
+    const normalInstances = [];
+    this.props.type.monsterInstances.forEach(instance => {
+      if(instance.isElite) {
+        eliteInstances.push({...instance});
+      } else {
+        normalInstances.push({...instance});
+      }
+    });
+
+    this.sortByToken(eliteInstances);
+    this.sortByToken(normalInstances);
+
     return (
       <div className="monster-type">
         <MonsterTypeHeader monster={this.props.type}/>
         <table>
-          { this.generateEliteInstances() }
-          {this.generateMonsterInstances()}
+          <tbody>
+            {this.generateInstances(eliteInstances)}
+            {this.generateInstances(normalInstances)}
+          </tbody>
         </table>
       </div>
     );
@@ -35,21 +51,4 @@ class MonsterType extends Component{
   
 }
 
-
-
-function isEliteTest(props, instance, index) {
-
-  if(instance.isElite){
-    return <Monster instance={instance} type={props.type} key={instance.id} index={index} activeStatuses={instance.activeStatues}/>
-  }
-    
-}
-
-function isNormalTest(props, instance, index) {
-
-  if(!instance.isElite){
-    return <Monster instance={instance} type={props.type} key={instance.id} index={index} activeStatuses={instance.activeStatues}/>
-  }
-    
-}
 export default MonsterType;
