@@ -18,6 +18,9 @@ public class MonsterInstanceResponseBody {
     private Set<String> activeStatuses;
     @NonNull
     private Long monsterId;
+    @NonNull
+    private Integer token;
+
 
     public static MonsterInstanceResponseBody create(MonsterInstance monsterInstance) {
         return new MonsterInstanceResponseBody(
@@ -25,7 +28,8 @@ public class MonsterInstanceResponseBody {
                 monsterInstance.getCurrentHealth(),
                 monsterInstance.getIsElite(),
                 monsterInstance.getActiveStatuses(),
-                monsterInstance.getMonster().getId()
+                monsterInstance.getMonster().getId(),
+                monsterInstance.getToken()
         );
     }
 }
