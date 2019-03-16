@@ -15,8 +15,7 @@ public class Status extends BaseModel {
     @GeneratedValue(generator = "status_generator")
     @SequenceGenerator(
             name = "status_generator",
-            sequenceName = "status_sequence",
-            initialValue = 1
+            sequenceName = "status_sequence"
     )
     private Long id;
     private String name;

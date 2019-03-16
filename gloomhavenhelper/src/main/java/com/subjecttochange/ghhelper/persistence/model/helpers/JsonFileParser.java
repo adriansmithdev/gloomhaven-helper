@@ -5,13 +5,15 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
+import lombok.ToString;
 import org.springframework.util.ResourceUtils;
 
 import java.util.*;
 
+@ToString
 public class JsonFileParser {
 
-    private JsonObject json;
+    private final JsonObject json;
 
     /**
      * defaults to monsterseed file

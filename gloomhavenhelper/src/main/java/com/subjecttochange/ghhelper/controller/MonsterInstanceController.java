@@ -29,9 +29,9 @@ import java.util.Collections;
 @ToString
 public class MonsterInstanceController {
 
-    private RoomRepository roomRepository;
-    private MonsterRepository monsterRepository;
-    private MonsterInstanceRepository monsterInstanceRepository;
+    private final RoomRepository roomRepository;
+    private final MonsterRepository monsterRepository;
+    private final MonsterInstanceRepository monsterInstanceRepository;
 
     @Autowired
     public MonsterInstanceController(RoomRepository roomRepository, MonsterRepository monsterRepository,

@@ -9,6 +9,7 @@ import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Status;
 import com.subjecttochange.ghhelper.persistence.repository.*;
+import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -21,14 +22,15 @@ import java.util.List;
 import java.util.Set;
 
 @Component
+@ToString
 public class DataLoader implements ApplicationRunner {
 
-    private MonsterRepository monsterRepository;
-    private RoomRepository roomRepository;
-    private MonsterInstanceRepository monsterInstanceRepository;
-    private StatusRepository statusRepository;
-    private StatRepository statRepository;
-    private ElementRepository elementRepository;
+    private final MonsterRepository monsterRepository;
+    private final RoomRepository roomRepository;
+    private final MonsterInstanceRepository monsterInstanceRepository;
+    private final StatusRepository statusRepository;
+    private final StatRepository statRepository;
+    private final ElementRepository elementRepository;
 
     @Autowired
     public DataLoader(MonsterRepository monsterRepository, RoomRepository roomRepository,

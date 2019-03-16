@@ -14,8 +14,7 @@ public class Stat extends BaseModel {
     @GeneratedValue(generator = "stat_generator")
     @SequenceGenerator(
             name = "stat_generator",
-            sequenceName = "stat_sequence",
-            initialValue = 1
+            sequenceName = "stat_sequence"
     )
     private Long id;
     private String name;

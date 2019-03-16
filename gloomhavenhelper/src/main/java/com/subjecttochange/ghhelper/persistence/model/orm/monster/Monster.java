@@ -17,8 +17,7 @@ public class Monster extends BaseModel {
     @GeneratedValue(generator = "monster_generator")
     @SequenceGenerator(
             name = "monster_generator",
-            sequenceName = "monster_sequence",
-            initialValue = 1
+            sequenceName = "monster_sequence"
     )
     private Long id;
     private String name;

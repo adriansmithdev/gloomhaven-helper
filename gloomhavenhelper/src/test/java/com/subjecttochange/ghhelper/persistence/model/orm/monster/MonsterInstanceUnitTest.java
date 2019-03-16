@@ -18,7 +18,7 @@ public class MonsterInstanceUnitTest {
     private Monster monster;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         monsterInstances = new ArrayList<>();
         room = Room.createWithHash("TEST");
         monster = Monster.create("Big Wolf", 10);

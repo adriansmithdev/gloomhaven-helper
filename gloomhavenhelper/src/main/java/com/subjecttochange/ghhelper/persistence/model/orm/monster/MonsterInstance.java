@@ -24,8 +24,7 @@ public class MonsterInstance extends BaseModel {
     @GeneratedValue(generator = "monster_instance_generator")
     @SequenceGenerator(
             name = "monster_instance_generator",
-            sequenceName = "monster_instance_sequence",
-            initialValue = 1
+            sequenceName = "monster_instance_sequence"
     )
     private Long id;
     private Integer currentHealth;
@@ -54,7 +53,7 @@ public class MonsterInstance extends BaseModel {
 
     public static MonsterInstance create(Boolean isElite, Room room, Monster monster) {
         if (isElite) {
-            return MonsterInstance.create(monster.getEliteHealth(), isElite, room, monster);
+            return MonsterInstance.create(monster.getEliteHealth(), true, room, monster);
         } else {
             return MonsterInstance.create(monster.getHealth(), isElite, room, monster);
         }

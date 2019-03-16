@@ -19,8 +19,8 @@ import java.util.Collections;
 @ToString
 public class ElementController {
 
-    private RoomRepository roomRepository;
-    private ElementRepository elementRepository;
+    private final RoomRepository roomRepository;
+    private final ElementRepository elementRepository;
 
     @Autowired
     public ElementController(RoomRepository roomRepository, ElementRepository elementRepository) {

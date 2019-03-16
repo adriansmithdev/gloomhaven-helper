@@ -20,7 +20,7 @@ import java.util.Collections;
 @ToString
 public class StatController {
 
-    private StatRepository statRepository;
+    private final StatRepository statRepository;
 
     @Autowired
     public StatController(StatRepository statRepository) {

@@ -26,7 +26,7 @@ import java.util.Collections;
 @ToString
 public class RoomController {
 
-    private RoomRepository roomRepository;
+    private final RoomRepository roomRepository;
 
     @Autowired
     public RoomController(RoomRepository roomRepository) {

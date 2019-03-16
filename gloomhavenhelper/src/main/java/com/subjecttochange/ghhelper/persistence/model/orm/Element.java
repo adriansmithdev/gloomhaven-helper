@@ -17,7 +17,7 @@ public class Element extends BaseModel {
 
     @Id
     @GeneratedValue(generator = "element_generator")
-    @SequenceGenerator(name = "element_generator", sequenceName = "element_sequence", initialValue = 1)
+    @SequenceGenerator(name = "element_generator", sequenceName = "element_sequence")
     private Long id;
     private ElementType type;
     private Integer strength;

@@ -29,10 +29,10 @@ import java.util.*;
 @ToString
 public class SessionController {
 
-    private RoomRepository roomRepository;
-    private MonsterRepository monsterRepository;
-    private StatusRepository statusRepository;
-    private StatRepository statRepository;
+    private final RoomRepository roomRepository;
+    private final MonsterRepository monsterRepository;
+    private final StatusRepository statusRepository;
+    private final StatRepository statRepository;
 
     @Autowired
     public SessionController(RoomRepository roomRepository, MonsterRepository monsterRepository,

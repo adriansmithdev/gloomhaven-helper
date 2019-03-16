@@ -24,7 +24,7 @@ public class Room extends BaseModel {
 
     @Id
     @GeneratedValue(generator = "room_generator")
-    @SequenceGenerator(name = "room_generator", sequenceName = "room_sequence", initialValue = 1)
+    @SequenceGenerator(name = "room_generator", sequenceName = "room_sequence")
     private Long id;
 
     private String hash;

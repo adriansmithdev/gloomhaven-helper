@@ -20,7 +20,7 @@ import java.util.Collections;
 @ToString
 public class StatusController {
 
-    private StatusRepository statusRepository;
+    private final StatusRepository statusRepository;
 
     @Autowired
     public StatusController(StatusRepository statusRepository) {

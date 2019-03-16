@@ -4,7 +4,4 @@ import org.junit.Before;
 
 public class MonsterTest {
 
-    @Before
-    public void setUp() throws Exception {
-    }
 }
