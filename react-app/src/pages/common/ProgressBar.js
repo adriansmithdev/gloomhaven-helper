@@ -17,7 +17,6 @@ const ProgressBar = (props) => {
   
   const healthPercent = healthPercentage(props.current, props.max);
   const healthHue = determineHealthHue(healthPercent);
-  const defaultHeight = '2rem';
 
   const barStyles = {
     backgroundColor: `hsl(${healthHue}, 100%, 35%)`,
