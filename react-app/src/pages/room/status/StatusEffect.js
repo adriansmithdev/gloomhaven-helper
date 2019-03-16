@@ -5,14 +5,6 @@ import { connect } from 'react-redux';
 
 class StatusEffect extends Component {
 
-  baseStyles = {
-    display: 'inline-block',
-    width: '2rem',
-    height: '2rem',
-  }
-  inactiveStyles = {
-    opacity: 0.25
-  }
 
   statusIsActive() {
     return this.props.instance.activeStatuses.find(current => 
@@ -44,18 +36,13 @@ class StatusEffect extends Component {
   }
 
   render() {
-    const usedStyles = (this.statusIsActive()) ? {
-      ...this.baseStyles,
-    } : {
-      ...this.baseStyles,
-      ...this.inactiveStyles
-    }
+    const classes = this.statusIsActive() ? 'status-toggle active' : 'status-toggle'
     return (this.props.showInactive && !this.statusIsActive()) ? (
       <></>
     ) : (
-      <div style={usedStyles} className="status-toggle">
+      <div className={classes}>
         <img src={require(`./../../../assets/icons/statuses/${this.props.status.name}.svg`)} 
-          alt={this.props.status.name} 
+          alt=""
           title={this.props.status.tooltip}
           onClick={this.toggleStatus.bind(this)}
         />

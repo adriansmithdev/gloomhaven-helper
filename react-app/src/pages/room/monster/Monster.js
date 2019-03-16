@@ -61,16 +61,15 @@ class Monster extends Component {
         />
     ));
 
+    const rowClasses = (this.props.instance.isElite) ?
+      'monster-instance elite' : 'monster-instance'
+
     const maxHealth = this.props.instance.isElite ?
       this.props.type.eliteHealth : this.props.type.health;
 
-    const eliteColor =  this.props.instance.isElite ?
-      'has-text-warning monster-identifier' : 'monster-identifier';
-
-
     return (
-      <tr className="monster-instance" key={this.props.key}>
-        <td className={eliteColor} >
+      <tr className={rowClasses} key={this.props.key}>
+        <td className="monster-identifier" >
           #: {this.props.instance.token}
         </td>
 
@@ -80,24 +79,31 @@ class Monster extends Component {
             current={this.props.instance.currentHealth}
             max={maxHealth}
           />
-        </td>
-        <td className="monster-health-buttons">
-          <button type="button" className="button-add-health" onClick={this.decreaseHealth}>
-            -
-          </button>
-          <button type="button" className="button-remove-health" onClick={this.increaseHealth}>
-            +
-          </button>
+          <div className="button-bar">
+            <button type="button" className="button-add-health" onClick={this.decreaseHealth}>
+              -
+            </button>
+            <button type="button" className="button-remove-health" onClick={this.increaseHealth}>
+              +
+            </button>
+          </div>
+          
         </td>
         <td className="monster-statuses">
-          {statuses}
-          <button className="button is-dark" 
-            onClick={this.toggleInactiveStatuses.bind(this)}>
-            Statuses
-          </button>
+          <div className="status-container">
+            {statuses}
+          </div>
         </td>
-        <td className="monster-remove">
-          <button type="button" onClick={this.deleteMonster}>X</button>
+        <td className="monster-controls">
+          <div className="button-bar">
+            <button className="status-display-button"
+              onClick={this.toggleInactiveStatuses.bind(this)}>
+              Statuses
+            </button>
+            <button className="button-remove" type="button" onClick={this.deleteMonster}>X</button>
+
+          </div>
+          
         </td>
       </tr>
     );
