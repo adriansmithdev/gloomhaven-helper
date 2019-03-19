@@ -30,10 +30,6 @@ const ProgressBar = (props) => {
 
   }
 
-  const textStyles = {
-    
-  }
-
   function getTitleText() {
     return props.title !== undefined ? props.title + ": " : "";
   }
@@ -49,7 +45,7 @@ const ProgressBar = (props) => {
   return (
     <div className="progress-bar">
       <div className="progress-bar-progress" style={barStyles}></div>
-      <p className="progress-title" style={textStyles}>{getTitleText() + getContentText()}</p>
+      <p className="progress-title">{getTitleText() + getContentText()}</p>
     </div>
   );
 };
