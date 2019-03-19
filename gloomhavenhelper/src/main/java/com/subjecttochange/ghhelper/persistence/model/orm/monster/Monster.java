@@ -119,7 +119,6 @@ public class Monster extends BaseModel {
         monster.addAttributes(levelStats.getAsJsonObject("normal").get("attributes").getAsJsonArray());
         monster.setEliteAttributes(new ArrayList<>());
         monster.addEliteAttributes(levelStats.getAsJsonObject("elite").get("attributes").getAsJsonArray());
-        System.out.println(monster.toString());
 
         return monster;
     }

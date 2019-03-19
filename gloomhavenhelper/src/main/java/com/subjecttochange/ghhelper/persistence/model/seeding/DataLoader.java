@@ -46,11 +46,21 @@ public class DataLoader implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
+        final String TEST_STATE = "SPRING_PROFILES_ACTIVE";
+        boolean isSeeding = false;
+
+        if (System.getenv(TEST_STATE) != null) {
+            isSeeding = System.getenv(TEST_STATE).toLowerCase().equals("dev");
+        }
+
         seedMonsterRepository();
-        seedRoomRepository();
         seedStatusRepository();
         seedStatRepository();
-        seedMonsterInstanceRepository();
+
+        if (isSeeding) {
+            seedRoomRepository();
+            seedMonsterInstanceRepository();
+        }
     }
 
     private void seedMonsterRepository() {

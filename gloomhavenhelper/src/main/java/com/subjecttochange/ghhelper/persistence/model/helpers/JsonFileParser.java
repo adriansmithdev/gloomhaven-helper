@@ -29,19 +29,13 @@ public class JsonFileParser {
      */
     public JsonFileParser(String filename) {
         json = getFileContents(filename);
-
     }
 
     public List<Monster> getMonsters() {
         List<Monster> monsters = new ArrayList<>();
         for (Map.Entry<String, JsonElement> monsterName : getMonsterNameSet()) {
             JsonArray jsonLevelsArray = getLevels(monsterName.getKey());
-            //TODO line below grabs only level 0. replace with commented out loop for all levels
             monsters.add(Monster.create(jsonLevelsArray.get(0).getAsJsonObject(), monsterName.getKey()));
-
-//            for (int i = 0; i < jsonLevelsArray.size(); i++) {
-//                monsters.add(Monster.create(jsonLevelsArray.get(i).getAsJsonObject(), monsterName.getKey()));
-//            }
         }
         return monsters;
     }
@@ -62,7 +56,7 @@ public class JsonFileParser {
             while (input.hasNext()) {
                 contents.append(input.nextLine());
             }
-        } catch (Exception e) { System.out.println(e.getMessage()); }
+        } catch (Exception e) { e.printStackTrace(); }
         return new JsonParser().parse(contents.toString()).getAsJsonObject();
     }
 

@@ -46,7 +46,9 @@ public class RoomControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.content[*].hash", hasItem("AABBCC")));
+                .andExpect(jsonPath("$.content[*].hash", hasItem("AABBCC")))
+                .andExpect(jsonPath("$.content[*].scenario", is("0")))
+                .andExpect(jsonPath("$.content[*].round", is("0")));
 
     }
 
