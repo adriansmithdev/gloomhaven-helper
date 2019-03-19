@@ -63,7 +63,11 @@ div.monster-type {
         // Elite styles
         &.elite {
           color: gold;
-
+          td.monster-identifier div.monster-token-container {
+            label input.monster-token-input {
+              color: gold;
+            }
+          }
           td.monster-healthbar {
             border-color: darken(gold, 10%);
           }
@@ -80,6 +84,58 @@ div.monster-type {
             background-color: #363636;
             text-align: center;
             font-weight: bold;
+            div.monster-token-container {
+              cursor: pointer;
+              &:hover {
+                
+                border: 2px ridge #363636;
+                background-color: darken(#363636, 2.5%);
+              }
+
+              &.active {
+                
+                cursor: text;
+                border: 2px ridge darken(#363636, 5%);
+                background-color: darken(#363636, 5%);
+
+                label {
+                  cursor: text;
+
+                  input.monster-token-input {
+                    cursor: text;
+                  }
+                }
+              }
+              label {
+                cursor: pointer;
+
+                // Remove arrows from number input.
+                input[type=number] {
+                  -moz-appearance:textfield;
+                }
+                input[type=number]::-webkit-inner-spin-button,
+                input[type=number]::-webkit-outer-spin-button {
+                  -webkit-appearance: none;
+                  margin: 0;
+                }
+
+                input.monster-token-input {
+                  cursor: pointer;
+                  margin-left: 0.25rem;
+                  text-align: center;
+                  height: 2rem;
+                  width: 1.5rem;
+                  background-color: #00000000;
+                  border: 0;
+                  color: #f5f5f5;
+                  font-weight: bold;
+
+                  &:focus{
+                    outline: none;
+                  }
+                }
+              }
+            }
             
           }
           &.monster-healthbar {

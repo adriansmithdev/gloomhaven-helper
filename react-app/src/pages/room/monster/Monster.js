@@ -1,8 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+
+// Redux Actions
 import {deleteMonster, updateMonster} from "../../../store/actions/actions";
+
+// Sub Components
 import ProgressBar from './../../common/ProgressBar';
 import StatusEffect from '../status/StatusEffect';
+import MonsterToken from './MonsterToken';
 
 class Monster extends Component {
 
@@ -16,6 +21,7 @@ class Monster extends Component {
     this.increaseHealth = this.increaseHealth.bind(this);
     this.decreaseHealth = this.decreaseHealth.bind(this);
     this.deleteMonster = this.deleteMonster.bind(this);
+    this.updateMonsterToken = this.updateMonsterToken.bind(this);
   }
 
   increaseHealth() {
@@ -35,6 +41,15 @@ class Monster extends Component {
       ...this.props.instance,
       currentHealth: newHealth
     }
+    this.props.updateMonster(this.props.hash, newMonster);
+  }
+
+  updateMonsterToken(newToken) {
+    const newMonster = {
+      ...this.props.instance,
+      token: newToken
+    }
+
     this.props.updateMonster(this.props.hash, newMonster);
   }
 
@@ -70,7 +85,9 @@ class Monster extends Component {
     return (
       <tr className={rowClasses} key={this.props.key}>
         <td className="monster-identifier" >
-          #: {this.props.instance.token}
+          <MonsterToken token={this.props.instance.token} 
+            updateMonsterToken={this.updateMonsterToken}
+          />
         </td>
 
         <td className="monster-healthbar">
