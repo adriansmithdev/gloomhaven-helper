@@ -12,7 +12,7 @@ const Element = (props) => {
       EARTH: '#7da82a',
       ICE: '#56c8ef',
       LIGHT: '#eca610',
-      DARK: '#202830'
+      DARK: '#607f85'
   }
 
   const containerStyles = {
