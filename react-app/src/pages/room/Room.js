@@ -51,7 +51,7 @@ class Room extends Component {
           <div className="navbar-brand">
             <div className="navbar-item">
               <a href="/"  className="title themed-font has-text-light">
-                Gloomhaven Helper
+                Gloomtility
               </a>
             </div>
             <div className="navbar-item">
