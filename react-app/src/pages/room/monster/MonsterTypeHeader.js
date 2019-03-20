@@ -7,9 +7,6 @@ import Range from './../../../assets/icons/stats/range.svg';
 
 class MonsterTypeHeader extends Component {
 
-  parseAttribute(attribute) {
-    const types = ['shield']
-  }
 
   render() {
     let monster = this.props.monster;
