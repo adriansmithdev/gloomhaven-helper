@@ -91,7 +91,7 @@ public class DataLoader implements ApplicationRunner {
             System.out.println("SEEDING: Statuses");
             List<Status> statuses = new ArrayList<>();
             statuses.add(Status.create("Poison", "+1 Attack vs figures. Heal removes poison and heal has no other effect."));
-            statuses.add(Status.create("Wound", "Suffers 1 damage at the star of each turn. Heals removes and heals continues normal."));
+            statuses.add(Status.create("Wound", "Suffers 1 damage at the start of each turn. Heals removes and heals continues normal."));
             statuses.add(Status.create("Immobilize", "Cannot perform move abilities. Removed at end of its next turn."));
             statuses.add(Status.create("Disarm", "Cannot perform any attack abilities. Removed at end of its next turn."));
             statuses.add(Status.create("Stun", "Cannot perform any abilities/items. Must play cards like normal. Removed at end of next turn."));
