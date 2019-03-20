@@ -25,35 +25,32 @@ class MonsterTypeHeader extends Component {
           {monster.name}
         </div>
         <div className="monster-stats">
-          <div className="monster-stat" title={`Allows a character to do a base ${monster.attack} damage with each attack.`}>
+          <div className="monster-stat" title="Base damage dealt by monsters with each attack.">
             <img src={Attack} className="inline-icon" alt="Attack: " />
-            {monster.attack}
+            <div>
+              <p className="monster-elite-stat">{monster.eliteAttack}</p>
+              <p className="monster-normal-stat">{monster.attack}</p>
+            </div>
           </div>
-          <div className="monster-stat" title={`Allows a character to move up to ${monster.movement} hex(es) on the map.`}>
+          <div className="monster-stat" title="Number of tiles the monsters is allowed to move.">
             <img src={Movement} className="inline-icon" alt="Movement: " />
-            {monster.movement}
+            <div>
+              <p className="monster-elite-stat">{monster.eliteMove}</p>
+              <p className="monster-normal-stat">{monster.movement}</p>
+            </div>
           </div>
-          <div className="monster-stat" title={`Allows a character to attack other characters within ${monster.range} hex(es) of distance.`}>
+          <div className="monster-stat" title="Number of tiles that the monsters can attack from">
             <img src={Range} className="inline-icon" alt="Range: " />
-            {monster.range}
+            <div>
+              <p className="monster-elite-stat">{monster.eliteRange}</p>
+              <p className="monster-normal-stat">{monster.range}</p>
+            </div>
           </div>
-          <div className="monster-stat has-text-warning" title={`Allows an Elite character to do a base ${monster.eliteAttack} damage with each attack.`}>
-           <img src={Attack} className="inline-icon" alt="Elite Attack: " />
-           {monster.eliteAttack}
-         </div>
-         <div className="monster-stat has-text-warning" title={`Allows a character to move up to ${monster.eliteMove} hex(es) on the map.`}>
-           <img src={Movement} className="inline-icon" alt="Elite Movement: " />
-           {monster.eliteMove}
-         </div>
-         <div className="monster-stat has-text-warning" title={`Allows a character to attack other characters within ${monster.eliteRange} hex(es) of distance.`}>
-           <img src={Range} className="inline-icon" alt="Elite Range: " />
-           {monster.eliteRange}
-         </div>
-
+          {monster.attributes}
         </div>
     
         <div className="">
-          {monster.attributes !== undefined ? "Traits: " + monster.attributes : ''}
+          
         </div>
       </div>
     );

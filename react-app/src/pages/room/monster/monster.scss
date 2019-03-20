@@ -1,9 +1,9 @@
 $header-height: 4rem;
 $header-font-size: $header-height/2;
 $padding: $header-height/4;
+$stat-icon-height: $header-height/1.6;
 
 div.monster-type {
-  width: 100%;
   margin-bottom: $padding;
   
   div.monster-type-header {
@@ -18,28 +18,29 @@ div.monster-type {
     background-color: #363636;
     
     div {
-      margin-top: $padding;
-      margin-bottom: $padding;
-      margin-left: $padding/2;
-      line-height: $header-font-size;
+      &.monster-name {
+        margin-left: $padding/2;
+        line-height: $header-height;
+      }
 
       &.monster-stats {
-        display: inline-block;
 
         div.monster-stat {
-          padding: 0;
-          margin: 0;
+          
           margin-left: $padding/2;
           display: inline-flex;
-
           img {
-            height: $header-font-size;
+            margin-top: .75rem;
+            height: $stat-icon-height;
             display: inline-block;
-            height: $header-font-size;
           }
-
-          div.monster-stat-title {
-            display: inline-block;
+          div p{
+            text-align: center;
+            font-size: $header-height/2.4;
+            line-height: $header-height/2;
+            &.monster-elite-stat {
+              color: gold;
+            }
           }
 
         }
