@@ -76,7 +76,7 @@ class MonsterToken extends Component {
             onBlur={this.setBlur}
             onKeyPress={this.enterPressed}
             min="1"
-            max="15"
+            step="1"
           />
         </label>
       </div>

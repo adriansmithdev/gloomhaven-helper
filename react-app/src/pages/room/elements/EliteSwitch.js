@@ -9,7 +9,7 @@ class EliteSwitch extends Component {
 
 
         return (
-            <div className="column">
+            <div className="">
                 <span className="themed-font has-text-white subtitle is-3 toggle-button-label">Elite: </span>
                 <input className="toggle" type="checkbox" onClick={ this.props.updateEliteStatus } />
             </div>

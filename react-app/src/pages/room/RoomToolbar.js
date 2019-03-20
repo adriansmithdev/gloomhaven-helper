@@ -44,25 +44,34 @@ class RoomToolbar extends Component {
 
     return (
       <div className="room-toolbar columns">
-        <div className="column is-horizontal field">
-          <div className="control">
-            <div className="select">
-              <select className="input" ref={this.monsterSelect}>
-                {monsterTypes || ''}
-              </select>
+        <div className="column is-half">
+          <div className="is-horizontal field">
+            <div className="control">
+              <div className="select">
+                <select className="input" ref={this.monsterSelect}>
+                  {monsterTypes || ''}
+                </select>
+              </div>
             </div>
-          </div>
-          <div className="control">
-            <div className="level-right">
-              <button className="button is-dark themed-font" onClick={this.addMonster}>
-                + Add Monster
-              </button>
+            <div className="control mr-1">
+              <div className="level-right">
+                <button className="button is-dark themed-font" onClick={this.addMonster}>
+                  + Monster
+                </button>
+              </div>
             </div>
+            
+          <EliteSwitch updateEliteStatus={this.updateEliteStatus}/>
           </div>
         </div>
-        <EliteSwitch updateEliteStatus={this.updateEliteStatus}/>
-        <ElementList/>
-        <RoundManager round={this.props.room.round}/>
+        
+        <div className="column"> 
+          <ElementList/>
+        </div>
+        <div className="column">
+
+          <RoundManager round={this.props.room.round}/>
+        </div>
       </div>
     );
   }

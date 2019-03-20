@@ -6,6 +6,11 @@ import Range from './../../../assets/icons/stats/range.svg';
 
 
 class MonsterTypeHeader extends Component {
+
+  parseAttribute(attribute) {
+    const types = ['shield']
+  }
+
   render() {
     let monster = this.props.monster;
     let portrait;
@@ -46,10 +51,16 @@ class MonsterTypeHeader extends Component {
               <p className="monster-normal-stat">{monster.range}</p>
             </div>
           </div>
-          {monster.attributes}
+          
         </div>
     
-        <div className="">
+        <div className="monster-attributes">
+          <div className="elite-attributes">
+            {monster.eliteAttributes.join(', ')}
+          </div>
+          <div className="normal-attributes">
+            {monster.attributes.join(', ')}
+          </div>
           
         </div>
       </div>

@@ -35,7 +35,7 @@ const ElementList = (props) => {
   }
 
   return (
-    <div className="element-list column">
+    <div className="element-list">
       { generateElements() }
     </div>
   );

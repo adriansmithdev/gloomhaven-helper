@@ -4,7 +4,9 @@ $padding: $header-height/4;
 $stat-icon-height: $header-height/1.6;
 
 div.monster-type {
-  margin-bottom: $padding;
+  padding-right: 16px;
+  padding-bottom: 1rem;
+  min-width: 742px;
   
   div.monster-type-header {
     display: flex;
@@ -20,14 +22,15 @@ div.monster-type {
     div {
       &.monster-name {
         margin-left: $padding/2;
+        margin-right: $padding/2;
         line-height: $header-height;
       }
 
       &.monster-stats {
 
         div.monster-stat {
-          
-          margin-left: $padding/2;
+          padding-left: $padding/4;
+          padding-right: $padding/4;
           display: inline-flex;
           img {
             margin-top: .75rem;
@@ -43,6 +46,14 @@ div.monster-type {
             }
           }
 
+        }
+      }
+      &.monster-attributes {
+        margin-left: 1rem;
+        font-size: $header-height/2.4;
+        line-height: $header-height/2;
+        div.elite-attributes {
+          color: gold;
         }
       }
     }
@@ -140,7 +151,7 @@ div.monster-type {
             
           }
           &.monster-healthbar {
-            min-width: 8rem + 6rem;
+            min-width: 3rem + 6rem;
               
             display: flex;
             border: 2px ridge gray;

@@ -47,7 +47,7 @@ class Room extends Component {
       ) : (
 
        <>
-        <nav className="navbar is-fixed-top is-black">
+        <nav className="navbar is-black">
           <div className="navbar-brand">
             <div className="navbar-item">
               <a href="/"  className="title themed-font has-text-light">
@@ -74,7 +74,7 @@ class Room extends Component {
             </div>
           </div>
         </nav>
-        <div className="container room-content">
+        <div className="room-content container">
           <RoomToolbar />
           <MonsterList />
 
