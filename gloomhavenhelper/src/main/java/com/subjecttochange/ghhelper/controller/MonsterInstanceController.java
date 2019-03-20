@@ -72,7 +72,7 @@ public class MonsterInstanceController {
             monsterInstance = MonsterInstance.create(false, room, monster);
         }
         monsterInstance = monsterInstance.updateMonsterInstance(request);
-        int token = MonsterInstance.nextAvailableToken(room.getMonsterInstances());
+        int token = monsterInstance.nextAvailableToken(room.getMonsterInstances());
         monsterInstance.setToken(token);
         return monsterInstanceRepository.save(monsterInstance);
     }

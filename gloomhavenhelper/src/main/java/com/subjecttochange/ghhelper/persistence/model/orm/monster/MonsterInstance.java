@@ -91,10 +91,12 @@ public class MonsterInstance extends BaseModel {
         this.monsterId = monsterId;
     }
 
-    public static Integer nextAvailableToken(List<MonsterInstance> monsterInstanceList) {
+    public Integer nextAvailableToken(List<MonsterInstance> monsterInstanceList) {
         Set<Integer> tokensGiven = new TreeSet<>();
         for (MonsterInstance monsterInstance : monsterInstanceList) {
-            tokensGiven.add(monsterInstance.getToken());
+            if (monsterInstance.getMonster().equals(this.getMonster())) {
+                tokensGiven.add(monsterInstance.getToken());
+            }
         }
 
         for (int i = 0; i < tokensGiven.size(); i++) {

@@ -16,12 +16,14 @@ public class MonsterInstanceUnitTest {
     private List<MonsterInstance> monsterInstances;
     private Room room;
     private Monster monster;
+    private MonsterInstance monsterInstance;
 
     @Before
     public void setUp() {
         monsterInstances = new ArrayList<>();
         room = Room.createWithHash("TEST");
         monster = Monster.create("Big Wolf", 10);
+        monsterInstance = MonsterInstance.create(10, false, room, monster);
     }
 
     // [] --> expect 1
@@ -30,7 +32,7 @@ public class MonsterInstanceUnitTest {
         assertEquals(
                 "Expected token to be equal to 1 when given no previous instances",
                 1,
-                MonsterInstance.nextAvailableToken(monsterInstances).intValue()
+                monsterInstance.nextAvailableToken(monsterInstances).intValue()
         );
     }
 
@@ -43,7 +45,7 @@ public class MonsterInstanceUnitTest {
         assertEquals(
                 "Should return next available index",
                 6,
-                MonsterInstance.nextAvailableToken(monsterInstances).intValue()
+                monsterInstance.nextAvailableToken(monsterInstances).intValue()
         );
     }
 
@@ -56,7 +58,7 @@ public class MonsterInstanceUnitTest {
         assertEquals(
                 "Should find first available number",
                 1,
-                MonsterInstance.nextAvailableToken(monsterInstances).intValue()
+                monsterInstance.nextAvailableToken(monsterInstances).intValue()
         );
     }
 
@@ -69,7 +71,7 @@ public class MonsterInstanceUnitTest {
         assertEquals(
                 "Should find first available number in sequence",
                 3,
-                MonsterInstance.nextAvailableToken(monsterInstances).intValue()
+                monsterInstance.nextAvailableToken(monsterInstances).intValue()
         );
     }
 
@@ -82,7 +84,7 @@ public class MonsterInstanceUnitTest {
         assertEquals(
                 "Should find last available in repeated sequence",
                 4,
-                MonsterInstance.nextAvailableToken(monsterInstances).intValue()
+                monsterInstance.nextAvailableToken(monsterInstances).intValue()
         );
     }
 
@@ -95,7 +97,7 @@ public class MonsterInstanceUnitTest {
         assertEquals(
                 "Should find first available in repeated sequence",
                 4,
-                MonsterInstance.nextAvailableToken(monsterInstances).intValue()
+                monsterInstance.nextAvailableToken(monsterInstances).intValue()
         );
     }
 
@@ -108,7 +110,7 @@ public class MonsterInstanceUnitTest {
         assertEquals(
                 "Should find first available in repeated sequence",
                 3,
-                MonsterInstance.nextAvailableToken(monsterInstances).intValue()
+                monsterInstance.nextAvailableToken(monsterInstances).intValue()
         );
     }
 
@@ -121,7 +123,7 @@ public class MonsterInstanceUnitTest {
         assertEquals(
                 "Should find last available in series",
                 2,
-                MonsterInstance.nextAvailableToken(monsterInstances).intValue()
+                monsterInstance.nextAvailableToken(monsterInstances).intValue()
         );
     }
 
@@ -134,7 +136,7 @@ public class MonsterInstanceUnitTest {
         assertEquals(
                 "Should find first available in series",
                 1,
-                MonsterInstance.nextAvailableToken(monsterInstances).intValue()
+                monsterInstance.nextAvailableToken(monsterInstances).intValue()
         );
     }
 
