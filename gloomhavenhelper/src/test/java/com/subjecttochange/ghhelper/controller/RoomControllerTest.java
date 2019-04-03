@@ -1,16 +1,12 @@
 package com.subjecttochange.ghhelper.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
 import com.subjecttochange.ghhelper.Application;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +16,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -33,46 +27,40 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = Application.class)
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-integrationtest.properties")
-public class RoomControllerIntegrationTest {
+public class RoomControllerTest {
 
     @Autowired
     private MockMvc mvc;
 
     @Autowired
     private RoomRepository roomRepository;
-    Room room;
+    private Room room;
 
     @Before
-    public void setup() {
-        roomRepository.save(Room.createWithHash("AABBCC"));
+    public void setUp() {
+        room = roomRepository.save(Room.createWithHash("AABBCC"));
     }
 
     @After
-    public void teardown() {
+    public void tearDown() {
         Room dirtyRoom = roomRepository.findByHash("AABBCC").orElseThrow(() -> new ResourceNotFoundException());
         roomRepository.delete(dirtyRoom);
     }
 
     @Test
-    public void getRoom_jsonAllRooms() throws Exception {
-        Room room = roomRepository.findByHash("AABBCC")
-                .orElseThrow(() -> new ResourceNotFoundException());
-
+    public void getRoomAll() throws Exception {
         mvc.perform(
                 get("/rooms")
                     .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.content[*].hash", hasItem("AABBCC")))
-                .andExpect(jsonPath("$.content[*].scenario", hasItem(0)))
-                .andExpect(jsonPath("$.content[*].round", hasItem(0)));
+                .andExpect(jsonPath("$.content[0].hash", is("AABBCC")))
+                .andExpect(jsonPath("$.content[0].scenario", is(0)))
+                .andExpect(jsonPath("$.content[0].round", is(0)));
     }
 
     @Test
-    public void getRoom_jsonRoom() throws Exception {
-        Room room = roomRepository.findByHash("AABBCC")
-                .orElseThrow(() -> new ResourceNotFoundException());
-
+    public void getRoomSingle() throws Exception {
         mvc.perform(
                 get("/rooms")
                         .param("hash", room.getHash())
@@ -85,7 +73,7 @@ public class RoomControllerIntegrationTest {
     }
 
     @Test
-    public void createRoom_json() throws Exception {
+    public void createRoom() throws Exception {
         mvc.perform(
                 post("/rooms")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -97,9 +85,7 @@ public class RoomControllerIntegrationTest {
     }
 
     @Test
-    public void updateRoom_jsonBody() throws Exception {
-        Room room = roomRepository.findByHash("AABBCC")
-                .orElseThrow(() -> new ResourceNotFoundException());
+    public void updateRoom() throws Exception {
         Room request = Room.createRoom("CCBBAA", 5, 10);
         String jsonBody = new ObjectMapper().writeValueAsString(request);
 
@@ -116,14 +102,11 @@ public class RoomControllerIntegrationTest {
 
         // cleanup for teardown
         room.setHash("AABBCC");
-        roomRepository.save(room);
+        room = roomRepository.save(room);
     }
 
     @Test
-    public void deleteRoom_status200() throws Exception {
-        Room room = roomRepository.findByHash("AABBCC")
-                .orElseThrow(() -> new ResourceNotFoundException());
-
+    public void deleteRoomStatus200() throws Exception {
         mvc.perform(
                 delete("/rooms")
                         .param("hash", room.getHash())

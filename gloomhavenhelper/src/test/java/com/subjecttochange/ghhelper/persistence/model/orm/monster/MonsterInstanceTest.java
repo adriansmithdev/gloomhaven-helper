@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class MonsterInstanceUnitTest {
+public class MonsterInstanceTest {
 
     private List<MonsterInstance> monsterInstances;
     private Room room;

@@ -13,7 +13,7 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @TestPropertySource(locations = "classpath:application-integrationtest.properties")
-public class RoomHashGeneratorIntegrationTest {
+public class RoomHashGeneratorTest {
 
     @Test
     public void whenHashGenerated_thenShouldBeNCharacters() {
