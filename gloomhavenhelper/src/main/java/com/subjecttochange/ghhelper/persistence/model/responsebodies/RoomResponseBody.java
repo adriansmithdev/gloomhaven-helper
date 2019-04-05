@@ -11,7 +11,9 @@ public class RoomResponseBody {
     @NonNull
     private String hash;
     @NonNull
-    private Integer scenario;
+    private Integer scenarioNumber;
+    @NonNull
+    private Integer scenarioLevel;
     @NonNull
     private Integer round;
     @NonNull
@@ -20,7 +22,8 @@ public class RoomResponseBody {
     public static RoomResponseBody create(Room room, List<ElementResponseBody> elements) {
         return new RoomResponseBody(
                 room.getHash(),
-                room.getScenario(),
+                room.getScenarioNumber(),
+                room.getScenarioLevel(),
                 room.getRound(),
                 elements
         );

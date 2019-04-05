@@ -57,8 +57,8 @@ public class RoomController {
      */
     @PostMapping("/rooms")
     @ResponseBody
-    public Room createRoom() {
-        Room room = roomRepository.save(Room.createWithRandomHash());
+    public Room createRoom(@Valid @RequestBody Room roomRequest) {
+        Room room = roomRepository.save(Room.create(roomRequest.getScenarioNumber(), roomRequest.getScenarioLevel()));
         room.setElements(Element.createElementsForRoom(0, room));
         room = roomRepository.save(room);
         return room;

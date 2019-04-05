@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.internal.hamcrest.HamcrestArgumentMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -55,7 +59,7 @@ public class RoomControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.content[0].hash", is("AABBCC")))
-                .andExpect(jsonPath("$.content[0].scenario", is(0)))
+                .andExpect(jsonPath("$.content[0].scenarioNumber", is(0)))
                 .andExpect(jsonPath("$.content[0].round", is(0)));
     }
 
@@ -68,25 +72,30 @@ public class RoomControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.content[0].hash", is("AABBCC")))
-                .andExpect(jsonPath("$.content[0].scenario", is(0)))
+                .andExpect(jsonPath("$.content[0].scenarioNumber", is(0)))
                 .andExpect(jsonPath("$.content[0].round", is(0)));
     }
 
     @Test
     public void createRoom() throws Exception {
+        Room request = Room.create(Room.DEFAULT_SCENARIO_NUMBER, Room.DEFAULT_SCENARIO_LEVEL);
+        String jsonBody = new ObjectMapper().writeValueAsString(request);
+
         mvc.perform(
                 post("/rooms")
+                        .content(jsonBody)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.hash", notNullValue()))
-                .andExpect(jsonPath("$.scenario", is(0)))
+                .andExpect(jsonPath("$.scenarioNumber", is(0)))
+                .andExpect(jsonPath("$.scenarioLevel", is(0)))
                 .andExpect(jsonPath("$.round", is(0)));
     }
 
     @Test
     public void updateRoom() throws Exception {
-        Room request = Room.createRoom("CCBBAA", 5, 10);
+        Room request = Room.createRoom("CCBBAA", 5, 7, 10);
         String jsonBody = new ObjectMapper().writeValueAsString(request);
 
         mvc.perform(
@@ -97,7 +106,8 @@ public class RoomControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.hash", is("CCBBAA")))
-                .andExpect(jsonPath("$.scenario", is(5)))
+                .andExpect(jsonPath("$.scenarioNumber", is(5)))
+                .andExpect(jsonPath("$.scenarioLevel", is(7)))
                 .andExpect(jsonPath("$.round", is(10)));
 
         // cleanup for teardown
