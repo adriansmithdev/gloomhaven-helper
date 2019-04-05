@@ -125,7 +125,7 @@ public class DataLoader implements ApplicationRunner {
             System.out.println("SEEDING: Monster Instances");
 
             List<MonsterInstance> instances = new ArrayList<>();
-            Monster monster = monsterRepository.findByName("Lurker")
+            Monster monster = monsterRepository.findByNameAndLevel("Lurker", 0)
                     .orElseThrow(() -> new ResourceNotFoundException("Could not find monster"));
 
             Room room = roomRepository.findByHash("ABCDEF")

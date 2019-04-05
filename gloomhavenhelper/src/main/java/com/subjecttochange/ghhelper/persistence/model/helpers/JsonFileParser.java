@@ -35,7 +35,9 @@ public class JsonFileParser {
         List<Monster> monsters = new ArrayList<>();
         for (Map.Entry<String, JsonElement> monsterName : getMonsterNameSet()) {
             JsonArray jsonLevelsArray = getLevels(monsterName.getKey());
-            monsters.add(Monster.create(jsonLevelsArray.get(0).getAsJsonObject(), monsterName.getKey()));
+            for(int i = 0; i < jsonLevelsArray.size(); i++) {
+                monsters.add(Monster.create(jsonLevelsArray.get(i).getAsJsonObject(), monsterName.getKey()));
+            }
         }
         return monsters;
     }
