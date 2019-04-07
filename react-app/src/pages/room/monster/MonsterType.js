@@ -4,13 +4,15 @@ import Monster from './Monster';
 import MonsterTypeHeader from './MonsterTypeHeader';
 import './monster.scss';
 
+export function sortByToken(instances) {
+  return instances.sort((i1, i2) =>
+    i1.token - i2.token
+  );
+}
+
 class MonsterType extends Component{
 
-  sortByToken(instances) {
-    return instances.sort((i1, i2) =>
-      i1.token - i2.token
-    );
-  }
+  
 
   generateInstances(instances) {
     return instances.map(instance => 
@@ -32,8 +34,8 @@ class MonsterType extends Component{
       }
     });
 
-    this.sortByToken(eliteInstances);
-    this.sortByToken(normalInstances);
+    sortByToken(eliteInstances);
+    sortByToken(normalInstances);
 
     return (
       <div className="monster-type">
