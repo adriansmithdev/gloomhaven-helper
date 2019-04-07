@@ -5,7 +5,7 @@ import ElementList from './elements/ElementList';
 
 import {addMonster} from './../../store/actions/actions';
 import EliteSwitch from './elements/EliteSwitch.js';
-import RoundManager from "./RoundManager";
+import RoundManager from './RoundManager';
 
 
 class RoomToolbar extends Component {
@@ -33,8 +33,7 @@ class RoomToolbar extends Component {
     this.setState({
       ...this.state,
       isElite: !this.state.isElite
-
-    })
+    });
   }
 
   render() {
