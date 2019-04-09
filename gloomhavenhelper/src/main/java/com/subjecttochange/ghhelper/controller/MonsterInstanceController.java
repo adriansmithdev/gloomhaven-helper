@@ -8,6 +8,7 @@ import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstanc
 import com.subjecttochange.ghhelper.persistence.repository.MonsterInstanceRepository;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
+import com.subjecttochange.ghhelper.persistence.service.MonsterInstanceService;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,16 +30,11 @@ import java.util.Collections;
 @ToString
 public class MonsterInstanceController {
 
-    private final RoomRepository roomRepository;
-    private final MonsterRepository monsterRepository;
-    private final MonsterInstanceRepository monsterInstanceRepository;
+    private final MonsterInstanceService monsterInstanceService;
 
     @Autowired
-    public MonsterInstanceController(RoomRepository roomRepository, MonsterRepository monsterRepository,
-                                     MonsterInstanceRepository monsterInstanceRepository) {
-        this.roomRepository = roomRepository;
-        this.monsterRepository = monsterRepository;
-        this.monsterInstanceRepository = monsterInstanceRepository;
+    public MonsterInstanceController(MonsterInstanceService monsterInstanceService) {
+        this.monsterInstanceService = monsterInstanceService;
     }
 
     @GetMapping("/monsterinstances")
@@ -46,62 +42,26 @@ public class MonsterInstanceController {
     public Page<MonsterInstance> getMonsterInstances(@RequestParam(value = "hash") String hash,
                                                      @RequestParam(value = "id", required = false) Long id,
                                                      Pageable pageable) {
-        if (id == null) {
-            return monsterInstanceRepository.findByRoomHash(hash, pageable);
-        } else {
-            MonsterInstance monsterInstance = monsterInstanceRepository.findById(id).orElseThrow(() ->
-                    new ResourceNotFoundException(Errors.NO_ID_INSTANCE + id));
-            MonsterInstance.checkHashMatchesGiven(monsterInstance, hash, id);
-            return new PageImpl<>(Collections.singletonList(monsterInstance));
-        }
+        return monsterInstanceService.getMonsters(hash, id, pageable);
     }
 
     @PostMapping("/monsterinstances")
     public MonsterInstance createMonsterInstance(@RequestParam(value = "hash") String hash,
                                                  @Valid @RequestBody(required = false) MonsterInstance request) {
-        Room room = roomRepository.findByHash(hash)
-                .orElseThrow(() -> new ResourceNotFoundException(Errors.NO_HASH_ROOM + request.getMonsterId()));
-        Monster monster = monsterRepository.findById(request.getMonsterId())
-                .orElseThrow(() -> new ResourceNotFoundException(Errors.NO_ID_MONSTER + request.getMonsterId()));
-
-        MonsterInstance monsterInstance;
-        Boolean eliteStatus = request.getIsElite();
-        if (eliteStatus != null && eliteStatus) {
-            monsterInstance = MonsterInstance.create(true, room, monster);
-        } else {
-            monsterInstance = MonsterInstance.create(false, room, monster);
-        }
-        monsterInstance = monsterInstance.updateMonsterInstance(request);
-        int token = monsterInstance.nextAvailableToken(room.getMonsterInstances());
-        monsterInstance.setToken(token);
-        return monsterInstanceRepository.save(monsterInstance);
+        return monsterInstanceService.createMonster(hash, request);
     }
 
     @PutMapping("/monsterinstances")
     public MonsterInstance updateMonsterInstance(@RequestParam(value = "hash") String hash,
                                                  @RequestParam(value = "id") Long id,
                                                  @Valid @RequestBody(required = false) MonsterInstance request) {
-        MonsterInstance monsterInstance = monsterInstanceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(Errors.NO_ID_INSTANCE + id));
-        Monster monster = monsterRepository.findById(request.getMonsterId())
-                .orElseThrow(() -> new ResourceNotFoundException(Errors.NO_ID_MONSTER + request.getMonsterId()));
-
-        MonsterInstance.checkHashMatchesGiven(monsterInstance, hash, id);
-
-        monsterInstance.setMonster(monster);
-        monsterInstance = monsterInstance.updateMonsterInstance(request);
-        return monsterInstanceRepository.save(monsterInstance);
+        return monsterInstanceService.updateMonster(hash, id, request);
     }
 
     @DeleteMapping("/monsterinstances")
     public ResponseEntity<?> deleteMonsterInstance(@RequestParam(value = "hash") String hash,
                                                    @RequestParam(value = "id") Long id) {
-        MonsterInstance monsterInstance = monsterInstanceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(Errors.NO_ID_MONSTER + id));
-        MonsterInstance.checkHashMatchesGiven(monsterInstance, hash, id);
-
-        monsterInstanceRepository.delete(monsterInstance);
-        return ResponseEntity.ok().build();
+        return monsterInstanceService.deleteMonster(hash, id);
     }
 
 }

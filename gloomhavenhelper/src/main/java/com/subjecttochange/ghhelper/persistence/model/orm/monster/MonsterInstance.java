@@ -80,6 +80,9 @@ public class MonsterInstance extends BaseModel {
         if (monsterRequest.getActiveStatuses() != null) {
             setActiveStatuses(monsterRequest.getActiveStatuses());
         }
+        if (monsterRequest.getMonsterId() != null) {
+            monsterRequest.setMonsterId(monsterRequest.getMonsterId());
+        }
         if (monsterRequest.getToken() != null) {
             setToken(monsterRequest.getToken());
         }

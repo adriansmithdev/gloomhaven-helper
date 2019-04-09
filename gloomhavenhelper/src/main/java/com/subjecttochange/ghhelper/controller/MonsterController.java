@@ -4,6 +4,7 @@ import com.subjecttochange.ghhelper.exception.Errors;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
+import com.subjecttochange.ghhelper.persistence.service.MonsterService;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,46 +20,34 @@ import java.util.Collections;
 @ToString
 public class MonsterController {
 
-    private final MonsterRepository monsterRepository;
+    private final MonsterService monsterService;
 
     @Autowired
-    public MonsterController(MonsterRepository monsterRepository) {
-        this.monsterRepository = monsterRepository;
+    public MonsterController(MonsterService monsterService) {
+        this.monsterService = monsterService;
     }
 
     @GetMapping("/monsters")
     @ResponseBody
     public Page<Monster> getMonsters(@RequestParam(value = "id", required = false) Long id, Pageable pageable) {
-        if (id == null) {
-            return monsterRepository.findAll(pageable);
-        } else {
-            Monster monster = monsterRepository.findById(id).orElseThrow(() ->
-                    new ResourceNotFoundException(Errors.NO_ID_MONSTER + id));
-            return new PageImpl<>(Collections.singletonList(monster));
-        }
+        return monsterService.getMonsters(id, pageable);
     }
 
     @PostMapping("/monsters")
     @ResponseBody
     public Monster createMonster(@Valid @RequestBody(required = false) Monster monsterRequest) {
-        Monster monster = Monster.create("", 0);
-        monster = monster.updateMonster(monsterRequest);
-        return monsterRepository.save(monster);
+        return monsterService.createMonster(monsterRequest);
     }
 
     @PutMapping("/monsters")
     @ResponseBody
     public Monster updateMonster(@RequestParam(value = "id") Long id,
                                  @Valid @RequestBody(required = false) Monster monsterRequest) {
-        Monster monster = monsterRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Errors.NO_ID_MONSTER + id));
-        monster = monster.updateMonster(monsterRequest);
-        return monsterRepository.save(monster);
+        return monsterService.updateMonster(id, monsterRequest);
     }
 
     @DeleteMapping("/monsters")
     public ResponseEntity<?> deleteMonster(@RequestParam(value = "id") Long id) {
-        monsterRepository.delete(monsterRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(Errors.NO_ID_MONSTER + id)));
-        return ResponseEntity.ok().build();
+        return monsterService.deleteMonster(id);
     }
 }

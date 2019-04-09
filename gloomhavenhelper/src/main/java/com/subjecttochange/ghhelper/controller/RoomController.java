@@ -5,6 +5,7 @@ import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.Element;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
+import com.subjecttochange.ghhelper.persistence.service.RoomService;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,11 +27,11 @@ import java.util.Collections;
 @ToString
 public class RoomController {
 
-    private final RoomRepository roomRepository;
+    private final RoomService roomService;
 
     @Autowired
-    public RoomController(RoomRepository roomRepository) {
-        this.roomRepository = roomRepository;
+    public RoomController(RoomService roomService) {
+        this.roomService = roomService;
     }
 
     /**
@@ -42,13 +43,7 @@ public class RoomController {
     @ResponseBody
     public Page<Room>
     getRooms(@RequestParam(value = "hash", required = false) String hash, Pageable pageable) {
-        if (hash == null) {
-            return roomRepository.findAll(pageable);
-        } else {
-            Room room = roomRepository.findByHash(hash).orElseThrow(() ->
-                    new ResourceNotFoundException(Errors.NO_HASH_ROOM + hash));
-            return new PageImpl<>(Collections.singletonList(room));
-        }
+        return roomService.getRooms(hash, pageable);
     }
 
     /**
@@ -57,33 +52,21 @@ public class RoomController {
      */
     @PostMapping("/rooms")
     @ResponseBody
-    public Room createRoom(@Valid @RequestBody Room roomRequest) {
-        Room room = roomRepository.save(Room.create(roomRequest.getScenarioNumber(), roomRequest.getScenarioLevel()));
-        room.setElements(Element.createElementsForRoom(0, room));
-        room = roomRepository.save(room);
-        return room;
+    public Room createRoom(@Valid @RequestBody Room request) {
+        return roomService.createRoom(request);
     }
 
     /**
      * Updates a room object with passed parameters
      * @param hash of room to update
-     * @param roomRequest json parameters passed in request
+     * @param request json parameters passed in request
      * @return updated object as response
      */
     @PutMapping("/rooms")
     @ResponseBody
     public Room updateRoom(@RequestParam(value = "hash") String hash,
-                                       @Valid @RequestBody(required = false) Room roomRequest) {
-        Room room = roomRepository.findByHash(hash).orElseThrow(() -> new ResourceNotFoundException(Errors.NO_HASH_ROOM + hash));
-        int prevRoundNum = room.getRound();
-
-        room = room.updateRoom(roomRequest);
-        int curRoundNum = room.getRound();
-
-        int roundDifference = Math.abs(curRoundNum - prevRoundNum);
-        Element.decrementElementsByQuantity(room, roundDifference);
-
-        return roomRepository.save(room);
+                                       @Valid @RequestBody(required = false) Room request) {
+        return roomService.updateRoom(hash, request);
     }
 
     /**
@@ -93,8 +76,6 @@ public class RoomController {
      */
     @DeleteMapping("/rooms")
     public ResponseEntity<?> deleteRoom(@RequestParam(value = "hash") String hash) {
-        roomRepository.delete(roomRepository.findByHash(hash)
-                .orElseThrow(() -> new ResourceNotFoundException(Errors.NO_HASH_ROOM + hash)));
-        return ResponseEntity.ok().build();
+        return roomService.deleteRoom(hash);
     }
 }

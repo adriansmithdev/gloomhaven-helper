@@ -5,6 +5,7 @@ import com.subjecttochange.ghhelper.Application;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
+import com.subjecttochange.ghhelper.persistence.service.RoomService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +37,8 @@ public class RoomControllerTest {
 
     @Autowired
     private MockMvc mvc;
-
+    @Autowired
+    private RoomService roomService;
     @Autowired
     private RoomRepository roomRepository;
     private Room room;
@@ -81,7 +84,7 @@ public class RoomControllerTest {
         Room request = Room.create(Room.DEFAULT_SCENARIO_NUMBER, Room.DEFAULT_SCENARIO_LEVEL);
         String jsonBody = new ObjectMapper().writeValueAsString(request);
 
-        mvc.perform(
+        MvcResult result = mvc.perform(
                 post("/rooms")
                         .content(jsonBody)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -90,7 +93,12 @@ public class RoomControllerTest {
                 .andExpect(jsonPath("$.hash", notNullValue()))
                 .andExpect(jsonPath("$.scenarioNumber", is(0)))
                 .andExpect(jsonPath("$.scenarioLevel", is(0)))
-                .andExpect(jsonPath("$.round", is(0)));
+                .andExpect(jsonPath("$.round", is(0)))
+                .andReturn();
+
+        String resultString = result.getResponse().getContentAsString();
+        Room roomResult = new ObjectMapper().readValue(resultString, Room.class);
+        roomService.deleteRoom(roomResult.getHash());
     }
 
     @Test
@@ -123,6 +131,6 @@ public class RoomControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        roomRepository.save(room);
+        room = roomRepository.save(room);
     }
 }
