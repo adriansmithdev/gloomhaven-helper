@@ -15,19 +15,29 @@ const Element = (props) => {
       DARK: '#607f85'
   }
 
-  const containerStyles = {
+  const containerStyles = (props.element !== undefined) ? {
     border: `2px solid ${elementColor[props.element.type]}aa`
+  } : {
+    border: '2px solid #444444'
   }
 
-  const barStyles = {
+  const barStyles = (props.element !== undefined) ? {
     backgroundColor: elementColor[props.element.type],
     height: (fillStrength[props.element.strength] - 3)
+  } : {
+    backgroundColor: '#000000',
+    height: 0
   }
+
+  const getIcon = () => 
+    (props.element && props.element.type !== undefined) ?
+      <img src={require(`./../../../assets/icons/elements/${props.element.type.toLowerCase()}.svg`)} alt={props.element.type} /> :
+      ""
 
   return (
     <div style={containerStyles} className="element" onClick={props.cycleElementStatus}>  
       <div style={barStyles}></div>     
-      <img src={require(`./../../../assets/icons/elements/${props.element.type.toLowerCase()}.svg`)} alt={props.element.type} />
+      {getIcon()}
        
     </div>
   );
