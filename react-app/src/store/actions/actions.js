@@ -21,9 +21,9 @@ export const getRoom = function(hash) {
   
 };
 
-export const createRoom = function(callback) {
+export const createRoom = function(callback, room) {
   return async (dispatch) => {
-    const response = await axios.post('http://localhost:5000/api/rooms')
+    const response = await axios.post('http://localhost:5000/api/rooms', room)
       .catch(function (error) {
         dispatch(addError(error.response.data));
         dispatch(setStatus('FAILED_TO_CREATE_ROOM'));

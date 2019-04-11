@@ -56,7 +56,7 @@ public class Room extends BaseModel {
     }
 
     public static Room create(Integer scenarioNumber, Integer scenarioLevel) {
-        return Room.createRoom(RoomHashGenerator.newHash(), DEFAULT_SCENARIO_NUMBER, scenarioLevel, DEFAULT_ROUND_NUMBER);
+        return Room.createRoom(RoomHashGenerator.newHash(), scenarioNumber, scenarioLevel, DEFAULT_ROUND_NUMBER);
     }
 
     public static Room createRoom(String hash, Integer scenarioNumber, Integer scenarioLevel, Integer round) {

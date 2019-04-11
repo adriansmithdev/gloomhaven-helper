@@ -1,60 +1,103 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { createRoom } from './../../store/actions/actions';
-import { getSession } from './../../store/actions/session';
-import { clearSession } from './../../store/actions/storeActions';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {createRoom} from './../../store/actions/actions';
+import {getSession} from './../../store/actions/session';
+import {clearSession} from './../../store/actions/storeActions';
 
 class Home extends Component {
 
   state = {
-    showHashInput: false
-  }
+    showHashInput: false,
+    showLevelInput: false,
+  };
 
   constructor(props) {
     super(props);
 
-    
-    this.setShowHash = this.setShowHash.bind(this);
+    this.scenarioLvl = React.createRef();
+    this.scenarioNum = React.createRef();
+
+    this.setShow = this.setShow.bind(this);
+    this.createRoom = this.createRoom.bind(this);
     this.joinRoom = this.joinRoom.bind(this);
+  }
+
+  renderCreateRoomBtn() {
+    return (
+      <button className="button is-dark is-large themed-font m-2" id="showLevelInput" type="button"
+              onClick={this.setShow}>
+        Create Room
+      </button>
+    );
   }
 
   renderJoinRoomBtn() {
     return (
+      <button className="button is-dark is-large themed-font m-2" id="showHashInput" type="button"
+              onClick={this.setShow}>
+        Join Room
+      </button>
+    );
+  }
+
+  setShow(event) {
+    this.setState({[event.target.id]: true});
+  }
+
+  renderDefaultButtons() {
+    return (
       <>
-        <button className="button is-dark is-large themed-font m-2" type="button"
-                onClick={this.props.createRoom}>
-          Create Room
-        </button>
-        <button className="button is-dark is-large themed-font m-2" type="button"
-                onClick={this.setShowHash}>
-          Join Room
-        </button>
+        {this.renderCreateRoomBtn()}
+        {this.renderJoinRoomBtn()}
       </>
     );
   }
 
-  renderHashInput() {
-    return (
-      <>
-      <button className="button is-dark is-large themed-font m-2" type="button">
-        Join Room
-      </button>
-      <input type="text" className="text-input" onBlur={this.joinRoom} name="hash"
-             placeholder="Room ID"/>
+  renderOptionInputs() {
+    if (this.state.showHashInput) {
+      return (
+        <>
+          <button className="button is-dark is-large themed-font m-2" type="button">
+            Join Room
+          </button>
+          <input type="text" className="text-input" autoFocus onBlur={this.joinRoom} name="hash"
+                 placeholder="Room ID"/>
         </>
-    );
-  }
-
-  setShowHash() {
-    this.setState({showHashInput: true});
+      );
+    } else if (this.state.showLevelInput) {
+      return (
+        <>
+          <input type="text" className="text-input" autoFocus name="scenarioNum" placeholder="Scenario Number"
+                 ref={this.scenarioNum}/>
+          <select className="text-input" name="scenarioLevel" ref={this.scenarioLvl}>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+          </select>
+          <button className="button is-dark is-large themed-font m-2" type="button" onClick={this.createRoom}>
+            Create Room
+          </button>
+        </>
+      );
+    }
   }
 
   joinRoom(event) {
     this.props.clearSession();
     this.props.history.push(`/rooms/${event.target.value}`);
-    this.setState({showHashInput: false})
+    this.setState({showHashInput: false});
   }
 
+  createRoom() {
+    const newRoom = {scenarioNumber: this.scenarioNum.current.value, scenarioLevel: this.scenarioLvl.current.value};
+    this.props.createRoom(newRoom);
+    this.setState({showLevelInput: false});
+  }
 
   render() {
     return (
@@ -72,15 +115,16 @@ class Home extends Component {
             </p>
 
             <span className="level-item">
-              {this.state.showHashInput ? this.renderHashInput() : this.renderJoinRoomBtn()}
+              {this.state.showLevelInput || this.state.showHashInput ? this.renderOptionInputs() : this.renderDefaultButtons()}
             </span>
 
           </div>
         </div>
       </div>
-      
+
     );
   }
+
 }
 
 
@@ -88,19 +132,19 @@ const mapStateToProps = (state) => {
   return {
     ...state
   };
-}
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   const rerouteToRoomPage = (response) => {
     ownProps.history.push(`/rooms/${response.data.hash}/`);
-  }
+  };
 
   return {
-    createRoom: () => dispatch(createRoom(rerouteToRoomPage)),
+    createRoom: (room) => dispatch(createRoom(rerouteToRoomPage, room)),
     getSession: (hash) => dispatch(getSession(hash)),
     clearSession: () => dispatch(clearSession)
   }
-}
+};
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
