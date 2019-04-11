@@ -22,9 +22,9 @@ class Room extends Component {
     this.updateScenario = this.updateScenario.bind(this);
   }
 
-  updateScenario(event) {
-    // Create new object for sending to server.
-    const newRoom = {...this.props.session.room, scenario: event.target.value};
+  updateScenario(event){
+    const key = event.target.id;
+    const newRoom = {...this.props.session.room, [key]: event.target.value};
 
     this.props.updateScenario(newRoom);
   }
@@ -63,11 +63,23 @@ class Room extends Component {
             <div className="navbar-item">
               <div className="field has-addons mr-1">
                 <div className="control">
-                  <span className="button is-static">Scenario</span>
+                  <span className="button is-static">Scenario Level</span>
                 </div>
                 <div className="control is-expanded">
-                  <input className="input input-short" type="number" min="1" max="150"
-                         defaultValue={this.props.session.room.scenario} onChange={this.updateScenario}
+                  <input className="input input-short" id="scenarioLevel" type="number" min="1" max="150"
+                         defaultValue={this.props.session.room.scenarioLevel} onChange={this.updateScenario}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="navbar-item">
+              <div className="field has-addons mr-1">
+                <div className="control">
+                  <span className="button is-static">Scenario Number</span>
+                </div>
+                <div className="control is-expanded">
+                  <input className="input input-short" id="scenarioNumber" type="number" min="1" max="150"
+                         defaultValue={this.props.session.room.scenarioNumber} onChange={this.updateScenario}
                   />
                 </div>
               </div>
@@ -95,7 +107,7 @@ const mapStateToProps = (state) => {
   return {
     ...state
   };
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -103,7 +115,7 @@ const mapDispatchToProps = (dispatch) => {
     getSession: (hash) => dispatch(getSession(hash)),
     updateScenario: (room) => dispatch(updateRoom(room))
   };
-}
+};
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Room);
