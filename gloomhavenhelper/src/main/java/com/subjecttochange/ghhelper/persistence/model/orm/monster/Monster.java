@@ -93,7 +93,7 @@ public class Monster extends BaseModel {
             setEliteAttack(monsterRequest.getEliteAttack());
         }
         if(monsterRequest.getEliteRange() != null) {
-            setEliteHealth(monsterRequest.getEliteRange());
+            setEliteRange(monsterRequest.getEliteRange());
         }
         return this;
     }
