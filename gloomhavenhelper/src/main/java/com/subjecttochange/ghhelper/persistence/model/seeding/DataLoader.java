@@ -13,6 +13,7 @@ import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +24,7 @@ import java.util.Set;
 
 @Component
 @ToString
+@Profile("!test")
 public class DataLoader implements ApplicationRunner {
 
     private final MonsterRepository monsterRepository;
