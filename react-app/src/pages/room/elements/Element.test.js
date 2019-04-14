@@ -10,6 +10,6 @@ configure({ adapter: new Adapter() });
 
 describe('Testing <Element />:', function() {
   it('should render without throwing an error', function() {
-    expect(render(<Element type="fire"/>));
+    expect(render(<Element/>));
   });
 });
