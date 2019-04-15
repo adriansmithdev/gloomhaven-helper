@@ -83,4 +83,9 @@ public class Room extends BaseModel {
         }
         return this;
     }
+
+    @Override
+    public String toString(){
+        return "Room: " + getHash();
+    }
 }

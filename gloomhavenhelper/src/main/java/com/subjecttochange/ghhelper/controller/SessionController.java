@@ -36,7 +36,8 @@ public class SessionController {
 
     @Autowired
     public SessionController(RoomRepository roomRepository, MonsterRepository monsterRepository,
-                             StatusRepository statusRepository, StatRepository statRepository) {
+                             StatusRepository statusRepository, StatRepository statRepository)
+    {
         this.roomRepository = roomRepository;
         this.monsterRepository = monsterRepository;
         this.statusRepository = statusRepository;
@@ -44,8 +45,10 @@ public class SessionController {
     }
 
     @GetMapping("/sessions")
-    public @ResponseBody Page<SessionResponseBody>
-    getRooms(@RequestParam(value = "hash", required = false) String hash , Pageable pageable) {
+    public @ResponseBody
+    Page<SessionResponseBody>
+    getRooms(@RequestParam(value = "hash", required = false) String hash, Pageable pageable)
+    {
         Page<Room> rooms;
         if (hash == null) {
             rooms = roomRepository.findAll(pageable);
@@ -77,17 +80,23 @@ public class SessionController {
         }
 
 
-
         return new PageImpl<>(sessionResponse);
     }
 
-    private Collection<MonsterResponseBody> buildMonsterResponses(Room room) {
+
+    private Collection<MonsterResponseBody> buildMonsterResponses(Room room)
+    {
         Map<Long, MonsterResponseBody> namedMonsterBodies = new HashMap<>();
-        List<Monster> monsters = monsterRepository.findAll();
+        List<Monster> monsters = monsterRepository.findAllByLevel(room.getScenarioLevel());
 
         for (Monster monster : monsters) {
             namedMonsterBodies.put(monster.getId(), MonsterResponseBody.create(monster));
         }
+
+        // Removes all monster instances that don't match the new scenarioLevel set
+        List<MonsterInstance> monsterInstances = room.getMonsterInstances();
+        monsterInstances.removeIf(instance -> !namedMonsterBodies.containsKey(instance.getId()));
+        room.setMonsterInstances(monsterInstances);
 
         for (MonsterInstance monsterInstance : room.getMonsterInstances()) {
             Monster monster = monsterInstance.getMonster();
@@ -100,3 +109,4 @@ public class SessionController {
         return namedMonsterBodies.values();
     }
 }
+
