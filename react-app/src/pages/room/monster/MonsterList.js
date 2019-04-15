@@ -35,12 +35,12 @@ const mapStateToProps = (state) => {
   return {
     ...state.session
   };
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
   };
-}
+};
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(MonsterList);

@@ -35,10 +35,11 @@ class RoomToolbar extends Component {
       isElite: !this.state.isElite
     });
   }
+  //
 
   render() {
     const monsterTypes = this.props.monsters.map((type, index) =>
-      <option value={type.id} key={index}>{type.name}</option>
+      <option value={type.id} key={index}>{type.name}: {type.level}</option>
     );
 
     return (

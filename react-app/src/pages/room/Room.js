@@ -22,11 +22,19 @@ class Room extends Component {
     this.updateScenario = this.updateScenario.bind(this);
   }
 
+  // Takes an event
+  // Sets the key to the id of the element it came from
+  // Sets the value to the value of the element it came from
   updateScenario(event){
     const key = event.target.id;
-    const newRoom = {...this.props.session.room, [key]: event.target.value};
+    const value = event.target.value;
+    const newRoom = {...this.props.session.room, [key]: value};
 
     this.props.updateScenario(newRoom);
+  }
+
+  deletionWarning(){
+    alert("Changing this value will delete all monsters!");
   }
 
   // If room not in store, attempt to pull from hash.
@@ -68,6 +76,7 @@ class Room extends Component {
                 <div className="control is-expanded">
                   <input className="input input-short" id="scenarioLevel" type="number" min="1" max="150"
                          defaultValue={this.props.session.room.scenarioLevel} onChange={this.updateScenario}
+                         onClick={this.deletionWarning}
                   />
                 </div>
               </div>
