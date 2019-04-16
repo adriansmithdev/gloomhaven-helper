@@ -78,7 +78,8 @@ public class SessionService {
         return new PageImpl<>(sessionResponse);
     }
 
-    private Collection<MonsterResponseBody> buildMonsterResponses(Room room) {
+    private Collection<MonsterResponseBody> buildMonsterResponses(Room room)
+    {
         Map<Long, MonsterResponseBody> namedMonsterBodies = new HashMap<>();
         List<Monster> monsters = monsterRepository.findAllByLevel(room.getScenarioLevel());
 
@@ -88,7 +89,7 @@ public class SessionService {
 
         // Removes all monster instances that don't match the new scenarioLevel set
         List<MonsterInstance> monsterInstances = room.getMonsterInstances();
-        monsterInstances.removeIf(instance -> !namedMonsterBodies.containsKey(instance.getId()));
+        monsterInstances.removeIf(instance -> !namedMonsterBodies.containsKey(instance.getMonster().getId()));
         room.setMonsterInstances(monsterInstances);
 
         for (MonsterInstance monsterInstance : room.getMonsterInstances()) {
