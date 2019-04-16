@@ -123,6 +123,47 @@ public class MonsterControllerTest {
 
     @Test
     public void updateMonster() throws Exception {
+        Monster request = Monster.create("Joe", 10);
+        ArrayList<String> attributes = new ArrayList<>();
+        attributes.add("Slow");
+        attributes.add("Old");
+        request.setAttributes(attributes);
+        request.setEliteAttributes(attributes);
+        request.setLevel(BASE_STAT * 2);
+        request.setMovement(BASE_STAT * 2);
+        request.setAttack(BASE_STAT * 2);
+        request.setRange(BASE_STAT * 2);
+        request.setEliteHealth(BASE_STAT * 3);
+        request.setEliteMove(BASE_STAT * 3);
+        request.setEliteAttack(BASE_STAT * 3);
+        request.setEliteRange(BASE_STAT * 3);
+
+        String jsonBody = new ObjectMapper().writeValueAsString(request);
+
+        mvc.perform(
+                put("/monsters")
+                        .param("id", monster.getId().toString())
+                        .content(jsonBody)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id", notNullValue()))
+                .andExpect(jsonPath("$.name", is(request.getName())))
+                .andExpect(jsonPath("$.attributes", containsInAnyOrder(
+                        is("Slow"), is("Old"))))
+                .andExpect(jsonPath("$.eliteAttributes", containsInAnyOrder(
+                        is("Slow"), is("Old"))))
+                .andExpect(jsonPath("$.level", is(request.getLevel())))
+                .andExpect(jsonPath("$.health", is(request.getHealth())))
+                .andExpect(jsonPath("$.movement", is(request.getMovement())))
+                .andExpect(jsonPath("$.attack", is(request.getAttack())))
+                .andExpect(jsonPath("$.range", is(request.getRange())))
+                .andExpect(jsonPath("$.eliteHealth", is(request.getEliteHealth())))
+                .andExpect(jsonPath("$.eliteMove", is(request.getEliteMove())))
+                .andExpect(jsonPath("$.eliteAttack", is(request.getEliteAttack())))
+                .andExpect(jsonPath("$.eliteRange", is(request.getEliteRange())));
+
+        monster = monsterService.updateMonster(monster.getId(), monster);
     }
 
     @Test

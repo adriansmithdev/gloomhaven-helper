@@ -36,8 +36,7 @@ public class SessionController {
 
     @Autowired
     public SessionController(RoomRepository roomRepository, MonsterRepository monsterRepository,
-                             StatusRepository statusRepository, StatRepository statRepository)
-    {
+                             StatusRepository statusRepository, StatRepository statRepository) {
         this.roomRepository = roomRepository;
         this.monsterRepository = monsterRepository;
         this.statusRepository = statusRepository;
@@ -47,8 +46,7 @@ public class SessionController {
     @GetMapping("/sessions")
     public @ResponseBody
     Page<SessionResponseBody>
-    getRooms(@RequestParam(value = "hash", required = false) String hash, Pageable pageable)
-    {
+    getRooms(@RequestParam(value = "hash", required = false) String hash, Pageable pageable) {
         Page<Room> rooms;
         if (hash == null) {
             rooms = roomRepository.findAll(pageable);
@@ -84,8 +82,7 @@ public class SessionController {
     }
 
 
-    private Collection<MonsterResponseBody> buildMonsterResponses(Room room)
-    {
+    private Collection<MonsterResponseBody> buildMonsterResponses(Room room) {
         Map<Long, MonsterResponseBody> namedMonsterBodies = new HashMap<>();
         List<Monster> monsters = monsterRepository.findAllByLevel(room.getScenarioLevel());
 
