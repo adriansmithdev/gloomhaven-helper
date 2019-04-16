@@ -5,6 +5,8 @@ import com.subjecttochange.ghhelper.exception.Errors;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Status;
 import com.subjecttochange.ghhelper.persistence.repository.StatusRepository;
+import com.subjecttochange.ghhelper.persistence.service.StatService;
+import com.subjecttochange.ghhelper.persistence.service.StatusService;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,48 +22,34 @@ import java.util.Collections;
 @ToString
 public class StatusController {
 
-    private final StatusRepository statusRepository;
+    private final StatusService statusService;
 
     @Autowired
-    public StatusController(StatusRepository statusRepository) {
-        this.statusRepository = statusRepository;
+    public StatusController(StatusService statusService) {
+        this.statusService = statusService;
     }
 
     @GetMapping("/statuses")
     @ResponseBody
     public Page<Status> getStatus(@RequestParam(value = "id", required = false) Long id, Pageable pageable) {
-        if (id == null) {
-            return statusRepository.findAll(pageable);
-        } else {
-            return new PageImpl<>(Collections.singletonList(statusRepository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException(Errors.NO_ID_STATUS + id))));
-        }
+        return statusService.getStatus(id, pageable);
     }
 
     @PostMapping("/statuses")
     @ResponseBody
     public Status createStatus(@Valid @RequestBody Status statusRequest) {
-        if (statusRequest.getName() == null || statusRequest.getTooltip() == null) {
-            throw new BadRequestException("Name and tooltip are both required!");
-        }
-        Status status = Status.create(statusRequest.getName(), statusRequest.getTooltip());
-        return statusRepository.save(status);
+        return statusService.createStatus(statusRequest);
     }
 
     @PutMapping("/statuses")
     @ResponseBody
     public Status updateStatus(@RequestParam(value = "id") Long id, @Valid @RequestBody Status statusRequest) {
-        Status statusResult = statusRepository.findById(id).orElseThrow(() ->
-                new ResourceNotFoundException(Errors.NO_ID_STATUS + id));
-        statusResult = statusResult.updateStatus(statusRequest);
-        return statusRepository.save(statusResult);
+        return statusService.updateStatus(id, statusRequest);
     }
 
     @DeleteMapping("/statuses")
     public ResponseEntity<?> deleteStatus(@RequestParam(value = "id") Long id) {
-        statusRepository.delete(statusRepository.findById(id).orElseThrow(() ->
-                new ResourceNotFoundException(Errors.NO_ID_STATUS + id)));
-        return ResponseEntity.ok().build();
+        return statusService.deleteStatus(id);
     }
 }
 

@@ -37,12 +37,14 @@ public class MonsterInstanceController {
     }
 
     @PostMapping("/monsterinstances")
+    @ResponseBody
     public MonsterInstance createMonsterInstance(@RequestParam(value = "hash") String hash,
                                                  @Valid @RequestBody(required = false) MonsterInstance request) {
         return monsterInstanceService.createMonster(hash, request);
     }
 
     @PutMapping("/monsterinstances")
+    @ResponseBody
     public MonsterInstance updateMonsterInstance(@RequestParam(value = "hash") String hash,
                                                  @RequestParam(value = "id") Long id,
                                                  @Valid @RequestBody(required = false) MonsterInstance request) {

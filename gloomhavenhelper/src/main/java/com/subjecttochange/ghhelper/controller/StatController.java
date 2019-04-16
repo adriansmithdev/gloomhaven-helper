@@ -5,6 +5,7 @@ import com.subjecttochange.ghhelper.exception.Errors;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.Stat;
 import com.subjecttochange.ghhelper.persistence.repository.StatRepository;
+import com.subjecttochange.ghhelper.persistence.service.StatService;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,47 +21,33 @@ import java.util.Collections;
 @ToString
 public class StatController {
 
-    private final StatRepository statRepository;
+    private final StatService statService;
 
     @Autowired
-    public StatController(StatRepository statRepository) {
-        this.statRepository = statRepository;
+    public StatController(StatService statService) {
+        this.statService = statService;
     }
 
     @GetMapping("/stats")
     @ResponseBody
     public Page<Stat> getStat(@RequestParam(value = "id", required = false) Long id, Pageable pageable) {
-        if (id == null) {
-            return statRepository.findAll(pageable);
-        } else {
-            return new PageImpl<>(Collections.singletonList(statRepository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException(Errors.NO_ID_STAT + id))));
-        }
+        return statService.getStat(id, pageable);
     }
 
     @PostMapping("/stats")
     @ResponseBody
     public Stat createStat(@Valid @RequestBody Stat statRequest) {
-        if (statRequest.getName() == null || statRequest.getTooltip() == null) {
-            throw new BadRequestException("Name and tooltip are both required!");
-        }
-        Stat stat = Stat.create(statRequest.getName(), statRequest.getTooltip());
-        return statRepository.save(stat);
+        return statService.createStat(statRequest);
     }
 
     @PutMapping("/stats")
     @ResponseBody
     public Stat updateStat(@RequestParam(value = "id") Long id, @Valid @RequestBody Stat statRequest) {
-        Stat statResult = statRepository.findById(id).orElseThrow(() ->
-                new ResourceNotFoundException(Errors.NO_ID_STAT + id));
-        statResult = statResult.updateStat(statRequest);
-        return statRepository.save(statResult);
+        return statService.updateStat(id, statRequest);
     }
 
     @DeleteMapping("/stats")
     public ResponseEntity<?> deleteStat(@RequestParam(value = "id") Long id) {
-        statRepository.delete(statRepository.findById(id).orElseThrow(() ->
-                new ResourceNotFoundException(Errors.NO_ID_STAT + id)));
-        return ResponseEntity.ok().build();
+        return statService.deleteStat(id);
     }
 }

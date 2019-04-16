@@ -59,7 +59,7 @@ public class RoomController {
     @PutMapping("/rooms")
     @ResponseBody
     public Room updateRoom(@RequestParam(value = "hash") String hash,
-                                       @Valid @RequestBody(required = false) Room request) {
+                           @Valid @RequestBody(required = false) Room request) {
         return roomService.updateRoom(hash, request);
     }
 
