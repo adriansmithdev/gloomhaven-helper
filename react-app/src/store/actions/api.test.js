@@ -96,7 +96,38 @@ describe('Test API functionality:', () => {
     expect(monsterTypes[0].attributes).not.toBe(undefined);
 
     expect(monsterTypes[0].eliteAttributes).not.toBe(undefined);
+
   });
 
+
+  // Test changeScenario Number.
+  it('Change Scenario Number', async () => {
+
+    const response = await axios.get('http://localhost:5000/api/sessions?hash=ABCDEF');
+
+    const room = response.data.content[0].room;
+
+    expect(room.scenarioNumber).not.toBe(undefined);
+
+    const newScenarioNumber = Math.round(Math.random() * 10000);
+    const newRoom = {...room, scenarioNumber: newScenarioNumber}
+
+    await axios.put(`http://localhost:5000/api/rooms?hash=ABCDEF`, newRoom);
+
+    const updatedResponse = await axios.get('http://localhost:5000/api/sessions?hash=ABCDEF');
+
+    const updatedRoom = updatedResponse.data.content[0].room;
+
+    expect(updatedRoom.scenarioNumber).not.toBe(undefined);
+    expect(updatedRoom.scenarioNumber).toBe(newScenarioNumber);
+
+
+
+  });
   
+  
+
+
+
+
 });
