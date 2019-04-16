@@ -4,6 +4,7 @@ import com.subjecttochange.ghhelper.exception.Errors;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.Element;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
+import com.subjecttochange.ghhelper.persistence.repository.MonsterInstanceRepository;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,10 +20,12 @@ import java.util.Collections;
 public class RoomService {
 
     private final RoomRepository roomRepository;
+    private final MonsterInstanceRepository instanceRepository;
 
     @Autowired
-    public RoomService(RoomRepository roomRepository) {
+    public RoomService(RoomRepository roomRepository, MonsterInstanceRepository instanceRepository) {
         this.roomRepository = roomRepository;
+        this.instanceRepository = instanceRepository;
     }
 
     @Transactional
@@ -57,6 +60,11 @@ public class RoomService {
 
         int roundDifference = Math.abs(curRoundNum - prevRoundNum);
         Element.decrementElementsByQuantity(room, roundDifference);
+
+        if(roomRequest.getScenarioLevel() != null && !roomRequest.getScenarioLevel().equals(room.getScenarioLevel())){
+            room.setScenarioLevel(roomRequest.getScenarioLevel());
+            instanceRepository.removeAllByRoomHash(room.getHash());
+        }
 
         return roomRepository.save(room);
     }
