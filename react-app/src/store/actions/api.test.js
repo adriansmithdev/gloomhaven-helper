@@ -120,9 +120,28 @@ describe('Test API functionality:', () => {
 
     expect(updatedRoom.scenarioNumber).not.toBe(undefined);
     expect(updatedRoom.scenarioNumber).toBe(newScenarioNumber);
+  });
 
+  // Test changeScenario level.
+  it('Change Scenario level', async () => {
 
+    const response = await axios.get('http://localhost:5000/api/sessions?hash=ABCDEF');
 
+    const room = response.data.content[0].room;
+
+    expect(room.scenarioLevel).not.toBe(undefined);
+
+    const newScenarioLevel = Math.round(Math.random() * 10000);
+    const newRoom = {...room, scenarioLevel: newScenarioLevel}
+
+    await axios.put(`http://localhost:5000/api/rooms?hash=ABCDEF`, newRoom);
+
+    const updatedResponse = await axios.get('http://localhost:5000/api/sessions?hash=ABCDEF');
+
+    const updatedRoom = updatedResponse.data.content[0].room;
+
+    expect(updatedRoom.scenarioLevel).not.toBe(undefined);
+    expect(updatedRoom.scenarioLevel).toBe(newScenarioLevel);
   });
   
   
