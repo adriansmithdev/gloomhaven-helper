@@ -39,7 +39,7 @@ class RoomToolbar extends Component {
 
   render() {
     const monsterTypes = this.props.monsters.map((type, index) =>
-      <option value={type.id} key={index}>{type.name}: {type.level}</option>
+      <option value={type.id} key={index}>{type.name}</option>
     );
 
     return (
