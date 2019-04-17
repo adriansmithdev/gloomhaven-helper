@@ -3,12 +3,12 @@ import {connect} from 'react-redux';
 
 import ElementList from './elements/ElementList';
 
-import {addMonster} from './../../store/actions/actions';
+import { addMonster, updateElement, incrementRound } from './../../store/actions/actions';
 import EliteSwitch from './elements/EliteSwitch.js';
 import RoundManager from './RoundManager';
 
 
-class RoomToolbar extends Component {
+export class RoomToolbar extends Component {
 
   constructor(props) {
     super(props);
@@ -26,7 +26,11 @@ class RoomToolbar extends Component {
 
   addMonster() {
     const monsterId = this.monsterSelect.current.value;
-    this.props.addMonster(this.props.room.hash, monsterId, this.state.isElite);
+    if(this.props.room !== undefined) {
+      this.props.addMonster(this.props.room.hash, monsterId, this.state.isElite);
+    } else {
+      console.error('Failed to add monster becuase room is undefined.')
+    }
   }
 
   updateEliteStatus() {
@@ -35,13 +39,16 @@ class RoomToolbar extends Component {
       isElite: !this.state.isElite
     });
   }
-  //
 
   render() {
-    const monsterTypes = this.props.monsters.map((type, index) =>
-      <option value={type.id} key={index}>{type.name}</option>
-    );
+    const monsterTypes = (this.props.monsters !== undefined) ? 
+      this.props.monsters.map((type, index) =>
+        <option value={type.id} key={index}>{type.name}</option>
+      ) : '';
 
+    const hasProps = this.props.room !== undefined;
+
+    const { hash, elements } = (hasProps) ? this.props.room : {};
     return (
       <div className="room-toolbar columns">
         <div className="column is-half">
@@ -55,7 +62,7 @@ class RoomToolbar extends Component {
             </div>
             <div className="control mr-1">
               <div className="level-right">
-                <button className="button is-dark themed-font" onClick={this.addMonster}>
+                <button className="button is-dark themed-font add-monster-button" onClick={this.addMonster}>
                   + Monster
                 </button>
               </div>
@@ -66,11 +73,15 @@ class RoomToolbar extends Component {
         </div>
         
         <div className="column"> 
-          <ElementList/>
+          <ElementList 
+            hash={hash} 
+            elements={elements} 
+            updateElement={this.props.updateElement}
+            />
         </div>
         <div className="column">
 
-          <RoundManager round={this.props.room.round}/>
+          <RoundManager room={this.props.room} incrementRound={incrementRound}/>
         </div>
       </div>
     );
@@ -86,7 +97,9 @@ const mapStateToProps = (state) => {
 
 const mapDispachToProps = (dispatch) => {
   return {
-    addMonster: (hash, monsterId, isElite) => dispatch(addMonster(hash, monsterId, isElite))
+    addMonster: (hash, monsterId, isElite) => dispatch(addMonster(hash, monsterId, isElite)),
+    updateElement: (hash, element) => dispatch(updateElement(hash, element)),
+    incrementRound: (room) => dispatch(incrementRound(room))
   };
 }
 
