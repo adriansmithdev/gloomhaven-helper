@@ -1,5 +1,4 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
 import { shallow, configure, mount, render } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
