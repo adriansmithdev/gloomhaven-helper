@@ -55,7 +55,7 @@ public class MonsterInstance extends BaseModel {
         if (isElite) {
             return MonsterInstance.create(monster.getEliteHealth(), true, room, monster);
         } else {
-            return MonsterInstance.create(monster.getHealth(), isElite, room, monster);
+            return MonsterInstance.create(monster.getHealth(), false, room, monster);
         }
     }
 
