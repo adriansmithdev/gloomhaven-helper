@@ -184,7 +184,7 @@ describe('Test API functionality:', () => {
   });
 
 
-  // Test updating Health.
+  // Test updating monster Health.
   it('Testing Health Functions Calls', async () => {
 
     //Get Room object
@@ -229,56 +229,65 @@ describe('Test API functionality:', () => {
     const elements = response.data.content[0].room.elements
     const randomElement = Math.round(Math.random() * elements.length)
     const element = elements[randomElement];
-    const newStrength = 2;
+
+  
+    const newStrength = (element.strength === 0) ? 1 : 
+                        (element.strength === 1) ? 2 : 0;
 
     const updateElement = {
       ...element,
       strength: newStrength
     };
 
-    //expect(element).not.toBe(undefined);
-    expect(updateElement.strength).toBe(2);
+    const updateResults = await axios.put(`http://localhost:5000/api/elements?hash=ABCDEF&id=${element.id}`, updateElement)
 
-    //  expect(element).not.toBe(undefined);
+    expect(updateResults).not.toBe(undefined);
 
-  });
+    const updatedElement = updateResults.data;
 
+    expect(updatedElement).not.toBe(undefined);
+    expect(updatedElement.strength).not.toBe(element.strength);
+    expect(updatedElement.strength).toBe(newStrength);
 
-  // Test Monster Statuses.
-  it('Status Tracking Tests', async () => {
-
-    //Get Room object
-    const response = await axios.get('http://localhost:5000/api/sessions?hash=ABCDEF');
-
-    const monsters = response.data.content[0].monsters;
-    const randomMonster = Math.round(Math.random() * monsters.length)
-    const monsterId = monsters[randomMonster].id;
-    const statuses = response.data.content[0].statuses;
-
-    //Create normal monster
-    const normalResponse = await axios.post(`http://localhost:5000/api/monsterinstances?hash=ABCDEF`, {
-      monsterId: monsterId,
-      isElite: false
-    });
-
-    const newInstance = normalResponse.data;
-
-    expect(newInstance.activeStatuses).not.toBe(undefined);
-    expect(newInstance.activeStatuses.length).toBe(0);
-
-    const updateInstance = {
-      ...newInstance,
-      activeStatuses: statuses
-    };
-
-    const updateResult = await axios.put(`http://localhost:5000/api/monsterinstances?hash=ABCDEF&id=${newInstance.id}`, updateInstance);
-
-    const updatedMonster = updateResult.data;
-    expect(updatedMonster.activeStatuses).not.toBe(undefined);
-    expect(updatedMonster.activeStatuses.length).not.toBe(newInstance.activeStatuses.length);
-    expect(updatedMonster.activeStatuses.length).toBe(statuses.length);
 
   });
+
+
+  // // Test Monster Statuses.
+  // it('Status Tracking Tests', async () => {
+
+  //   //Get Room object
+  //   const response = await axios.get('http://localhost:5000/api/sessions?hash=ABCDEF');
+
+  //   const monsters = response.data.content[0].monsters;
+  //   const randomMonster = Math.round(Math.random() * monsters.length)
+  //   const monsterId = monsters[randomMonster].id;
+  //   const statuses = response.data.content[0].statuses;
+
+  //   //Create normal monster
+  //   const normalResponse = await axios.post(`http://localhost:5000/api/monsterinstances?hash=ABCDEF`, {
+  //     monsterId: monsterId,
+  //     isElite: false
+  //   });
+
+  //   const newInstance = normalResponse.data;
+
+  //   expect(newInstance.activeStatuses).not.toBe(undefined);
+  //   expect(newInstance.activeStatuses.length).toBe(0);
+
+  //   const updateInstance = {
+  //     ...newInstance,
+  //     activeStatuses: statuses
+  //   };
+
+  //   const updateResult = await axios.put(`http://localhost:5000/api/monsterinstances?hash=ABCDEF&id=${newInstance.id}`, updateInstance);
+
+  //   const updatedMonster = updateResult.data;
+  //   expect(updatedMonster.activeStatuses).not.toBe(undefined);
+  //   expect(updatedMonster.activeStatuses.length).not.toBe(newInstance.activeStatuses.length);
+  //   expect(updatedMonster.activeStatuses.length).toBe(statuses.length);
+
+  // });
   
 
 });
