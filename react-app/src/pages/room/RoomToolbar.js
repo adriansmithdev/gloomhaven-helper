@@ -81,7 +81,7 @@ export class RoomToolbar extends Component {
         </div>
         <div className="column">
 
-          <RoundManager room={this.props.room} incrementRound={incrementRound}/>
+          <RoundManager room={this.props.room} incrementRound={this.props.incrementRound}/>
         </div>
       </div>
     );
