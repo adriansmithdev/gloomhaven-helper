@@ -1,33 +1,34 @@
-import React, { Component } from 'react';
-import connect from "react-redux/es/connect/connect";
-import {incrementRound} from "../../store/actions/actions";
+import React from 'react';
+import { connect } from 'react-redux';
+import { incrementRound } from "../../store/actions/actions";
 
-class RoundManager extends Component {
+export const incrementRoundForRoom = (room) => {
+  const newRoom = {
+    ...room, 
+    round: room.round + 1
+  };
+  
+  return newRoom;
+}
 
-  constructor(props){
-    super(props);
-
-    this.incrementRound = this.incrementRound.bind(this);
+export const RoundManager = (props) => {
+  const incrementRound = () => {
+    if(props.room === undefined) return;
+    const newRoom = incrementRoundForRoom(props.room);
+    props.incrementRound(newRoom);
   }
 
-  incrementRound(){
-    const newRoom = {...this.props.session.room, round: this.props.session.room.round + 1};
-    this.props.incrementRound(newRoom);
-  }
-
-
-  render() {
-    return(
+  return(
     <div className="round-manager">
-        <strong className="themed-font has-text-white subtitle is-3">Round {this.props.round} </strong>
-        <button className="button is-dark themed-font is-rounded" onClick={this.incrementRound}>→</button>
+        <strong className="themed-font has-text-white subtitle is-3">Round {(props.room !== undefined) ? props.round : ''} </strong>
+        <button className="button is-dark themed-font is-rounded round-increment-button" onClick={incrementRound}>→</button>
     </div>
-    )}
+  )
 }
 
 const mapStateToProps = (state) => {
   return {
-    ...state
+    room: {...state.session.room}
   };
 }
 
