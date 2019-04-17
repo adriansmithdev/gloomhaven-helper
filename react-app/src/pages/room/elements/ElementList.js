@@ -1,7 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
-
-import { updateElement } from './../../../store/actions/actions';
 
 import Element from './Element';
 import './element.scss';
@@ -44,19 +41,4 @@ export const ElementList = (props) => {
   );
 }
 
-// Redux interactions.
-const mapStateToProps = (state) => {
-  return {
-    hash: state.session.room.hash,
-    elements: [...state.session.room.elements]
-  }
-}
-
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateElement: (hash, element) => dispatch(updateElement(hash, element))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ElementList);
+export default ElementList;
