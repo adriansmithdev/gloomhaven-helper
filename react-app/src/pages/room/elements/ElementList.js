@@ -6,22 +6,25 @@ import { updateElement } from './../../../store/actions/actions';
 import Element from './Element';
 import './element.scss';
 
-const ElementList = (props) => {
+export const cycleElement = (element) => {
+  // Pick next element strength in cycle.
+  const newVal = 
+    (element.strength === 1) ? (0) : 
+    (element.strength === 2) ? (1) : (2);
+  const newElement = {
+    ...element,
+    strength: newVal
+  }
 
-  
+  return newElement;
+}
 
-  const generateElements = () => {
-    return props.elements.map(element => {
+export const ElementList = (props) => {
+  const generateElements = (elements) => {
+    return elements.map(element => {
 
       const cycleElementStatus = () => {
-        // Pick next element strength in cycle.
-        const newVal = 
-          (element.strength === 1) ? (0) : 
-          (element.strength === 2) ? (1) : (2);
-        const newElement = {
-          ...element,
-          strength: newVal
-        }
+        const newElement = cycleElement(element);
         props.updateElement(props.hash, newElement);
       }
 
@@ -36,14 +39,10 @@ const ElementList = (props) => {
 
   return (
     <div className="element-list">
-      { generateElements() }
+      { (props.elements !== undefined) ? generateElements(props.elements) : '' }
     </div>
   );
 }
-
-
-
-
 
 // Redux interactions.
 const mapStateToProps = (state) => {
