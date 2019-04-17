@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 // Redux Actions
-import {deleteMonster, updateMonster} from "../../../store/actions/actions";
+import { deleteMonster, updateMonster } from "../../../store/actions/actions";
 
 // Sub Components
 import ProgressBar from './../../common/ProgressBar';
 import StatusEffect from '../status/StatusEffect';
 import MonsterToken from './MonsterToken';
 
-class Monster extends Component {
+export class Monster extends Component {
 
   constructor(props) {
     super(props);
@@ -68,24 +68,30 @@ class Monster extends Component {
 
   render() {
 
-    const statuses = this.props.statuses.map(status => (
+    const statuses = (this.props.statuses !== undefined) ? this.props.statuses.map(status => (
         <StatusEffect key={status.id} 
           showInactive={this.state.showInactiveConditions} 
           instance={this.props.instance} 
           status={status}
         />
-    ));
+    )) : '';
 
-    const rowClasses = (this.props.instance.isElite) ?
-      'monster-instance elite' : 'monster-instance'
+    const hasInstance = (this.props.instance !== undefined);
 
-    const maxHealth = this.props.instance.isElite ?
-      this.props.type.eliteHealth : this.props.type.health;
+    const rowClasses = (hasInstance) ? (this.props.instance.isElite) ?
+      'monster-instance elite' : 'monster-instance' : '';
+
+    const maxHealth = (hasInstance) ? (this.props.instance.isElite) ?
+      this.props.type.eliteHealth : this.props.type.health : '';
+
+    const token = (hasInstance) ? this.props.instance.token : '';
+
+    const currentHealth = (hasInstance) ? this.props.instance.currentHealth : '';
 
     return (
       <tr className={rowClasses} key={this.props.key}>
         <td className="monster-identifier" >
-          <MonsterToken token={this.props.instance.token} 
+          <MonsterToken token={token} 
             updateMonsterToken={this.updateMonsterToken}
           />
         </td>
@@ -93,7 +99,7 @@ class Monster extends Component {
         <td className="monster-healthbar">
           <ProgressBar
             title="HP"
-            current={this.props.instance.currentHealth}
+            current={currentHealth}
             max={maxHealth}
           />
           <div className="button-bar">
@@ -118,9 +124,7 @@ class Monster extends Component {
               Statuses
             </button>
             <button className="button-remove" type="button" onClick={this.deleteMonster}>X</button>
-
           </div>
-          
         </td>
       </tr>
     );
