@@ -180,7 +180,24 @@ describe('Test API functionality:', () => {
    expect(updatedInstanceCount).not.toBe(undefined);
    expect(updatedInstanceCount).not.toBe(instanceCount);
    expect(updatedInstanceCount).toBe(instanceCount + 2);
-  
+
+
+   const updatedMonsterInstances = updatedMonsters[randomMonster].monsterInstances;
+
+
+   const deleteResponseOne = await axios.delete(`http://localhost:5000/api/monsterinstances?hash=ABCDEF&id=${updatedMonsterInstances[0].id}`)
+
+   const deleteResponseTwo = await axios.delete(`http://localhost:5000/api/monsterinstances?hash=ABCDEF&id=${updatedMonsterInstances[1].id}`)
+
+   const finalResponse = await axios.get('http://localhost:5000/api/sessions?hash=ABCDEF');
+   const finalMonsters = finalResponse.data.content[0].monsters;
+   const finalCount = finalMonsters[randomMonster].monsterInstances.length;
+
+
+   expect(finalCount).not.toBe(undefined);
+   expect(finalCount).toBe(instanceCount);
+   expect(finalCount).not.toBe(updatedInstanceCount);
+
   });
 
 
