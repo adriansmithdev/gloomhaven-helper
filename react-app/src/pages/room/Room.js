@@ -19,6 +19,7 @@ class Room extends Component {
   constructor(props) {
     super(props);
 
+    this.confirmLevelChange = this.confirmLevelChange.bind(this);
     this.updateScenario = this.updateScenario.bind(this);
   }
 
