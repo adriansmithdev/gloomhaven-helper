@@ -12,8 +12,6 @@ export function sortByToken(instances) {
 
 class MonsterType extends Component{
 
-  
-
   generateInstances(instances) {
     return instances.map(instance => 
       <Monster instance={instance} 
@@ -39,7 +37,7 @@ class MonsterType extends Component{
 
     return (
       <div className="monster-type">
-        <MonsterTypeHeader monster={this.props.type}/>
+        <MonsterTypeHeader hash={this.props.hash} monster={this.props.type} addMonster={this.props.addMonster}/>
         <table>
           <tbody>
             {this.generateInstances(eliteInstances)}

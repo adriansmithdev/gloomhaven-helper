@@ -35,7 +35,6 @@ class Room extends Component {
   }
 
   confirmLevelChange(e) {
-    console.log(e);
     const response = window.confirm('Changing scenario level will remove all monsters in play!');
     if(response) {
       this.updateScenario(e);
@@ -65,12 +64,17 @@ class Room extends Component {
         <nav className="navbar is-black">
           <div className="navbar-brand">
             <div className="navbar-item">
-              <a href="/"  className="title themed-font has-text-light">
-                Gloomtility
-              </a>
+              <div>
+                <a href="/"  className="title themed-font has-text-light">
+                  Gloomtility
+                </a>
+              </div>
+              <div>
+                <strong className="has-text-light">Room: {this.props.session.room.hash}</strong>
+              </div>
             </div>
             <div className="navbar-item">
-              <strong className="has-text-light">Room: {this.props.session.room.hash}</strong>
+              
 
             </div>
           </div>

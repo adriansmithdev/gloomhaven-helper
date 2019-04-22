@@ -56,6 +56,10 @@ div.monster-type {
           color: gold;
         }
       }
+      &.monster-type-controls {
+        margin-left: auto;
+        padding: 1rem;
+      }
     }
   }
 
@@ -151,7 +155,7 @@ div.monster-type {
             
           }
           &.monster-healthbar {
-            min-width: 3rem + 6rem;
+            min-width: 2rem + 6rem;
               
             display: flex;
             border: 2px ridge gray;

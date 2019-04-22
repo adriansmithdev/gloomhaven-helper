@@ -18,8 +18,8 @@ export class RoomToolbar extends Component {
     }
 
     this.monsterSelect = React.createRef();
-    this.addMonster = this.addMonster.bind(this);
     this.eliteToggle = React.createRef();
+    this.addMonster = this.addMonster.bind(this);
     this.updateEliteStatus = this.updateEliteStatus.bind(this);
 
   }

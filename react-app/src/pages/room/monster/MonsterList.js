@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { addMonster } from './../../../store/actions/actions';
 
 import MonsterType from './MonsterType';
 
@@ -16,7 +17,7 @@ class MonsterList extends Component {
     return this.props.monsters.filter(type =>
       type.monsterInstances.length > 0
     ).map(type =>
-      <MonsterType key={type.id} type={type} />
+      <MonsterType hash={this.props.room.hash} key={type.id} type={type} addMonster={this.props.addMonster}/>
     );
   }
 
@@ -24,7 +25,6 @@ class MonsterList extends Component {
 
     return (
       <div className="monster-list">
-        
         {this.generateTypes()}
       </div>
     );
@@ -39,6 +39,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    addMonster: (hash, monsterId, isElite) => dispatch(addMonster(hash, monsterId, isElite))
   };
 };
 

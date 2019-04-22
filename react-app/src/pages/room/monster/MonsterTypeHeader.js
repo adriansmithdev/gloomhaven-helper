@@ -1,12 +1,28 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import Attack from './../../../assets/icons/stats/attack.svg';
-import Movement from './../../../assets/icons/stats/movement.svg';
-import Range from './../../../assets/icons/stats/range.svg';
 
+import Attack   from './../../../assets/icons/stats/attack.svg';
+import Movement from './../../../assets/icons/stats/movement.svg';
+import Range    from './../../../assets/icons/stats/range.svg';
 
 class MonsterTypeHeader extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.eliteToggle = React.createRef();
+    this.addMonsterEvent = this.addMonsterEvent.bind(this);
+  }
+
+  addMonsterEvent(event) {
+
+    const hash = this.props.hash;
+
+    const monsterid = this.props.monster.id;
+    
+    const eliteStatus = this.eliteToggle.current.checked;
+
+    this.props.addMonster(hash, monsterid, eliteStatus);
+  }
 
   render() {
     let monster = this.props.monster;
@@ -60,22 +76,18 @@ class MonsterTypeHeader extends Component {
           </div>
           
         </div>
+        <div className="monster-type-controls">
+          <div className="add-monster-widget">
+            <label>
+              Elite:
+              <input type="checkbox" ref={this.eliteToggle}/>
+            </label>
+            <button className="button themed-font" onClick={this.addMonsterEvent}>+</button>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-
-  };
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    //UI Events
-  };
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(MonsterTypeHeader);
+export default MonsterTypeHeader;
