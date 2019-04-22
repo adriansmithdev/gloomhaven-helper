@@ -75,9 +75,8 @@ public class SessionService {
         return new PageImpl<>(sessionResponse);
     }
 
-    private Collection<MonsterResponseBody> buildMonsterResponses(Room room)
-    {
-        Map<Long, MonsterResponseBody> namedMonsterBodies = new HashMap<>();
+    private Collection<MonsterResponseBody> buildMonsterResponses(Room room) {
+        Map<Long, MonsterResponseBody> namedMonsterBodies = new TreeMap<>();
         List<Monster> monsters = monsterRepository.findAllByLevel(room.getScenarioLevel());
 
         for (Monster monster : monsters) {
