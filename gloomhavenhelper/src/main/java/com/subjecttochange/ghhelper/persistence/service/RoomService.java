@@ -53,19 +53,16 @@ public class RoomService {
     @Transactional
     public Room updateRoom(String hash, Room roomRequest) {
         Room room = roomRepository.findByHash(hash).orElseThrow(() -> new ResourceNotFoundException(Errors.NO_HASH_ROOM + hash));
-        int prevRoundNum = room.getRound();
 
-        room = room.updateRoom(roomRequest);
-        int curRoundNum = room.getRound();
+        if (!isRoundEqual(roomRequest, room)) {
+            Element.decrementElementsByQuantity(room, Math.abs(room.getRound() - roomRequest.getRound()));
+        }
 
-        int roundDifference = Math.abs(curRoundNum - prevRoundNum);
-        Element.decrementElementsByQuantity(room, roundDifference);
-
-        if(roomRequest.getScenarioLevel() != null && !roomRequest.getScenarioLevel().equals(room.getScenarioLevel())){
-            room.setScenarioLevel(roomRequest.getScenarioLevel());
+        if (!isScenarioLevelEqual(roomRequest, room)) {
             instanceRepository.removeAllByRoomHash(room.getHash());
         }
 
+        room = room.updateRoom(roomRequest);
         return roomRepository.save(room);
     }
 
@@ -74,5 +71,13 @@ public class RoomService {
         roomRepository.delete(roomRepository.findByHash(hash)
                 .orElseThrow(() -> new ResourceNotFoundException(Errors.NO_HASH_ROOM + hash)));
         return ResponseEntity.ok().build();
+    }
+
+    private boolean isRoundEqual(Room request, Room stored) {
+        return request.getRound() != null && request.getRound().equals(stored.getRound());
+    }
+
+    private boolean isScenarioLevelEqual(Room request, Room stored) {
+        return request.getScenarioLevel() != null && request.getScenarioLevel().equals(stored.getScenarioLevel());
     }
 }
