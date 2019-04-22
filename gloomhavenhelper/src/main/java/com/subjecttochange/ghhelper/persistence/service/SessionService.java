@@ -84,11 +84,6 @@ public class SessionService {
             namedMonsterBodies.put(monster.getId(), MonsterResponseBody.create(monster));
         }
 
-        // Removes all monster instances that don't match the new scenarioLevel set
-        List<MonsterInstance> monsterInstances = room.getMonsterInstances();
-        monsterInstances.removeIf(instance -> !namedMonsterBodies.containsKey(instance.getMonster().getId()));
-        room.setMonsterInstances(monsterInstances);
-
         for (MonsterInstance monsterInstance : room.getMonsterInstances()) {
             Monster monster = monsterInstance.getMonster();
 

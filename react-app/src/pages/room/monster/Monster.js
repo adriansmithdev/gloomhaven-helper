@@ -98,7 +98,6 @@ export class Monster extends Component {
 
         <td className="monster-healthbar">
           <ProgressBar
-            title="HP"
             current={currentHealth}
             max={maxHealth}
           />
