@@ -4,6 +4,8 @@ import com.subjecttochange.ghhelper.exception.Errors;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.Element;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
+import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
+import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterInstanceRepository;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class RoomService {
@@ -56,6 +61,7 @@ public class RoomService {
 
         if (!isRoundEqual(roomRequest, room)) {
             Element.decrementElementsByQuantity(room, Math.abs(room.getRound() - roomRequest.getRound()));
+            handleDrawMonsterAction(room);
         }
 
         if (!isScenarioLevelEqual(roomRequest, room)) {
@@ -79,5 +85,16 @@ public class RoomService {
 
     private boolean isScenarioLevelEqual(Room request, Room stored) {
         return request.getScenarioLevel() != null && request.getScenarioLevel().equals(stored.getScenarioLevel());
+    }
+
+    private void handleDrawMonsterAction(Room room) {
+        List<MonsterInstance> instances = room.getMonsterInstances();
+        Set<Monster> uniqueMonsters = new HashSet<>();
+        for (MonsterInstance instance: instances) {
+            uniqueMonsters.add(instance.getMonster());
+        }
+        for (Monster monster : uniqueMonsters) {
+            monster.drawNewMonsterAction();
+        }
     }
 }

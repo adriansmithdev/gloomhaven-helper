@@ -1,5 +1,6 @@
 package com.subjecttochange.ghhelper.persistence.model.orm.monster;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -8,7 +9,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 @Entity
 @Data
@@ -25,6 +28,12 @@ public class Monster extends BaseModel {
     private List<String> attributes;
     @ElementCollection(targetClass=String.class)
     private List<String> eliteAttributes;
+    @JsonIgnore
+    private Stack<MonsterAction> actionDeck;
+    @JsonIgnore
+    private Stack<MonsterAction> actionDiscard;
+    private MonsterAction currentAction;
+
     private Integer level;
     private Integer health;
     private Integer movement;
@@ -122,6 +131,27 @@ public class Monster extends BaseModel {
 
         return monster;
     }
+
+    /**
+     * Draws new current action and checks for reshuffling
+     */
+    public void drawNewMonsterAction() {
+        if (currentAction != null) {
+            actionDiscard.push(currentAction);
+            if (currentAction.isShuffleable()) {
+                reshuffleActions();
+            }
+        }
+        currentAction = actionDeck.pop();
+    }
+
+    private void reshuffleActions() {
+        while (!actionDiscard.empty()) {
+            actionDeck.push(actionDiscard.pop());
+        }
+        Collections.shuffle(actionDeck);
+    }
+
 
     private void addAttributes(JsonArray attributesArray) {
         for (JsonElement attribute : attributesArray) {
