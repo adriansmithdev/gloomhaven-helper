@@ -37,7 +37,7 @@ class MonsterType extends Component{
 
     return (
       <div className="monster-type">
-        <MonsterTypeHeader hash={this.props.hash} monster={this.props.type} addMonster={this.props.addMonster}/>
+        <MonsterTypeHeader {...this.props}/>
         <table>
           <tbody>
             {this.generateInstances(eliteInstances)}
