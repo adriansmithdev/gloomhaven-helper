@@ -9,7 +9,6 @@ class MonsterTypeHeader extends Component {
   constructor(props) {
     super(props);
 
-    this.eliteToggle = React.createRef();
     this.addMonsterEvent = this.addMonsterEvent.bind(this);
   }
 
@@ -17,15 +16,15 @@ class MonsterTypeHeader extends Component {
 
     const hash = this.props.hash;
 
-    const monsterid = this.props.monster.id;
+    const monsterid = this.props.type.id;
     
-    const eliteStatus = this.eliteToggle.current.checked;
+    const eliteStatus = this.props.eliteToggle;
 
     this.props.addMonster(hash, monsterid, eliteStatus);
   }
 
   render() {
-    let monster = this.props.monster;
+    let monster = this.props.type;
     let portrait;
     try {
       portrait = require(`./../../../assets/portraits/monsters/${monster.name}.png`);
@@ -77,13 +76,9 @@ class MonsterTypeHeader extends Component {
           
         </div>
         <div className="monster-type-controls">
-          <div className="add-monster-widget">
-            <label>
-              Elite:
-              <input type="checkbox" ref={this.eliteToggle}/>
-            </label>
-            <button className="button themed-font" onClick={this.addMonsterEvent}>+</button>
-          </div>
+          <button className="button is-dark is-rounded themed-font" onClick={this.addMonsterEvent}>
+            {String.fromCharCode(10010)}
+          </button>
         </div>
       </div>
     );
