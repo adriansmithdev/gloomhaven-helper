@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import ElementList from './elements/ElementList';
 
 import { addMonster, updateElement, incrementRound } from './../../store/actions/actions';
-import EliteSwitch from './elements/EliteSwitch.js';
+import EliteToggle from './../common/EliteToggle';
 import RoundManager from './RoundManager';
 
 
@@ -13,31 +13,18 @@ export class RoomToolbar extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      isElite: false
-    }
-
     this.monsterSelect = React.createRef();
-    this.eliteToggle = React.createRef();
     this.addMonster = this.addMonster.bind(this);
-    this.updateEliteStatus = this.updateEliteStatus.bind(this);
 
   }
 
   addMonster() {
     const monsterId = this.monsterSelect.current.value;
     if(this.props.room !== undefined) {
-      this.props.addMonster(this.props.room.hash, monsterId, this.state.isElite);
+      this.props.addMonster(this.props.room.hash, monsterId, this.props.eliteToggle);
     } else {
       console.error('Failed to add monster becuase room is undefined.')
     }
-  }
-
-  updateEliteStatus() {
-    this.setState({
-      ...this.state,
-      isElite: !this.state.isElite
-    });
   }
 
   render() {
@@ -51,8 +38,8 @@ export class RoomToolbar extends Component {
     const { hash, elements } = (hasProps) ? this.props.room : {};
     return (
       <div className="room-toolbar columns">
-        <div className="column is-half">
-          <div className="is-horizontal field">
+        <div className="column">
+          <div className="is-horizontal field has-addons">
             <div className="control">
               <div className="select">
                 <select className="input" ref={this.monsterSelect}>
@@ -60,15 +47,19 @@ export class RoomToolbar extends Component {
                 </select>
               </div>
             </div>
-            <div className="control mr-1">
+            <div className="control">
+                <EliteToggle toggleStatus={this.props.eliteToggle} onClick={this.props.toggleElite}/>
+              </div>
+            <div className="control">
               <div className="level-right">
                 <button className="button is-dark themed-font add-monster-button" onClick={this.addMonster}>
                   + Monster
                 </button>
               </div>
+              
             </div>
             
-          <EliteSwitch updateEliteStatus={this.updateEliteStatus}/>
+          
           </div>
         </div>
         
@@ -91,7 +82,8 @@ export class RoomToolbar extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    ...state.session
+    ...state.session,
+    eliteToggle: state.eliteToggle
   };
 }
 
@@ -99,7 +91,8 @@ const mapDispachToProps = (dispatch) => {
   return {
     addMonster: (hash, monsterId, isElite) => dispatch(addMonster(hash, monsterId, isElite)),
     updateElement: (hash, element) => dispatch(updateElement(hash, element)),
-    incrementRound: (room) => dispatch(incrementRound(room))
+    incrementRound: (room) => dispatch(incrementRound(room)),
+    toggleElite: () => dispatch({type: 'TOGGLE_ELITE'})
   };
 }
 
