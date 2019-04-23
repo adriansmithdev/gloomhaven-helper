@@ -64,7 +64,7 @@ public class RoomService {
         if (!isRoundEqual(roomRequest, room)) {
             Element.decrementElementsByQuantity(room, Math.abs(room.getRound() - roomRequest.getRound()));
             handleStatusEffects(room);
-            handleDrawMonsterAction(room);
+            //handleDrawMonsterAction(room);
         }
 
         if (!isScenarioLevelEqual(roomRequest, room)) {

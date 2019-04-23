@@ -50,11 +50,9 @@ public class MonsterInstance extends BaseModel {
     private Integer token;
 
     public void removeRoundStatusEffects() {
-        System.out.println("removeRoundStatusEffects");
-        for (String status : activeStatuses) {
-            System.out.println("remove: " + status);
+        Set<String> active = new HashSet<>(activeStatuses);
+        for (String status : active) {
             if (validTempStatus(status)) {
-                System.out.println("remove:valid: " + status);
                 if (temporaryStatuses.contains(status)) {
                     temporaryStatuses.remove(status);
                 } else {
@@ -66,10 +64,8 @@ public class MonsterInstance extends BaseModel {
 
     private void trackStatuses(Set<String> oldStatuses, Set<String> newStatuses) {
         for (String newStatus : newStatuses) {
-            System.out.println("trackStatus: " + newStatus);
             if (!oldStatuses.contains(newStatus)) {
                 if (validTempStatus(newStatus)) {
-                    System.out.println("tempAdded: " + newStatus);
                     temporaryStatuses.add(newStatus);
                 }
             }
