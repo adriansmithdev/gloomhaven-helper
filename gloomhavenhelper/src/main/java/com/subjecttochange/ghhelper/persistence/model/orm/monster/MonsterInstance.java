@@ -31,6 +31,7 @@ public class MonsterInstance extends BaseModel {
     private Boolean isElite;
     @ElementCollection(targetClass=String.class)
     private Set<String> activeStatuses;
+    @ElementCollection(targetClass=String.class)
     private Set<String> temporaryStatuses;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -76,12 +77,12 @@ public class MonsterInstance extends BaseModel {
     }
 
     private boolean validTempStatus(String status) {
-        if (status == "Immobilize" ||
-                status == "Disarm" ||
-                status == "Stun" ||
-                status == "Muddle" ||
-                status == "Invisible" ||
-                status == "Strengthen") {
+        if (status.equals("Immobilize") ||
+                status.equals("Disarm") ||
+                status.equals("Stun") ||
+                status.equals("Muddle") ||
+                status.equals("Invisible") ||
+                status.equals("Strengthen")) {
             return true;
         }
         return false;
