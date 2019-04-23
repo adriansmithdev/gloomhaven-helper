@@ -17,7 +17,13 @@ class MonsterList extends Component {
     return this.props.monsters.filter(type =>
       type.monsterInstances.length > 0
     ).map(type =>
-      <MonsterType hash={this.props.room.hash} key={type.id} type={type} addMonster={this.props.addMonster}/>
+      <MonsterType hash={this.props.room.hash} 
+        key={type.id} 
+        type={type}
+        eliteToggle={this.props.eliteToggle} 
+        addMonster={this.props.addMonster}
+        
+        />
     );
   }
 
@@ -33,7 +39,8 @@ class MonsterList extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    ...state.session
+    ...state.session,
+    eliteToggle: state.eliteToggle
   };
 };
 
