@@ -103,7 +103,7 @@ export class Monster extends Component {
           />
           <div className="button-bar">
             <button type="button" className="button-add-health" onClick={this.decreaseHealth}>
-              -
+              {String.fromCharCode(8722)}
             </button>
             <button type="button" className="button-remove-health" onClick={this.increaseHealth}>
               +
@@ -122,7 +122,9 @@ export class Monster extends Component {
               onClick={this.toggleInactiveStatuses.bind(this)}>
               Statuses
             </button>
-            <button className="button-remove" type="button" onClick={this.deleteMonster}>X</button>
+            <button className="button-remove" type="button" onClick={this.deleteMonster}>
+              {String.fromCharCode(10005)}
+            </button>
           </div>
         </td>
       </tr>
