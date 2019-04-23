@@ -8,6 +8,8 @@ import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterInstanceRepository;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -61,6 +63,7 @@ public class RoomService {
 
         if (!isRoundEqual(roomRequest, room)) {
             Element.decrementElementsByQuantity(room, Math.abs(room.getRound() - roomRequest.getRound()));
+            handleStatusEffects(room);
             handleDrawMonsterAction(room);
         }
 
@@ -95,6 +98,13 @@ public class RoomService {
         }
         for (Monster monster : uniqueMonsters) {
             monster.drawNewMonsterAction();
+        }
+    }
+
+    private void handleStatusEffects(Room room) {
+        List<MonsterInstance> instances = room.getMonsterInstances();
+        for (MonsterInstance instance: instances) {
+            instance.removeRoundStatusEffects();
         }
     }
 }
