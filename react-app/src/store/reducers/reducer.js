@@ -7,6 +7,7 @@ const initialState = {
   },
   notifications: [],
   modalIsOpen: false,
+  eliteToggle: false
   
 }
 
@@ -23,6 +24,9 @@ const reducer = (state = initialState, action) => {
   };
 
   switch(action.type) {
+    case 'TOGGLE_ELITE':
+      newState.eliteToggle = !state.eliteToggle;
+      break;
     case 'SET_ROOM': 
       newState.session.room = {...action.value};
       break;
