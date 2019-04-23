@@ -69,6 +69,7 @@ public class Room extends BaseModel {
     }
 
     public Room updateRoom(Room roomRequest){
+        System.out.println("Room update Room");
         if (roomRequest.getHash() != null) {
             setHash(roomRequest.getHash());
         }

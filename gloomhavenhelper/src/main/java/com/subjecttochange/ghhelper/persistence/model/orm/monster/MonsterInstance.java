@@ -31,6 +31,8 @@ public class MonsterInstance extends BaseModel {
     private Boolean isElite;
     @ElementCollection(targetClass=String.class)
     private Set<String> activeStatuses;
+    @ElementCollection(targetClass=String.class)
+    private Set<String> temporaryStatuses;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "room_id", nullable = false)
@@ -46,6 +48,45 @@ public class MonsterInstance extends BaseModel {
     @Transient
     private Long monsterId;
     private Integer token;
+
+    public void removeRoundStatusEffects() {
+        System.out.println("removeRoundStatusEffects");
+        for (String status : activeStatuses) {
+            System.out.println("remove: " + status);
+            if (validTempStatus(status)) {
+                System.out.println("remove:valid: " + status);
+                if (temporaryStatuses.contains(status)) {
+                    temporaryStatuses.remove(status);
+                } else {
+                    activeStatuses.remove(status);
+                }
+            }
+        }
+    }
+
+    private void trackStatuses(Set<String> oldStatuses, Set<String> newStatuses) {
+        for (String newStatus : newStatuses) {
+            System.out.println("trackStatus: " + newStatus);
+            if (!oldStatuses.contains(newStatus)) {
+                if (validTempStatus(newStatus)) {
+                    System.out.println("tempAdded: " + newStatus);
+                    temporaryStatuses.add(newStatus);
+                }
+            }
+        }
+    }
+
+    private boolean validTempStatus(String status) {
+        if (status.equals("Immobilize") ||
+                status.equals("Disarm") ||
+                status.equals("Stun") ||
+                status.equals("Muddle") ||
+                status.equals("Invisible") ||
+                status.equals("Strengthen")) {
+            return true;
+        }
+        return false;
+    }
 
     public MonsterInstance() {
         super();
@@ -78,6 +119,7 @@ public class MonsterInstance extends BaseModel {
             setIsElite(monsterRequest.getIsElite());
         }
         if (monsterRequest.getActiveStatuses() != null) {
+            trackStatuses(getActiveStatuses(), monsterRequest.getActiveStatuses());
             setActiveStatuses(monsterRequest.getActiveStatuses());
         }
         if (monsterRequest.getMonsterId() != null) {
@@ -88,6 +130,8 @@ public class MonsterInstance extends BaseModel {
         }
         return this;
     }
+
+
 
     @JsonProperty(required = true)
     public void setMonsterId(Long monsterId) {
