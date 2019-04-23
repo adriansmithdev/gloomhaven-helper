@@ -8,10 +8,7 @@ import com.subjecttochange.ghhelper.persistence.model.orm.BaseModel;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 @Entity
 @Data
@@ -29,9 +26,14 @@ public class Monster extends BaseModel {
     @ElementCollection(targetClass=String.class)
     private List<String> eliteAttributes;
     @JsonIgnore
-    private Stack<MonsterAction> actionDeck;
+    @OrderBy("id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "monster")
+    private List<MonsterAction> actionDeck;
     @JsonIgnore
-    private Stack<MonsterAction> actionDiscard;
+    @OrderBy("id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "monster")
+    private List<MonsterAction> actionDiscard;
+    @OneToOne
     private MonsterAction currentAction;
 
     private Integer level;
@@ -55,6 +57,8 @@ public class Monster extends BaseModel {
         monster.setName(name);
         monster.setAttributes(new ArrayList<>());
         monster.setEliteAttributes(new ArrayList<>());
+        monster.setActionDeck(new Stack<>());
+        monster.setActionDiscard(new Stack<>());
         monster.setLevel(0);
         monster.setHealth(maxHealth);
         monster.setMovement(0);
@@ -136,20 +140,36 @@ public class Monster extends BaseModel {
      * Draws new current action and checks for reshuffling
      */
     public void drawNewMonsterAction() {
+        Stack<MonsterAction> deck = new Stack<>();
+        deck.addAll(getActionDeck());
+        Stack<MonsterAction> discard = new Stack<>();
+        discard.addAll(getActionDiscard());
+
         if (currentAction != null) {
-            actionDiscard.push(currentAction);
+            discard.push(currentAction);
             if (currentAction.isShuffleable()) {
                 reshuffleActions();
             }
         }
-        currentAction = actionDeck.pop();
+        currentAction = deck.pop();
+
+        setActionDeck(new ArrayList<>(deck));
+        setActionDiscard(new ArrayList<>(discard));
     }
 
     private void reshuffleActions() {
-        while (!actionDiscard.empty()) {
-            actionDeck.push(actionDiscard.pop());
+        Stack<MonsterAction> deck = new Stack<>();
+        deck.addAll(getActionDeck());
+        Stack<MonsterAction> discard = new Stack<>();
+        discard.addAll(getActionDiscard());
+
+        while (!discard.empty()) {
+            deck.push(discard.pop());
         }
-        Collections.shuffle(actionDeck);
+        Collections.shuffle(deck);
+
+        setActionDeck(new ArrayList<>(deck));
+        setActionDiscard(new ArrayList<>(discard));
     }
 
 
