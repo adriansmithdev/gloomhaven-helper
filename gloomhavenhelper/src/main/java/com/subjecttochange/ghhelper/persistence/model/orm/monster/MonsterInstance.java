@@ -49,40 +49,6 @@ public class MonsterInstance extends BaseModel {
     private Long monsterId;
     private Integer token;
 
-    public void removeRoundStatusEffects() {
-        Set<String> active = new HashSet<>(activeStatuses);
-        for (String status : active) {
-            if (validTempStatus(status)) {
-                if (temporaryStatuses.contains(status)) {
-                    temporaryStatuses.remove(status);
-                } else {
-                    activeStatuses.remove(status);
-                }
-            }
-        }
-    }
-
-    private void trackStatuses(Set<String> oldStatuses, Set<String> newStatuses) {
-        for (String newStatus : newStatuses) {
-            if (!oldStatuses.contains(newStatus)) {
-                if (validTempStatus(newStatus)) {
-                    temporaryStatuses.add(newStatus);
-                }
-            }
-        }
-    }
-
-    private boolean validTempStatus(String status) {
-        if (status.equals("Immobilize") ||
-                status.equals("Disarm") ||
-                status.equals("Stun") ||
-                status.equals("Muddle") ||
-                status.equals("Invisible") ||
-                status.equals("Strengthen")) {
-            return true;
-        }
-        return false;
-    }
 
     public MonsterInstance() {
         super();
@@ -127,8 +93,6 @@ public class MonsterInstance extends BaseModel {
         return this;
     }
 
-
-
     @JsonProperty(required = true)
     public void setMonsterId(Long monsterId) {
         this.monsterId = monsterId;
@@ -155,5 +119,40 @@ public class MonsterInstance extends BaseModel {
         if (!monsterInstance.getRoom().getHash().equals(hash)) {
             throw new ResourceNotFoundException(Errors.WRONG_HASH_FOR_ID + id);
         }
+    }
+
+    /**
+     * Causes temporary status effects to be removed or closer to removal
+     */
+    public void removeRoundStatusEffects() {
+        Set<String> active = new HashSet<>(activeStatuses);
+        for (String status : active) {
+            if (validTempStatus(status)) {
+                if (temporaryStatuses.contains(status)) {
+                    temporaryStatuses.remove(status);
+                } else {
+                    activeStatuses.remove(status);
+                }
+            }
+        }
+    }
+
+    private void trackStatuses(Set<String> oldStatuses, Set<String> newStatuses) {
+        for (String newStatus : newStatuses) {
+            if (!oldStatuses.contains(newStatus)) {
+                if (validTempStatus(newStatus)) {
+                    temporaryStatuses.add(newStatus);
+                }
+            }
+        }
+    }
+
+    private boolean validTempStatus(String status) {
+        return (status.equals("Immobilize") ||
+                status.equals("Disarm") ||
+                status.equals("Stun") ||
+                status.equals("Muddle") ||
+                status.equals("Invisible") ||
+                status.equals("Strengthen"));
     }
 }
