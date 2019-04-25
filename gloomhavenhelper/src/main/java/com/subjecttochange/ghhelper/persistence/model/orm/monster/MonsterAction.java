@@ -23,8 +23,16 @@ public class MonsterAction {
     @JsonIgnore
     private Monster monster;
 
-    private boolean shuffleable;
+    private Boolean shuffleable;
     private Integer initiative;
     @ElementCollection(targetClass=String.class)
     private Set<String> actionDeck;
+
+    public static MonsterAction create(Monster monster, Boolean shuffleable, Integer initiative) {
+        MonsterAction action = new MonsterAction();
+        action.setMonster(monster);
+        action.setShuffleable(shuffleable);
+        action.setInitiative(initiative);
+        return action;
+    }
 }
