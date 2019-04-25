@@ -92,8 +92,11 @@ public class Room extends BaseModel {
         return this;
     }
 
-    public void drawMonsterAction(){}
-
+    public void drawMonsterAction(){
+        for (Map.Entry<Monster,MonsterActionDeck> deck : decks.entrySet()) {
+            deck.getValue().drawNewMonsterAction();
+        }
+    }
 
     @Override
     public String toString(){
