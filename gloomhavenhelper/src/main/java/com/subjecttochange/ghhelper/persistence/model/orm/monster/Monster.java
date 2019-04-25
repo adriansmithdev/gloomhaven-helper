@@ -22,16 +22,7 @@ public class Monster extends BaseModel {
     private List<String> attributes;
     @ElementCollection(targetClass=String.class)
     private List<String> eliteAttributes;
-    @JsonIgnore
-    @OrderBy("id")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "monster")
-    private List<MonsterAction> actionDeck;
-    @JsonIgnore
-    @OrderBy("id")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "monster")
-    private List<MonsterAction> actionDiscard;
-    @OneToOne
-    private MonsterAction currentAction;
+
 
     private Integer level;
     private Integer health;
@@ -54,8 +45,6 @@ public class Monster extends BaseModel {
         monster.setName(name);
         monster.setAttributes(new ArrayList<>());
         monster.setEliteAttributes(new ArrayList<>());
-        monster.setActionDeck(new Stack<>());
-        monster.setActionDiscard(new Stack<>());
         monster.setLevel(0);
         monster.setHealth(maxHealth);
         monster.setMovement(0);
@@ -133,41 +122,7 @@ public class Monster extends BaseModel {
         return monster;
     }
 
-    /**
-     * Draws new current action and checks for reshuffling
-     */
-    public void drawNewMonsterAction() {
-        Stack<MonsterAction> deck = new Stack<>();
-        deck.addAll(getActionDeck());
-        Stack<MonsterAction> discard = new Stack<>();
-        discard.addAll(getActionDiscard());
 
-        if (currentAction != null) {
-            discard.push(currentAction);
-            if (currentAction.getShuffleable()) {
-                reshuffleActions();
-            }
-        }
-        currentAction = deck.pop();
-
-        setActionDeck(new ArrayList<>(deck));
-        setActionDiscard(new ArrayList<>(discard));
-    }
-
-    private void reshuffleActions() {
-        Stack<MonsterAction> deck = new Stack<>();
-        deck.addAll(getActionDeck());
-        Stack<MonsterAction> discard = new Stack<>();
-        discard.addAll(getActionDiscard());
-
-        while (!discard.empty()) {
-            deck.push(discard.pop());
-        }
-        Collections.shuffle(deck);
-
-        setActionDeck(new ArrayList<>(deck));
-        setActionDiscard(new ArrayList<>(discard));
-    }
 
 
     private void addAttributes(JsonArray attributesArray) {
