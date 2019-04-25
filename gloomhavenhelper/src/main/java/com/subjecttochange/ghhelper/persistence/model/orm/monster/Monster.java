@@ -15,10 +15,7 @@ import java.util.*;
 public class Monster extends BaseModel {
     @Id
     @GeneratedValue(generator = "monster_generator")
-    @SequenceGenerator(
-            name = "monster_generator",
-            sequenceName = "monster_sequence"
-    )
+    @SequenceGenerator(name = "monster_generator", sequenceName = "monster_sequence")
     private Long id;
     private String name;
     @ElementCollection(targetClass=String.class)
@@ -147,7 +144,7 @@ public class Monster extends BaseModel {
 
         if (currentAction != null) {
             discard.push(currentAction);
-            if (currentAction.isShuffleable()) {
+            if (currentAction.getShuffleable()) {
                 reshuffleActions();
             }
         }
