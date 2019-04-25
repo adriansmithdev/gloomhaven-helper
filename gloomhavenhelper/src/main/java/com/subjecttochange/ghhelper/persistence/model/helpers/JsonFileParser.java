@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
+import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterAction;
 import lombok.ToString;
 import org.springframework.util.ResourceUtils;
 
@@ -34,9 +35,11 @@ public class JsonFileParser {
     public List<Monster> getMonsters() {
         List<Monster> monsters = new ArrayList<>();
         for (Map.Entry<String, JsonElement> monsterName : getMonsterNameSet()) {
-            JsonArray jsonLevelsArray = getLevels(monsterName.getKey());
-            for(int i = 0; i < jsonLevelsArray.size(); i++) {
-                monsters.add(Monster.create(jsonLevelsArray.get(i).getAsJsonObject(), monsterName.getKey()));
+            JsonArray jsonLevels = getInfo(monsterName.getKey(), "level");
+            JsonArray jsonActions = getInfo(monsterName.getKey(), "actions");
+            //List<MonsterAction> actionDeck = MonsterAction.createMonsterActionDeck(jsonActions);
+            for(int i = 0; i < jsonLevels.size(); i++) {
+                monsters.add(Monster.create(jsonLevels.get(i).getAsJsonObject(), monsterName.getKey()));
             }
         }
         return monsters;
@@ -46,11 +49,13 @@ public class JsonFileParser {
         return json.getAsJsonObject("monsters").entrySet();
     }
 
-    private JsonArray getLevels(String monsterName) {
+    private JsonArray getInfo(String monsterName, String info) {
         return json.getAsJsonObject("monsters")
                 .getAsJsonObject(monsterName)
-                .getAsJsonArray("level");
+                .getAsJsonArray(info);
     }
+
+
 
     private static JsonObject getFileContents(String filename) {
         StringBuilder contents = new StringBuilder();

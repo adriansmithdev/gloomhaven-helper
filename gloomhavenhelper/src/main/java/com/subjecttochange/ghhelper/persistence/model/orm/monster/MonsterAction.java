@@ -17,22 +17,16 @@ public class MonsterAction {
     @SequenceGenerator(name = "monster_action_generator", sequenceName = "monster_action_sequence")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "monster_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private Monster monster;
-
     private Boolean shuffleable;
     private Integer initiative;
     @ElementCollection(targetClass=String.class)
     private Set<String> actionDeck;
 
-    public static MonsterAction create(Monster monster, Boolean shuffleable, Integer initiative) {
+    public static MonsterAction create(Boolean shuffleable, Integer initiative, Set<String> actionDeck) {
         MonsterAction action = new MonsterAction();
-        action.setMonster(monster);
         action.setShuffleable(shuffleable);
         action.setInitiative(initiative);
+        action.setActionDeck(actionDeck);
         return action;
     }
 }

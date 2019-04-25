@@ -13,17 +13,21 @@ import java.util.Stack;
 @Entity
 @Data
 public class MonsterActionDeck extends BaseModel {
-
-    private Monster monster;
+    @Id
+    @GeneratedValue(generator = "monster_action_deck_generator")
+    @SequenceGenerator(name = "monster_action_deck_generator", sequenceName = "monster_action_deck_sequence")
+    private Long id;
 
     @JsonIgnore
     @OrderBy("id")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "monster")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<MonsterAction> actionDeck;
+
     @JsonIgnore
     @OrderBy("id")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "monster")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<MonsterAction> actionDiscard;
+
     @OneToOne
     private MonsterAction currentAction;
 
@@ -46,7 +50,7 @@ public class MonsterActionDeck extends BaseModel {
 
         if (currentAction != null) {
             discard.push(currentAction);
-            if (currentAction.isShuffleable()) {
+            if (currentAction.getShuffleable()) {
                 reshuffleActions();
             }
         }

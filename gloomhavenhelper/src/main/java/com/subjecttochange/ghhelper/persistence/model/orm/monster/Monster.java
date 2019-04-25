@@ -23,6 +23,10 @@ public class Monster extends BaseModel {
     @ElementCollection(targetClass=String.class)
     private List<String> eliteAttributes;
 
+    @JsonIgnore
+    @OrderBy("id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<MonsterAction> deck;
 
     private Integer level;
     private Integer health;

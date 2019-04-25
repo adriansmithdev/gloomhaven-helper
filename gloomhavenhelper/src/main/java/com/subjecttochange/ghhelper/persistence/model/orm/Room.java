@@ -2,12 +2,16 @@ package com.subjecttochange.ghhelper.persistence.model.orm;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.subjecttochange.ghhelper.persistence.model.helpers.RoomHashGenerator;
+import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
+import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterActionDeck;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author subjecttochange
@@ -42,6 +46,10 @@ public class Room extends BaseModel {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "room")
     @JsonIgnore
     private List<Element> elements = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Map<Monster, MonsterActionDeck> decks = new HashMap<>();
 
     public Room() {
         super();
@@ -83,6 +91,9 @@ public class Room extends BaseModel {
         }
         return this;
     }
+
+    public void drawMonsterAction(){}
+
 
     @Override
     public String toString(){

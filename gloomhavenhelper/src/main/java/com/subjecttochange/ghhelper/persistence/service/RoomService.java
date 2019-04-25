@@ -64,7 +64,7 @@ public class RoomService {
         if (!isRoundEqual(roomRequest, room)) {
             Element.decrementElementsByQuantity(room, Math.abs(room.getRound() - roomRequest.getRound()));
             handleStatusEffects(room);
-            //handleDrawMonsterAction(room);  //TODO finish monster action
+            room.drawMonsterAction();
         }
 
         if (!isScenarioLevelEqual(roomRequest, room)) {
@@ -88,17 +88,6 @@ public class RoomService {
 
     private boolean isScenarioLevelEqual(Room request, Room stored) {
         return request.getScenarioLevel() != null && request.getScenarioLevel().equals(stored.getScenarioLevel());
-    }
-
-    private void handleDrawMonsterAction(Room room) {
-        List<MonsterInstance> instances = room.getMonsterInstances();
-        Set<Monster> uniqueMonsters = new HashSet<>();
-        for (MonsterInstance instance: instances) {
-            uniqueMonsters.add(instance.getMonster());
-        }
-        for (Monster monster : uniqueMonsters) {
-            monster.drawNewMonsterAction();
-        }
     }
 
     private void handleStatusEffects(Room room) {
