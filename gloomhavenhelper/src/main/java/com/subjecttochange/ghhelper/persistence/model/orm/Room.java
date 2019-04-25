@@ -67,12 +67,17 @@ public class Room extends BaseModel {
         return Room.createRoom(RoomHashGenerator.newHash(), scenarioNumber, scenarioLevel, DEFAULT_ROUND_NUMBER);
     }
 
-    public static Room createRoom(String hash, Integer scenarioNumber, Integer scenarioLevel, Integer round) {
+    public static Room create(Integer scenarioNumber, Integer scenarioLevel, Map<Monster, MonsterActionDeck> decks) {
+        return Room.createRoom(RoomHashGenerator.newHash(), scenarioNumber, scenarioLevel, DEFAULT_ROUND_NUMBER, decks);
+    }
+
+    public static Room createRoom(String hash, Integer scenarioNumber, Integer scenarioLevel, Integer round, Map<Monster, MonsterActionDeck> decks) {
         Room room = new Room();
         room.setHash(hash);
         room.setScenarioNumber(scenarioNumber);
         room.setScenarioLevel(scenarioLevel);
         room.setRound(round);
+        room.setDecks(decks);
         return room;
     }
 

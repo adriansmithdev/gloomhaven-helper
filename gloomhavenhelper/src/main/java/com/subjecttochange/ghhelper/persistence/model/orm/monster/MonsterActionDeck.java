@@ -32,11 +32,16 @@ public class MonsterActionDeck extends BaseModel {
     private MonsterAction currentAction;
 
 
-    public MonsterActionDeck()  {
-        super();
+    public MonsterActionDeck()  { super(); }
 
-        setActionDeck(new Stack<>());
-        setActionDiscard(new Stack<>());
+    public static MonsterActionDeck createDeck(List<MonsterAction> actions){
+        MonsterActionDeck deck = new MonsterActionDeck();
+
+        deck.setActionDeck(actions);
+        deck.setActionDiscard(new Stack<>());
+        deck.setCurrentAction(null);
+
+        return deck;
     }
 
     /**
