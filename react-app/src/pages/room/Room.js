@@ -7,6 +7,7 @@ import { Redirect } from 'react-router';
 import RoomToolbar from "./RoomToolbar";
 import MonsterList from './monster/MonsterList';
 import LoadingScreen from './../common/LoadingScreen';
+import InitiativeTracker from './InitiativeTracker';
 
 // Redux Store Actions.
 import { getSession } from './../../store/actions/session';
@@ -70,12 +71,10 @@ class Room extends Component {
                 </a>
               </div>
               <div>
-                <strong className="has-text-light">Room: {this.props.session.room.hash}</strong>
+                <strong className="has-text-light ml-1">Room: {this.props.session.room.hash}</strong>
               </div>
             </div>
             <div className="navbar-item">
-              
-
             </div>
           </div>
           <div className="navbar-end">
@@ -115,6 +114,7 @@ class Room extends Component {
             </Link>
           </span>
         </div>
+        <InitiativeTracker monsters={this.props.monsters}/>
       </>
     );
   }
