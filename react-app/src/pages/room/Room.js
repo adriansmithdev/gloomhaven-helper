@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 
 // Components.
 import { Redirect } from 'react-router';
-import RoomToolbar from "./RoomToolbar";
+import RoomTopbar from './RoomTopbar';
+import RoomToolbar from './RoomToolbar';
 import MonsterList from './monster/MonsterList';
 import LoadingScreen from './../common/LoadingScreen';
 import InitiativeTracker from './InitiativeTracker';
@@ -62,48 +63,11 @@ class Room extends Component {
       ) : (
 
        <>
-        <nav className="navbar is-black">
-          <div className="navbar-brand">
-            <div className="navbar-item">
-              <div>
-                <a href="/"  className="title themed-font has-text-light">
-                  Gloomtility
-                </a>
-              </div>
-              <div>
-                <strong className="has-text-light ml-1">Room: {this.props.session.room.hash}</strong>
-              </div>
-            </div>
-            <div className="navbar-item">
-            </div>
-          </div>
-          <div className="navbar-end">
-            <div className="navbar-item">
-              <div className="field has-addons mr-1">
-                <div className="control">
-                  <span className="button is-static">Scenario Level</span>
-                </div>
-                <div className="control is-expanded">
-                  <input className="input input-short" id="scenarioLevel" type="number" min="1" max="150"
-                         defaultValue={this.props.session.room.scenarioLevel} onChange={this.confirmLevelChange}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="navbar-item">
-              <div className="field has-addons mr-1">
-                <div className="control">
-                  <span className="button is-static">Scenario Number</span>
-                </div>
-                <div className="control is-expanded">
-                  <input className="input input-short" id="scenarioNumber" type="number" min="1" max="150"
-                         defaultValue={this.props.session.room.scenarioNumber} onChange={this.updateScenario}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </nav>
+        <RoomTopbar {...this.props.session.room} 
+          confirmLevelChange={this.confirmLevelChange}
+          updateScenario={this.updateScenario}
+          />
+        <InitiativeTracker monsters={this.props.monsters}/>
         <div className="room-content container">
           <RoomToolbar />
           <MonsterList />
@@ -114,7 +78,6 @@ class Room extends Component {
             </Link>
           </span>
         </div>
-        <InitiativeTracker monsters={this.props.monsters}/>
       </>
     );
   }
