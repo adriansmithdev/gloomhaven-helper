@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,9 +21,9 @@ public class MonsterAction {
     private Boolean shuffleable;
     private Integer initiative;
     @ElementCollection(targetClass=String.class)
-    private Set<String> actionDeck;
+    private List<String> actionDeck;
 
-    public static MonsterAction create(Boolean shuffleable, Integer initiative, Set<String> actionDeck) {
+    public static MonsterAction create(Boolean shuffleable, Integer initiative, List<String> actionDeck) {
         MonsterAction action = new MonsterAction();
         action.setShuffleable(shuffleable);
         action.setInitiative(initiative);

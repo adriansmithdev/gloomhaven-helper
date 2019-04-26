@@ -25,13 +25,13 @@ public class RoomService {
 
     private final RoomRepository roomRepository;
     private final MonsterInstanceRepository instanceRepository;
-    private final MonsterRepository monsterRepository;
+    private final DeckService deckService;
 
     @Autowired
-    public RoomService(RoomRepository roomRepository, MonsterInstanceRepository instanceRepository, MonsterRepository monsterRepository) {
+    public RoomService(RoomRepository roomRepository, MonsterInstanceRepository instanceRepository, DeckService deckService) {
         this.roomRepository = roomRepository;
         this.instanceRepository = instanceRepository;
-        this.monsterRepository = monsterRepository;
+        this.deckService = deckService;
     }
 
     @Transactional
@@ -50,13 +50,7 @@ public class RoomService {
         int scenarioNum = (roomRequest.getScenarioNumber() != null ? roomRequest.getScenarioNumber() : 0);
         int scenarioLvl = (roomRequest.getScenarioLevel() != null ? roomRequest.getScenarioLevel() : 0);
 
-        Map<Monster, MonsterActionDeck> decks = new HashMap<>();
-
-        for(Monster monster : monsterRepository.findAll()){
-            decks.put(monster, MonsterActionDeck.createDeck(monster.getDeck()));
-        }
-
-        Room room = roomRepository.save(Room.create(scenarioNum, scenarioLvl, decks));
+        Room room = roomRepository.save(Room.create(scenarioNum, scenarioLvl));
         room.setElements(Element.createElementsForRoom(0, room));
         room = roomRepository.save(room);
         return room;

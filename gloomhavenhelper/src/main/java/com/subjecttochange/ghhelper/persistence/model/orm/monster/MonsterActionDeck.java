@@ -31,15 +31,19 @@ public class MonsterActionDeck extends BaseModel {
     @OneToOne
     private MonsterAction currentAction;
 
+    @JsonIgnore
+    private String monsterName;
+
 
     public MonsterActionDeck()  { super(); }
 
-    public static MonsterActionDeck createDeck(List<MonsterAction> actions){
+    public static MonsterActionDeck createDeck(String monsterName, List<MonsterAction> actions){
         MonsterActionDeck deck = new MonsterActionDeck();
 
         deck.setActionDeck(actions);
         deck.setActionDiscard(new Stack<>());
         deck.setCurrentAction(null);
+        deck.setMonsterName(monsterName);
 
         return deck;
     }
