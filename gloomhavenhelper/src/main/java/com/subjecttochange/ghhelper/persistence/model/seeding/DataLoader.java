@@ -33,17 +33,20 @@ public class DataLoader implements ApplicationRunner {
     private final StatusRepository statusRepository;
     private final StatRepository statRepository;
     private final ElementRepository elementRepository;
+    private final DeckRepository deckRepository;
 
     @Autowired
     public DataLoader(MonsterRepository monsterRepository, RoomRepository roomRepository,
                       MonsterInstanceRepository monsterInstanceRepository, StatusRepository statusRepository,
-                      StatRepository statRepository, ElementRepository elementRepository) {
+                      StatRepository statRepository, ElementRepository elementRepository,
+                      DeckRepository deckRepository) {
         this.monsterRepository = monsterRepository;
         this.roomRepository = roomRepository;
         this.monsterInstanceRepository = monsterInstanceRepository;
         this.statusRepository = statusRepository;
         this.statRepository = statRepository;
         this.elementRepository = elementRepository;
+        this.deckRepository = deckRepository;
     }
 
     @Override
@@ -56,12 +59,21 @@ public class DataLoader implements ApplicationRunner {
         }
 
         seedMonsterRepository();
+        seedDeckRepository();
         seedStatusRepository();
         seedStatRepository();
 
         if (isSeeding) {
             seedRoomRepository();
             seedMonsterInstanceRepository();
+        }
+    }
+
+    private void seedDeckRepository() {
+        if(isRepoEmpty(deckRepository)){
+            System.out.println("SEEDING: Action Decks");
+            JsonFileParser deckSeed = new JsonFileParser("monsterseed.json");
+            deckRepository.saveAll(deckSeed.getDecks());
         }
     }
 
