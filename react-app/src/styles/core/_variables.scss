@@ -21,8 +21,10 @@ $stat-icon-height: $header-height/1.6;
 $element-size: 36px;
 
 // Initiative Tracker
-$initiative-item-width: 4rem;
+$initiative-font-size: 1.5rem;
+
+$initiative-item-width: 5rem;
 $initiative-tracker-toggle-width: 1.15rem;
-$initiative-tracker-width: $initiative-item-width + $initiative-tracker-toggle-width;
+$initiative-tracker-width: $initiative-item-width + $initiative-tracker-toggle-width + 2rem;
 $initiative-tracker-min-height: $initiative-item-width * 12;
 

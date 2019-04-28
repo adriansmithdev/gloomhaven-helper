@@ -17,6 +17,7 @@ class InitiativeTracker extends Component {
     this.toggleHide = this.toggleHide.bind(this);
     this.getHidden = this.getHidden.bind(this);
     this.renderTypes = this.renderTypes.bind(this);
+    this.sortTypesByInitiative = this.sortTypesByInitiative.bind(this);
   }
 
   toggleHide() {
@@ -39,11 +40,53 @@ class InitiativeTracker extends Component {
     return type.monsterInstances.length > 0;
   }
 
+  hasAction(type) {
+    return type.action !== undefined;
+  }
+
   renderTypes() {
-    const typesWithInstances = this.props.monsters.filter(type => this.hasInstances(type));
-    return typesWithInstances.map(type => 
-      <InitiativeItem type={type}/>
+
+    // REMOVE WHEN ACTIONS ARE FULLY IMPLEMENTED ON BACKEND.
+    const monsters = this.props.monsters.map(type => 
+      this.appendActionToType(type)
     );
+    
+
+    const validTypes = monsters.filter(type => 
+      this.hasInstances(type) && this.hasAction(type)
+    );
+
+    const sortedTypes = this.sortTypesByInitiative(validTypes);
+
+    return sortedTypes.map(type => 
+      <InitiativeItem type={type} key={type.id} />
+    );
+  }
+
+  sortTypesByInitiative(types) {
+    return types.sort((type1, type2) => this.compareInitiativeOfTypes(type1, type2));
+  }
+
+  /**
+   * Returns true if the initiative of the first monster type
+   * is higher than the initiative of the second.
+   */
+  compareInitiativeOfTypes(type1, type2) {
+    return type1.action.initiative >= type2.action.initiative;
+  }
+
+  /*
+    Temporary function until backend for actions is implemented.
+  */
+  appendActionToType(type) {
+    const newType = {
+      ...type,
+      action: {
+        initiative: Math.round(Math.random() * 100) 
+      }
+    };
+
+    return newType;
   }
   
   render() {
