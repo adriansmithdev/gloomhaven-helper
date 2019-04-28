@@ -1,0 +1,44 @@
+.initiative-tracker {
+  position: fixed;
+  width: $initiative-tracker-width;
+  min-height: $initiative-tracker-min-height;
+  top: $topbar-height;
+  right: 0;
+  transition: transform 0.25s;
+  &.hide {
+    -ms-transform: translate($initiative-item-width, 0); /* IE 9 */
+    -webkit-transform: translate($initiative-item-width, 0); /* Safari */
+    transform: translate($initiative-item-width, 0);
+  }
+}
+
+.initiative-tracker-background {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: $initiative-tracker-background;
+}
+
+.initiative-tracker-container {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.initiative-tracker-toggle {
+  color: invert($initiative-tracker-toggle-color);
+  background-color: $initiative-tracker-toggle-color;
+  position: relative;
+  padding: 0;
+  border: 0;
+  height: 100%;
+  width: $initiative-tracker-toggle-width;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: lighten($initiative-tracker-toggle-color, 2.5%);
+  }
+}

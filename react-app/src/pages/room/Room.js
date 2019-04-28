@@ -8,7 +8,7 @@ import RoomTopbar from './RoomTopbar';
 import RoomToolbar from './RoomToolbar';
 import MonsterList from './monster/MonsterList';
 import LoadingScreen from './../common/LoadingScreen';
-import InitiativeTracker from './InitiativeTracker';
+import InitiativeTracker from './initiative/InitiativeTracker';
 
 // Redux Store Actions.
 import { getSession } from './../../store/actions/session';
@@ -67,7 +67,6 @@ class Room extends Component {
           confirmLevelChange={this.confirmLevelChange}
           updateScenario={this.updateScenario}
           />
-        <InitiativeTracker monsters={this.props.monsters}/>
         <div className="room-content container">
           <RoomToolbar />
           <MonsterList />
@@ -78,6 +77,8 @@ class Room extends Component {
             </Link>
           </span>
         </div>
+        
+        <InitiativeTracker monsters={this.props.session.monsters}/>
       </>
     );
   }

@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 
-import './switch.scss';
-
 class EliteSwitch extends Component {
 
     render(){ 

@@ -1,0 +1,28 @@
+
+// Colors
+$body-backgroung-color: #222222;
+$initiative-tracker-toggle-color: #363636;
+$initiative-tracker-background: #2e2e2eb7;
+$element-background-color: #0a0a0a;
+
+// Room 
+$room-min-width: 824px;
+
+// Room Topbar
+$topbar-height: 4rem;
+
+// Room toolbar
+$header-height: 4rem;
+$header-font-size: $header-height/2;
+$padding: $header-height/4;
+$stat-icon-height: $header-height/1.6;
+
+// Element Variables
+$element-size: 36px;
+
+// Initiative Tracker
+$initiative-item-width: 4rem;
+$initiative-tracker-toggle-width: 1.15rem;
+$initiative-tracker-width: $initiative-item-width + $initiative-tracker-toggle-width;
+$initiative-tracker-min-height: $initiative-item-width * 12;
+

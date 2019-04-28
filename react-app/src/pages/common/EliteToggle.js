@@ -1,7 +1,5 @@
 import React from 'react';
 
-import './EliteToggle.scss';
-
 const EliteToggle = (props) => {
   
   const isActive = (props.toggleStatus === true)
@@ -16,6 +14,5 @@ const EliteToggle = (props) => {
   );
     
 }
-
 
 export default EliteToggle;

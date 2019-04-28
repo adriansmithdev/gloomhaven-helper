@@ -1,0 +1,66 @@
+
+
+.monster-type {
+  padding-bottom: 1rem;
+  min-width: 742px;
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+}
+
+.monster-type-header {
+  display: flex;
+  justify-content: flex-start;
+  height: $header-height;
+  width: 100%;
+  margin: 0;
+  font-size: $header-font-size;
+  vertical-align: middle;
+  color: #f5f5f5;
+  background-color: #363636;
+}
+
+.monster-stats {
+  div.monster-stat {
+    padding-left: $padding/4;
+    padding-right: $padding/4;
+    display: inline-flex;
+    img {
+      margin-top: .75rem;
+      height: $stat-icon-height;
+      display: inline-block;
+    }
+    div p{
+      text-align: center;
+      font-size: $header-height/2.4;
+      line-height: $header-height/2;
+      &.monster-elite-stat {
+        color: gold;
+      }
+    }
+
+  }
+}
+
+.monster-name {
+  margin-left: $padding/2;
+  margin-right: $padding/2;
+  line-height: $header-height;
+}
+
+.monster-type-controls {
+  margin-left: auto;
+  padding: 1rem;
+}
+
+.monster-attributes {
+  margin-left: 1rem;
+  font-size: $header-height/2.4;
+  line-height: $header-height/2;
+  div.elite-attributes {
+    color: gold;
+  }
+}
+

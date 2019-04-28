@@ -37,9 +37,9 @@ export class RoomToolbar extends Component {
 
     const { hash, elements } = (hasProps) ? this.props.room : {};
     return (
-      <div className="room-toolbar columns">
-        <div className="column">
-          <div className="is-horizontal field has-addons">
+      <div className="monster-toolbar">
+        <div className="monster-toolbar-content">
+          <div className="field has-addons">
             <div className="control">
               <div className="select">
                 <select className="input" ref={this.monsterSelect}>
@@ -55,26 +55,20 @@ export class RoomToolbar extends Component {
                 <button className="button is-dark themed-font add-monster-button" onClick={this.addMonster}>
                   + Monster
                 </button>
-              </div>
-              
+              </div>            
             </div>
-            
-          
           </div>
-        </div>
-        
-        <div className="column"> 
+          
           <ElementList 
             hash={hash} 
             elements={elements} 
             updateElement={this.props.updateElement}
             />
-        </div>
-        <div className="column">
 
           <RoundManager room={this.props.room} incrementRound={this.props.incrementRound}/>
         </div>
       </div>
+      
     );
   }
 

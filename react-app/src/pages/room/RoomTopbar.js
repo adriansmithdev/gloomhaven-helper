@@ -3,44 +3,32 @@ import React from 'react';
 
 const RoomTopbar = (props) => {
   return (
-    <nav className="navbar is-black">
-      <div className="navbar-brand">
-        <div className="navbar-item">
-          <div>
-            <a href="/"  className="title themed-font has-text-light">
-              Gloomtility
-            </a>
-          </div>
-          <div>
-            <strong className="has-text-light ml-1">Room: {props.hash}</strong>
-          </div>
-        </div>
-        <div className="navbar-item">
-        </div>
+    <nav className="room-topbar is-black">
+      <div className="topbar-item">
+        <a href="/"  className="title themed-font has-text-light">
+          Gloomtility
+        </a>
+        <strong className="room-hash has-text-light ml-1">Room: {props.hash}</strong>
       </div>
-      <div className="navbar-end">
-        <div className="navbar-item">
-          <div className="field has-addons mr-1">
-            <div className="control">
-              <span className="button is-static">Scenario Level</span>
-            </div>
-            <div className="control is-expanded">
-              <input className="input input-short" id="scenarioLevel" type="number" min="1" max="150"
-                      defaultValue={props.scenarioLevel} onChange={props.confirmLevelChange}
-              />
-            </div>
+      <div className="topbar-item">
+        <div className="field has-addons">
+          <div className="control">
+            <span className="button is-static">Scenario Level</span>
+          </div>
+          <div className="control is-expanded">
+            <input className="input input-short" id="scenarioLevel" type="number" min="1" max="150"
+                    defaultValue={props.scenarioLevel} onChange={props.confirmLevelChange}
+            />
           </div>
         </div>
-        <div className="navbar-item">
-          <div className="field has-addons mr-1">
-            <div className="control">
-              <span className="button is-static">Scenario Number</span>
-            </div>
-            <div className="control is-expanded">
-              <input className="input input-short" id="scenarioNumber" type="number" min="1" max="150"
-                      defaultValue={props.scenarioNumber} onChange={props.updateScenario}
-              />
-            </div>
+        <div className="field has-addons">
+          <div className="control">
+            <span className="button is-static">Scenario Number</span>
+          </div>
+          <div className="control is-expanded">
+            <input className="input input-short" id="scenarioNumber" type="number" min="1" max="150"
+                    defaultValue={props.scenarioNumber} onChange={props.updateScenario}
+            />
           </div>
         </div>
       </div>

@@ -1,0 +1,21 @@
+.room-topbar {
+  display: flex;
+  position: absolute;
+  justify-content: space-between;
+  width: 100%;
+  height: $topbar-height;
+  padding: 1rem;
+  background-color: $element-background-color;
+}
+
+.topbar-item {
+  display: flex;
+  justify-content: space-between;
+  div {
+    margin-right: 0.5rem;
+  }
+}
+
+.room-hash {
+  padding: 6px;
+}

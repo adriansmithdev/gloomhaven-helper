@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Element from './Element';
-import './element.scss';
 
 export const cycleElement = (element) => {
   // Pick next element strength in cycle.

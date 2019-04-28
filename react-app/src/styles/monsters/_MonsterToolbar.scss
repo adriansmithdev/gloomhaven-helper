@@ -1,0 +1,23 @@
+
+.monster-toolbar {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 0;
+  z-index: 55;
+  background-color: $body-backgroung-color;
+}
+
+.monster-toolbar-content {
+  padding-top: 8px;
+  display: flex !important;
+  justify-content: space-between !important;
+  margin: 0 !important;
+  
+}
+
+.elite-toggle {
+  width: 66.2px;
+  &.active {
+    color: gold !important;
+  }
+}
