@@ -27,10 +27,10 @@ class MonsterTypeHeader extends Component {
     let monster = this.props.type;
     let portrait;
     try {
-      portrait = require(`./../../../assets/portraits/monsters/${monster.name}.png`);
+      portrait = require(`./../../../assets/portraits/monsters/mini/${monster.name}.png`);
     } catch(e) {
       console.log('Failed to find portrait!');
-      portrait = require('./../../../assets/portraits/monsters/default.svg');
+      portrait = require('./../../../assets/portraits/monsters/mini/default.svg');
     }
     return (
       <div className="monster-type-header themed-font">
