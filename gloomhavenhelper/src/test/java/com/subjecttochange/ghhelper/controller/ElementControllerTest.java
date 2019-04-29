@@ -40,7 +40,7 @@ public class ElementControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        room = roomService.createRoom(Room.createWithRandomHash());
+        room = roomService.createRoom(Room.create());
     }
 
     @After

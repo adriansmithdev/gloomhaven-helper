@@ -2,13 +2,13 @@ package com.subjecttochange.ghhelper.persistence.model.seeding;
 
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.helpers.JsonFileParser;
-import com.subjecttochange.ghhelper.persistence.model.orm.Element;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.model.orm.Stat;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Status;
 import com.subjecttochange.ghhelper.persistence.repository.*;
+import com.subjecttochange.ghhelper.persistence.service.RoomService;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -34,12 +34,15 @@ public class DataLoader implements ApplicationRunner {
     private final StatRepository statRepository;
     private final ElementRepository elementRepository;
     private final DeckRepository deckRepository;
+    private final RoomService roomService;
+
+    private List<Room> roomSeeds;
 
     @Autowired
     public DataLoader(MonsterRepository monsterRepository, RoomRepository roomRepository,
                       MonsterInstanceRepository monsterInstanceRepository, StatusRepository statusRepository,
                       StatRepository statRepository, ElementRepository elementRepository,
-                      DeckRepository deckRepository) {
+                      DeckRepository deckRepository, RoomService roomService) {
         this.monsterRepository = monsterRepository;
         this.roomRepository = roomRepository;
         this.monsterInstanceRepository = monsterInstanceRepository;
@@ -47,6 +50,8 @@ public class DataLoader implements ApplicationRunner {
         this.statRepository = statRepository;
         this.elementRepository = elementRepository;
         this.deckRepository = deckRepository;
+        this.roomService = roomService;
+        roomSeeds = new ArrayList<>();
     }
 
     @Override
@@ -88,15 +93,9 @@ public class DataLoader implements ApplicationRunner {
     private void seedRoomRepository() {
         if (isRepoEmpty(roomRepository)) {
             System.out.println("SEEDING: Rooms");
-            List<Room> rooms = new ArrayList<>();
-            rooms.add(Room.createWithHash("ABCDEF"));
-            rooms.add(Room.createWithHash("ZYXWVU"));
-            rooms.add(Room.createWithHash("OOMMOO"));
-            roomRepository.saveAll(rooms);
-
-            for (Room room : rooms) {
-                elementRepository.saveAll(Element.createElementsForRoom(0, room));
-            }
+            roomSeeds.add(roomService.createRoom(Room.create()));
+            roomSeeds.add(roomService.createRoom(Room.create()));
+            roomService.createRoom(Room.create());
         }
     }
 
@@ -142,7 +141,7 @@ public class DataLoader implements ApplicationRunner {
             Monster monster = monsterRepository.findByNameAndLevel("Lurker", 0)
                     .orElseThrow(() -> new ResourceNotFoundException("Could not find monster"));
 
-            Room room = roomRepository.findByHash("ABCDEF")
+            Room room = roomRepository.findByHash(roomSeeds.get(0).getHash())
                     .orElseThrow(() -> new ResourceNotFoundException("Could not find room"));
 
             MonsterInstance monsterInstance = MonsterInstance.create( 10, false, room, monster);
@@ -154,7 +153,7 @@ public class DataLoader implements ApplicationRunner {
             monsterInstance.setActiveStatuses(activeStatus);
             instances.add(monsterInstance);
 
-            room = roomRepository.findByHash("OOMMOO")
+            room = roomRepository.findByHash(roomSeeds.get(1).getHash())
                     .orElseThrow(() -> new ResourceNotFoundException("Could not find room"));
 
             instances.add(MonsterInstance.create(5, false, room, monster));

@@ -47,8 +47,8 @@ public class RoomService {
 
     @Transactional
     public Room createRoom(Room roomRequest) {
-        int scenarioNum = (roomRequest.getScenarioNumber() != null ? roomRequest.getScenarioNumber() : 0);
-        int scenarioLvl = (roomRequest.getScenarioLevel() != null ? roomRequest.getScenarioLevel() : 0);
+        int scenarioNum = (roomRequest.getScenarioNumber() != null ? roomRequest.getScenarioNumber() : Room.DEFAULT_SCENARIO_NUMBER);
+        int scenarioLvl = (roomRequest.getScenarioLevel() != null ? roomRequest.getScenarioLevel() : Room.DEFAULT_SCENARIO_LEVEL);
 
         Room room = roomRepository.save(Room.create(scenarioNum, scenarioLvl));
         room.setElements(Element.createElementsForRoom(0, room));

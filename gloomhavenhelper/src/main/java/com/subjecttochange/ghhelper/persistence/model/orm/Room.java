@@ -5,7 +5,10 @@ import com.subjecttochange.ghhelper.persistence.model.helpers.RoomHashGenerator;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterActionDeck;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ import java.util.Map;
 @Entity
 @Table(name = "rooms")
 @Data
+@ToString
 public class Room extends BaseModel {
     public static final int DEFAULT_SCENARIO_NUMBER = 0;
     public static final int DEFAULT_ROUND_NUMBER = 0;
@@ -32,6 +36,7 @@ public class Room extends BaseModel {
     @SequenceGenerator(name = "room_generator", sequenceName = "room_sequence")
     private Long id;
 
+    @Setter(AccessLevel.NONE)
     private String hash;
     private Integer scenarioNumber;
     private Integer scenarioLevel;
@@ -55,21 +60,17 @@ public class Room extends BaseModel {
         super();
     }
 
-    public static Room createWithRandomHash() {
-        return Room.createRoom(RoomHashGenerator.newHash(), DEFAULT_SCENARIO_NUMBER, DEFAULT_SCENARIO_LEVEL, DEFAULT_ROUND_NUMBER);
-    }
-
-    public static Room createWithHash(String hash) {
-        return Room.createRoom(hash, DEFAULT_SCENARIO_NUMBER, DEFAULT_SCENARIO_LEVEL, DEFAULT_ROUND_NUMBER);
+    public static Room create() {
+        return Room.create(DEFAULT_SCENARIO_NUMBER, DEFAULT_SCENARIO_LEVEL, DEFAULT_ROUND_NUMBER);
     }
 
     public static Room create(Integer scenarioNumber, Integer scenarioLevel) {
-        return Room.createRoom(RoomHashGenerator.newHash(), scenarioNumber, scenarioLevel, DEFAULT_ROUND_NUMBER);
+        return Room.create(scenarioNumber, scenarioLevel, DEFAULT_ROUND_NUMBER);
     }
 
-    public static Room createRoom(String hash, Integer scenarioNumber, Integer scenarioLevel, Integer round) {
+    private static Room create(Integer scenarioNumber, Integer scenarioLevel, Integer round) {
         Room room = new Room();
-        room.setHash(hash);
+        room.hash = RoomHashGenerator.newHash();
         room.setScenarioNumber(scenarioNumber);
         room.setScenarioLevel(scenarioLevel);
         room.setRound(round);
@@ -77,9 +78,6 @@ public class Room extends BaseModel {
     }
 
     public Room updateRoom(Room roomRequest){
-        if (roomRequest.getHash() != null) {
-            setHash(roomRequest.getHash());
-        }
         if (roomRequest.getScenarioNumber() != null) {
             setScenarioNumber(roomRequest.getScenarioNumber());
         }
@@ -92,14 +90,6 @@ public class Room extends BaseModel {
         return this;
     }
 
-    public void drawMonsterAction(){
-        for (Map.Entry<Monster,MonsterActionDeck> deck : decks.entrySet()) {
-            deck.getValue().drawNewMonsterAction();
-        }
-    }
+    public void drawMonsterAction(){}
 
-    @Override
-    public String toString(){
-        return "Room: " + getHash();
-    }
 }

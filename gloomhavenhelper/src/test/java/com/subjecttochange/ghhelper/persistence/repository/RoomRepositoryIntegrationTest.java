@@ -28,7 +28,7 @@ public class RoomRepositoryIntegrationTest {
     @Test
     public void whenFindByHash_thenReturnRoom() {
         // given
-        Room room = Room.createWithHash("AABBCC");
+        Room room = Room.create(0, 0);
         entityManager.persist(room);
         entityManager.flush();
 
