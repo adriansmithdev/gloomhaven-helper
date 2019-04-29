@@ -64,15 +64,15 @@ class InitiativeTracker extends Component {
   }
 
   sortTypesByInitiative(types) {
-    return types.sort((type1, type2) => this.compareInitiativeOfTypes(type1, type2));
+    return [...types].sort((type1, type2) => this.compareInitiativeOfTypes(type1, type2));
   }
 
   /**
-   * Returns true if the initiative of the first monster type
-   * is higher than the initiative of the second.
+   * Function used to sort types based on initiative in ascending 
+   * order.
    */
   compareInitiativeOfTypes(type1, type2) {
-    return type1.action.initiative >= type2.action.initiative;
+    return type1.action.initiative - type2.action.initiative;
   }
 
   /*
