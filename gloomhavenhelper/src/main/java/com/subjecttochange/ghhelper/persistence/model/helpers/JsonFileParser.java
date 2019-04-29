@@ -5,8 +5,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
-import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterAction;
-import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterActionDeck;
+import com.subjecttochange.ghhelper.persistence.model.orm.monster.Action;
+import com.subjecttochange.ghhelper.persistence.model.orm.monster.ActionDeck;
 import lombok.ToString;
 import org.springframework.util.ResourceUtils;
 
@@ -46,11 +46,11 @@ public class JsonFileParser {
         return monsters;
     }
 
-    public List<MonsterActionDeck> getDecks() {
-        List<MonsterActionDeck> decks = new ArrayList<>();
+    public List<ActionDeck> getDecks() {
+        List<ActionDeck> decks = new ArrayList<>();
 
         for (Map.Entry<String, JsonElement> monsterName : getMonsterNameSet()) {
-            List<MonsterAction> monsterActions = new ArrayList<>();
+            List<Action> monsterActions = new ArrayList<>();
 
             JsonArray jsonActions = getInfo(monsterName.getKey(), "actions");
 
@@ -64,9 +64,9 @@ public class JsonFileParser {
                 for (int i = 2; i < action.size(); i++) {
                     cardContent.add(action.get(i).getAsString());
                 }
-                monsterActions.add(MonsterAction.create(shuffleable, initiative, cardContent));
+                monsterActions.add(Action.create(shuffleable, initiative, cardContent));
             }
-            decks.add(MonsterActionDeck.createDeck(monsterName.getKey(), monsterActions));
+            decks.add(ActionDeck.createDeck(monsterName.getKey(), monsterActions));
         }
 
         return decks;

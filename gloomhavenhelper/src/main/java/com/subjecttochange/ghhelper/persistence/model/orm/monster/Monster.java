@@ -26,7 +26,7 @@ public class Monster extends BaseModel {
     @JsonIgnore
     @OrderBy("id")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<MonsterAction> deck;
+    private List<Action> deck;
 
     private Integer level;
     private Integer health;

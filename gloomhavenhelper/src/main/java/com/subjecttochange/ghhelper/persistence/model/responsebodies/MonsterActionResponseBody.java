@@ -1,6 +1,6 @@
 package com.subjecttochange.ghhelper.persistence.model.responsebodies;
 
-import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterAction;
+import com.subjecttochange.ghhelper.persistence.model.orm.monster.Action;
 import lombok.Data;
 import lombok.NonNull;
 
@@ -18,7 +18,7 @@ public class MonsterActionResponseBody {
     @NonNull
     private List<String> actionDeck;
 
-    public static MonsterActionResponseBody create(MonsterAction action) {
+    public static MonsterActionResponseBody create(Action action) {
         return new MonsterActionResponseBody(
                 action.getId(),
                 action.getShuffleable(),
