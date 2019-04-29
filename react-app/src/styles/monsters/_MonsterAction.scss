@@ -1,0 +1,16 @@
+.monster-action {
+  $font-size: 1.25rem;
+  display: block;
+  color: white;
+  background-color: $monster-action-background-color;
+  font-size: $font-size;
+  img {
+    bottom: 0;
+    width: $font-size + 0.5rem;
+    height: $font-size + 0.5rem;
+  }
+  p {
+    text-align: center;
+    padding: 0.25rem;
+  }
+}

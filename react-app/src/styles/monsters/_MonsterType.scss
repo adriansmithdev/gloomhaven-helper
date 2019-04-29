@@ -3,6 +3,12 @@
 .monster-type {
   padding-bottom: 1rem;
   min-width: 742px;
+  
+
+}
+
+.monster-type-body {
+  display: flex;
   table {
     width: 100%;
     border-collapse: collapse;

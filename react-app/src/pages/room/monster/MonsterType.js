@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Monster from './Monster';
 import MonsterTypeHeader from './MonsterTypeHeader';
+import MonsterAbility from './MonsterAbility';
 
 export function sortByToken(instances) {
   return instances.sort((i1, i2) =>
@@ -37,12 +38,15 @@ class MonsterType extends Component{
     return (
       <div id={this.props.type.name} className="monster-type">
         <MonsterTypeHeader {...this.props}/>
-        <table>
-          <tbody>
-            {this.generateInstances(eliteInstances)}
-            {this.generateInstances(normalInstances)}
-          </tbody>
-        </table>
+        <div className='monster-type-body'>
+          <MonsterAbility/>
+          <table>
+            <tbody>
+              {this.generateInstances(eliteInstances)}
+              {this.generateInstances(normalInstances)}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
