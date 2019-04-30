@@ -1,6 +1,7 @@
 package com.subjecttochange.ghhelper.persistence.model.orm.monster;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.subjecttochange.ghhelper.persistence.model.orm.BaseModel;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
@@ -12,7 +13,7 @@ import java.util.List;
 @Data
 @Entity
 @ToString
-public class DeckInstance {
+public class DeckInstance extends BaseModel {
 
     @Id
     @GeneratedValue(generator = "active_deck_generator")
@@ -24,37 +25,34 @@ public class DeckInstance {
     @JsonIgnore
     private ActionDeck deck;
 
+    @JsonIgnore
+    @OrderBy("id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Action> mutatedDeck;
     @OneToOne
     private Action currentAction;
 
-    public DeckInstance(){
+    public DeckInstance() {
         super();
     }
 
-    public static DeckInstance create(ActionDeck deck){
-        DeckInstance activeDeck = new DeckInstance();
-
-        activeDeck.setDeck(deck);
-
-        Collections.shuffle(activeDeck.getDeck().getActionDeck());
-
-        return activeDeck;
+    public static DeckInstance create(ActionDeck deck) {
+        DeckInstance deckInstance = new DeckInstance();
+        deckInstance.setDeck(deck);
+        deckInstance.setMutatedDeck(deck.getActionDeck());
+        deckInstance.shuffle();
+        return deckInstance;
     }
 
-    /**
-     * Draws new current action and checks for reshuffling
-     */
-    public void drawNewMonsterAction(ActionDeck deck) {
-        List<Action> actionDeck = deck.getActionDeck();
-        currentAction = actionDeck.remove(actionDeck.size());
+    public void drawAction() {
+        currentAction = mutatedDeck.remove(mutatedDeck.size());
 
-        if(currentAction.getShuffleable()){
-            reshuffleActions(deck);
+        if (currentAction.getShuffleable()) {
+            shuffle();
         }
     }
 
-    private void reshuffleActions(ActionDeck deck) {
-        setDeck(deck);
-
+    private void shuffle() {
+        Collections.shuffle(getMutatedDeck());
     }
 }

@@ -3,6 +3,8 @@ package com.subjecttochange.ghhelper.persistence.model.orm;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.subjecttochange.ghhelper.persistence.model.helpers.RoomHashGenerator;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.ActionDeck;
+import com.subjecttochange.ghhelper.persistence.model.orm.monster.DeckInstance;
+import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -11,7 +13,9 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author subjecttochange
@@ -51,7 +55,7 @@ public class Room extends BaseModel {
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ActionDeck> decks = new ArrayList<>();
+    private Map<Monster, DeckInstance> decks = new HashMap<>();
 
     public Room() {
         super();

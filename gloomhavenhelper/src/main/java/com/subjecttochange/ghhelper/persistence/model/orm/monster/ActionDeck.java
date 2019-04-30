@@ -24,17 +24,16 @@ public class ActionDeck extends BaseModel {
     private String monsterName;
 
 
-    public ActionDeck()  { super(); }
-
-    public static ActionDeck createDeck(String monsterName, List<Action> actions){
-        ActionDeck deck = new ActionDeck();
-
-        deck.setActionDeck(actions);
-        deck.setMonsterName(monsterName);
-
-        return deck;
+    public ActionDeck() {
+        super();
     }
 
+    public static ActionDeck createDeck(String monsterName, List<Action> actionDeck) {
+        ActionDeck deck = new ActionDeck();
+        deck.setActionDeck(actionDeck);
+        deck.setMonsterName(monsterName);
+        return deck;
+    }
 
 
 }

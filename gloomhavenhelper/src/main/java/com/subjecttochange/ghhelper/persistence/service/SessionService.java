@@ -80,6 +80,8 @@ public class SessionService {
         List<Monster> monsters = monsterRepository.findAllByLevel(room.getScenarioLevel());
 
         for (Monster monster : monsters) {
+            MonsterResponseBody monsterResponseBody = MonsterResponseBody.create(monster);
+            monsterResponseBody.setMonsterAction(MonsterActionResponseBody.create(room.getDecks().get(monster).getCurrentAction()));
             namedMonsterBodies.put(monster.getId(), MonsterResponseBody.create(monster));
         }
 

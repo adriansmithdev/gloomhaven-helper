@@ -1,42 +1,58 @@
 package com.subjecttochange.ghhelper.persistence.service;
 
+import com.subjecttochange.ghhelper.persistence.model.orm.Room;
+import com.subjecttochange.ghhelper.persistence.model.orm.monster.DeckInstance;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.ActionDeck;
+import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
 import com.subjecttochange.ghhelper.persistence.repository.DeckRepository;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
+import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class DeckService {
 
     private final DeckRepository deckRepository;
-    private final MonsterRepository monsterRepository;
+    private final RoomRepository roomRepository;
 
     @Autowired
-    public DeckService(DeckRepository deckRepository, MonsterRepository monsterRepository) {
+    public DeckService(DeckRepository deckRepository, RoomRepository roomRepository) {
         this.deckRepository = deckRepository;
-        this.monsterRepository = monsterRepository;
+        this.roomRepository = roomRepository;
     }
 
-    public List<ActionDeck> getMonsterActionDecks(List<Monster> monsters) {
-        List<String> monsterNames = new ArrayList<>();
+    public Map<Monster, DeckInstance> drawMonsterActions(Room room) {
+        room.setDecks(getMonsterActionDecks(room));
 
-        for (Monster monster : monsters) {
-            monsterNames.add(monster.getName());
+        for (DeckInstance deckInstance : room.getDecks().values()) {
+            deckInstance.drawAction();
         }
 
-        return deckRepository.findAllByMonsterName(monsterNames);
+        return room.getDecks();
     }
 
-    public ActionDeck getMonsterActionDeck(ActionDeck deck){
-        return
+    public Map<Monster, DeckInstance> getMonsterActionDecks(Room room) {
+        Set<Monster> monsters = new HashSet<>();
+
+        for (MonsterInstance monsterInstance : room.getMonsterInstances()) {
+            monsters.add(monsterInstance.getMonster());
+        }
+
+        for (Monster monster : monsters) {
+            if (!room.getDecks().containsKey(monster)) {
+                room.getDecks().put(monster, getMonsterActionDeck(monster));
+            }
+        }
+
+        return room.getDecks();
     }
 
-
-
-
+    private DeckInstance getMonsterActionDeck(Monster monster){
+        ActionDeck actionDeck = deckRepository.findByMonsterName(monster.getName());
+        return DeckInstance.create(actionDeck);
+    }
 }
