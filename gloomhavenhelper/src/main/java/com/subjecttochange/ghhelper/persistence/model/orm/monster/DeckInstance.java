@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.subjecttochange.ghhelper.persistence.model.orm.BaseModel;
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
 import java.util.Collections;
@@ -16,12 +15,12 @@ import java.util.List;
 public class DeckInstance extends BaseModel {
 
     @Id
-    @GeneratedValue(generator = "active_deck_generator")
-    @SequenceGenerator(name = "active_deck_generator", sequenceName = "active_deck_sequence")
+    @GeneratedValue(generator = "deck_instance_generator")
+    @SequenceGenerator(name = "deck_instance_generator", sequenceName = "deck_instance_sequence")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id", nullable = false)
+    @JoinColumn(name = "action_deck_id", nullable = false)
     @JsonIgnore
     private ActionDeck deck;
 
@@ -39,7 +38,7 @@ public class DeckInstance extends BaseModel {
     public static DeckInstance create(ActionDeck deck) {
         DeckInstance deckInstance = new DeckInstance();
         deckInstance.setDeck(deck);
-        deckInstance.setMutatedDeck(deck.getActionDeck());
+        deckInstance.setMutatedDeck(deck.getDeck());
         deckInstance.shuffle();
         return deckInstance;
     }

@@ -5,6 +5,7 @@ import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.Element;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.model.orm.Stat;
+import com.subjecttochange.ghhelper.persistence.model.orm.monster.Action;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Status;
@@ -81,7 +82,16 @@ public class SessionService {
 
         for (Monster monster : monsters) {
             MonsterResponseBody monsterResponseBody = MonsterResponseBody.create(monster);
-            monsterResponseBody.setMonsterAction(MonsterActionResponseBody.create(room.getDecks().get(monster).getCurrentAction()));
+            Action currentAction = null;
+
+            if (room.getDecks().containsKey(monster)) {
+                currentAction = room.getDecks().get(monster).getCurrentAction();
+            }
+
+            if (currentAction != null) {
+                monsterResponseBody.setMonsterAction(MonsterActionResponseBody.create(currentAction));
+            }
+
             namedMonsterBodies.put(monster.getId(), MonsterResponseBody.create(monster));
         }
 

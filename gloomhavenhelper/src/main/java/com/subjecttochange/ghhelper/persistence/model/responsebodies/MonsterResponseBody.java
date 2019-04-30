@@ -37,7 +37,6 @@ public class MonsterResponseBody {
     private Integer eliteRange;
     @NonNull
     private List<MonsterInstanceResponseBody> monsterInstances;
-    @NonNull
     private MonsterActionResponseBody monsterAction;
 
     public static MonsterResponseBody create(Monster monster) {
@@ -55,8 +54,7 @@ public class MonsterResponseBody {
                 monster.getEliteMove(),
                 monster.getEliteAttack(),
                 monster.getEliteRange(),
-                new ArrayList<>(),
-                null
+                new ArrayList<>()
         );
     }
 }

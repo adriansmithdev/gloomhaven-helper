@@ -23,7 +23,7 @@ public class MonsterActionResponseBody {
                 action.getId(),
                 action.getShuffleable(),
                 action.getInitiative(),
-                new ArrayList<>(action.getActionDeck())
+                new ArrayList<>(action.getActions())
         );
     }
 }
