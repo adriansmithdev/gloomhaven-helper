@@ -27,18 +27,16 @@ public class DeckService {
     }
 
     @Transactional
-    public Map<Monster, DeckInstance> drawMonsterActions(Room room) {
-        room.setDecks(getMonsterActionDecks(room));
+    public void drawMonsterActions(Room room) {
+        getMonsterActionDecks(room);
 
         for (DeckInstance deckInstance : room.getDecks().values()) {
             deckInstance.drawAction();
         }
-
-        return room.getDecks();
     }
 
     @Transactional
-    public Map<Monster, DeckInstance> getMonsterActionDecks(Room room) {
+    public void getMonsterActionDecks(Room room) {
         Set<Monster> monsters = new HashSet<>();
         Map<Monster, DeckInstance> decks = room.getDecks();
 
@@ -58,8 +56,6 @@ public class DeckService {
                 decks.put(monster, getMonsterActionDeck(monster));
             }
         }
-
-        return decks;
     }
 
     private DeckInstance getMonsterActionDeck(Monster monster){
