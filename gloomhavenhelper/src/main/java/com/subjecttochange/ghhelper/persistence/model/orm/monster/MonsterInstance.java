@@ -115,14 +115,6 @@ public class MonsterInstance extends BaseModel {
     }
 
     public void removeRoundStatusEffects() {
-        for (String status : activeStatuses) {
-            if (isTempStatus(status)) {
-                activeStatuses.remove(status);
-            }
-        }
-    }
-
-    private boolean isTempStatus(String status) {
-        return Arrays.asList(Status.tempStatuses).contains(status);
+        activeStatuses.removeAll(Arrays.asList(Status.tempStatuses));
     }
 }
