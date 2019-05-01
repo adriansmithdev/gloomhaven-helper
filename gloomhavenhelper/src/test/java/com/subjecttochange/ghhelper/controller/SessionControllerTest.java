@@ -22,7 +22,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -48,7 +47,7 @@ public class SessionControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        room = roomService.createRoom(Room.createWithRandomHash());
+        room = roomService.createRoom(Room.create());
         monster = monsterService.createMonster(Monster.create("Baggon", 5));
         monsterInstance = monsterInstanceService.createMonster(
                 room.getHash(),

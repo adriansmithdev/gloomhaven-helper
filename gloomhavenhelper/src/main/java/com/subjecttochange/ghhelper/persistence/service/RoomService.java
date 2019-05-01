@@ -4,12 +4,9 @@ import com.subjecttochange.ghhelper.exception.Errors;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.Element;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
-import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterInstanceRepository;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,21 +15,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class RoomService {
 
     private final RoomRepository roomRepository;
     private final MonsterInstanceRepository instanceRepository;
+    private final DeckService deckService;
 
     @Autowired
-    public RoomService(RoomRepository roomRepository, MonsterInstanceRepository instanceRepository) {
+    public RoomService(RoomRepository roomRepository, MonsterInstanceRepository instanceRepository, DeckService deckService) {
         this.roomRepository = roomRepository;
         this.instanceRepository = instanceRepository;
+        this.deckService = deckService;
     }
 
     @Transactional
@@ -48,8 +44,8 @@ public class RoomService {
 
     @Transactional
     public Room createRoom(Room roomRequest) {
-        int scenarioNum = (roomRequest.getScenarioNumber() != null ? roomRequest.getScenarioNumber() : 0);
-        int scenarioLvl = (roomRequest.getScenarioLevel() != null ? roomRequest.getScenarioLevel() : 0);
+        int scenarioNum = (roomRequest.getScenarioNumber() != null ? roomRequest.getScenarioNumber() : Room.DEFAULT_SCENARIO_NUMBER);
+        int scenarioLvl = (roomRequest.getScenarioLevel() != null ? roomRequest.getScenarioLevel() : Room.DEFAULT_SCENARIO_LEVEL);
 
         Room room = roomRepository.save(Room.create(scenarioNum, scenarioLvl));
         room.setElements(Element.createElementsForRoom(0, room));
@@ -61,14 +57,14 @@ public class RoomService {
     public Room updateRoom(String hash, Room roomRequest) {
         Room room = roomRepository.findByHash(hash).orElseThrow(() -> new ResourceNotFoundException(Errors.NO_HASH_ROOM + hash));
 
+        if (!isScenarioLevelEqual(roomRequest, room)) {
+            instanceRepository.removeAllByRoomHash(room.getHash());
+        }
+
         if (!isRoundEqual(roomRequest, room)) {
             Element.decrementElementsByQuantity(room, Math.abs(room.getRound() - roomRequest.getRound()));
             handleStatusEffects(room);
-            room.drawMonsterAction();
-        }
-
-        if (!isScenarioLevelEqual(roomRequest, room)) {
-            instanceRepository.removeAllByRoomHash(room.getHash());
+            room.setDecks(deckService.drawMonsterActions(room));
         }
 
         room = room.updateRoom(roomRequest);

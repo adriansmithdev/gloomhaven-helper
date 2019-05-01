@@ -21,7 +21,7 @@ public class MonsterInstanceTest {
     @Before
     public void setUp() {
         monsterInstances = new ArrayList<>();
-        room = Room.createWithHash("TEST");
+        room = Room.create();
         monster = Monster.create("Big Wolf", 10);
         monsterInstance = MonsterInstance.create(10, false, room, monster);
     }

@@ -6,12 +6,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.subjecttochange.ghhelper.persistence.model.orm.BaseModel;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.*;
 
 @Entity
 @Data
+@ToString
 public class Monster extends BaseModel {
     @Id
     @GeneratedValue(generator = "monster_generator")
@@ -22,12 +24,6 @@ public class Monster extends BaseModel {
     private List<String> attributes;
     @ElementCollection(targetClass=String.class)
     private List<String> eliteAttributes;
-
-    @JsonIgnore
-    @OrderBy("id")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<MonsterAction> deck;
-
     private Integer level;
     private Integer health;
     private Integer movement;

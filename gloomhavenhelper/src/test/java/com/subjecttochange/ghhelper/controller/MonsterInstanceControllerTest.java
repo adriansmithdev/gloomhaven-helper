@@ -50,7 +50,7 @@ public class MonsterInstanceControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        room = roomService.createRoom(Room.createWithRandomHash());
+        room = roomService.createRoom(Room.create());
 
         monster = Monster.create("Joe Monster", 5);
         monster = monsterService.createMonster(monster);

@@ -2,7 +2,6 @@ package com.subjecttochange.ghhelper.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.subjecttochange.ghhelper.Application;
-import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
 import com.subjecttochange.ghhelper.persistence.service.RoomService;
@@ -43,13 +42,12 @@ public class RoomControllerTest {
 
     @Before
     public void setUp() {
-        room = roomRepository.save(Room.createWithHash("AABBCC"));
+        room = roomService.createRoom(Room.create());
     }
 
     @After
     public void tearDown() {
-        Room dirtyRoom = roomRepository.findByHash("AABBCC").orElseThrow(() -> new ResourceNotFoundException());
-        roomRepository.delete(dirtyRoom);
+        roomService.deleteRoom(room.getHash());
     }
 
     @Test
@@ -59,9 +57,9 @@ public class RoomControllerTest {
                     .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.content[0].hash", is("AABBCC")))
-                .andExpect(jsonPath("$.content[0].scenarioNumber", is(0)))
-                .andExpect(jsonPath("$.content[0].round", is(0)));
+                .andExpect(jsonPath("$.content[0].hash", is(room.getHash())))
+                .andExpect(jsonPath("$.content[0].scenarioNumber", is(room.getScenarioNumber())))
+                .andExpect(jsonPath("$.content[0].round", is(room.getRound())));
     }
 
     @Test
@@ -72,15 +70,14 @@ public class RoomControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.content[0].hash", is("AABBCC")))
-                .andExpect(jsonPath("$.content[0].scenarioNumber", is(0)))
-                .andExpect(jsonPath("$.content[0].round", is(0)));
+                .andExpect(jsonPath("$.content[0].hash", is(room.getHash())))
+                .andExpect(jsonPath("$.content[0].scenarioNumber", is(room.getScenarioNumber())))
+                .andExpect(jsonPath("$.content[0].round", is(room.getRound())));
     }
 
     @Test
     public void createRoom() throws Exception {
-        Room request = Room.create(Room.DEFAULT_SCENARIO_NUMBER, Room.DEFAULT_SCENARIO_LEVEL);
-        String jsonBody = new ObjectMapper().writeValueAsString(request);
+        String jsonBody = new ObjectMapper().writeValueAsString(roomService.createRoom(room));
 
         MvcResult result = mvc.perform(
                 post("/rooms")
@@ -89,9 +86,9 @@ public class RoomControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.hash", notNullValue()))
-                .andExpect(jsonPath("$.scenarioNumber", is(0)))
-                .andExpect(jsonPath("$.scenarioLevel", is(0)))
-                .andExpect(jsonPath("$.round", is(0)))
+                .andExpect(jsonPath("$.scenarioNumber", is(room.getScenarioNumber())))
+                .andExpect(jsonPath("$.scenarioLevel", is(room.getScenarioLevel())))
+                .andExpect(jsonPath("$.round", is(room.getRound())))
                 .andReturn();
 
         String resultString = result.getResponse().getContentAsString();
@@ -101,7 +98,7 @@ public class RoomControllerTest {
 
     @Test
     public void updateRoom() throws Exception {
-        Room request = Room.createRoom("CCBBAA", 5, 7, 10);
+        Room request = Room.create(5, 7);
         String jsonBody = new ObjectMapper().writeValueAsString(request);
 
         mvc.perform(
@@ -111,14 +108,12 @@ public class RoomControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.hash", is("CCBBAA")))
-                .andExpect(jsonPath("$.scenarioNumber", is(5)))
-                .andExpect(jsonPath("$.scenarioLevel", is(7)))
-                .andExpect(jsonPath("$.round", is(10)));
+                .andExpect(jsonPath("$.hash", notNullValue()))
+                .andExpect(jsonPath("$.scenarioNumber", is(request.getScenarioNumber())))
+                .andExpect(jsonPath("$.scenarioLevel", is(request.getScenarioLevel())))
+                .andExpect(jsonPath("$.round", is(request.getRound())));
 
-        // cleanup for teardown
-        room.setHash("AABBCC");
-        room = roomRepository.save(room);
+        roomService.updateRoom(room.getHash(), room);
     }
 
     @Test
@@ -129,6 +124,6 @@ public class RoomControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        room = roomRepository.save(room);
+        room = roomService.createRoom(room);
     }
 }
