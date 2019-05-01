@@ -25,8 +25,11 @@ public class MonsterInstance extends BaseModel {
     private Long id;
     private Integer currentHealth;
     private Boolean isElite;
-    @ElementCollection(targetClass=String.class)
+    @ElementCollection(targetClass = String.class)
     private Set<String> activeStatuses;
+    @JsonIgnore
+    @ElementCollection(targetClass = String.class)
+    private Set<String> recentTempStatuses;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "room_id", nullable = false)
@@ -61,6 +64,7 @@ public class MonsterInstance extends BaseModel {
         monsterInstance.setCurrentHealth(currentHealth);
         monsterInstance.setIsElite(isElite);
         monsterInstance.setActiveStatuses(new HashSet<>());
+        monsterInstance.setRecentTempStatuses(new HashSet<>());
         monsterInstance.setRoom(room);
         monsterInstance.setMonster(monster);
         monsterInstance.setMonsterId(monster.getId());
@@ -76,6 +80,8 @@ public class MonsterInstance extends BaseModel {
         }
         if (monsterRequest.getActiveStatuses() != null) {
             setActiveStatuses(monsterRequest.getActiveStatuses());
+            setRecentTempStatuses(new HashSet<>(monsterRequest.getActiveStatuses()));
+            recentTempStatuses.retainAll(Arrays.asList(Status.tempStatuses));
         }
         if (monsterRequest.getMonsterId() != null) {
             monsterRequest.setMonsterId(monsterRequest.getMonsterId());
@@ -116,5 +122,7 @@ public class MonsterInstance extends BaseModel {
 
     public void removeRoundStatusEffects() {
         activeStatuses.removeAll(Arrays.asList(Status.tempStatuses));
+        activeStatuses.addAll(recentTempStatuses);
+        recentTempStatuses = new HashSet<>();
     }
 }
