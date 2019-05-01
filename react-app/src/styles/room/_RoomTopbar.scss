@@ -5,6 +5,7 @@
   width: 100%;
   height: $topbar-height;
   padding: 1rem;
+  z-index: 56;
   background-color: $element-background-color;
 }
 
@@ -18,4 +19,5 @@
 
 .room-hash {
   padding: 6px;
+  min-width: 130px;
 }

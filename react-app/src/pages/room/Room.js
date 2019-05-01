@@ -72,7 +72,7 @@ class Room extends Component {
           <MonsterList />
 
           <span className="input-group-btn">
-            <Link className="button is-dark is-large themed-font m-2" to={"/"}>
+            <Link className="button is-dark is-large themed-font" to={"/"}>
               Leave Room
             </Link>
           </span>

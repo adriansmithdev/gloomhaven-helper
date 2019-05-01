@@ -17,7 +17,7 @@ export const RoundManager = (props) => {
   }
 
   return(
-    <div className="round-manager field has-addons">
+    <div className="ml-1 round-manager field has-addons">
         <button type="button" 
           className="themed-font button has-text-black is-static">
           Round: {(props.room !== undefined) ? props.room.round : ''} 

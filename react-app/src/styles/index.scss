@@ -72,6 +72,9 @@ input.input-short, select.input-short {
 @import './monsters/MonsterInstance';
 @import './monsters/MonsterAction';
 
+// Status Effects
+@import './statuses/Status';
+
 // Element Components.
 @import './elements/Element';
 @import './elements/ElementList';

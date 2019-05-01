@@ -2,15 +2,15 @@
 
 .monster-type {
   padding-bottom: 1rem;
-  min-width: 742px;
-  
+  min-width: 900px;
 
 }
 
 .monster-type-body {
   display: flex;
+  justify-content: space-between;
   table {
-    width: 100%;
+    min-width: 742px;
     border-collapse: collapse;
     border-spacing: 0;
   }
