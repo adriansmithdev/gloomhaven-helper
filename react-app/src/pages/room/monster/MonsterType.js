@@ -39,7 +39,7 @@ class MonsterType extends Component{
       <div id={this.props.type.name} className="monster-type">
         <MonsterTypeHeader {...this.props}/>
         <div className='monster-type-body'>
-          <MonsterAbility/>
+          <MonsterAbility monster={this.props.type}/>
           <table>
             <tbody>
               {this.generateInstances(eliteInstances)}

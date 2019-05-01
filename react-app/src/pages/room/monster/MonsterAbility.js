@@ -56,21 +56,22 @@ class MonsterAbility extends Component {
     }
 
     render() {
-
-        const MonsterAbilityStat = {
-            shuffle: false,
-            initiative: "28",
-            action: ["%attack% +0", "%range% +0", "All adjacent enemies suffer 2 damage"]
+        if(this.props.monster.monsterAction === null || this.props.monster.monsterAction === undefined) {
+            return (
+                <div className="monster-action">
+                    <button type="button">Draw Action</button>
+                </div>
+            );
         }
 
         // Filter out types without any instances   
-        const actions = MonsterAbilityStat.action.map(action =>
+        const actions = this.props.monster.monsterAction.actionDeck.map(action =>
             <p>{this.generateAction(action)}</p>
         );
     
         return(
             <div className="monster-action">
-                {actions}{this.reshuffle(MonsterAbilityStat.shuffle)}
+                {actions}
             </div>
         );
     }
