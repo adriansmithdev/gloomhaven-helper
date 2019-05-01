@@ -58,7 +58,7 @@ public class RoomService {
         Room room = roomRepository.findByHash(hash).orElseThrow(() -> new ResourceNotFoundException(Errors.NO_HASH_ROOM + hash));
 
         if (!isScenarioLevelEqual(roomRequest, room)) {
-            //instanceRepository.removeAllByRoomHash(room.getHash());
+            instanceRepository.removeAllByRoomHash(room.getHash());
         }
 
         if (!isRoundEqual(roomRequest, room)) {

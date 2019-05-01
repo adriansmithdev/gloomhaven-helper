@@ -92,7 +92,7 @@ public class SessionService {
                 monsterResponseBody.setMonsterAction(MonsterActionResponseBody.create(currentAction));
             }
 
-            namedMonsterBodies.put(monster.getId(), MonsterResponseBody.create(monster));
+            namedMonsterBodies.put(monster.getId(), monsterResponseBody);
         }
 
         for (MonsterInstance monsterInstance : room.getMonsterInstances()) {
