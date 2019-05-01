@@ -12,10 +12,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 @Data
 @Entity
@@ -24,17 +21,12 @@ import java.util.TreeSet;
 public class MonsterInstance extends BaseModel {
     @Id
     @GeneratedValue(generator = "monster_instance_generator")
-    @SequenceGenerator(
-            name = "monster_instance_generator",
-            sequenceName = "monster_instance_sequence"
-    )
+    @SequenceGenerator(name = "monster_instance_generator", sequenceName = "monster_instance_sequence")
     private Long id;
     private Integer currentHealth;
     private Boolean isElite;
     @ElementCollection(targetClass=String.class)
     private Set<String> activeStatuses;
-    @ElementCollection(targetClass=String.class)
-    private Set<String> temporaryStatuses;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "room_id", nullable = false)
@@ -83,7 +75,6 @@ public class MonsterInstance extends BaseModel {
             setIsElite(monsterRequest.getIsElite());
         }
         if (monsterRequest.getActiveStatuses() != null) {
-            trackStatuses(getActiveStatuses(), monsterRequest.getActiveStatuses());
             setActiveStatuses(monsterRequest.getActiveStatuses());
         }
         if (monsterRequest.getMonsterId() != null) {
@@ -123,38 +114,15 @@ public class MonsterInstance extends BaseModel {
         }
     }
 
-    /**
-     * Causes temporary status effects to be removed or closer to removal
-     */
     public void removeRoundStatusEffects() {
-        Set<String> active = new HashSet<>(activeStatuses);
-        for (String status : active) {
-            if (validTempStatus(status)) {
-                if (temporaryStatuses.contains(status)) {
-                    temporaryStatuses.remove(status);
-                } else {
-                    activeStatuses.remove(status);
-                }
+        for (String status : activeStatuses) {
+            if (isTempStatus(status)) {
+                activeStatuses.remove(status);
             }
         }
     }
 
-    private void trackStatuses(Set<String> oldStatuses, Set<String> newStatuses) {
-        for (String newStatus : newStatuses) {
-            if (!oldStatuses.contains(newStatus)) {
-                if (validTempStatus(newStatus)) {
-                    temporaryStatuses.add(newStatus);
-                }
-            }
-        }
-    }
-
-    private boolean validTempStatus(String status) {
-        return (status.equals("Immobilize") ||
-                status.equals("Disarm") ||
-                status.equals("Stun") ||
-                status.equals("Muddle") ||
-                status.equals("Invisible") ||
-                status.equals("Strengthen"));
+    private boolean isTempStatus(String status) {
+        return Arrays.asList(Status.tempStatuses).contains(status);
     }
 }

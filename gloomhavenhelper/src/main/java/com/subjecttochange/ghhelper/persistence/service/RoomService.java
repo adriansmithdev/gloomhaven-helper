@@ -15,7 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class RoomService {
@@ -92,7 +94,7 @@ public class RoomService {
 
     private void handleStatusEffects(Room room) {
         List<MonsterInstance> instances = room.getMonsterInstances();
-        for (MonsterInstance instance: instances) {
+        for (MonsterInstance instance : instances) {
             instance.removeRoundStatusEffects();
         }
     }

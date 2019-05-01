@@ -12,6 +12,7 @@ import java.util.List;
 @Data
 @ToString
 public class ActionDeck extends BaseModel {
+
     @Id
     @GeneratedValue(generator = "action_deck_generator")
     @SequenceGenerator(name = "action_deck_generator", sequenceName = "action_deck_sequence")

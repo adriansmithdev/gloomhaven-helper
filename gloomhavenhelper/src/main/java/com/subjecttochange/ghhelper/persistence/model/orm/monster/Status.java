@@ -4,15 +4,23 @@ import com.subjecttochange.ghhelper.persistence.model.orm.BaseModel;
 import lombok.Data;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
 
 @Entity
 @Data
 @ToString
 public class Status extends BaseModel {
+
+    @Transient
+    public static final String[] tempStatuses = {
+            "Immobilize",
+            "Disarm",
+            "Stun",
+            "Muddle",
+            "Invisible",
+            "Strengthen"
+    };
+
     @Id
     @GeneratedValue(generator = "status_generator")
     @SequenceGenerator(

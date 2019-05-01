@@ -10,12 +10,10 @@ import javax.persistence.SequenceGenerator;
 @Entity
 @Data
 public class Stat extends BaseModel {
+
     @Id
     @GeneratedValue(generator = "stat_generator")
-    @SequenceGenerator(
-            name = "stat_generator",
-            sequenceName = "stat_sequence"
-    )
+    @SequenceGenerator(name = "stat_generator", sequenceName = "stat_sequence")
     private Long id;
     private String name;
     private String tooltip;
