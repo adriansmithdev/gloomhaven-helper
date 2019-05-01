@@ -59,7 +59,11 @@ public class RoomService {
 
         if (!isScenarioLevelEqual(roomRequest, room)) {
             instanceRepository.removeAllByRoomHash(room.getHash());
+            room.setMonsterInstances(new ArrayList<>());
+            roomRepository.save(room);
         }
+
+        room = roomRepository.findByHash(hash).orElseThrow(() -> new ResourceNotFoundException(Errors.NO_HASH_ROOM + hash));
 
         if (!isRoundEqual(roomRequest, room)) {
             Element.decrementElementsByQuantity(room, Math.abs(room.getRound() - roomRequest.getRound()));
@@ -79,11 +83,11 @@ public class RoomService {
     }
 
     private boolean isRoundEqual(Room request, Room stored) {
-        return request.getRound() != null && request.getRound().equals(stored.getRound());
+        return request.getRound() == null || request.getRound().equals(stored.getRound());
     }
 
     private boolean isScenarioLevelEqual(Room request, Room stored) {
-        return request.getScenarioLevel() != null && request.getScenarioLevel().equals(stored.getScenarioLevel());
+        return request.getScenarioLevel() == null || request.getScenarioLevel().equals(stored.getScenarioLevel());
     }
 
     private void handleStatusEffects(Room room) {
