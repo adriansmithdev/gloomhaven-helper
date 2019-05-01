@@ -10,6 +10,7 @@ import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -25,6 +26,7 @@ public class DeckService {
         this.roomRepository = roomRepository;
     }
 
+    @Transactional
     public Map<Monster, DeckInstance> drawMonsterActions(Room room) {
         room.setDecks(getMonsterActionDecks(room));
 
@@ -35,20 +37,29 @@ public class DeckService {
         return room.getDecks();
     }
 
+    @Transactional
     public Map<Monster, DeckInstance> getMonsterActionDecks(Room room) {
         Set<Monster> monsters = new HashSet<>();
+        Map<Monster, DeckInstance> decks = room.getDecks();
 
         for (MonsterInstance monsterInstance : room.getMonsterInstances()) {
             monsters.add(monsterInstance.getMonster());
         }
 
-        for (Monster monster : monsters) {
-            if (!room.getDecks().containsKey(monster)) {
-                room.getDecks().put(monster, getMonsterActionDeck(monster));
+        // Deletes monsters that have been removed since the last run through
+        for (Monster monster : decks.keySet()) {
+            if (!monsters.contains(monster)) {
+                decks.remove(monster);
             }
         }
 
-        return room.getDecks();
+        for (Monster monster : monsters) {
+            if (!decks.containsKey(monster)) {
+                decks.put(monster, getMonsterActionDeck(monster));
+            }
+        }
+
+        return decks;
     }
 
     private DeckInstance getMonsterActionDeck(Monster monster){

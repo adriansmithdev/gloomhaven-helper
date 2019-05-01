@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,13 +39,15 @@ public class DeckInstance extends BaseModel {
     public static DeckInstance create(ActionDeck deck) {
         DeckInstance deckInstance = new DeckInstance();
         deckInstance.setDeck(deck);
-        deckInstance.setMutatedDeck(deck.getDeck());
+        deckInstance.setMutatedDeck(new ArrayList<>(deck.getDeck()));
         deckInstance.shuffle();
         return deckInstance;
     }
 
     public void drawAction() {
-        currentAction = mutatedDeck.remove(mutatedDeck.size());
+        if (!mutatedDeck.isEmpty()) {
+            currentAction = mutatedDeck.remove(mutatedDeck.size() - 1);
+        }
 
         if (currentAction.getShuffleable()) {
             shuffle();

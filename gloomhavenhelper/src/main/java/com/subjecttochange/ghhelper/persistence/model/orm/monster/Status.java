@@ -2,6 +2,7 @@ package com.subjecttochange.ghhelper.persistence.model.orm.monster;
 
 import com.subjecttochange.ghhelper.persistence.model.orm.BaseModel;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import javax.persistence.SequenceGenerator;
 
 @Entity
 @Data
+@ToString
 public class Status extends BaseModel {
     @Id
     @GeneratedValue(generator = "status_generator")

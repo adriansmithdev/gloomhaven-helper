@@ -3,12 +3,14 @@ package com.subjecttochange.ghhelper.persistence.model.orm.monster;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.subjecttochange.ghhelper.persistence.model.orm.BaseModel;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Data
+@ToString
 public class ActionDeck extends BaseModel {
     @Id
     @GeneratedValue(generator = "action_deck_generator")

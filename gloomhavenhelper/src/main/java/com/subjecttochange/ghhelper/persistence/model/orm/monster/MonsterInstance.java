@@ -7,6 +7,7 @@ import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
 import com.subjecttochange.ghhelper.persistence.model.orm.BaseModel;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -18,6 +19,7 @@ import java.util.TreeSet;
 
 @Data
 @Entity
+@ToString
 @Table(name = "monster_instances")
 public class MonsterInstance extends BaseModel {
     @Id

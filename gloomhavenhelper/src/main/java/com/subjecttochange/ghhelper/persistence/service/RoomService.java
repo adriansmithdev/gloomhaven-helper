@@ -57,14 +57,14 @@ public class RoomService {
     public Room updateRoom(String hash, Room roomRequest) {
         Room room = roomRepository.findByHash(hash).orElseThrow(() -> new ResourceNotFoundException(Errors.NO_HASH_ROOM + hash));
 
+        if (!isScenarioLevelEqual(roomRequest, room)) {
+            //instanceRepository.removeAllByRoomHash(room.getHash());
+        }
+
         if (!isRoundEqual(roomRequest, room)) {
             Element.decrementElementsByQuantity(room, Math.abs(room.getRound() - roomRequest.getRound()));
             handleStatusEffects(room);
             room.setDecks(deckService.drawMonsterActions(room));
-        }
-
-        if (!isScenarioLevelEqual(roomRequest, room)) {
-            instanceRepository.removeAllByRoomHash(room.getHash());
         }
 
         room = room.updateRoom(roomRequest);
