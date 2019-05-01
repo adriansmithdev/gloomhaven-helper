@@ -3,7 +3,10 @@ import React from 'react';
 
 
 const InitiativeItem = (props) => {
-  if(props.type === undefined || props.type.action === undefined) {
+  if(props.type === undefined || 
+    props.type.monsterAction === undefined ||
+    props.type.monsterAction === null
+    ) {
     console.warn('Could not create intiative item: type or action is undefined!');
     return <></>
   }
@@ -20,7 +23,7 @@ const InitiativeItem = (props) => {
   return (
     <div className="initiative-item" title={props.type.name}>
       <img src={portrait} alt={props.type.name}/>
-      <strong>{props.type.action.initiative}</strong>
+      <strong>{props.type.monsterAction.initiative}</strong>
     </div>
   );
 }

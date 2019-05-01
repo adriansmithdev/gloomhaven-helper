@@ -41,18 +41,12 @@ class InitiativeTracker extends Component {
   }
 
   hasAction(type) {
-    return type.action !== undefined;
+    return type.monsterAction !== undefined && type.monsterAction !== null;
   }
 
   renderTypes() {
 
-    // REMOVE WHEN ACTIONS ARE FULLY IMPLEMENTED ON BACKEND.
-    const monsters = this.props.monsters.map(type => 
-      this.appendActionToType(type)
-    );
-    
-
-    const validTypes = monsters.filter(type => 
+    const validTypes = this.props.monsters.filter(type => 
       this.hasInstances(type) && this.hasAction(type)
     );
 
@@ -72,21 +66,7 @@ class InitiativeTracker extends Component {
    * order.
    */
   compareInitiativeOfTypes(type1, type2) {
-    return type1.action.initiative - type2.action.initiative;
-  }
-
-  /*
-    Temporary function until backend for actions is implemented.
-  */
-  appendActionToType(type) {
-    const newType = {
-      ...type,
-      action: {
-        initiative: Math.round(Math.random() * 100) 
-      }
-    };
-
-    return newType;
+    return type1.monsterAction.initiative - type2.monsterAction.initiative;
   }
   
   render() {
