@@ -25,11 +25,11 @@ class MonsterAbility extends Component {
     getIcon(name) {
         switch(name) {
             case '%attack%':
-                return <img src={AttackIcon} className="action-icon" alt="Attack: " />;
+                return `<img src="${AttackIcon}" className="action-icon" alt="Attack: " />`;
             case '%range%':
-                return <img src={RangeIcon} className="action-icon" alt="Range: " />;
+                return `<img src="${RangeIcon}" className="action-icon" alt="Range: " />`;
             case '%move%':
-                return <img src={MoveIcon} className="action-icon" alt="Move: " />;
+                return `<img src="${MoveIcon}" className="action-icon" alt="Move: " />`;
             default:
                 return undefined;
         }
@@ -50,8 +50,8 @@ class MonsterAbility extends Component {
             } else {
                 return item;
             }
-        });
-        return (counter > 0) ? parsed : action;
+        }).join('');
+        return ((counter > 0) ? parsed : action).replace(/[*]/g, '');
 
     }
 
@@ -66,7 +66,7 @@ class MonsterAbility extends Component {
 
         // Filter out types without any instances   
         const actions = this.props.monster.monsterAction.actionDeck.map(action =>
-            <p>{this.generateAction(action)}</p>
+            <p dangerouslySetInnerHTML={{ __html: this.generateAction(action) }}></p>
         );
     
         return(
