@@ -8,7 +8,7 @@ const rightArrow = String.fromCharCode(10097);
 class InitiativeTracker extends Component {
 
   initialState = {
-    hidden: true
+    hidden: false
   }
 
   constructor(props) {
