@@ -312,7 +312,7 @@
         [false, "44", "* %move% -1", "* %attack% +1", "** %range% +0"],
         [false, "56", "* %attack% -1", "** %range% +0", "** %target% 2"],
         [true, "68", "* %attack% +1", "** %range% +1"],
-        [false, "14", "* %move% -1", "* %attack% -1", "** %range% +0", "* <span class='small'> Create a 3 damage trap in an adjacent empty hex closest to an enemy </span>"],
+        [false, "14", "* %move% -1", "* %attack% -1", "** %range% +0", "* Create a 3 damage trap in an adjacent empty hex closest to an enemy"],
         [true, "29", "* %move% +0", "* %attack% -1", "** %range% +1", "** %immobilize%"]
       ]
     },
@@ -480,7 +480,7 @@
         [false, "44", "* %move% -1", "* %attack% +1", "** %range% +0"],
         [false, "56", "* %attack% -1", "** %range% +0", "** %target% 2"],
         [true, "68", "* %attack% +1", "** %range% +1"],
-        [false, "14", "* %move% -1", "* %attack% -1", "** %range% +0", "* <span class='small'> Create a 3 damage trap in an adjacent empty hex closest to an enemy </span>"],
+        [false, "14", "* %move% -1", "* %attack% -1", "** %range% +0", "* Create a 3 damage trap in an adjacent empty hex closest to an enemy"],
         [true, "29", "* %move% +0", "* %attack% -1", "** %range% +1", "** %immobilize%"]
       ]
     },
@@ -1010,7 +1010,7 @@
         [false, "44", "* %move% -1", "* %attack% +1", "** %range% +0"],
         [false, "56", "* %attack% -1", "** %range% +0", "** %target% 2"],
         [true, "68", "* %attack% +1", "** %range% +1"],
-        [false, "14", "* %move% -1", "* %attack% -1", "** %range% +0", "* <span class='small'> Create a 3 damage trap in an adjacent empty hex closest to an enemy </span>"],
+        [false, "14", "* %move% -1", "* %attack% -1", "** %range% +0", "* Create a 3 damage trap in an adjacent empty hex closest to an enemy"],
         [true, "29", "* %move% +0", "* %attack% -1", "** %range% +1", "** %immobilize%"]
       ]
     },
@@ -1699,14 +1699,14 @@
         }
       ],
       "actions" : [
-        [true, "40", "* %heal% 3", "** Self", "* %earth%%use_element%: <span class='small'>%immobilize% Target all enemies within %range% 3</span>"],
+        [true, "40", "* %heal% 3", "** Self", "* %earth%%use_element%: %immobilize% Target all enemies within %range% 3"],
         [true, "42", "* %move% +1", "* %attack% -1"],
         [false, "62", "* %move% +0", "* %attack% +0", "* %earth%"],
         [false, "71", "* %attack% +0", "** %range% 4", "** %earth%%use_element%: %target% 2"],
         [false, "83", "* %move% -1", "* %attack% +1", "* %earth%"],
         [false, "93", "* %move% -1", "* %attack% -1", "** Target all adjacent enemies", "* %earth%%use_element%: %push% 1"],
         [false, "79", "* %move% +1", "* %attack% +0", "** %air%%use_element%: -2 %attack%"],
-        [false, "87", "* %move% +0", "* %attack% -1 <div class='collapse'>%aoe-4-with-black%</div>", "* %any%%use_element%: %earth%"]
+        [false, "87", "* %move% +0", "* %attack% -1 %aoe-4-with-black%", "* %any%%use_element%: %earth%"]
       ]
     },
     "Flame Demon": {
@@ -1912,11 +1912,11 @@
         [false, "03", "* %move% +1", "* %attack% -1", "** %range% +0","* %fire%"],
         [false, "24", "* %move% +0", "* %attack% +0", "** %range% +0","* %fire%"],
         [true, "46", "* %attack% +0", "** %range% +0", "** %fire%%use_element%:  %aoe-circle%"],
-        [false, "49", "* %attack% +0 %aoe-line-3-with-black%", "** <table align='center'><tr><td>%fire%%use_element%:</td> <td> +1 %attack% <br> %wound% </td> </tr> </table>"],
+        [false, "49", "* %attack% +0 %aoe-line-3-with-black%", "** %fire%%use_element%: +1 %attack%  %wound%"],
         [false, "67", "* %move% -1", "* %attack% +1", "** %range% -1", "* %fire%"],
         [false, "77", "* %attack% +0", "** Target all adjacent enemies", "** %ice%%use_element%:Flame Demon suffers 1 damage."],
-        [true, "30", "* <table align='center'><tr> <td>  %fire%%use_element%: </td> <td> <span class='small'>All adjacent enemies<br/>suffer 2 damage.</span> </td> </tr> </table>", "* %move% +0", "* %attack% -2", "** %range% +0", "** %wound%", "** %target% 2"],
-        [false, "08", "* %move% -1", "* <span class='small'> Create a 4 damage trap in an adjacent empty hex closest to an enemy </span>", "* %any%%use_element%: %fire%"]
+        [true, "30", "* %fire%%use_element%: All adjacent enemies suffer 2 damage.", "* %move% +0", "* %attack% -2", "** %range% +0", "** %wound%", "** %target% 2"],
+        [false, "08", "* %move% -1", "* Create a 4 damage trap in an adjacent empty hex closest to an enemy", "* %any%%use_element%: %fire%"]
       ]
     },
     "Frost Demon": {
@@ -2087,14 +2087,14 @@
         }
       ],
       "actions" : [
-        [false, "18", "* %immobilize%", "** Target all enemies within %range% 2", "* %ice%%use_element%: <span class='small'>%heal% 3<br/>Self</span>"],
+        [false, "18", "* %immobilize%", "** Target all enemies within %range% 2", "* %ice%%use_element%: %heal% 3 Self"],
         [false, "38", "* %move% +1", "* %attack% -1"],
         [false, "58", "* %move% +0", "* %attack% +0"],
         [false, "58", "* %move% -1", "* %attack% +0", "** %range% 2", "** %ice%%use_element%: +2 %attack%, +1 %range%"],
         [true, "78", "* %move% -1", "* %attack% +0 %aoe-triangle-2-side-with-black%", "* %ice%"],
         [true, "78", "* %move% -1", "* %attack% +0 %aoe-triangle-2-side-with-black%", "* %ice%"],
         [false, "58", "* %move% -1", "* %attack% -1", "** %pierce% 3", "* %any%%use_element%: %ice%"],
-        [false, "18", "* %shield% 2", "* %move% +1", "* %fire%%use_element%: <span class='small'>Frost Demon suffers 1 damage</span>"]
+        [false, "18", "* %shield% 2", "* %move% +1", "* %fire%%use_element%: Frost Demon suffers 1 damage"]
       ]
     },
     "Forest Imp": {
