@@ -6,9 +6,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Data
 @Entity
@@ -26,8 +24,7 @@ public class DeckInstance extends BaseModel {
     private ActionDeck deck;
 
     @JsonIgnore
-    @OrderBy("id")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Action> mutatedDeck;
     @OneToOne
     private Action currentAction;
@@ -45,12 +42,12 @@ public class DeckInstance extends BaseModel {
     }
 
     public void drawAction() {
-        if (!mutatedDeck.isEmpty()) {
-            currentAction = mutatedDeck.remove(mutatedDeck.size() - 1);
-        }
+        shuffle();
+
+        currentAction = mutatedDeck.remove(mutatedDeck.size() - 1);
 
         if (currentAction.getShuffleable()) {
-            shuffle();
+            mutatedDeck = new ArrayList<>(deck.getDeck());
         }
     }
 

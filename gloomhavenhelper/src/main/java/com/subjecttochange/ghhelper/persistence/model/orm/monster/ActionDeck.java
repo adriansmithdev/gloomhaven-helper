@@ -19,7 +19,6 @@ public class ActionDeck extends BaseModel {
     private Long id;
 
     @JsonIgnore
-    @OrderBy("id")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Action> deck;
 
