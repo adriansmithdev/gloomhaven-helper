@@ -24,7 +24,7 @@ public class EventController {
                     SseEmitter.SseEventBuilder event = SseEmitter.event()
                             .data("SSE MVC - " + LocalTime.now().toString())
                             .id(String.valueOf(i))
-                            .name("sse event - mvc");
+                            .name("message");
                     emitter.send(event);
                     Thread.sleep(1000);
                 }
