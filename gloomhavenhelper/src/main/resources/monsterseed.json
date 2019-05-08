@@ -2659,7 +2659,7 @@
         [false, "16", "* %move% -1", "* %attack% -1", "* %heal% 5", "** Self"],
         [false, "16", "* %attack% +2", "** %immobilize%", "* %retaliate% 2"],
         [true, "02", "* %shield% 2", "* %retaliate% 2", "** %range% 3"],
-        [false, "30", "* %move% -1", "* %attack% +0 %aoe-line-4-with-black%", "** %dark%%use_element%: Perform \"%heal% 2, Self\" </br>for each target damaged"],
+        [false, "30", "* %move% -1", "* %attack% +0 %aoe-line-4-with-black%", "** %dark%%use_element%: Perform %heal% 2, Self for each target damaged"],
         [false, "38", "* %move% +0", "* %attack% -1", "** %target% 2", "** %dark%%use_element%: +2 %attack%, %disarm%"],
         [true, "07", "* %attack% -1", "** %range% 3", "** %muddle%", "* %heal% 4", "** Self"]
       ]
@@ -3000,7 +3000,7 @@
         [false, "44", "* %move% -1", "* %attack% +1", "** %range% +0"],
         [false, "56", "* %attack% -1", "** %range% +0", "** %target% 2"],
         [true, "68", "* %attack% +1", "** %range% +1"],
-        [false, "14", "* %move% -1", "* %attack% -1", "** %range% +0", "* <span class='small'> Create a 3 damage trap in an adjacent empty hex closest to an enemy </span>"],
+        [false, "14", "* %move% -1", "* %attack% -1", "** %range% +0", "* Create a 3 damage trap in an adjacent empty hex closest to an enemy"],
         [true, "29", "* %move% +0", "* %attack% -1", "** %range% +1", "** %immobilize%"]
       ]
     },
@@ -3676,13 +3676,13 @@
         }
       ],
       "actions" : [
-        [false, "21", "* %move% +1", "* %muddle% and %immobilize%", "** Target one adjacent enemy"],
+        [false, "21", "* %move% +1", "* %muddle% and %immobilize%", " Target one adjacent enemy"],
         [false, "47", "* %move% +1", "* %attack% -1"],
         [true, "66", "* %move% +0", "* %attack% +0"],
         [true, "66", "* %move% +0", "* %attack% +0"],
         [false, "82", "* %move% -1", "* %attack% +1"],
         [false, "91", "* %move% +1", "* Living Corpse suffers 1 damage."],
-        [false, "71", "* %move% +0", "* %attack% +1", "* %poison%", "** Target all adjacent enemies"],
+        [false, "71", "* %move% +0", "* %attack% +1", "* %poison%", " Target all adjacent enemies"],
         [false, "32", "* %attack% +2", "** %push% 1", "* Living Corpse suffers 1 damage."]
       ]
     },
@@ -4272,8 +4272,8 @@
         [false, "57", "* %move% +0", "* %attack% +0", "** %range% +0"],
         [false, "59", "* %attack% +0", "** %range% +0", "** %target% 2", "** %poison%"],
         [false, "66", "* %move% -1", "* %attack% +1", "** %range% +1"],
-        [true, "94", "* Ooze suffers 2 damage ", "** <span class='small'>Summons normal Ooze with a hit point value equal to the summoning Ooze's current hit point value (limited by a normal Ooze's specified maximum hit point value)</span>"],
-        [true, "94", "* Ooze suffers 2 damage ", "** <span class='small'>Summons normal Ooze with a hit point value equal to the summoning Ooze's current hit point value (limited by a normal Ooze's specified maximum hit point value)</span>"],
+        [true, "94", "* Ooze suffers 2 damage ", "** Summons normal Ooze with a hit point value equal to the summoning Ooze's current hit point value (limited by a normal Ooze's specified maximum hit point value)"],
+        [true, "94", "* Ooze suffers 2 damage ", "** Summons normal Ooze with a hit point value equal to the summoning Ooze's current hit point value (limited by a normal Ooze's specified maximum hit point value)"],
         [false, "85", "* %push% 1 and", "* %poison%", "** Target all adjacent enemies", "* %attack% +1", "** %range% -1"],
         [false, "66", "* %move% -1", "* %loot% 1", "* %heal% 2", "** Self"]
       ]
@@ -4457,7 +4457,7 @@
         [true, "46", "* %move% -1", "* %attack% +1", "** %dark%%use_element%: +2 %attack%"],
         [true, "41", "* %move% -1", "* %attack% +1", "* %dark%"],
         [false, "35", "* %attack% -1", "* %attack% -1", "** %pierce% 2", "* %light%%use_element%: %curse%", "** Self"],
-        [false, "15", "* %move% +0", "* %attack% -1", "* <span class='small'>All adjacent enemies and allies suffer 1 damage.</span>", "* <span class='small'>%any%%use_element%: %dark%</span>"]
+        [false, "15", "* %move% +0", "* %attack% -1", "* All adjacent enemies and allies suffer 1 damage.", "* %any%%use_element%: %dark%"]
       ]
     },
     "Rending Drake": {
@@ -6140,11 +6140,11 @@
         }
       ],
       "actions" : [
-        [false, "09", "* %attack% -1", "** %range% +0", "* %heal% 1", "** Self", "* %air%%use_element%: %invisible%<br/><span class='small'>Self</span>"],
+        [false, "09", "* %attack% -1", "** %range% +0", "* %heal% 1", "** Self", "* %air%%use_element%: %invisible% Self"],
         [true, "21", "* %move% +0", "* %attack% +0", "** %range% +0, %pull% 1", "* %air%"],
         [true, "21", "* %move% +0", "* %attack% +0", "** %range% +0, %pull% 1", "* %air%"],
         [false, "29", "* %move% +0", "* %attack% -1", "** %range% +0, %target% 2", "** %air%%use_element%: %push% 2"],
-        [false, "37", "* %move% +0", "* %attack% +0 <div style='display: inline-block; width: 0; margin-top: -1.5em; vertical-align: bottom'>%aoe-4-with-black%</div>", "** %air%%use_element%: +1 Attack <div style='display: inline-block; margin-right: -3em'>%aoe-circle-with-side-black%</div>"],
+        [false, "37", "* %move% +0", "* %attack% +0", " %aoe-4-with-black%", "** %air%%use_element%: +1 Attack %aoe-circle-with-side-black%"],
         [false, "43", "* %move% -1", "* %attack% +1", "** %range% +0", "** %air%%use_element%: %target% 2"],
         [false, "43", "* %push% 1", "** Target all adjacent enemies", "* %attack% +0", "** %range% +0", "** %earth%%use_element%: -2 %range%"],
         [false, "02", "* %shield% 1", "* %move% -1", "* %attack% -1", "** %range% +0", "* %any%%use_element%: %air%"]
