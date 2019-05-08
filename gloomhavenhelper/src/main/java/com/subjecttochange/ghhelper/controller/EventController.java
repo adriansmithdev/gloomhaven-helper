@@ -11,9 +11,12 @@ import java.util.concurrent.Executors;
 @Controller
 public class EventController {
 
+    public static final long ONE_DAY = 86400000L;
+
+
     @GetMapping("/stream-sse-mvc")
     public SseEmitter streamSseMvc() {
-        SseEmitter emitter = new SseEmitter();
+        SseEmitter emitter = new SseEmitter(ONE_DAY);
         ExecutorService sseMvcExecutor = Executors.newSingleThreadExecutor();
         sseMvcExecutor.execute(() -> {
             try {
