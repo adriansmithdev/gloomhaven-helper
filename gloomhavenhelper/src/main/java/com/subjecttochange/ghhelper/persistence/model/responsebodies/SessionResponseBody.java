@@ -14,14 +14,14 @@ public class SessionResponseBody {
     @NonNull
     private List<MonsterResponseBody> monsters;
     @NonNull
-    private List<Status> statuses;
+    private List<StatusResponseBody> statuses;
     @NonNull
-    private List<Stat> stats;
+    private List<StatResponseBody> stats;
 
     public static SessionResponseBody create(RoomResponseBody room,
                                              List<MonsterResponseBody> monsters,
-                                             List<Status> statuses,
-                                             List<Stat> stats) {
+                                             List<StatusResponseBody> statuses,
+                                             List<StatResponseBody> stats) {
         return new SessionResponseBody(
                 room,
                 monsters,

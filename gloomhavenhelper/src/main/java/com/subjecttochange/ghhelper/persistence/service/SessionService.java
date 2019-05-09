@@ -14,6 +14,7 @@ import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
 import com.subjecttochange.ghhelper.persistence.repository.StatRepository;
 import com.subjecttochange.ghhelper.persistence.repository.StatusRepository;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -67,8 +68,8 @@ public class SessionService {
             sessionResponse.add(SessionResponseBody.create(
                     roomResponse,
                     new ArrayList<>(buildMonsterResponses(room)),
-                    statuses,
-                    stats
+                    new ArrayList<>(buildStatusResponses(statuses)),
+                    new ArrayList<>(buildStatResponses(stats))
             ));
         }
 
@@ -81,6 +82,9 @@ public class SessionService {
         List<Monster> monsters = monsterRepository.findAllByLevel(room.getScenarioLevel());
 
         for (Monster monster : monsters) {
+            Hibernate.initialize(monster.getAttributes());
+            Hibernate.initialize(monster.getEliteAttributes());
+
             MonsterResponseBody monsterResponseBody = MonsterResponseBody.create(monster);
             Action currentAction = null;
 
@@ -96,6 +100,8 @@ public class SessionService {
         }
 
         for (MonsterInstance monsterInstance : room.getMonsterInstances()) {
+            Hibernate.initialize(monsterInstance.getActiveStatuses());
+
             Monster monster = monsterInstance.getMonster();
 
             namedMonsterBodies.get(monster.getId())
@@ -104,5 +110,25 @@ public class SessionService {
         }
 
         return namedMonsterBodies.values();
+    }
+
+    private Collection<StatusResponseBody> buildStatusResponses(List<Status> statuses) {
+        List<StatusResponseBody> result = new ArrayList<>();
+
+        for (Status status : statuses) {
+            result.add(StatusResponseBody.create(status));
+        }
+
+        return result;
+    }
+
+    private Collection<StatResponseBody> buildStatResponses(List<Stat> stats) {
+        List<StatResponseBody> result = new ArrayList<>();
+
+        for (Stat stat : stats) {
+            result.add(StatResponseBody.create(stat));
+        }
+
+        return result;
     }
 }
