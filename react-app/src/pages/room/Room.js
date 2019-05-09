@@ -15,7 +15,8 @@ import { getSession } from './../../store/actions/session';
 import { updateRoom } from './../../store/actions/actions';
 import { setStatus } from './../../store/actions/storeActions';
 
- 
+
+
 class Room extends Component {
 
   constructor(props) {
@@ -24,6 +25,8 @@ class Room extends Component {
     this.confirmLevelChange = this.confirmLevelChange.bind(this);
     this.updateScenario = this.updateScenario.bind(this);
   }
+
+  
 
   // Takes an event
   // Sets the key to the id of the element it came from
@@ -47,7 +50,21 @@ class Room extends Component {
 
   // If room not in store, attempt to pull from hash.
   componentWillMount() {
-    this.props.getSession(this.props.match.params.hash);
+    var evtSource = new EventSource('http://localhost:5000/api/stream-sse-mvc');
+
+    evtSource.onopen = (event) => {
+      console.log(event);
+      this.props.getSession(this.props.match.params.hash);
+    }
+
+    evtSource.onmessage = (event) => {
+      console.log(event);
+      this.props.getSession(this.props.match.params.hash);
+    };
+    
+    evtSource.onerror = function(event) {
+      console.log(event.message);
+    }
   }
 
 

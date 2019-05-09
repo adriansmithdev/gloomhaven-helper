@@ -21,24 +21,7 @@ import * as serviceWorker from './serviceWorker';
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
-var evtSource = new EventSource('http://localhost:5000/api/stream-sse-mvc');
-console.log(evtSource);
-evtSource.onmessage = (e) => {
-  console.log(e);
-};
-
-evtSource.onerror = function(event) {
-  console.log(event.message);
-}
-
-ReactDOM.render(
-  <Provider store={store}>
-    <Page>
-      <Routes/>
-    </Page>
-  </Provider>, 
-  document.getElementById('root')
-);
+ReactDOM.render(<Provider store={store}><Page><Routes/></Page></Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
