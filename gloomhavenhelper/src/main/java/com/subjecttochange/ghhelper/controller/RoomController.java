@@ -22,10 +22,12 @@ import javax.validation.Valid;
 public class RoomController {
 
     private final RoomService roomService;
+    private final EventController eventController;
 
     @Autowired
-    public RoomController(RoomService roomService) {
+    public RoomController(RoomService roomService, EventController eventController) {
         this.roomService = roomService;
+        this.eventController = eventController;
     }
 
     /**
@@ -60,7 +62,9 @@ public class RoomController {
     @ResponseBody
     public Room updateRoom(@RequestParam(value = "hash") String hash,
                            @Valid @RequestBody(required = false) Room request) {
-        return roomService.updateRoom(hash, request);
+        Room result = roomService.updateRoom(hash, request);
+        eventController.newEvent("RoomUpdate", hash, eventController.jsonUpdate(result));
+        return result;
     }
 
     /**
