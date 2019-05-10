@@ -50,7 +50,7 @@ class Room extends Component {
 
   // If room not in store, attempt to pull from hash.
   componentWillMount() {
-    var evtSource = new EventSource('http://localhost:5000/api/stream');
+    var evtSource = new EventSource(`http://localhost:5000/api/stream?hash=${this.props.session.room.hash}`);
 
     evtSource.onopen = (event) => {
       console.log(event);
