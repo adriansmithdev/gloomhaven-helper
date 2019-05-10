@@ -57,14 +57,13 @@ class Room extends Component {
     }
 
     evtSource.onmessage = (event) => {
-      
-      console.log(JSON.parse(event.data));
 
       const data = JSON.parse(event.data);
 
+      console.log(data);
       const action = {
         type: data.action,
-        data: data.response.content[0]
+        data: data.response
       }
 
       this.props.recieveEvent(action)

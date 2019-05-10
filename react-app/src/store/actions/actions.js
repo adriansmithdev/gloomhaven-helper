@@ -17,8 +17,6 @@ export const getRoom = function(hash) {
     dispatch(setStatus('ROOM_FOUND'));
     return response.data;
   }
-
-  
 };
 
 export const createRoom = function(callback, room) {
@@ -46,7 +44,6 @@ export const updateRoom = function(room) {
         return error.response.data;
       });
 
-    dispatch(getSession(room.hash));
     dispatch(setStatus('UPDATED_SCENARIO'));
     return response.data;
   };
@@ -59,13 +56,9 @@ export const addMonster = function(hash, monsterId, isElite) {
       isElite: isElite
     }).catch(function (error) {
       dispatch(addError(error.response.data));
-      dispatch(setStatus('FAILED_TO_ADD_MONSTER'));
       toast.error('Unable to add monster!');
       return error.response.data;
     });
-
-    dispatch(getSession(hash));
-    dispatch(setStatus('ADDED_MONSTER'));
     return response.data;
   }
 };
@@ -80,7 +73,7 @@ export const updateMonster = function(hash, monster) {
       return error.response.data;
     });
 
-    dispatch(getSession(hash));
+    
     dispatch(setStatus('UPDATED_MONSTER'));
     return response.data;
   }
@@ -97,7 +90,7 @@ export const deleteMonster = function(hash, monster) {
       });
 
     dispatch(setStatus('DELETED_MONSTER'));
-    dispatch(getSession(hash));
+    
     return response.data;
   }
 };
@@ -112,7 +105,7 @@ export const updateElement = function(hash, element) {
       return error.response.data;
     });
 
-    dispatch(getSession(hash));
+    
     dispatch(setStatus('UPDATED_ELEMENT'));
     return response.data;
   }

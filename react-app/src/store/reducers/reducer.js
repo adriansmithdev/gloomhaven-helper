@@ -13,6 +13,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
 
+  console.log(state.session);
   let newState = {
     ...state, 
     session: { 
@@ -30,8 +31,8 @@ const reducer = (state = initialState, action) => {
     case 'SET_ROOM': 
       newState.session.room = {...action.value};
       break;
-    case 'GET_SESSION': 
-      newState.session = {...action.data};
+    case 'GET_SESSION':
+      newState.session = {...action.data.content[0]};
       break;
     case 'ADD_ERROR':
       newState.notifications.push(action.error);
@@ -39,23 +40,57 @@ const reducer = (state = initialState, action) => {
     case 'SET_STATUS':
       newState.status = action.value;
       break;
-    case 'ADD_MONSTER':
-      newState.session.monsters.push(action.monster);
+    
+    // Monster instance modifiers.
+    case 'POST_MONSTER_INSTANCE': {
+        const monsterTypeIndex = newState.session.monsters.findIndex(monster =>
+          monster.id === action.data.monsterId
+        );
+
+        const monsterType = newState.session.monsters[monsterTypeIndex];
+
+        const newInstances = [...monsterType.monsterInstances, action.data];
+
+        monsterType.monsterInstances = newInstances;
+      }
+        
       break;
-    case 'DELETE_MONSTER':
-      // Filter out old monster.
-      const newMonsters = newState.monsters.filter(monster =>
-        monster.id !== action.monster.id
-      );
-      // Replace old state.
-      newState.session.room.monsters = newMonsters;
+    case 'PUT_MONSTER_INSTANCE': {
+        const monsterType = newState.session.monsters.find(monster =>
+          monster.id === action.data.monsterId
+        );
+
+        const instanceIndex = monsterType.monsterInstances.findIndex(instance => 
+          instance.id === action.data.id
+        );
+
+        monsterType.monsterInstances.splice(instanceIndex, 1, action.data);
+      }
       break;
-    case 'UPDATE_MONSTER':
-      const targetIndex = newState.monsters.findIndex(current => 
-        current.id === action.monster.id
-      );
-      newState.session.monsters.splice(targetIndex, 1, action.monster);
+    case 'DELETE_MONSTER_INSTANCE': {
+        const monsterType = newState.session.monsters.find(monster =>
+          monster.monsterInstances.findIndex(instance => 
+            instance.id === action.data.id
+          ) !== -1
+        );
+
+        const instanceIndex = monsterType.monsterInstances.findIndex(instance => 
+          instance.id === action.data.id
+        );
+
+        monsterType.monsterInstances.splice(instanceIndex, 1);
+      }
       break;
+
+    case 'PUT_ELEMENT': {
+        const elements = newState.session.room.elements;
+        const elementIndex = elements.findIndex(element => 
+          element.id === action.data.id
+        );
+        elements.splice(elementIndex, 1, action.data);
+      }
+      break;
+    
     case 'CLEAR_SESSION':
       newState = initialState;
       break;
