@@ -50,16 +50,25 @@ class Room extends Component {
 
   // If room not in store, attempt to pull from hash.
   componentWillMount() {
-    var evtSource = new EventSource(`http://localhost:5000/api/stream?hash=${this.props.session.room.hash}`);
+    var evtSource = new EventSource(`http://localhost:5000/api/stream?hash=${this.props.match.params.hash}`);
 
     evtSource.onopen = (event) => {
-      console.log(event);
-      this.props.getSession(this.props.match.params.hash);
+      console.log("Connected to Server API");
     }
 
     evtSource.onmessage = (event) => {
-      console.log(event);
-      this.props.getSession(this.props.match.params.hash);
+      
+      console.log(JSON.parse(event.data));
+
+      const data = JSON.parse(event.data);
+
+      const action = {
+        type: data.action,
+        data: data.content.content[0]
+      }
+
+      this.props.recieveEvent(action)
+      
     };
     
     evtSource.onerror = function(event) {
@@ -113,7 +122,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setStatus: (newStatus) => dispatch(setStatus(newStatus)),
     getSession: (hash) => dispatch(getSession(hash)),
-    updateScenario: (room) => dispatch(updateRoom(room))
+    updateScenario: (room) => dispatch(updateRoom(room)),
+    recieveEvent: (action) => dispatch(action)
   };
 };
 

@@ -30,8 +30,8 @@ const reducer = (state = initialState, action) => {
     case 'SET_ROOM': 
       newState.session.room = {...action.value};
       break;
-    case 'SET_SESSION': 
-      newState.session = {...action.value};
+    case 'GET_SESSION': 
+      newState.session = {...action.data};
       break;
     case 'ADD_ERROR':
       newState.notifications.push(action.error);

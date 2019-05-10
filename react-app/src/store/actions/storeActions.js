@@ -23,7 +23,7 @@ export const setRoom = function(data) {
 };
 
 export const setSession = function(data) {
-  return {type: 'SET_SESSION', value: data}
+  return {type: 'GET_SESSION', value: data}
 };
 
 export const setStatus = function(status) {
