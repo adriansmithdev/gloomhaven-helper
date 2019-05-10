@@ -65,7 +65,8 @@ public class EventController {
     private void sendBroadcast(EventType eventType, SseEmitter emitter, Object body) {
         SseEmitter.SseEventBuilder event = SseEmitter.event()
                 .data(jsonOutput(body))
-                .name(eventType.name().toLowerCase());
+                .name("message")
+                .comment(eventType.name().toLowerCase());
         try {
             emitter.send(event);
         } catch (IOException e) {
@@ -77,13 +78,13 @@ public class EventController {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-        String result = "";
+        String result = "{\"action\":\"GET_SESSION\",\"content\":";
         try {
-            result = objectMapper.writeValueAsString(room);
+            result += objectMapper.writeValueAsString(room);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return JsonUtils.prettyPrint(result);
+        return result + "}";
     }
 
     private void deleteEmitter(String hash, SseEmitter emitter) {
