@@ -2,11 +2,9 @@ package com.subjecttochange.ghhelper.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.subjecttochange.ghhelper.persistence.model.responsebodies.SessionResponseBody;
 import com.subjecttochange.ghhelper.persistence.service.SessionService;
 import io.micrometer.core.instrument.util.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,71 +15,61 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @Controller
 public class EventController {
 
     public static final long ONE_DAY = 86400000L;
     private final SessionService sessionService;
-    Map<String, LinkedList<SseEmitter>> observers = new HashMap<>();
+    private Map<String, LinkedList<SseEmitter>> roomEmitters = new HashMap<>();
 
     @Autowired
     public EventController(SessionService sessionService) {
         this.sessionService = sessionService;
     }
 
-    @GetMapping("/stream-sse-mvc")
+    @GetMapping("/stream")
     public SseEmitter streamSseMvc(@RequestParam(value = "hash") String hash) {
         SseEmitter emitter = new SseEmitter(ONE_DAY);
-        ExecutorService sseMvcExecutor = Executors.newSingleThreadExecutor();
-        sseMvcExecutor.execute(() -> {
-            try {
-                //initial - send the whole
-                updateEvent(
-                        emitter,
-                        jsonUpdate(sessionService.getRooms("1b6e045", null))
-                );
 
-                if (observers.containsKey(hash)) {
-                    LinkedList<SseEmitter> emitters = observers.get(hash);
-                    emitters.add(emitter);
-                } else {
-                    observers.put(hash, new LinkedList<>(Collections.singletonList(emitter)));
-                }
-            } catch (Exception ex) {
-                emitter.completeWithError(ex);
-            }
+        emitter.onCompletion(() -> {
+            deleteEmitter(hash, emitter);
+            System.out.println("Emitter has completed");
         });
+        emitter.onTimeout(() -> {
+            deleteEmitter(hash, emitter);
+            System.out.println("Emitter has timed out");
+        });
+        emitter.onError((e) -> {
+            deleteEmitter(hash, emitter);
+            System.out.println("Emitter has errored");
+        });
+
+        sendBroadcast(emitter, jsonOutput(sessionService.getRooms(hash, null)), "message");
+        saveEmitter(hash, emitter);
         return emitter;
     }
 
-    // partial room change
     public void newEvent(String eventType, String hash, String body) {
-        if (observers.containsKey(hash)) {
-            for (SseEmitter emitter : observers.get(hash)) {
-                SseEmitter.SseEventBuilder event = SseEmitter.event()
-                        .data(body)
-                        .name(eventType);
-                try {
-                    emitter.send(event);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        if (roomEmitters.containsKey(hash)) {
+            for (SseEmitter emitter : roomEmitters.get(hash)) {
+                sendBroadcast(emitter, body, eventType);
             }
         }
     }
 
-    private void updateEvent(SseEmitter emitter, String content) throws IOException {
+    private void sendBroadcast(SseEmitter emitter, String content, String eventType) {
         SseEmitter.SseEventBuilder event = SseEmitter.event()
                 .data(content)
-                .name("message");
-        emitter.send(event);
+                .name(eventType);
+        try {
+            emitter.send(event);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public String jsonUpdate(Object room) {
+    public String jsonOutput(Object room) {
         ObjectMapper objectMapper = new ObjectMapper();
         String result = "";
         try {
@@ -90,5 +78,20 @@ public class EventController {
             e.printStackTrace();
         }
         return JsonUtils.prettyPrint(result);
+    }
+
+    private void deleteEmitter(String hash, SseEmitter emitter) {
+        if (roomEmitters.containsKey(hash)) {
+            roomEmitters.get(hash).remove(emitter);
+        }
+    }
+
+    private void saveEmitter(String hash, SseEmitter emitter) {
+        if (roomEmitters.containsKey(hash)) {
+            LinkedList<SseEmitter> emitters = roomEmitters.get(hash);
+            emitters.add(emitter);
+        } else {
+            roomEmitters.put(hash, new LinkedList<>(Collections.singletonList(emitter)));
+        }
     }
 }

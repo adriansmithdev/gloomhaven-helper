@@ -63,7 +63,7 @@ public class RoomController {
     public Room updateRoom(@RequestParam(value = "hash") String hash,
                            @Valid @RequestBody(required = false) Room request) {
         Room result = roomService.updateRoom(hash, request);
-        eventController.newEvent("RoomUpdate", hash, eventController.jsonUpdate(result));
+        eventController.newEvent("RoomUpdate", hash, eventController.jsonOutput(result));
         return result;
     }
 
