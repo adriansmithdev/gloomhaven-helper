@@ -4,6 +4,7 @@ import com.subjecttochange.ghhelper.persistence.model.EventType;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.model.responsebodies.DeleteHashResponseBody;
 import com.subjecttochange.ghhelper.persistence.service.RoomService;
+import com.subjecttochange.ghhelper.persistence.service.SessionService;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,11 +26,13 @@ public class RoomController {
 
     private final RoomService roomService;
     private final EventController eventController;
+    private final SessionService sessionService;
 
     @Autowired
-    public RoomController(RoomService roomService, EventController eventController) {
+    public RoomController(RoomService roomService, EventController eventController, SessionService sessionService) {
         this.roomService = roomService;
         this.eventController = eventController;
+        this.sessionService = sessionService;
     }
 
     /**
@@ -65,7 +68,7 @@ public class RoomController {
     public Room updateRoom(@RequestParam(value = "hash") String hash,
                            @Valid @RequestBody(required = false) Room request) {
         Room room = roomService.updateRoom(hash, request);
-        eventController.newEvent(EventType.PUT_ROOM, hash, room);
+        eventController.newEvent(EventType.PUT_ROOM, hash, sessionService.getRooms(room.getHash(), null));
         return room;
     }
 
