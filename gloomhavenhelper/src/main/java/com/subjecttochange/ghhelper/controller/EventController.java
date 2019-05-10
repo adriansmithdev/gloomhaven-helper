@@ -2,6 +2,9 @@ package com.subjecttochange.ghhelper.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.subjecttochange.ghhelper.persistence.model.EventType;
 import com.subjecttochange.ghhelper.persistence.service.SessionService;
 import io.micrometer.core.instrument.util.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -45,23 +49,23 @@ public class EventController {
             System.out.println("Emitter has errored");
         });
 
-        sendBroadcast(emitter, jsonOutput(sessionService.getRooms(hash, null)), "message");
+        sendBroadcast(EventType.MESSAGE, emitter, sessionService.getRooms(hash, null));
         saveEmitter(hash, emitter);
         return emitter;
     }
 
-    public void newEvent(String eventType, String hash, String body) {
+    public void newEvent(EventType eventType, String hash, Object body) {
         if (roomEmitters.containsKey(hash)) {
             for (SseEmitter emitter : roomEmitters.get(hash)) {
-                sendBroadcast(emitter, body, eventType);
+                sendBroadcast(eventType, emitter, body);
             }
         }
     }
 
-    private void sendBroadcast(SseEmitter emitter, String content, String eventType) {
+    private void sendBroadcast(EventType eventType, SseEmitter emitter, Object body) {
         SseEmitter.SseEventBuilder event = SseEmitter.event()
-                .data(content)
-                .name(eventType);
+                .data(jsonOutput(body))
+                .name(eventType.name().toLowerCase());
         try {
             emitter.send(event);
         } catch (IOException e) {
@@ -71,6 +75,8 @@ public class EventController {
 
     public String jsonOutput(Object room) {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         String result = "";
         try {
             result = objectMapper.writeValueAsString(room);

@@ -1,5 +1,6 @@
 package com.subjecttochange.ghhelper.controller;
 
+import com.subjecttochange.ghhelper.persistence.model.EventType;
 import com.subjecttochange.ghhelper.persistence.model.orm.Element;
 import com.subjecttochange.ghhelper.persistence.service.ElementService;
 import lombok.ToString;
@@ -15,10 +16,12 @@ import javax.validation.Valid;
 public class ElementController {
 
     private final ElementService elementService;
+    private final EventController eventController;
 
     @Autowired
-    public ElementController(ElementService elementService) {
+    public ElementController(ElementService elementService, EventController eventController) {
         this.elementService = elementService;
+        this.eventController = eventController;
     }
 
     @GetMapping("/elements")
@@ -34,7 +37,9 @@ public class ElementController {
     public Element updateElement(@RequestParam(value = "hash") String hash,
                                  @RequestParam(value = "id") Long id,
                                  @Valid @RequestBody(required = false) Element request) {
-        return elementService.updateElement(hash, id, request);
+        Element element = elementService.updateElement(hash, id, request);
+        eventController.newEvent(EventType.ELEMENT_UPDATE, hash, element);
+        return element;
     }
 
 }

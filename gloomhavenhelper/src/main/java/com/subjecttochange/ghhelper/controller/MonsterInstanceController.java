@@ -1,6 +1,8 @@
 package com.subjecttochange.ghhelper.controller;
 
+import com.subjecttochange.ghhelper.persistence.model.EventType;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
+import com.subjecttochange.ghhelper.persistence.model.responsebodies.DeleteIdResponseBody;
 import com.subjecttochange.ghhelper.persistence.service.MonsterInstanceService;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +24,12 @@ import javax.validation.Valid;
 public class MonsterInstanceController {
 
     private final MonsterInstanceService monsterInstanceService;
+    private final EventController eventController;
 
     @Autowired
-    public MonsterInstanceController(MonsterInstanceService monsterInstanceService) {
+    public MonsterInstanceController(MonsterInstanceService monsterInstanceService, EventController eventController) {
         this.monsterInstanceService = monsterInstanceService;
+        this.eventController = eventController;
     }
 
     @GetMapping("/monsterinstances")
@@ -40,7 +44,9 @@ public class MonsterInstanceController {
     @ResponseBody
     public MonsterInstance createMonsterInstance(@RequestParam(value = "hash") String hash,
                                                  @Valid @RequestBody(required = false) MonsterInstance request) {
-        return monsterInstanceService.createMonster(hash, request);
+        MonsterInstance monsterInstance = monsterInstanceService.createMonster(hash, request);
+        eventController.newEvent(EventType.INSTANCE_CREATE, hash, monsterInstance);
+        return monsterInstance;
     }
 
     @PutMapping("/monsterinstances")
@@ -48,13 +54,17 @@ public class MonsterInstanceController {
     public MonsterInstance updateMonsterInstance(@RequestParam(value = "hash") String hash,
                                                  @RequestParam(value = "id") Long id,
                                                  @Valid @RequestBody(required = false) MonsterInstance request) {
-        return monsterInstanceService.updateMonster(hash, id, request);
+        MonsterInstance monsterInstance = monsterInstanceService.updateMonster(hash, id, request);
+        eventController.newEvent(EventType.INSTANCE_UPDATE, hash, monsterInstance);
+        return monsterInstance;
     }
 
     @DeleteMapping("/monsterinstances")
     public ResponseEntity<?> deleteMonsterInstance(@RequestParam(value = "hash") String hash,
                                                    @RequestParam(value = "id") Long id) {
-        return monsterInstanceService.deleteMonster(hash, id);
+        ResponseEntity<?> response = monsterInstanceService.deleteMonster(hash, id);
+        eventController.newEvent(EventType.INSTANCE_DELETE, hash, DeleteIdResponseBody.create(id));
+        return response;
     }
 
 }
