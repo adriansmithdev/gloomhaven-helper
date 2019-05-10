@@ -45,7 +45,7 @@ public class MonsterInstanceController {
     public MonsterInstance createMonsterInstance(@RequestParam(value = "hash") String hash,
                                                  @Valid @RequestBody(required = false) MonsterInstance request) {
         MonsterInstance monsterInstance = monsterInstanceService.createMonster(hash, request);
-        eventController.newEvent(EventType.INSTANCE_CREATE, hash, monsterInstance);
+        eventController.newEvent(EventType.POST_MONSTER_INSTANCE, hash, monsterInstance);
         return monsterInstance;
     }
 
@@ -55,7 +55,7 @@ public class MonsterInstanceController {
                                                  @RequestParam(value = "id") Long id,
                                                  @Valid @RequestBody(required = false) MonsterInstance request) {
         MonsterInstance monsterInstance = monsterInstanceService.updateMonster(hash, id, request);
-        eventController.newEvent(EventType.INSTANCE_UPDATE, hash, monsterInstance);
+        eventController.newEvent(EventType.PUT_MONSTER_INSTANCE, hash, monsterInstance);
         return monsterInstance;
     }
 
@@ -63,7 +63,7 @@ public class MonsterInstanceController {
     public ResponseEntity<?> deleteMonsterInstance(@RequestParam(value = "hash") String hash,
                                                    @RequestParam(value = "id") Long id) {
         ResponseEntity<?> response = monsterInstanceService.deleteMonster(hash, id);
-        eventController.newEvent(EventType.INSTANCE_DELETE, hash, DeleteIdResponseBody.create(id));
+        eventController.newEvent(EventType.DELETE_MONSTER_INSTANCE, hash, DeleteIdResponseBody.create(id));
         return response;
     }
 

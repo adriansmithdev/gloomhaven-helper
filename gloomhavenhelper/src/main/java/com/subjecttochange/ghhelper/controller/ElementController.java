@@ -38,7 +38,7 @@ public class ElementController {
                                  @RequestParam(value = "id") Long id,
                                  @Valid @RequestBody(required = false) Element request) {
         Element element = elementService.updateElement(hash, id, request);
-        eventController.newEvent(EventType.ELEMENT_UPDATE, hash, element);
+        eventController.newEvent(EventType.PUT_ELEMENT, hash, element);
         return element;
     }
 

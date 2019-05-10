@@ -3,7 +3,6 @@ package com.subjecttochange.ghhelper.controller;
 import com.subjecttochange.ghhelper.persistence.model.EventType;
 import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.model.responsebodies.DeleteHashResponseBody;
-import com.subjecttochange.ghhelper.persistence.model.responsebodies.DeleteIdResponseBody;
 import com.subjecttochange.ghhelper.persistence.service.RoomService;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +65,7 @@ public class RoomController {
     public Room updateRoom(@RequestParam(value = "hash") String hash,
                            @Valid @RequestBody(required = false) Room request) {
         Room room = roomService.updateRoom(hash, request);
-        eventController.newEvent(EventType.ROOM_UPDATE, hash, room);
+        eventController.newEvent(EventType.PUT_ROOM, hash, room);
         return room;
     }
 
@@ -78,7 +77,7 @@ public class RoomController {
     @DeleteMapping("/rooms")
     public ResponseEntity<?> deleteRoom(@RequestParam(value = "hash") String hash) {
         ResponseEntity<?> response = roomService.deleteRoom(hash);
-        eventController.newEvent(EventType.ROOM_DELETE, hash, DeleteHashResponseBody.create(hash));
+        eventController.newEvent(EventType.DELETE_ROOM, hash, DeleteHashResponseBody.create(hash));
         return response;
     }
 }

@@ -1,11 +1,11 @@
 package com.subjecttochange.ghhelper.persistence.model;
 
 public enum EventType {
-    ROOM_UPDATE,
-    ROOM_DELETE,
-    ELEMENT_UPDATE,
-    INSTANCE_CREATE,
-    INSTANCE_UPDATE,
-    INSTANCE_DELETE,
-    MESSAGE
+    PUT_ROOM,
+    DELETE_ROOM,
+    PUT_ELEMENT,
+    POST_MONSTER_INSTANCE,
+    PUT_MONSTER_INSTANCE,
+    DELETE_MONSTER_INSTANCE,
+    GET_SESSION
 }

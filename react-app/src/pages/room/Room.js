@@ -64,7 +64,7 @@ class Room extends Component {
 
       const action = {
         type: data.action,
-        data: data.content.content[0]
+        data: data.response.content[0]
       }
 
       this.props.recieveEvent(action)
