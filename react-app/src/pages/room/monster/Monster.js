@@ -93,6 +93,7 @@ export class Monster extends Component {
         <td className="monster-identifier" >
           <MonsterToken token={token} 
             updateMonsterToken={this.updateMonsterToken}
+            key={token}
           />
         </td>
 
