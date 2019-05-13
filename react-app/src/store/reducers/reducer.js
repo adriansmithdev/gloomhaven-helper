@@ -8,14 +8,12 @@ const initialState = {
   notifications: [],
   modalIsOpen: false,
   eliteToggle: false
-  
 }
 
 
 
 const reducer = (state = initialState, action) => {
 
-  console.log(state.session);
   let newState = {
     ...state, 
     session: { 
