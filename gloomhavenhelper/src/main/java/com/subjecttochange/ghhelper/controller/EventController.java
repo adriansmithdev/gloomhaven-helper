@@ -23,7 +23,7 @@ import java.util.Map;
 @Controller
 public class EventController {
 
-    public static final long ONE_DAY = 86400000L;
+    public static final long FIVE_MINUTES = 300000L;
     private final SessionService sessionService;
     private Map<String, LinkedList<SseEmitter>> roomEmitters = new HashMap<>();
 
@@ -34,7 +34,7 @@ public class EventController {
 
     @GetMapping("/stream")
     public SseEmitter streamSseMvc(@RequestParam(value = "hash") String hash) {
-        SseEmitter emitter = new SseEmitter(ONE_DAY);
+        SseEmitter emitter = new SseEmitter(FIVE_MINUTES);
 
         emitter.onCompletion(() -> {
             deleteEmitter(hash, emitter);
@@ -49,7 +49,7 @@ public class EventController {
             System.out.println("Emitter has errored");
         });
 
-        sendBroadcast(EventType.GET_SESSION, emitter, sessionService.getRooms(hash, null));
+        sendBroadcast(EventType.GET_SESSION, emitter, sessionService.getRooms(hash, null), hash);
         saveEmitter(hash, emitter);
         return emitter;
     }
@@ -57,19 +57,20 @@ public class EventController {
     public void newEvent(EventType eventType, String hash, Object body) {
         if (roomEmitters.containsKey(hash)) {
             for (SseEmitter emitter : roomEmitters.get(hash)) {
-                sendBroadcast(eventType, emitter, body);
+                sendBroadcast(eventType, emitter, body, hash);
             }
         }
     }
 
-    private void sendBroadcast(EventType eventType, SseEmitter emitter, Object body) {
+    private void sendBroadcast(EventType eventType, SseEmitter emitter, Object body, String hash) {
         SseEmitter.SseEventBuilder event = SseEmitter.event()
                 .data(jsonOutput(eventType, body))
                 .name("message");
         try {
             emitter.send(event);
         } catch (IOException e) {
-            e.printStackTrace();
+            deleteEmitter(hash, emitter);
+            System.out.println("Status: Deleted old emitter");
         }
     }
 
