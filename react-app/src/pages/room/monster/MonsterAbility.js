@@ -54,63 +54,63 @@ class MonsterAbility extends Component {
         switch(name) {
             //Elements
             case '%air%':
-                return `<img src="${AirIcon}" className="action-icon" alt="Air" />`;
+                return `<img src="${AirIcon}" className="action-icon" alt="Air" title="Air Element"/>`;
             case '%dark%':
-                return `<img src="${DarkIcon}" className="action-icon" alt="Dark" />`;
+                return `<img src="${DarkIcon}" className="action-icon" alt="Dark" title="Dark Element"/>`;
             case '%earth%':
-                return `<img src="${EarthIcon}" className="action-icon" alt="Earth" />`;
+                return `<img src="${EarthIcon}" className="action-icon" alt="Earth" title="Earth Element"/>`;
             case '%fire%':
-                return `<img src="${FireIcon}" className="action-icon" alt="Fire" />`;
+                return `<img src="${FireIcon}" className="action-icon" alt="Fire" title="Fire Element"/>`;
             case '%ice%':
-                return `<img src="${IceIcon}" className="action-icon" alt="Ice" />`;
+                return `<img src="${IceIcon}" className="action-icon" alt="Ice" title="Ice Element"/>`;
             case '%light%':
-                return `<img src="${LightIcon}" className="action-icon" alt="Light" />`;
+                return `<img src="${LightIcon}" className="action-icon" alt="Light" title="Light Element"/>`;
               
             // Stats
             case '%attack%':
-                return `<img src="${AttackIcon}" className="action-icon" alt="Attack: " />`;
+                return `<img src="${AttackIcon}" className="action-icon" alt="Attack: " title="Attack"/>`;
             case '%range%':
-                return `<img src="${RangeIcon}" className="action-icon" alt="Range: " />`;
+                return `<img src="${RangeIcon}" className="action-icon" alt="Range: " title="Range"/>`;
             case '%move%':
-                return `<img src="${MoveIcon}" className="action-icon" alt="Move: " />`;
+                return `<img src="${MoveIcon}" className="action-icon" alt="Move: " title="Movement"/>`;
             case '%shield%':
-                return `<img src="${ShieldIcon}" className="action-icon" alt="Shield: " />`;
+                return `<img src="${ShieldIcon}" className="action-icon" alt="Shield: " title="Shield"/>`;
             case '%heal%':
-                return `<img src="${HealIcon}" className="action-icon" alt="Heal: " />`;
+                return `<img src="${HealIcon}" className="action-icon" alt="Heal: " title="Heal"/>`;
             case '%flying%':
-                return `<img src="${FlyIcon}" className="action-icon" alt="Flying: " />`;
+                return `<img src="${FlyIcon}" className="action-icon" alt="Flying: " title="FLying"/>`;
             case '%jump%':
-                return `<img src="${JumpIcon}" className="action-icon" alt="Jump: " />`;
+                return `<img src="${JumpIcon}" className="action-icon" alt="Jump: " title="Jump"/>`;
             case '%retaliate%':
-                return `<img src="${RetaliateIcon}" className="action-icon" alt="Retaliate: " />`;
+                return `<img src="${RetaliateIcon}" className="action-icon" alt="Retaliate: " title="Retaliate"/>`;
 
             //Statuses
             case '%bless%':
-                return `<img src="${BlessIcon}" className="action-icon" alt="Bless" />`;
+                return `<img src="${BlessIcon}" className="action-icon" alt="Bless" title="Bless"/>`;
             case '%curse%':
-                return `<img src="${CurseIcon}" className="action-icon" alt="Curse" />`;
+                return `<img src="${CurseIcon}" className="action-icon" alt="Curse" title="Curse"/>`;
             case '%disarm%':
-                return `<img src="${DisarmIcon}" className="action-icon" alt="Disarm" />`;
+                return `<img src="${DisarmIcon}" className="action-icon" alt="Disarm" title="Disarm"/>`;
             case '%immobilize%':
-                return `<img src="${ImmobilizeIcon}" className="action-icon" alt="Immobilize" />`;
+                return `<img src="${ImmobilizeIcon}" className="action-icon" alt="Immobilize" title="Immobilize"/>`;
             case '%invisible%':
-                return `<img src="${InvisibleIcon}" className="action-icon" alt="Invisible" />`;
+                return `<img src="${InvisibleIcon}" className="action-icon" alt="Invisible" title="Invisible"/>`;
             case '%muddle%':
-                return `<img src="${MuddleIcon}" className="action-icon" alt="Muddle" />`;
+                return `<img src="${MuddleIcon}" className="action-icon" alt="Muddle" title="Muddle"/>`;
             case '%pierce%':
-                return `<img src="${PierceIcon}" className="action-icon" alt="Pierce" />`;
+                return `<img src="${PierceIcon}" className="action-icon" alt="Pierce" title="Pierce"/>`;
             case '%poison%':
-                return `<img src="${PoisonIcon}" className="action-icon" alt="Poison" />`;
+                return `<img src="${PoisonIcon}" className="action-icon" alt="Poison" title="Poison"/>`;
             case '%push%':
-                return `<img src="${PushIcon}" className="action-icon" alt="Push" />`;
+                return `<img src="${PushIcon}" className="action-icon" alt="Push" title="Push"/>`;
             case '%strengthen%':
-                return `<img src="${StrengthenIcon}" className="action-icon" alt="Strengthen" />`;
+                return `<img src="${StrengthenIcon}" className="action-icon" alt="Strengthen" title="Strengthen"/>`;
             case '%stun%':
-                return `<img src="${StunIcon}" className="action-icon" alt="Stun" />`;
+                return `<img src="${StunIcon}" className="action-icon" alt="Stun" title="Stun"/>`;
             case '%target%':
-                return `<img src="${TargetIcon}" className="action-icon" alt="Target" />`;
+                return `<img src="${TargetIcon}" className="action-icon" alt="Target" title="Target"/>`;
             case '%wound%':
-                return `<img src="${WoundIcon}" className="action-icon" alt="Wound" />`;
+                return `<img src="${WoundIcon}" className="action-icon" alt="Wound" title="Wound"/>`;
             default:
                 return undefined;
         }
