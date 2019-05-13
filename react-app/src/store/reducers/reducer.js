@@ -99,7 +99,7 @@ const reducer = (state = initialState, action) => {
       break;
     
     case 'CLEAR_SESSION':
-      newState = initialState;
+      newState = {...newState, session: {...initialState.session}};
       break;
 
     case 'SHOW_MODAL':

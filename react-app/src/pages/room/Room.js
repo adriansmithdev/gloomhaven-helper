@@ -23,6 +23,8 @@ class Room extends Component {
 
     this.confirmLevelChange = this.confirmLevelChange.bind(this);
     this.updateScenario = this.updateScenario.bind(this);
+
+    this.props.clearSession();
   }
 
   
@@ -118,6 +120,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    clearSession: () => dispatch({type: 'CLEAR_SESSION'}),
     setStatus: (newStatus) => dispatch(setStatus(newStatus)),
     updateScenario: (room) => dispatch(updateRoom(room)),
     recieveEvent: (action) => dispatch(action)
