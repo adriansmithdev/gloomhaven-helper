@@ -18,6 +18,8 @@ import { setStatus } from './../../store/actions/storeActions';
 
 class Room extends Component {
 
+  eventSource = undefined;
+
   constructor(props) {
     super(props);
 
@@ -51,17 +53,16 @@ class Room extends Component {
 
   // If room not in store, attempt to pull from hash.
   componentWillMount() {
-    var evtSource = new EventSource(`http://localhost:5000/api/stream?hash=${this.props.match.params.hash}`);
+    this.eventSource = new EventSource(`http://localhost:5000/api/stream?hash=${this.props.match.params.hash}`);
 
-    evtSource.onopen = (event) => {
+    this.eventSource.onopen = (event) => {
       console.log("Connected to Server API");
     }
 
-    evtSource.onmessage = (event) => {
+    this.eventSource.onmessage = (event) => {
 
       const data = JSON.parse(event.data);
 
-      console.log(data);
       const action = {
         type: data.action,
         data: data.response
@@ -71,9 +72,14 @@ class Room extends Component {
       
     };
     
-    evtSource.onerror = function(event) {
+    this.eventSource.onerror = function(event) {
       console.log(event.message);
     }
+  }
+
+  componentWillUnmount() {
+    this.eventSource.close();
+    this.props.clearSession();
   }
 
 
