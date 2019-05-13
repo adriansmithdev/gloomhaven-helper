@@ -11,6 +11,8 @@ const initialState = {
   
 }
 
+
+
 const reducer = (state = initialState, action) => {
 
   console.log(state.session);
@@ -24,6 +26,10 @@ const reducer = (state = initialState, action) => {
     }
   };
 
+  function setSession() {
+    newState.session = {...action.data.content[0]};
+  }
+
   switch(action.type) {
     case 'TOGGLE_ELITE':
       newState.eliteToggle = !state.eliteToggle;
@@ -31,8 +37,11 @@ const reducer = (state = initialState, action) => {
     case 'SET_ROOM': 
       newState.session.room = {...action.value};
       break;
+    case 'PUT_ROOM':
+      setSession();
+      break;
     case 'GET_SESSION':
-      newState.session = {...action.data.content[0]};
+      setSession();
       break;
     case 'ADD_ERROR':
       newState.notifications.push(action.error);

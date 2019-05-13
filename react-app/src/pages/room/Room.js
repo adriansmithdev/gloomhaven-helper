@@ -11,7 +11,6 @@ import LoadingScreen from './../common/LoadingScreen';
 import InitiativeTracker from './initiative/InitiativeTracker';
 
 // Redux Store Actions.
-import { getSession } from './../../store/actions/session';
 import { updateRoom } from './../../store/actions/actions';
 import { setStatus } from './../../store/actions/storeActions';
 
@@ -120,7 +119,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setStatus: (newStatus) => dispatch(setStatus(newStatus)),
-    getSession: (hash) => dispatch(getSession(hash)),
     updateScenario: (room) => dispatch(updateRoom(room)),
     recieveEvent: (action) => dispatch(action)
   };

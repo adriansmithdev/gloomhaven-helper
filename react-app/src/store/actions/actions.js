@@ -3,7 +3,6 @@ import { toast } from 'react-toastify';
 import { 
   addError, setStatus
  } from './storeActions';
-import { getSession } from './session';
 
 export const getRoom = function(hash) {
   return async (dispatch) => {
@@ -120,8 +119,6 @@ export const incrementRound = function(room) {
         toast.error('Failed to increment round!');
         return error.response.data;
       });
-
-    dispatch(getSession(room.hash));
     dispatch(setStatus('INCREMENTED_ROUND'));
     return response.data;
   }
