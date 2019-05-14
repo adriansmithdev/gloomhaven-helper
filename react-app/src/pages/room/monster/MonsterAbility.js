@@ -54,63 +54,63 @@ class MonsterAbility extends Component {
         switch(name) {
             //Elements
             case '%air%':
-                return `<img src="${AirIcon}" className="action-icon" alt="Air" title="Air Element"/>`;
+                return `<img src="${AirIcon}" class="action-icon" alt="Air" title="Air Element"/>`;
             case '%dark%':
-                return `<img src="${DarkIcon}" className="action-icon" alt="Dark" title="Dark Element"/>`;
+                return `<img src="${DarkIcon}" class="action-icon" alt="Dark" title="Dark Element"/>`;
             case '%earth%':
-                return `<img src="${EarthIcon}" className="action-icon" alt="Earth" title="Earth Element"/>`;
+                return `<img src="${EarthIcon}" class="action-icon" alt="Earth" title="Earth Element"/>`;
             case '%fire%':
-                return `<img src="${FireIcon}" className="action-icon" alt="Fire" title="Fire Element"/>`;
+                return `<img src="${FireIcon}" class="action-icon" alt="Fire" title="Fire Element"/>`;
             case '%ice%':
-                return `<img src="${IceIcon}" className="action-icon" alt="Ice" title="Ice Element"/>`;
+                return `<img src="${IceIcon}" class="action-icon" alt="Ice" title="Ice Element"/>`;
             case '%light%':
-                return `<img src="${LightIcon}" className="action-icon" alt="Light" title="Light Element"/>`;
+                return `<img src="${LightIcon}" class="action-icon" alt="Light" title="Light Element"/>`;
               
             // Stats
             case '%attack%':
-                return `<img src="${AttackIcon}" className="action-icon" alt="Attack: " title="Attack"/>`;
+                return `<img src="${AttackIcon}" class="action-icon" alt="Attack: " title="Attack"/>`;
             case '%range%':
-                return `<img src="${RangeIcon}" className="action-icon" alt="Range: " title="Range"/>`;
+                return `<img src="${RangeIcon}" class="action-icon" alt="Range: " title="Range"/>`;
             case '%move%':
-                return `<img src="${MoveIcon}" className="action-icon" alt="Move: " title="Movement"/>`;
+                return `<img src="${MoveIcon}" class="action-icon" alt="Move: " title="Movement"/>`;
             case '%shield%':
-                return `<img src="${ShieldIcon}" className="action-icon" alt="Shield: " title="Shield"/>`;
+                return `<img src="${ShieldIcon}" class="action-icon" alt="Shield: " title="Shield"/>`;
             case '%heal%':
-                return `<img src="${HealIcon}" className="action-icon" alt="Heal: " title="Heal"/>`;
+                return `<img src="${HealIcon}" class="action-icon" alt="Heal: " title="Heal"/>`;
             case '%flying%':
-                return `<img src="${FlyIcon}" className="action-icon" alt="Flying: " title="FLying"/>`;
+                return `<img src="${FlyIcon}" class="action-icon" alt="Flying: " title="FLying"/>`;
             case '%jump%':
-                return `<img src="${JumpIcon}" className="action-icon" alt="Jump: " title="Jump"/>`;
+                return `<img src="${JumpIcon}" class="action-icon" alt="Jump: " title="Jump"/>`;
             case '%retaliate%':
-                return `<img src="${RetaliateIcon}" className="action-icon" alt="Retaliate: " title="Retaliate"/>`;
+                return `<img src="${RetaliateIcon}" class="action-icon" alt="Retaliate: " title="Retaliate"/>`;
 
             //Statuses
             case '%bless%':
-                return `<img src="${BlessIcon}" className="action-icon" alt="Bless" title="Bless"/>`;
+                return `<img src="${BlessIcon}" class="action-icon" alt="Bless" title="Bless"/>`;
             case '%curse%':
-                return `<img src="${CurseIcon}" className="action-icon" alt="Curse" title="Curse"/>`;
+                return `<img src="${CurseIcon}" class="action-icon" alt="Curse" title="Curse"/>`;
             case '%disarm%':
-                return `<img src="${DisarmIcon}" className="action-icon" alt="Disarm" title="Disarm"/>`;
+                return `<img src="${DisarmIcon}" class="action-icon" alt="Disarm" title="Disarm"/>`;
             case '%immobilize%':
-                return `<img src="${ImmobilizeIcon}" className="action-icon" alt="Immobilize" title="Immobilize"/>`;
+                return `<img src="${ImmobilizeIcon}" class="action-icon" alt="Immobilize" title="Immobilize"/>`;
             case '%invisible%':
-                return `<img src="${InvisibleIcon}" className="action-icon" alt="Invisible" title="Invisible"/>`;
+                return `<img src="${InvisibleIcon}" class="action-icon" alt="Invisible" title="Invisible"/>`;
             case '%muddle%':
-                return `<img src="${MuddleIcon}" className="action-icon" alt="Muddle" title="Muddle"/>`;
+                return `<img src="${MuddleIcon}" class="action-icon" alt="Muddle" title="Muddle"/>`;
             case '%pierce%':
-                return `<img src="${PierceIcon}" className="action-icon" alt="Pierce" title="Pierce"/>`;
+                return `<img src="${PierceIcon}" class="action-icon" alt="Pierce" title="Pierce"/>`;
             case '%poison%':
-                return `<img src="${PoisonIcon}" className="action-icon" alt="Poison" title="Poison"/>`;
+                return `<img src="${PoisonIcon}" class="action-icon" alt="Poison" title="Poison"/>`;
             case '%push%':
-                return `<img src="${PushIcon}" className="action-icon" alt="Push" title="Push"/>`;
+                return `<img src="${PushIcon}" class="action-icon" alt="Push" title="Push"/>`;
             case '%strengthen%':
-                return `<img src="${StrengthenIcon}" className="action-icon" alt="Strengthen" title="Strengthen"/>`;
+                return `<img src="${StrengthenIcon}" class="action-icon" alt="Strengthen" title="Strengthen"/>`;
             case '%stun%':
-                return `<img src="${StunIcon}" className="action-icon" alt="Stun" title="Stun"/>`;
+                return `<img src="${StunIcon}" class="action-icon" alt="Stun" title="Stun"/>`;
             case '%target%':
-                return `<img src="${TargetIcon}" className="action-icon" alt="Target" title="Target"/>`;
+                return `<img src="${TargetIcon}" class="action-icon" alt="Target" title="Target"/>`;
             case '%wound%':
-                return `<img src="${WoundIcon}" className="action-icon" alt="Wound" title="Wound"/>`;
+                return `<img src="${WoundIcon}" class="action-icon" alt="Wound" title="Wound"/>`;
             default:
                 return undefined;
         }
@@ -123,11 +123,11 @@ class MonsterAbility extends Component {
         const splitted = action.split(' ');
 
         const parsed = splitted.map(item => {
-            const icon = this.getIcon(item)
+            const icon = this.getIcon(item);
 
             if(icon !== undefined) {
-                counter++
-                return this.getIcon(item)
+                counter++;
+                return this.getIcon(item);
             } else {
                 return item;
             }
@@ -147,7 +147,7 @@ class MonsterAbility extends Component {
 
         // Filter out types without any instances   
         const actions = this.props.monster.monsterAction.actionDeck.map(action =>
-            <p dangerouslySetInnerHTML={{ __html: this.generateAction(action) }}></p>
+            <p dangerouslySetInnerHTML={{__html: this.generateAction(action)}}/>
         );
     
         return(
