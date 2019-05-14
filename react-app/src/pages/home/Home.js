@@ -16,10 +16,12 @@ class Home extends Component {
 
     this.scenarioLvl = React.createRef();
     this.scenarioNum = React.createRef();
+    this.roomCode = React.createRef();
 
     this.setShow = this.setShow.bind(this);
     this.createRoom = this.createRoom.bind(this);
     this.joinRoom = this.joinRoom.bind(this);
+    this.handleKeydown = this.handleKeydown.bind(this);
   }
 
   renderCreateRoomBtn() {
@@ -52,16 +54,16 @@ class Home extends Component {
 
   renderHashInput() {
     return (
-      <form onSubmit={this.joinRoom}>
+      <>
         <label className="label">Room Code</label>
-        <input type="text" className="input is-large" autoFocus name="hash" maxLength={6} />
-      </form>
+        <input type="text" className="input is-large" autoFocus name="hash" maxLength={7} ref={this.roomCode} />
+      </>
     );
   }
 
   renderNewRoomInputs() {
     return (
-      <form onSubmit={this.createRoom}>
+      <>
         <div className="ml-1 mr-2">
           <label className="label">Scenario Number</label>
           <input type="text" maxLength={4} className="input scenarioNumInput is-large" autoFocus name="scenarioNum"
@@ -83,13 +85,13 @@ class Home extends Component {
             </select>
           </div>
         </div>
-      </form>
+      </>
     );
   }
 
-  joinRoom(event) {
+  joinRoom() {
     this.props.clearSession();
-    this.props.history.push(`/rooms/${event.target.value}`);
+    this.props.history.push(`/rooms/${this.roomCode.current.value}`);
     this.setState({showHashInput: false});
   }
 
@@ -101,6 +103,10 @@ class Home extends Component {
 
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeydown);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeydown);
   }
 
   handleKeydown = (event) => {
