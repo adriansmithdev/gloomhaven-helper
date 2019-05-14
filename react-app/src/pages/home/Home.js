@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {createRoom} from './../../store/actions/actions';
 import {getSession} from './../../store/actions/session';
 import {clearSession} from './../../store/actions/storeActions';
+import FAQ from './../home/FAQ';
 
 class Home extends Component {
 
@@ -113,10 +114,14 @@ class Home extends Component {
               game out of the box, our project reduces the number of physical tokens and trackers
               players need to manage.
             </p>
-
+            
             <span className="level-item">
               {this.state.showLevelInput || this.state.showHashInput ? this.renderOptionInputs() : this.renderDefaultButtons()}
             </span>
+
+            <hr className='break'/>
+
+            <FAQ/>
 
           </div>
         </div>
