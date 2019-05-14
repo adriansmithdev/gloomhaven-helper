@@ -25,7 +25,7 @@ class Home extends Component {
   renderCreateRoomBtn() {
     return (
       <button className="button is-dark is-large themed-font m-2" id="showLevelInput" type="button"
-              onClick={this.setShow}>
+              onClick={(this.state.showLevelInput ? this.createRoom : this.setShow)}>
         Create Room
       </button>
     );
@@ -34,57 +34,57 @@ class Home extends Component {
   renderJoinRoomBtn() {
     return (
       <button className="button is-dark is-large themed-font m-2" id="showHashInput" type="button"
-              onClick={this.setShow}>
+              onClick={(this.state.showHashInput ? this.joinRoom : this.setShow)}>
         Join Room
       </button>
     );
   }
 
   setShow(event) {
+    if (event.target.id === 'showLevelInput') {
+      this.setState({'showHashInput': false});
+    } else if (event.target.id === 'showHashInput') {
+      this.setState({'showLevelInput': false});
+    }
+
     this.setState({[event.target.id]: true});
   }
 
-  renderDefaultButtons() {
+  renderHashInput() {
     return (
-      <>
-        {this.renderCreateRoomBtn()}
-        {this.renderJoinRoomBtn()}
-      </>
+      <form onSubmit={this.joinRoom}>
+        <label className="label">Room Code</label>
+        <input type="text" className="input is-large" autoFocus name="hash" maxLength={6} />
+      </form>
     );
   }
 
-  renderOptionInputs() {
-    if (this.state.showHashInput) {
-      return (
-        <>
-          <button className="button is-dark is-large themed-font m-2" type="button">
-            Join Room
-          </button>
-          <input type="text" className="text-input" autoFocus onBlur={this.joinRoom} name="hash"
-                 placeholder="Room ID"/>
-        </>
-      );
-    } else if (this.state.showLevelInput) {
-      return (
-        <>
-          <input type="text" className="text-input" autoFocus name="scenarioNum" placeholder="Scenario Number"
-                 ref={this.scenarioNum}/>
-          <select className="text-input" name="scenarioLevel" ref={this.scenarioLvl}>
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-          </select>
-          <button className="button is-dark is-large themed-font m-2" type="button" onClick={this.createRoom}>
-            Create Room
-          </button>
-        </>
-      );
-    }
+  renderNewRoomInputs() {
+    return (
+      <form onSubmit={this.createRoom}>
+        <div className="ml-1 mr-2">
+          <label className="label">Scenario Number</label>
+          <input type="text" maxLength={4} className="input scenarioNumInput is-large" autoFocus name="scenarioNum"
+                 defaultValue="0" ref={this.scenarioNum}/>
+        </div>
+        <br/>
+        <div className="m-1 mr-2">
+          <label className="label">Scenario Level</label>
+          <div className="select is-large">
+            <select className="" name="scenarioLevel" ref={this.scenarioLvl}>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+            </select>
+          </div>
+        </div>
+      </form>
+    );
   }
 
   joinRoom(event) {
@@ -99,10 +99,24 @@ class Home extends Component {
     this.setState({showLevelInput: false});
   }
 
+  componentDidMount() {
+    document.addEventListener("keydown", this.handleKeydown);
+  }
+
+  handleKeydown = (event) => {
+    if (event.keyCode === 13) {
+      if (this.state.showLevelInput) {
+        this.createRoom();
+      } else if (this.state.showHashInput) {
+        this.joinRoom();
+      }
+    }
+  };
+
   render() {
     return (
       <div className="container">
-        <div className="card">
+        <div className="card full-height">
           <div className="card-content">
             <h1 className="title themed-font level-item">Gloomtility</h1>
 
@@ -114,17 +128,24 @@ class Home extends Component {
               players need to manage.
             </p>
 
-            <span className="level-item">
-              {this.state.showLevelInput || this.state.showHashInput ? this.renderOptionInputs() : this.renderDefaultButtons()}
-            </span>
 
+            <div className="columns is-mobile is-centered">
+              <div className="column is-narrow"> {this.renderCreateRoomBtn()}</div>
+              <div className="column is-narrow">{this.renderJoinRoomBtn()}</div>
+            </div>
+            <div className="columns is-centered">
+              <div className="column is-narrow"> {this.state.showLevelInput ? this.renderNewRoomInputs() : ''}</div>
+              <div className="column is-narrow">{this.state.showHashInput ? this.renderHashInput() : ''}</div>
+            </div>
           </div>
+          {/*<span className="level-item">*/}
+          {/*{this.state.showLevelInput || this.state.showHashInput ? this.renderOptionInputs() : this.renderDefaultButtons()}*/}
+          {/*</span>*/}
+
         </div>
       </div>
-
     );
   }
-
 }
 
 
