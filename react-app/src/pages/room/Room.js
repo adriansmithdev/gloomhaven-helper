@@ -105,7 +105,6 @@ class Room extends Component {
           confirmLevelChange={this.confirmLevelChange}
           updateScenario={this.updateScenario}
           eventSourceStatus={this.props.eventSourceStatus}
-          key={this.props.session.room.scenarioNumber}
           />
         <div className="room-content container">
           <RoomToolbar />
