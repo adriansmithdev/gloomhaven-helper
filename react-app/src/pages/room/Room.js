@@ -9,12 +9,12 @@ import RoomToolbar from './RoomToolbar';
 import MonsterList from './monster/MonsterList';
 import LoadingScreen from './../common/LoadingScreen';
 import InitiativeTracker from './initiative/InitiativeTracker';
+import { toast } from 'react-toastify';
 
 // Redux Store Actions.
 import { updateRoom } from './../../store/actions/actions';
 import { setStatus } from './../../store/actions/storeActions';
-
-
+import { apiURL } from './../../store/actions/axios.config';
 
 class Room extends Component {
 
@@ -53,10 +53,10 @@ class Room extends Component {
 
   // If room not in store, attempt to pull from hash.
   componentWillMount() {
-    this.eventSource = new EventSource(`http://localhost:5000/api/stream?hash=${this.props.match.params.hash}`);
+    this.eventSource = new EventSource(`${apiURL}stream?hash=${this.props.match.params.hash}`);
 
     this.eventSource.onopen = (event) => {
-      console.log("Connected to Server API");
+      this.props.setEventSourceStatus('CONNECTION_STARTED');
     }
 
     this.eventSource.onmessage = (event) => {
@@ -71,26 +71,33 @@ class Room extends Component {
       this.props.recieveEvent(action)
       
     };
-    
+
+    const setEventSourceStatus = this.props.setEventSourceStatus;
+
     this.eventSource.onerror = function(event) {
-      console.log(event.message);
+      console.log(event);
+      setEventSourceStatus('CONNECTION_LOST');
     }
   }
 
   componentWillUnmount() {
     this.eventSource.close();
+    this.props.setEventSourceStatus('NO_CONNECTION');
     this.props.clearSession();
   }
 
 
   render() {
 
-    if(this.props.status === "SESSION_NOT_FOUND") {
+    if(this.props.status === "SESSION_NOT_FOUND" 
+      || this.props.eventSourceStatus === "CONNECTION_LOST") {
       this.props.setStatus("INITIAL");
+      toast.error('Couldn\'t connect to room');
       return <Redirect to="/" />
     }
     
-    return (this.props.session.room.hash === undefined) ? (
+    return (this.props.session.room.hash === undefined
+      || this.props.eventSourceStatus !== 'CONNECTION_STARTED') ? (
       <LoadingScreen /> 
       ) : (
 
@@ -129,7 +136,11 @@ const mapDispatchToProps = (dispatch) => {
     clearSession: () => dispatch({type: 'CLEAR_SESSION'}),
     setStatus: (newStatus) => dispatch(setStatus(newStatus)),
     updateScenario: (room) => dispatch(updateRoom(room)),
-    recieveEvent: (action) => dispatch(action)
+    recieveEvent: (action) => dispatch(action),
+    setEventSourceStatus: (newStatus) => dispatch({
+      type: 'SET_EVENT_SOURCE_STATUS', 
+      data: newStatus
+    })
   };
 };
 
