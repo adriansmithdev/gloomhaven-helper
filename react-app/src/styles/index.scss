@@ -76,6 +76,7 @@ input.input-short, select.input-short {
 
 // Widgets
 @import './widgets/progressbar';
+@import './widgets/connectionmonitor';
 
 // Room Components
 @import './room/InitiativeTracker';
