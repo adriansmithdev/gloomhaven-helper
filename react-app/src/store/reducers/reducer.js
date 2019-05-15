@@ -7,7 +7,8 @@ const initialState = {
   },
   notifications: [],
   modalIsOpen: false,
-  eliteToggle: false
+  eliteToggle: false,
+  eventSourceStatus: 'NO_CONNECTION'
 }
 
 
@@ -47,7 +48,9 @@ const reducer = (state = initialState, action) => {
     case 'SET_STATUS':
       newState.status = action.value;
       break;
-    
+    case 'SET_EVENT_SOURCE_STATUS':
+      newState.eventSourceStatus = action.data;
+      break;
     // Monster instance modifiers.
     case 'POST_MONSTER_INSTANCE': {
         const monsterTypeIndex = newState.session.monsters.findIndex(monster =>
