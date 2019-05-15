@@ -1,4 +1,5 @@
 import React from 'react';
+import ConnectionMonitor from '../common/ConnectionMonitor';
 
 
 const RoomTopbar = (props) => {
@@ -9,6 +10,7 @@ const RoomTopbar = (props) => {
           Gloomtility
         </a>
         <strong className="room-hash has-text-light ml-1">Room: {props.hash}</strong>
+        <ConnectionMonitor status={props.eventSourceStatus}/>
       </div>
       <div className="topbar-item">
         <div className="field has-addons">
