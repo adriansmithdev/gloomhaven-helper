@@ -75,7 +75,7 @@ class Room extends Component {
     const setEventSourceStatus = this.props.setEventSourceStatus;
 
     this.eventSource.onerror = function(event) {
-      console.log(event);
+      toast.error('Unable to connect to server!');
       setEventSourceStatus('CONNECTION_LOST');
     }
   }
@@ -89,22 +89,22 @@ class Room extends Component {
 
   render() {
 
-    if(this.props.status === "SESSION_NOT_FOUND" 
-      || this.props.eventSourceStatus === "CONNECTION_LOST") {
-      this.props.setStatus("INITIAL");
+    if(this.props.status === 'SESSION_NOT_FOUND') {
+      this.props.setStatus('INITIAL');
       toast.error('Couldn\'t connect to room');
       return <Redirect to="/" />
     }
     
-    return (this.props.session.room.hash === undefined
-      || this.props.eventSourceStatus !== 'CONNECTION_STARTED') ? (
+    return (this.props.session.room.hash === undefined) ? (
       <LoadingScreen /> 
       ) : (
 
        <>
-        <RoomTopbar {...this.props.session.room} 
+        <RoomTopbar 
+          {...this.props.session.room} 
           confirmLevelChange={this.confirmLevelChange}
           updateScenario={this.updateScenario}
+          eventSourceStatus={this.props.eventSourceStatus}
           />
         <div className="room-content container">
           <RoomToolbar />
