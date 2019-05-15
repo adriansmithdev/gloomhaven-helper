@@ -147,7 +147,7 @@ class MonsterAbility extends Component {
 
         // Filter out types without any instances   
         const actions = this.props.monster.monsterAction.actionDeck.map(action =>
-            <p dangerouslySetInnerHTML={{__html: this.generateAction(action)}}/>
+            <p key={Math.round(Math.random() * 10000)} dangerouslySetInnerHTML={{__html: this.generateAction(action)}}/>
         );
     
         return(
