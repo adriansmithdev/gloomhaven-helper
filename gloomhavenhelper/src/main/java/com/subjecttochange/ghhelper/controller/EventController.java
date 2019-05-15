@@ -26,6 +26,7 @@ public class EventController {
     public static final long FIVE_MINUTES = 300000L;
     private final SessionService sessionService;
     private Map<String, LinkedList<SseEmitter>> roomEmitters = new HashMap<>();
+    private Map<String, String> roomCache = new HashMap<>();
 
     @Autowired
     public EventController(SessionService sessionService) {
@@ -49,22 +50,36 @@ public class EventController {
             System.out.println("Emitter has errored");
         });
 
-        sendBroadcast(EventType.GET_SESSION, emitter, sessionService.getRooms(hash, null), hash);
         saveEmitter(hash, emitter);
+
+        try {
+            if (!roomCache.containsKey(hash)) {
+                String resultBody = jsonOutput(EventType.GET_SESSION, sessionService.getRooms(hash, null));
+                roomCache.put(hash, resultBody);
+            }
+            sendBroadcast(emitter, roomCache.get(hash), hash);
+        } catch (Exception e) {
+            System.out.println("Error!");
+        }
+
         return emitter;
     }
 
     public void newEvent(EventType eventType, String hash, Object body) {
         if (roomEmitters.containsKey(hash)) {
+            String newRoomResultBody = jsonOutput(EventType.GET_SESSION, sessionService.getRooms(hash, null));
+            roomCache.put(hash, newRoomResultBody);
+
+            String resultBody = jsonOutput(eventType, body);
             for (SseEmitter emitter : roomEmitters.get(hash)) {
-                sendBroadcast(eventType, emitter, body, hash);
+                sendBroadcast(emitter, resultBody, hash);
             }
         }
     }
 
-    private void sendBroadcast(EventType eventType, SseEmitter emitter, Object body, String hash) {
+    private void sendBroadcast(SseEmitter emitter, String body, String hash) {
         SseEmitter.SseEventBuilder event = SseEmitter.event()
-                .data(jsonOutput(eventType, body))
+                .data(body)
                 .name("message");
         try {
             emitter.send(event);

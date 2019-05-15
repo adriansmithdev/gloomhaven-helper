@@ -41,7 +41,6 @@ public class SessionService {
         this.statRepository = statRepository;
     }
 
-    @Transactional
     public Page<SessionResponseBody> getRooms(String hash, Pageable pageable) {
         Page<Room> rooms;
         if (hash == null) {
