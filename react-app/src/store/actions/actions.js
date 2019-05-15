@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { configuredAxios as axios} from './axios.config';
 import { toast } from 'react-toastify';
 import { 
   addError, setStatus
@@ -6,9 +6,9 @@ import {
 
 export const getRoom = function(hash) {
   return async (dispatch) => {
-    const response = await axios.get(`http://localhost:5000/api/rooms/${hash}`)
+    const response = await axios.get(`rooms/${hash}`)
       .catch((error) => {
-        dispatch(addError(error.response.data));
+        dispatch(addError(error.response));
         dispatch(setStatus('ROOM_NOT_FOUND'));
         toast.error('That room doesn\'t exist, please enter a valid room');
         return error.response.data;
@@ -20,12 +20,12 @@ export const getRoom = function(hash) {
 
 export const createRoom = function(callback, room) {
   return async (dispatch) => {
-    const response = await axios.post('http://localhost:5000/api/rooms', room)
+    const response = await axios.post('rooms', room)
       .catch(function (error) {
-        dispatch(addError(error.response.data));
+        console.log(error);
+        dispatch(addError(error.response));
         dispatch(setStatus('FAILED_TO_CREATE_ROOM'));
-        toast.error('There was an error trying to create that room, please try again later');
-        return error.response.data;
+        toast.error('There was an error trying to create your room, please try again later');
       });
     dispatch(setStatus('ROOM_FOUND'));
     callback(response);
@@ -35,9 +35,9 @@ export const createRoom = function(callback, room) {
 
 export const updateRoom = function(room) {
   return async dispatch => {
-    const response = await axios.put(`http://localhost:5000/api/rooms?hash=${room.hash}`, room)
+    const response = await axios.put(`rooms?hash=${room.hash}`, room)
       .catch(function (error) {
-        dispatch(addError(error.response.data));
+        dispatch(addError(error.response));
         dispatch(setStatus('FAILED_TO_UPDATE_SCENARIO'));
         toast.error('Failed to update scenario!');
         return error.response.data;
@@ -50,11 +50,11 @@ export const updateRoom = function(room) {
 
 export const addMonster = function(hash, monsterId, isElite) {
   return async dispatch => {
-    const response = await axios.post(`http://localhost:5000/api/monsterinstances?hash=${hash}`, {
+    const response = await axios.post(`monsterinstances?hash=${hash}`, {
       monsterId: monsterId,
       isElite: isElite
     }).catch(function (error) {
-      dispatch(addError(error.response.data));
+      dispatch(addError(error.response));
       toast.error('Unable to add monster!');
       return error.response.data;
     });
@@ -64,9 +64,9 @@ export const addMonster = function(hash, monsterId, isElite) {
 
 export const updateMonster = function(hash, monster) {
   return async dispatch => {
-    const response = await axios.put(`http://localhost:5000/api/monsterinstances?hash=${hash}&id=${monster.id}`, monster)
+    const response = await axios.put(`monsterinstances?hash=${hash}&id=${monster.id}`, monster)
     .catch(function (error) {
-      dispatch(addError(error.response.data));
+      dispatch(addError(error.response));
       dispatch(setStatus('FAILED_TO_UPDATE_MONSTER'));
       toast.error('Unable to update monster!');
       return error.response.data;
@@ -80,9 +80,9 @@ export const updateMonster = function(hash, monster) {
 
 export const deleteMonster = function(hash, monster) {
   return async dispatch => {
-    const response = await axios.delete(`http://localhost:5000/api/monsterinstances?hash=${hash}&id=${monster.id}`)
+    const response = await axios.delete(`monsterinstances?hash=${hash}&id=${monster.id}`)
       .catch(function (error) {
-        dispatch(addError(error.response.data));
+        dispatch(addError(error.response));
         dispatch(setStatus('FAILED_TO_UPDATE_MONSTER'));
         toast.error('Unable to remove monster!');
         return error.response.data;
@@ -96,9 +96,9 @@ export const deleteMonster = function(hash, monster) {
 
 export const updateElement = function(hash, element) {
   return async dispatch => {
-    const response = await axios.put(`http://localhost:5000/api/elements?hash=${hash}&id=${element.id}`, element)
+    const response = await axios.put(`elements?hash=${hash}&id=${element.id}`, element)
     .catch(function (error) {
-      dispatch(addError(error.response.data));
+      dispatch(addError(error.response));
       dispatch(setStatus('FAILED_TO_UPDATE_ELEMENT'));
       toast.error('Unable to update element!');
       return error.response.data;
@@ -112,9 +112,9 @@ export const updateElement = function(hash, element) {
 
 export const incrementRound = function(room) {
   return async dispatch => {
-    const response = await axios.put(`http://localhost:5000/api/rooms?hash=${room.hash}`, room)
+    const response = await axios.put(`rooms?hash=${room.hash}`, room)
       .catch(function (error) {
-        dispatch(addError(error.response.data));
+        dispatch(addError(error.response));
         dispatch(setStatus('FAILED_TO_INCREMENT_ROUND'));
         toast.error('Failed to increment round!');
         return error.response.data;
