@@ -11,22 +11,18 @@ class FAQ extends Component {
             <h2 className="title themed-font level-item is-size-4 faq">Frequently Asked Questions</h2>
             
                 <h3 className="is-size-6 has-text-weight-bold question">How to Create a Room</h3>
-                    <p className="answer">To create room go to the home page. If a 
-                        different scenario level and difficulty is 
-                        needed then select the appropriate for the 
-                        group. Click create room to get started!
+                    <p className="answer">From the top of the homepage, a new room can be created using the button near the top of the page which will provide a chance to set the scenario number and level for monsters.
                     </p>
                 <h3 className="is-size-6 has-text-weight-bold question">How to Join a Room</h3>
-                    <p className="answer">To join anothers room, wait until the room 
+                    <p className="answer">To join another's room, wait until the room 
                         has been created by the host. Once the room 
-                        has been created navigate to the home page. 
+                        has been created, navigate to the home page. 
                         The host room has a special code in the top-left 
                         corner. Type that code in the join room box and 
                         press join to get started!
                     </p>
                 <h3 className="is-size-6 has-text-weight-bold question">How to add Monsters</h3>
-                    <p className="answer">To add a new monster type select it from the drop 
-                        down in the top left. Next to the drop down, select 
+                    <p className="answer">To add a new monster type select it from the drop-down in the top left. Next to the drop-down, select 
                         if you want a normal or elite version of the monster 
                         then click +Monster button to add more monsters of that 
                         type.
@@ -35,16 +31,6 @@ class FAQ extends Component {
                     <p className="answer">If a monster group already exists, more can be added with 
                         the previous method or with the + located to the right of 
                         the stats for that type.
-
-                        Once a group has created a room then monsters can be added. 
-                        Select a monster from the monster list in the top left corner. 
-                        After selecting a monster the ‘+ monster’ button can be 
-                        clicked to create it. Once a monster has appeared in the room 
-                        there is a quick add button that appears at the top of the 
-                        monster group as a ‘+’.
-
-                        To add an elite monster toggle the elite monster toggle button
-                        before hitting the ‘+ monster’ button.
                     </p>
                 <h3 className="is-size-6 has-text-weight-bold question">How to Track Elements</h3>
                     <p className="answer">In the top right corner of the application is a series of the 6 
@@ -67,14 +53,13 @@ class FAQ extends Component {
                         progress the temporary statuses will be removed automatically.
                     </p>
                 <h3 className="is-size-6 has-text-weight-bold question">How to remove monsters</h3>
-                    <p className="answer">Next to each monster that has been added is a red ‘x’ which will delete 
-                        the monster. When a monster reaches 0 health is stays on the board until 
+                    <p className="answer">Next to each monster that has been added is a red ‘X’ which will delete 
+                        the monster. When a monster reaches 0 health it stays on the board until 
                         the players are ready to remove it.
                     </p>
-                <h3 className="is-size-6 has-text-weight-bold question">How to change leve/scenario</h3>
-                    <p className="answer">To change the scenario level for a room click in the top right corner 
-                        and type in a new number for the scenario level. When the scenario level 
-                        does change the room will clear all monsters for the next encounter.
+                <h3 className="is-size-6 has-text-weight-bold question">How to change monster level/scenario</h3>
+                    <p className="answer">To change the scenario or level for a room click in the top right corner 
+                        and type in a new number for the scenario level. Changing the level for a room will clear all monsters.
                     </p>
                 <h3 className="is-size-6 has-text-weight-bold question">How to track rounds</h3>
                     <p className="answer">The current round is displayed in the top right with a button to advance 
@@ -83,7 +68,7 @@ class FAQ extends Component {
                     </p>
                 <h3 className="is-size-6 has-text-weight-bold question">Where can I find monster initiatives?</h3>
                     <p className="answer">The initiative order display extends from the right side of the page. 
-                        With each round the initiative display will automatically reorder the 
+                        With each , the initiative display will automatically reorder the 
                         monsters based on their current actions.
                     </p>
             </div>
