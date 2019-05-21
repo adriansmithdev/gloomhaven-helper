@@ -73,6 +73,7 @@ input.input-short, select.input-short {
 }
 
 @import './core/variables';
+@import './core/mixins';
 
 // Widgets
 @import './widgets/progressbar';
@@ -88,6 +89,7 @@ input.input-short, select.input-short {
 @import './monsters/MonsterType';
 @import './monsters/MonsterInstance';
 @import './monsters/MonsterAction';
+@import './monsters/MonsterAttribute';
 
 // Status Effects
 @import './statuses/Status';
@@ -98,6 +100,10 @@ input.input-short, select.input-short {
 
 //Home Components
 @import './home/home';
+
+.inline-icon {
+  display: inline-block;
+}
 
 
 
