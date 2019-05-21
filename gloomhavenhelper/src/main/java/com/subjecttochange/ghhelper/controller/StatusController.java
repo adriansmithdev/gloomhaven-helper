@@ -27,22 +27,5 @@ public class StatusController {
     public Page<Status> getStatus(@RequestParam(value = "id", required = false) Long id, Pageable pageable) {
         return statusService.getStatus(id, pageable);
     }
-
-    @PostMapping("/statuses")
-    @ResponseBody
-    public Status createStatus(@Valid @RequestBody Status statusRequest) {
-        return statusService.createStatus(statusRequest);
-    }
-
-    @PutMapping("/statuses")
-    @ResponseBody
-    public Status updateStatus(@RequestParam(value = "id") Long id, @Valid @RequestBody Status statusRequest) {
-        return statusService.updateStatus(id, statusRequest);
-    }
-
-    @DeleteMapping("/statuses")
-    public ResponseEntity<?> deleteStatus(@RequestParam(value = "id") Long id) {
-        return statusService.deleteStatus(id);
-    }
 }
 

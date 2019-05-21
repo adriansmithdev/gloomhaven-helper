@@ -27,21 +27,4 @@ public class StatController {
     public Page<Stat> getStat(@RequestParam(value = "id", required = false) Long id, Pageable pageable) {
         return statService.getStat(id, pageable);
     }
-
-    @PostMapping("/stats")
-    @ResponseBody
-    public Stat createStat(@Valid @RequestBody Stat statRequest) {
-        return statService.createStat(statRequest);
-    }
-
-    @PutMapping("/stats")
-    @ResponseBody
-    public Stat updateStat(@RequestParam(value = "id") Long id, @Valid @RequestBody Stat statRequest) {
-        return statService.updateStat(id, statRequest);
-    }
-
-    @DeleteMapping("/stats")
-    public ResponseEntity<?> deleteStat(@RequestParam(value = "id") Long id) {
-        return statService.deleteStat(id);
-    }
 }

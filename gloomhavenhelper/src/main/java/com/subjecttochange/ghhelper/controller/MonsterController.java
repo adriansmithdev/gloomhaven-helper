@@ -27,22 +27,4 @@ public class MonsterController {
     public Page<Monster> getMonsters(@RequestParam(value = "id", required = false) Long id, Pageable pageable) {
         return monsterService.getMonsters(id, pageable);
     }
-
-    @PostMapping("/monsters")
-    @ResponseBody
-    public Monster createMonster(@Valid @RequestBody(required = false) Monster monsterRequest) {
-        return monsterService.createMonster(monsterRequest);
-    }
-
-    @PutMapping("/monsters")
-    @ResponseBody
-    public Monster updateMonster(@RequestParam(value = "id") Long id,
-                                 @Valid @RequestBody(required = false) Monster monsterRequest) {
-        return monsterService.updateMonster(id, monsterRequest);
-    }
-
-    @DeleteMapping("/monsters")
-    public ResponseEntity<?> deleteMonster(@RequestParam(value = "id") Long id) {
-        return monsterService.deleteMonster(id);
-    }
 }
