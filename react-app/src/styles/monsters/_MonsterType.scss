@@ -1,16 +1,15 @@
+$monster-total-width: 470px;
 
 
 .monster-type {
   padding-bottom: 1rem;
-  min-width: 900px;
+  min-width: $monster-total-width;
 
 }
 
 .monster-type-body {
-  display: flex;
-  justify-content: space-between;
+  display: block;
   table {
-    min-width: 742px;
     border-collapse: collapse;
     border-spacing: 0;
   }
@@ -34,9 +33,9 @@
     padding-right: $padding/4;
     display: inline-flex;
     img {
+      
+      height: $icon-height;
       margin-top: .75rem;
-      height: $stat-icon-height;
-      display: inline-block;
     }
     div p{
       text-align: center;
@@ -66,6 +65,11 @@
   font-size: $header-height/2.4;
   line-height: $header-height/2;
   div.elite-attributes {
+    color: gold;
+  }
+
+  img {
+    height: $header-font-size;
     color: gold;
   }
 }
