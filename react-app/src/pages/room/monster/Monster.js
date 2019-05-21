@@ -89,46 +89,50 @@ export class Monster extends Component {
     const currentHealth = (hasInstance) ? this.props.instance.currentHealth : '';
 
     return (
-      <tr className={rowClasses} key={this.props.key}>
-        <td className="monster-identifier" >
-          <MonsterToken token={token} 
-            updateMonsterToken={this.updateMonsterToken}
-            key={token}
-          />
-        </td>
+      <>
+        <tr className={rowClasses} key={this.props.key}>
+          <td className="monster-identifier" >
+            <MonsterToken token={token} 
+              updateMonsterToken={this.updateMonsterToken}
+              key={token}
+            />
+          </td>
 
-        <td className="monster-healthbar">
-          <ProgressBar
-            current={currentHealth}
-            max={maxHealth}
-          />
-          <div className="button-bar">
-            <button type="button" className="button-add-health" onClick={this.decreaseHealth}>
-              {String.fromCharCode(8722)}
-            </button>
-            <button type="button" className="button-remove-health" onClick={this.increaseHealth}>
-              +
-            </button>
-          </div>
-          
-        </td>
-        <td className="monster-statuses">
-          <div className="status-container">
-            {statuses}
-          </div>
-        </td>
-        <td className="monster-controls">
-          <div className="button-bar">
-            <button className="status-display-button"
-              onClick={this.toggleInactiveStatuses.bind(this)}>
-              Statuses
-            </button>
-            <button className="button-remove" type="button" onClick={this.deleteMonster}>
-              {String.fromCharCode(10005)}
-            </button>
-          </div>
-        </td>
-      </tr>
+          <td className="monster-healthbar">
+            <ProgressBar
+              current={currentHealth}
+              max={maxHealth}
+            />
+            <div className="button-bar">
+              <button type="button" className="button-add-health" onClick={this.decreaseHealth}>
+                {String.fromCharCode(8722)}
+              </button>
+              <button type="button" className="button-remove-health" onClick={this.increaseHealth}>
+                +
+              </button>
+            </div>
+            
+          </td>
+          <td className="monster-controls">
+            <div className="button-bar">
+              <button className="status-display-button"
+                onClick={this.toggleInactiveStatuses.bind(this)}>
+                Statuses
+              </button>
+              <button className="button-remove" type="button" onClick={this.deleteMonster}>
+                {String.fromCharCode(10005)}
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td className="monster-statuses" colSpan="3">
+            <div className="status-container">
+              {statuses}
+            </div>
+          </td>
+        </tr>
+      </>
     );
   }
 }
