@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
 
-import Attack   from './../../../assets/icons/stats/attack.svg';
-import Movement from './../../../assets/icons/stats/movement.svg';
-import Range    from './../../../assets/icons/stats/range.svg';
+import MonsterAttribute from './MonsterAttribute';
+import IconManager from './../../common/IconManager';
+
+import Attack    from './../../../assets/icons/stats/attack.svg';
+import Movement  from './../../../assets/icons/stats/movement.svg';
+import Range     from './../../../assets/icons/stats/range.svg';
+
 
 class MonsterTypeHeader extends Component {
 
@@ -10,6 +14,17 @@ class MonsterTypeHeader extends Component {
     super(props);
 
     this.addMonsterEvent = this.addMonsterEvent.bind(this);
+  }
+
+  parseMonsterAttribute(attribute) {
+    const splitStat = attribute.split(' ');
+
+    const icon = IconManager(`%${splitStat[0].toLowerCase()}%`);
+    if(icon !== undefined) {
+      const value = (splitStat[1] !== undefined) ?
+        splitStat[1].replace(',', '') : '';
+      return <MonsterAttribute src={icon.src} alt={icon.alt} value={value}/>
+    }
   }
 
   addMonsterEvent(event) {
@@ -68,10 +83,12 @@ class MonsterTypeHeader extends Component {
     
         <div className="monster-attributes">
           <div className="elite-attributes">
-            {monster.eliteAttributes.join(', ')}
+            {monster.eliteAttributes.map(attribute =>
+              this.parseMonsterAttribute(attribute))}
           </div>
           <div className="normal-attributes">
-            {monster.attributes.join(', ')}
+            {monster.attributes.map(attribute =>
+              this.parseMonsterAttribute(attribute))}
           </div>
           
         </div>
