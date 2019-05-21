@@ -24,6 +24,8 @@ class MonsterTypeHeader extends Component {
       const value = (splitStat[1] !== undefined) ?
         splitStat[1].replace(',', '') : '';
       return <MonsterAttribute src={icon.src} alt={icon.alt} value={value}/>
+    } else {
+      return attribute;
     }
   }
 
