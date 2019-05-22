@@ -23,7 +23,10 @@ $monster-total-width: 470px;
 .monster-name {
   font-size: $header-font-size;
   line-height: $header-font-size;
-  padding: ($header-height - $header-font-size)/2
+  padding-top: ($header-height - $header-font-size)/2;
+  padding-bottom: ($header-height - $header-font-size)/2;
+
+  padding-left: 0.5rem;
 }
 
 .monster-stats {
@@ -62,12 +65,33 @@ $monster-total-width: 470px;
 }
 
 .monster-attributes {
-  .elite-attributes {
-    color: gold;
-  }
+  margin-left: 0.5rem;
+  div {
+    height: $header-height/2;
+    &.elite-attributes {
+      color: gold;
+    }
+  }  
+}
+
+.monster-attribute {
+  height: $header-height/2;
+  position: relative;
+  display: inline-block;
 
   img {
     height: $header-font-size;
+  }
+  p {
+    height: $header-height/2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+    text-shadow: 0px 0px 2px #000000, 0px 1px 2px #000000, 1px 0px 2px #000000;
+    text-align: center;
+    width: 100%;
+    font-size: $header-height/3;
   }
 }
 
