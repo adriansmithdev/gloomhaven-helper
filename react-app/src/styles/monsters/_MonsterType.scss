@@ -4,15 +4,11 @@ $monster-total-width: 470px;
 .monster-type {
   padding-bottom: 1rem;
   min-width: $monster-total-width;
-
+  background-color: #363636;
+  border-radius: 4px;
 }
 
 .monster-type-body {
-  display: block;
-  table {
-    border-collapse: collapse;
-    border-spacing: 0;
-  }
 }
 
 .monster-type-header {
@@ -21,10 +17,13 @@ $monster-total-width: 470px;
   height: $header-height;
   width: 100%;
   margin: 0;
-  font-size: $header-font-size;
-  vertical-align: middle;
   color: #f5f5f5;
-  background-color: #363636;
+}
+
+.monster-name {
+  font-size: $header-font-size;
+  line-height: $header-font-size;
+  padding: ($header-height - $header-font-size)/2
 }
 
 .monster-stats {
@@ -33,26 +32,28 @@ $monster-total-width: 470px;
     padding-right: $padding/4;
     display: inline-flex;
     img {
-      
       height: $icon-height;
-      margin-top: .75rem;
+      margin-top: ($header-height - $icon-height)/2
     }
-    div p{
-      text-align: center;
-      font-size: $header-height/2.4;
-      line-height: $header-height/2;
-      &.monster-elite-stat {
-        color: gold;
+    div {
+      margin-top: ($header-height - $header-height/1.25)/2;
+
+      p {
+        text-align: center;
+        font-size: $header-height/2.5;
+        line-height: $header-height/2.5;
+        
+        &.monster-elite-stat {
+          color: gold;
+        }
       }
     }
-
   }
 }
 
 .monster-name {
   margin-left: $padding/2;
   margin-right: $padding/2;
-  line-height: $header-height;
 }
 
 .monster-type-controls {
@@ -61,16 +62,12 @@ $monster-total-width: 470px;
 }
 
 .monster-attributes {
-  margin-left: 1rem;
-  font-size: $header-height/2.4;
-  line-height: $header-height/2;
-  div.elite-attributes {
+  .elite-attributes {
     color: gold;
   }
 
   img {
     height: $header-font-size;
-    color: gold;
   }
 }
 
