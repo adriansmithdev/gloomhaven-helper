@@ -1,0 +1,53 @@
+.monster-token-container {
+  cursor: pointer;
+  color: $light-color;
+  height: $monster-instance-height;
+  min-width: $token-min-width;
+  overflow: hidden;
+  &:hover {
+    
+    
+    background-color: darken($ui-background-color, 2.5%);
+  }
+
+  &.active {
+    cursor: text;
+    background-color: darken($ui-background-color, 5%);
+
+    label {
+      cursor: text;
+      input.monster-token-input {
+        cursor: text;
+      }
+    }
+  }
+  label {
+    cursor: pointer;
+
+    // Remove arrows from number input.
+    input[type=number] {
+      -moz-appearance:textfield;
+    }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}
+
+.monster-token-input {
+  cursor: pointer;
+  margin-left: 0.25rem;
+  text-align: center;
+  width: $monster-token-width;
+  height: $monster-instance-height;
+  background-color: #00000000;
+  border: 0;
+  color: $light-color;
+  font-weight: bold;
+
+  &:focus{
+    outline: none;
+  }
+}

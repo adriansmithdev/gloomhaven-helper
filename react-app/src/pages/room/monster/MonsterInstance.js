@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { deleteMonster, updateMonster } from "../../../store/actions/actions";
 
 // Sub Components
-import ProgressBar from './../../common/ProgressBar';
+import ProgressBar from '../../common/ProgressBar';
 import StatusEffect from '../status/StatusEffect';
 import MonsterToken from './MonsterToken';
 
@@ -89,32 +89,29 @@ export class Monster extends Component {
     const currentHealth = (hasInstance) ? this.props.instance.currentHealth : '';
 
     return (
-      <>
-        <tr className={rowClasses} key={this.props.key}>
-          <td className="monster-identifier" >
-            <MonsterToken token={token} 
-              updateMonsterToken={this.updateMonsterToken}
-              key={token}
-            />
-          </td>
+      <div className={rowClasses} key={this.props.key}>
+        <div className="instance-container">
+          <div className="instance-fields">
+            <div className="monster-identifier" >
+              <MonsterToken token={token} 
+                updateMonsterToken={this.updateMonsterToken}
+                key={token}
+              />
+            </div>
 
-          <td className="monster-healthbar">
-            <ProgressBar
-              current={currentHealth}
-              max={maxHealth}
-            />
-            <div className="button-bar">
+            <div className="monster-healthbar">
+              <ProgressBar
+                current={currentHealth}
+                max={maxHealth}
+              />
+            </div>
+            <div className="monster-controls">
               <button type="button" className="button-add-health" onClick={this.decreaseHealth}>
                 {String.fromCharCode(8722)}
               </button>
               <button type="button" className="button-remove-health" onClick={this.increaseHealth}>
                 +
               </button>
-            </div>
-            
-          </td>
-          <td className="monster-controls">
-            <div className="button-bar">
               <button className="status-display-button"
                 onClick={this.toggleInactiveStatuses.bind(this)}>
                 Statuses
@@ -123,16 +120,12 @@ export class Monster extends Component {
                 {String.fromCharCode(10005)}
               </button>
             </div>
-          </td>
-        </tr>
-        <tr>
-          <td className="monster-statuses" colSpan="3">
-            <div className="status-container">
-              {statuses}
-            </div>
-          </td>
-        </tr>
-      </>
+          </div>
+        </div>
+        <div className="monster-statuses">
+          {statuses}
+        </div>
+      </div>
     );
   }
 }

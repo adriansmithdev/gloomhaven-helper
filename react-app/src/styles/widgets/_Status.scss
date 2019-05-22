@@ -1,0 +1,20 @@
+
+div.status-toggle {
+  display: inline-block;
+  width: $status-height;
+  height: $status-height;
+  opacity: 0.25;
+  transition: opacity 0.1s;
+
+  &.active {
+    opacity: 1;
+  }
+  &:hover {
+    opacity: 0.9;
+  }
+  &:active {
+    opacity: 1;
+  }
+}
+
+

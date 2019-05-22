@@ -1,3 +1,31 @@
+
+
+@import './core/variables';
+
+// Widgets
+@import './widgets/Status';
+@import './widgets/progressbar';
+@import './widgets/connectionmonitor';
+@import './widgets/InitiativeTracker';
+
+// Room Components
+@import './room/Room';
+@import './room/RoomTopbar';
+
+// Monster Components
+@import './monsters/MonsterToolbar';
+@import './monsters/MonsterType';
+@import './monsters/MonsterInstance';
+@import './monsters/MonsterAction';
+@import './monsters/MonsterToken';
+
+// Element Components.
+@import './elements/Element';
+@import './elements/ElementList';
+
+//Home Components
+@import './home/home';
+
 * {
   -webkit-box-sizing: border-box !important;
   -moz-box-sizing: border-box !important;
@@ -12,7 +40,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #222222;
+  background-color: $body-backgroung-color;
   width: 100vw;
   min-height: 100vh;
   
@@ -72,35 +100,16 @@ input.input-short, select.input-short {
   width: 20%;
 }
 
-@import './core/variables';
-
-// Widgets
-@import './widgets/progressbar';
-@import './widgets/connectionmonitor';
-
-// Room Components
-@import './room/InitiativeTracker';
-@import './room/Room';
-@import './room/RoomTopbar';
-
-// Monster Components
-@import './monsters/MonsterToolbar';
-@import './monsters/MonsterType';
-@import './monsters/MonsterInstance';
-@import './monsters/MonsterAction';
-
-// Status Effects
-@import './statuses/Status';
-
-// Element Components.
-@import './elements/Element';
-@import './elements/ElementList';
-
-//Home Components
-@import './home/home';
-
 .inline-icon {
   display: inline-block;
+}
+
+.hidden {
+  display: none;
+}
+
+.title {
+  min-width: 8rem;
 }
 
 

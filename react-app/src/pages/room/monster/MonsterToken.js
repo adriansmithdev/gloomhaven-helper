@@ -67,7 +67,6 @@ class MonsterToken extends Component {
     return (
       <div className={this.pickInputClasses()} title="Edit monster token">
         <label>
-          #
           <input className="monster-token-input" 
             type="number" 
             ref={this.tokenInput}

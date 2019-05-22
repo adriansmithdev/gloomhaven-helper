@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Monster from './Monster';
+import MonsterInstance from './MonsterInstance';
 import MonsterTypeHeader from './MonsterTypeHeader';
 import MonsterAbility from './MonsterAbility';
 
@@ -14,7 +14,7 @@ class MonsterType extends Component{
 
   generateInstances(instances) {
     return instances.map(instance => 
-      <Monster instance={instance} 
+      <MonsterInstance instance={instance} 
         type={this.props.type} 
         key={instance.id}
       />
@@ -38,14 +38,12 @@ class MonsterType extends Component{
     return (
       <div id={this.props.type.name} className="monster-type">
         <MonsterTypeHeader {...this.props}/>
-        <div className='monster-type-body'>
+        <div className="monster-type-body">
           <MonsterAbility monster={this.props.type}/>
-          <table>
-            <tbody>
-              {this.generateInstances(eliteInstances)}
-              {this.generateInstances(normalInstances)}
-            </tbody>
-          </table>
+          <div className="monster-instances">
+            {this.generateInstances(eliteInstances)}
+            {this.generateInstances(normalInstances)}
+          </div>
         </div>
       </div>
     );

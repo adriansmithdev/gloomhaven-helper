@@ -29,8 +29,8 @@
 }
 
 .initiative-tracker-toggle {
-  color: invert($initiative-tracker-toggle-color);
-  background-color: $initiative-tracker-toggle-color;
+  color: invert($ui-background-color);
+  background-color: $ui-background-color;
   position: relative;
   padding: 0;
   border: 0;
@@ -40,7 +40,7 @@
   cursor: pointer;
 
   &:hover {
-    background-color: lighten($initiative-tracker-toggle-color, 2.5%);
+    background-color: lighten($ui-background-color, 2.5%);
   }
 }
 

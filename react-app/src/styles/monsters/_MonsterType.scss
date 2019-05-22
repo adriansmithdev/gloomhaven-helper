@@ -1,11 +1,12 @@
-$monster-total-width: 470px;
+
 
 
 .monster-type {
   padding-bottom: 1rem;
   min-width: $monster-total-width;
-  background-color: #363636;
+  background-color: $ui-background-color;
   border-radius: 4px;
+  margin-bottom: 0.5rem;
 }
 
 .monster-type-body {
@@ -17,7 +18,7 @@ $monster-total-width: 470px;
   height: $header-height;
   width: 100%;
   margin: 0;
-  color: #f5f5f5;
+  color: $light-color;
 }
 
 .monster-name {
@@ -25,11 +26,12 @@ $monster-total-width: 470px;
   line-height: $header-font-size;
   padding-top: ($header-height - $header-font-size)/2;
   padding-bottom: ($header-height - $header-font-size)/2;
-
+  overflow: hidden;
   padding-left: 0.5rem;
 }
 
 .monster-stats {
+  overflow: hidden;
   div.monster-stat {
     padding-left: $padding/4;
     padding-right: $padding/4;
@@ -67,6 +69,7 @@ $monster-total-width: 470px;
 .monster-attributes {
   margin-left: 0.5rem;
   div {
+    overflow: hidden;
     height: $header-height/2;
     &.elite-attributes {
       color: gold;
