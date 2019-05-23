@@ -45,21 +45,11 @@ $token-min-width: 2rem;
 $status-height: 2rem;
 
 // Breakpoints
+$phone-only:          599px;
+$tablet-portrait-up:  600px;
+$tablet-landscape-up: 900px;
+$desktop-up:          1200px;
+$large-desktop-up:    1800px;
 
-$tiny:   320px;
-$small:  480px;
-$medium: 720px;
-$normal: 1080px;
-$large:  1440px;
-$huge:   1920px;
-
-$breakpoints: (
-  tiny:   $tiny,  
-  small:  $small, 
-  medium: $medium,
-  normal: $normal,
-  large:  $large, 
-  huge:   $huge  
-);
 
 
