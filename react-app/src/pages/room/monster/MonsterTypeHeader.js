@@ -20,7 +20,7 @@ class MonsterTypeHeader extends Component {
         splitStat[1].replace(',', '') : '';
       return <MonsterAttribute src={icon.src} alt={icon.alt} value={value}/>
     } else {
-      return attribute;
+      return <span className="text-attribute">{attribute}</span>;
     }
   }
 
