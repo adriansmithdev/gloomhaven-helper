@@ -18,6 +18,15 @@ import FireIcon from './../../../assets/icons/elements/fire.svg';
 import IceIcon from './../../../assets/icons/elements/ice.svg';
 import LightIcon from './../../../assets/icons/elements/light.svg';
 
+// Use Elements Icons 
+//TODO change svgs
+import AirUseIcon from './../../../assets/icons/elements/air.svg';
+import DarkUseIcon from './../../../assets/icons/elements/dark.svg';
+import EarthUseIcon from './../../../assets/icons/elements/earth.svg';
+import FireUseIcon from './../../../assets/icons/elements/fire.svg';
+import IceUseIcon from './../../../assets/icons/elements/ice.svg';
+import LightUseIcon from './../../../assets/icons/elements/light.svg';
+
 // Statuses Icons
 import BlessIcon from './../../../assets/icons/statuses/Bless.svg';
 import CurseIcon from './../../../assets/icons/statuses/Curse.svg';
@@ -32,6 +41,20 @@ import StrengthenIcon from './../../../assets/icons/statuses/Strengthen.svg';
 import StunIcon from './../../../assets/icons/statuses/Stun.svg';
 import TargetIcon from './../../../assets/icons/statuses/Target.svg';
 import WoundIcon from './../../../assets/icons/statuses/Wound.svg';
+
+// AOE icons
+//TODO CHANGE ICONS W/ REAL ONES
+import AOECirclewBlack from './../../../assets/icons/elements/air.svg';
+import AOEline6withBlack from './../../../assets/icons/elements/air.svg';
+import AOE4withBlack from './../../../assets/icons/elements/air.svg';
+import AOELine3withBlack from './../../../assets/icons/elements/air.svg';
+import AOECircle from './../../../assets/icons/elements/air.svg';
+import AOETriangle2SidewithBlack from './../../../assets/icons/elements/air.svg';
+import AOEline4withBlack from './../../../assets/icons/elements/air.svg';
+import AOETriangle3swcBlack from './../../../assets/icons/elements/air.svg';
+import AOETriangle2Side from './../../../assets/icons/elements/air.svg';
+import AOECirclewithsideBlack from './../../../assets/icons/elements/air.svg';
+
 
 class MonsterAbility extends Component {  
 
@@ -65,6 +88,19 @@ class MonsterAbility extends Component {
                 return `<img src="${IceIcon}" class="action-icon" alt="Ice" title="Ice Element"/>`;
             case '%light%':
                 return `<img src="${LightIcon}" class="action-icon" alt="Light" title="Light Element"/>`;
+            
+            case '%air-use-element%':
+                return `<img src="${AirUseIcon}" class="action-icon" alt="Use Air" title="Use Air Element"/>`;
+            case '%dark-use-element%':
+                return `<img src="${DarkUseIcon}" class="action-icon" alt="Use Dark" title="Use Dark Element"/>`;
+            case '%earth-use-element%':
+                return `<img src="${EarthUseIcon}" class="action-icon" alt="Use Earth" title="Use Earth Element"/>`;
+            case '%fire-use-element%':
+                return `<img src="${FireUseIcon}" class="action-icon" alt="Use Fire" title="Use Fire Element"/>`;
+            case '%ice-use-element%':
+                return `<img src="${IceUseIcon}" class="action-icon" alt="Use Ice" title="Use Ice Element"/>`;
+            case '%light-use-element%':
+                return `<img src="${LightUseIcon}" class="action-icon" alt="use Light" title="Use Light Element"/>`;
               
             // Stats
             case '%attack%':
@@ -111,6 +147,38 @@ class MonsterAbility extends Component {
                 return `<img src="${TargetIcon}" class="action-icon" alt="Target" title="Target"/>`;
             case '%wound%':
                 return `<img src="${WoundIcon}" class="action-icon" alt="Wound" title="Wound"/>`;
+            
+            //AOE
+            case '%aoe-circle-with-middle-black%':
+                return `<img src="${AOECirclewBlack}" class="action-icon" alt="AOE circle with black" title="AOE circle with black" />`;
+            
+            case '%aoe-line-6-with-black%':
+                return `<img src="${AOEline6withBlack}" class="action-icon" alt="AOE line 6 with black" title="AOE line 6 with black" />`;
+            
+            case '%aoe-4-with-black%':
+                return `<img src="${AOE4withBlack}" class="action-icon" alt="AOE 4 with black" title="AOE 4 with black" />`;
+            
+            case '%aoe-line-3-with-black%':
+                return `<img src="${AOELine3withBlack}" class="action-icon" alt="AOE Line 3 with Black" title="AOE Line 3 with Black" />`;
+            
+            case '%aoe-circle%':
+                return `<img src="${AOECircle}" class="action-icon" alt="AOE Circle" title="AOE Circle" />`;
+            
+            case '%aoe-triangle-2-side-with-black%':
+                return `<img src="${AOETriangle2SidewithBlack}" class="action-icon" alt="AOE triangle 2 side with black" title="AOE triangle 2 side with black" />`;
+            
+            case '%aoe-line-4-with-black%':
+                return `<img src="${AOEline4withBlack}" class="action-icon" alt="AOE circle with black" title="AOE circle with black" />`;
+            
+            case '%aoe-triangle-3-side-with-corner-Black%':
+                return `<img src="${AOETriangle3swcBlack}" class="action-icon" alt="AOE circle with black" title="AOE circle with black" />`;
+            
+            case '%aoe-triangle-2-side%':
+                return `<img src="${AOETriangle2Side}" class="action-icon" alt="AOE circle with black" title="AOE circle with black" />`;
+            
+            case '%aoe-circle-with-side-black%':
+                return `<img src="${AOECirclewithsideBlack}" class="action-icon" alt="AOE circle with black" title="AOE circle with black" />`;
+            
             default:
                 return undefined;
         }
@@ -123,6 +191,7 @@ class MonsterAbility extends Component {
         const splitted = action.split(' ');
 
         const parsed = splitted.map(item => {
+            console.log(item);
             const icon = this.getIcon(item);
 
             if(icon !== undefined) {
