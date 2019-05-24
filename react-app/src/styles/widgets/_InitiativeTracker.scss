@@ -3,7 +3,7 @@
 @mixin mobile-initiative-tracker {
   .initiative-tracker {
     height: $initiative-tracker-width;
-    width: 100%;
+    width: 100vw;
     bottom: -($scrollbar-buffer-width);
     &.hide {
       -ms-transform: translate(0, $initiative-item-width); /* IE 9 */
@@ -18,7 +18,7 @@
   .initiative-tracker-background {
     display: block;
     position: absolute;
-    width: 100%;
+    width: 100vw;
     height: 100%;
     background-color: $initiative-tracker-background;
   }
@@ -26,14 +26,14 @@
   .initiative-tracker-container {
     display: block;
     position: absolute;
-    width: 100%;
+    width: 100vw;
     height: 100%;
     overflow: hidden;
   }
 
   .initiative-tracker-toggle {
     min-height: $initiative-tracker-toggle-width;
-    width: 100%;
+    width: 100vw;
     position: absolute;
     color: invert($ui-background-color);
     background-color: $ui-background-color;
@@ -50,20 +50,16 @@
   .initiative-list {
     margin-top: $initiative-tracker-toggle-width;
     height: $initiative-item-width + $scrollbar-buffer-width;
-    width: 100%;
     overflow-x: scroll;
-    overflow-y: auto;
-    display: flex;
-    flex-flow: column wrap; 
+    white-space: nowrap;
     scroll-behavior: smooth;
-    box-sizing: content-box;
   }
 
   .initiative-item {
-    display: block;
-    position: relative;
     width: $initiative-item-width;
     height: $initiative-item-width;
+    display: inline-block;
+    position: relative;
     opacity: 0.8;
     cursor: pointer;
     transition: opacity 0.1s;
