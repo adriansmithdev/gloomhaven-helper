@@ -36,6 +36,8 @@ $initiative-tracker-toggle-width: 1.15rem;
 $initiative-tracker-width: $initiative-item-width + $initiative-tracker-toggle-width + 2rem;
 $initiative-tracker-min-height: $initiative-item-width * 12;
 
+$scrollbar-buffer-width: 2rem;
+
 // Monster Type Variables
 $monster-total-width: 470px;
 
@@ -50,11 +52,11 @@ $token-min-width: 2rem;
 $status-height: 2rem;
 
 // Breakpoints
-$phone-only:          599px;
-$tablet-portrait-up:  600px;
-$tablet-landscape-up: 900px;
-$desktop-up:          1200px;
-$large-desktop-up:    1800px;
+$phone-only:           599px;
+$tablet-portrait-down: 899px;
+$tablet-landscape-up:  900px;
+$desktop-up:           1200px;
+$large-desktop-up:     1800px;
 
 
 
