@@ -53,13 +53,14 @@
     width: 100%;
     overflow-x: scroll;
     overflow-y: hidden;
-    display: flex;
+    display: block;
 
     scroll-behavior: smooth;
     box-sizing: content-box;
   }
 
   .initiative-item {
+    display: inline;
     width: $initiative-item-width;
     height: $initiative-item-width;
     opacity: 0.8;
