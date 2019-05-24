@@ -52,15 +52,16 @@
     height: $initiative-item-width + $scrollbar-buffer-width;
     width: 100%;
     overflow-x: scroll;
-    overflow-y: hidden;
-    display: block;
-
+    overflow-y: auto;
+    display: flex;
+    flex-flow: column wrap; 
     scroll-behavior: smooth;
     box-sizing: content-box;
   }
 
   .initiative-item {
-    display: inline;
+    display: block;
+    position: relative;
     width: $initiative-item-width;
     height: $initiative-item-width;
     opacity: 0.8;
