@@ -32,6 +32,19 @@ import StunIcon       from './../../assets/icons/statuses/Stun.svg';
 import TargetIcon     from './../../assets/icons/statuses/Target.svg';
 import WoundIcon      from './../../assets/icons/statuses/Wound.svg';
 
+// AOE icons
+//TODO CHANGE ICONS W/ REAL ONES
+import AOECirclewBlack from './../../assets/icons/elements/air.svg';
+import AOEline6withBlack from './../../assets/icons/elements/air.svg';
+import AOE4withBlack from './../../assets/icons/elements/air.svg';
+import AOELine3withBlack from './../../assets/icons/elements/air.svg';
+import AOECircle from './../../assets/icons/elements/air.svg';
+import AOETriangle2SidewithBlack from './../../assets/icons/elements/air.svg';
+import AOEline4withBlack from './../../assets/icons/elements/air.svg';
+import AOETriangle3swcBlack from './../../assets/icons/elements/air.svg';
+import AOETriangle2Side from './../../assets/icons/elements/air.svg';
+import AOECirclewithsideBlack from './../../assets/icons/elements/air.svg';
+
 const IconManager = (icon) => {
   switch(icon) {
     //Elements
@@ -200,6 +213,68 @@ const IconManager = (icon) => {
           type: 'status',
           src: WoundIcon,
           alt: 'Wound'
+        }
+
+    // AOE
+    case '%aoe-circle-with-middle-black%':
+        return {
+          type: 'AOE',
+          src: AOECirclewBlack,
+          alt: 'AOECirclewBlack'
+        }
+    case '%aoe-line-6-with-black%':
+        return {
+          type: 'AOE',
+          src: AOEline6withBlack,
+          alt: 'AOEline6withBlack'
+        }
+    case '%aoe-4-with-black%':
+        return {
+          type: 'AOE',
+          src: AOE4withBlack,
+          alt: 'AOE4withBlack'
+        };
+    case '%aoe-line-3-with-black%':
+        return {
+          type: 'AOE',
+          src: AOELine3withBlack,
+          alt: 'AOELine3withBlack'
+        }
+    case '%aoe-circle%':
+        return {
+          type: 'AOE',
+          src: AOECircle,
+          alt: 'AOECircle'
+        }
+    case '%aoe-triangle-2-side-with-black%':
+        return {
+          type: 'AOE',
+          src: AOETriangle2SidewithBlack,
+          alt: 'AOETriangle2SidewithBlack'
+        }
+    case '%aoe-line-4-with-black%':
+        return {
+          type: 'AOE',
+          src: AOEline4withBlack,
+          alt: 'AOEline4withBlack'
+        }
+    case '%aoe-triangle-3-side-with-corner-Black%':
+        return {
+          type: 'AOE',
+          src: AOETriangle3swcBlack,
+          alt: 'AOETriangle3swcBlack'
+        }
+    case '%aoe-triangle-2-side%':
+        return {
+          type: 'AOE',
+          src: AOETriangle2Side,
+          alt: 'AOETriangle2Side'
+        }
+    case '%aoe-circle-with-side-black%':
+        return {
+          type: 'AOE',
+          src: AOECirclewithsideBlack,
+          alt: 'AOECirclewithsideBlack'
         }
     default:
         return undefined;
