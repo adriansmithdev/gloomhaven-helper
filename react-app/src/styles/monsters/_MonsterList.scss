@@ -1,0 +1,14 @@
+
+@include for-tablet-portrait-down {
+  .monster-list {
+    display: block;
+  }
+}
+
+@include for-tablet-landscape-up {
+  .monster-list {
+    display: flex;
+    flex-wrap: wrap;
+    
+  }
+}
