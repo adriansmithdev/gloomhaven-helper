@@ -95,7 +95,7 @@ class MonsterTypeHeader extends Component {
           
         </div>
         <div className="monster-type-controls">
-          <button className="button is-dark is-rounded themed-font" onClick={this.addMonsterEvent}>
+          <button className="monster-header-add-button" onClick={this.addMonsterEvent}>
             {String.fromCharCode(10010)}
           </button>
         </div>
