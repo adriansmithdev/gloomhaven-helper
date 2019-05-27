@@ -17,10 +17,10 @@ const RoomTopbar = (props) => {
         <ConnectionMonitor status={props.eventSourceStatus}/>
       </div>
       <div className="topbar-item">
-        <ScenarioLevel key={props.scenarioLevel} 
+        <ScenarioLevel
           scenarioLevel={props.scenarioLevel} 
           confirmLevelChange={props.confirmLevelChange}/>
-        <ScenarioNumber key={props.scenarioNumber} 
+        <ScenarioNumber
           scenarioNumber={props.scenarioNumber} 
           updateScenario={props.updateScenario}/>
       </div>
