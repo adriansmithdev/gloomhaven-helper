@@ -1,6 +1,5 @@
 
-
-@mixin mobile-initiative-tracker {
+@include for-tablet-portrait-down {
   .initiative-tracker {
     height: $initiative-tracker-width;
     width: 100vw;
@@ -86,14 +85,6 @@
       font-size: $initiative-font-size;
     }
   }
-}
-
-@include for-phone-only {
-  @include mobile-initiative-tracker;
-}
-
-@include for-tablet-portrait-down {
-  @include mobile-initiative-tracker;
 }
 
 @include for-tablet-landscape-up {
