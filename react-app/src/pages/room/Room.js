@@ -106,7 +106,7 @@ class Room extends Component {
           updateScenario={this.updateScenario}
           eventSourceStatus={this.props.eventSourceStatus}
           />
-        <div className="room-content container">
+        <div className="room-content">
           <RoomToolbar />
           <MonsterList />
 
