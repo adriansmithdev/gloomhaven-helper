@@ -5,8 +5,8 @@
 
 // Widgets
 @import './widgets/Status';
-@import './widgets/progressbar';
-@import './widgets/connectionmonitor';
+@import './widgets/ProgressBar';
+@import './widgets/ConnectionMonitor';
 @import './widgets/InitiativeTracker';
 
 // Room Components
@@ -15,6 +15,7 @@
 
 // Monster Components
 @import './monsters/MonsterToolbar';
+@import './monsters/MonsterList';
 @import './monsters/MonsterType';
 @import './monsters/MonsterInstance';
 @import './monsters/MonsterAction';
@@ -36,6 +37,7 @@
 body {
   margin: 0;
   padding: 0;
+  border: 0;
   font-family: $base-font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
