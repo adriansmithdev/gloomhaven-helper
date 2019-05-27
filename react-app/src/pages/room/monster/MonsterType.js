@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import MonsterInstance from './MonsterInstance';
 import MonsterTypeHeader from './MonsterTypeHeader';
-import MonsterAbility from './MonsterAbility';
+import MonsterActions from './MonsterActions';
 
 export function sortByToken(instances) {
   return instances.sort((i1, i2) =>
@@ -39,7 +39,7 @@ class MonsterType extends Component{
       <div id={this.props.type.name} className="monster-type">
         <MonsterTypeHeader {...this.props}/>
         <div className="monster-type-body">
-          <MonsterAbility monster={this.props.type}/>
+          <MonsterActions monster={this.props.type}/>
           <div className="monster-instances">
             {this.generateInstances(eliteInstances)}
             {this.generateInstances(normalInstances)}
