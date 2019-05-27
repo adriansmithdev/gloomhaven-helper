@@ -3,10 +3,10 @@
 
 .monster-type {
   padding-bottom: 1rem;
-  min-width: $monster-total-width;
   background-color: $ui-background-color;
   border-radius: 4px;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  position: relative;
 }
 
 .monster-type-body {
@@ -15,7 +15,8 @@
 .monster-type-header {
   display: flex;
   justify-content: flex-start;
-  height: $header-height;
+  flex-wrap: wrap;
+  min-height: $header-height;
   width: 100%;
   margin: 0;
   color: $light-color;
@@ -31,7 +32,6 @@
 }
 
 .monster-stats {
-  overflow: hidden;
   div.monster-stat {
     padding-left: $padding/4;
     padding-right: $padding/4;
@@ -61,10 +61,7 @@
   margin-right: $padding/2;
 }
 
-.monster-type-controls {
-  margin-left: auto;
-  padding: 1rem;
-}
+
 
 .monster-attributes {
   margin-left: 0.5rem;
@@ -102,3 +99,42 @@
   line-height: $header-height/2
 }
 
+.monster-type-controls {
+  margin-left: auto;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem;
+}
+
+.monster-header-add-button {
+  color: $light-color;
+  background-color: $ui-background-color;
+  height: 3rem;
+  width: 3rem;
+  
+
+  border: 0;
+  border-radius: 100%;
+
+  line-height: 2rem;
+  text-align:center;
+  vertical-align: middle;
+  &:hover {
+    background-color: darken($ui-background-color, 4%);
+  }
+}
+
+
+@include for-tablet-portrait-down {
+  .monster-type {
+    max-width: 100%;
+  }
+}
+
+@include for-tablet-landscape-up {
+  .monster-type {
+    width: $monster-type-width;
+    margin-left: 1rem;
+  }
+}
