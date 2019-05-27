@@ -1,15 +1,47 @@
-.monster-action {
-  $font-size: 1.25rem;
+
+$font-size: 1.25rem;
+$action-icon-size: 1.25 * $font-size;
+
+.monster-actions {
+  border-top: 2px solid darken($ui-background-color, 5%);
+  @include padding-y(1rem);
   color: white;
-  background-color: $ui-background-color;
+  display: flex;
+  flex-wrap: wrap;
+  
+  
+}
+
+.monster-action {
+  display: flex;
+  @include margin-x(0.5rem);
+}
+
+.monster-action-icon {
+  bottom: 0;
+  display: inline-block;
+  width: $font-size + 0.5rem;
+  height: $font-size + 0.5rem;
+}
+
+.monster-action-text {
+  display: inline-block;
   font-size: $font-size;
-  img {
-    bottom: 0;
-    width: $font-size + 0.5rem;
-    height: $font-size + 0.5rem;
-  }
-  p {
-    text-align: center;
-    padding: 0.25rem;
+  
+}
+
+.draw-action-button {
+  color: $light-color;
+  background-color: lighten($ui-background-color, 7.5%); 
+  width: 90%;
+  padding: 1rem;
+  @include margin-x(auto);
+  border: 0;
+  border-radius: 4px;
+
+  font-size: $font-size;
+
+  &:hover {
+    background-color: lighten($ui-background-color, 5%); 
   }
 }
