@@ -1,18 +1,13 @@
 .room-content {
   padding-top: $topbar-height;
-  padding-right: 1rem;
 }
 
-// Add margins for initiative tracker 
-@include for-phone-only {
-  .room-content {
-    padding-bottom: $initiative-tracker-width !important;
-  }
-}
+// Add margins for initiative tracker
 
 @include for-tablet-portrait-down {
   .room-content {
     padding-bottom: $initiative-tracker-width !important;
+    padding-right: 1rem;
   }
 }
 
