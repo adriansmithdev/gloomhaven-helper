@@ -6,7 +6,6 @@ import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.ActionDeck;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.MonsterInstance;
 import com.subjecttochange.ghhelper.persistence.repository.DeckRepository;
-import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ public class DeckService {
 
     @Transactional
     public void drawMonsterActions(Room room) {
-        getMonsterActionDecks(room);
+        setupMonsterActionDecks(room);
 
         for (DeckInstance deckInstance : room.getDecks().values()) {
             deckInstance.drawAction();
@@ -36,7 +35,13 @@ public class DeckService {
     }
 
     @Transactional
-    public void getMonsterActionDecks(Room room) {
+    public void drawSingleMonsterAction(Room room, Monster monster) {
+        setupMonsterActionDecks(room);
+        room.getDecks().get(monster).drawAction();
+    }
+
+    @Transactional
+    public void setupMonsterActionDecks(Room room) {
         Set<Monster> monsters = new HashSet<>();
         Map<Monster, DeckInstance> decks = room.getDecks();
 

@@ -2,8 +2,12 @@ package com.subjecttochange.ghhelper.persistence.service;
 
 import com.subjecttochange.ghhelper.exception.Errors;
 import com.subjecttochange.ghhelper.exception.ResourceNotFoundException;
+import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
+import com.subjecttochange.ghhelper.persistence.model.responsebodies.MonsterActionResponseBody;
+import com.subjecttochange.ghhelper.persistence.model.responsebodies.MonsterResponseBody;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
+import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,10 +22,14 @@ import java.util.Collections;
 public class MonsterService {
 
     private final MonsterRepository monsterRepository;
+    private final RoomRepository roomRepository;
+    private final DeckService deckService;
 
     @Autowired
-    public MonsterService(MonsterRepository monsterRepository) {
+    public MonsterService(MonsterRepository monsterRepository, RoomRepository roomRepository, DeckService deckService) {
         this.monsterRepository = monsterRepository;
+        this.roomRepository = roomRepository;
+        this.deckService = deckService;
     }
 
     @Transactional
@@ -55,5 +63,15 @@ public class MonsterService {
         monsterRepository.delete(monsterRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(Errors.NO_ID_MONSTER + id)));
         return ResponseEntity.ok().build();
+    }
+
+    @Transactional
+    public MonsterActionResponseBody drawAction(String hash, Long id) {
+        Room room = roomRepository.findByHash(hash).orElseThrow(() -> new ResourceNotFoundException(Errors.NO_HASH_ROOM + hash));
+        Monster monster = monsterRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Errors.NO_ID_MONSTER + id));
+
+        deckService.drawSingleMonsterAction(room, monster);
+
+        return MonsterActionResponseBody.create(room.getDecks().get(monster).getCurrentAction());
     }
 }
