@@ -42,8 +42,7 @@ public class RoomController {
      */
     @GetMapping("/rooms")
     @ResponseBody
-    public Page<Room>
-    getRooms(@RequestParam(value = "hash", required = false) String hash, Pageable pageable) {
+    public Page<Room> getRooms(@RequestParam(value = "hash") String hash, Pageable pageable) {
         return roomService.getRooms(hash, pageable);
     }
 

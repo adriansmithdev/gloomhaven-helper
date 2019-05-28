@@ -24,7 +24,7 @@ public class SessionController {
 
     @GetMapping("/sessions")
     @ResponseBody
-    public Page<SessionResponseBody> getRooms(@RequestParam(value = "hash", required = false) String hash,
+    public Page<SessionResponseBody> getRooms(@RequestParam(value = "hash") String hash,
                                               Pageable pageable) {
         return sessionService.getRooms(hash, pageable);
     }

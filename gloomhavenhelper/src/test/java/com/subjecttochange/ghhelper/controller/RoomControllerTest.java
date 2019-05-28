@@ -51,18 +51,6 @@ public class RoomControllerTest {
     }
 
     @Test
-    public void getRoomAll() throws Exception {
-        mvc.perform(
-                get("/rooms")
-                    .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.content[0].hash", is(room.getHash())))
-                .andExpect(jsonPath("$.content[0].scenarioNumber", is(room.getScenarioNumber())))
-                .andExpect(jsonPath("$.content[0].round", is(room.getRound())));
-    }
-
-    @Test
     public void getRoomSingle() throws Exception {
         mvc.perform(
                 get("/rooms")

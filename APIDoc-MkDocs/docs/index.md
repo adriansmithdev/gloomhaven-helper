@@ -1,22 +1,18 @@
-Gloom Haven Helper API
+Gloomtility API
 # Welcome
 
-The documentation covers [API](/api/) requests
+The documentation covers API requests
+
+The different types of requests can be viewed on the left of the screen.
 
 ## Postman
 
 We suggest downloading postman to format queries for quick reuse
 
-To get started try this query
-
-    GET /api/rooms
-
-Which will return an aggregate of all [room](/api/rooms) information
-
 ## Rate Limiting
 
-We don't rate limit so DDOS our servers as you please
+We have not implemented rate limiting of any sort
 
 ## API Keys
 
-Currently we don't authenticate API users... please be nice
+We don't have API authentication either

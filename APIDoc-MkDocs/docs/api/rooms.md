@@ -1,31 +1,49 @@
-# Room Properties
-
-* hash : String
-* scenarioNumber : Integer
-
 # Room Queries
+###### Get
+```nginx
+GET /api/rooms?hash={hash}
+```
 
-### Get All Rooms
+###### Create
 
-    GET /api/rooms
+```
+POST /api/rooms
+```
 
-### Get Specific Room
+###### Update
+```nginx
+PUT /api/rooms?hash={hash}
+```
 
-    GET /api/rooms/{hash}
+###### Delete
+```nginx
+DEL /api/rooms?hash={hash}
+```
 
-### Create Room
+Status code 200 if the delete was successful
 
-    POST /api/rooms/
+#### Input
+```json
+{
+    "scenarioNumber": 5,
+    "scenarioLevel": 2,
+    "round": 2
+}
+```
 
-### Update Room
+#### Output
+```json
+{
+    "createdAt": "2019-05-23T20:21:23.51",
+    "updatedAt": "2019-05-23T20:21:23.588",
+    "id": 5752,
+    "hash": "71147d5",
+    "scenarioNumber": 10,
+    "scenarioLevel": 2,
+    "round": 0
+}
+```
 
-    PUT /api/rooms/{hash}
+#### Example
 
-### Delete Room
-
-    DEL /api/rooms/{hash}
-
-# Aggregate Room Information
-
-Rooms return all information that is nested in them. One query on a room is
-enough to pull all information for a users game session.
+GET /api/rooms?hash=ABCDEF

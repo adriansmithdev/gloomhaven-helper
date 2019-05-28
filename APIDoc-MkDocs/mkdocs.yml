@@ -1,9 +1,15 @@
-site_name: Gloom Haven Helper
+site_name: Gloomtility
 nav:
   - Home: index.md
-  - API Requests:
-      - Monsters: api/monsters.md
+  - Session Requests:
+      - Elements: api/elements.md
+      - Event Streams: api/streams.md
       - Monster Instances: api/monsterinstances.md
       - Rooms: api/rooms.md
+      - Sessions: api/sessions.md
+  - Static Requests:
+    - Monsters: api/monsters.md
+    - Stats: api/stats.md
+    - Statuses: api/statuses.md
   - FAQ: about.md
 theme: readthedocs

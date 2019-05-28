@@ -1,33 +1,52 @@
-# Monster Instance Properties
-
-* name : String (of existing Monster)
-* maxHealth : Integer
-* currentHealth : Integer
-* moveRange : Integer
-
 # Monster Instance Queries
+###### Get
+```nginx
+GET /api/monsterinstances?hash={hash}
+```
 
-### Get All Monster Instances
+###### Create
 
-    GET /api/room/{hash}/monsterinstances
+Creating a monster instance requires a monsterId to be passed in the body of the request
 
-### Get Specific Monster Instance
+```
+POST /api/monsterinstances
+```
 
-    GET /api/room/{hash}/monsterinstances/{id}
+###### Update
+```nginx
+PUT /api/monsterinstances?hash={hash}&id={id}
+```
 
-### Create Monster Instances
+###### Delete
+```nginx
+DEL /api/monsterinstances?hash={hash}&id={id}
+```
 
-    POST /api/room/{hash}/monsterinstances/
+Status code 200 if the delete was successful
 
-### Update Monster Instances
+#### Input
+```json
+{
+	"monsterId": 202,
+	"currentHealth": 50,
+	"isElite": true
+}
+```
 
-    PUT /api/room/{hash}/monsterinstances/{id}
+#### Output
+```json
+{
+    "createdAt": "2019-05-27T16:47:01.593",
+    "updatedAt": "2019-05-27T16:47:01.593",
+    "id": 5203,
+    "currentHealth": 50,
+    "isElite": true,
+    "activeStatuses": [],
+    "monsterId": 8209,
+    "token": 1
+}
+```
 
-### Delete Monster Instances
+#### Example
 
-    DEL /api/room/{hash}/monsterinstances/{id}
-
-# Aggregate Monster Instance Information
-
-Under each monster instance the Monster that it is an instance of is returned
-with all details of the Monster.
+GET /api/rooms?hash=ABCDEF
