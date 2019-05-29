@@ -9,6 +9,16 @@ $danger-color: #6e0b0b;
 $normal-border-color: darken(gray, 2.5%);
 $elite-color: darken(gold, 5%);
 
+$element-colors: (
+  air:   #98b0b5,
+  fire:  #e2421f,
+  earth: #7da82a,
+  ice:   #56c8ef,
+  light: #eca610,
+  dark:  #607f85
+);
+
+
 // Fonts
 $base-font: 'Overlock', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
 "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -18,7 +28,9 @@ sans-serif;
 $room-min-width: 824px;
 
 // Room Topbar
-$topbar-height: 4rem;
+$topbar-title-height: 3.5rem;
+$add-monster-height: 2rem;
+$topbar-height: $topbar-title-height + $add-monster-height;
 
 // Room toolbar
 $header-height: 4rem;
@@ -27,7 +39,10 @@ $padding: $header-height/4;
 $icon-height: $header-height/1.6;
 
 // Element Variables
-$element-size: 36px;
+$element-size: 3rem;
+
+// Round Tracker
+$round-size: 3rem;
 
 // Initiative Tracker
 $initiative-font-size: 1.5rem;

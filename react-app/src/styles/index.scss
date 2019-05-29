@@ -6,7 +6,6 @@
 // Widgets
 @import './widgets/Status';
 @import './widgets/ProgressBar';
-@import './widgets/ConnectionMonitor';
 @import './widgets/InitiativeTracker';
 
 // Room Components
@@ -20,7 +19,6 @@
 @import './monsters/MonsterInstance';
 @import './monsters/MonsterAction';
 @import './monsters/MonsterToken';
-@import './monsters/AddMonsterWidget';
 
 // Element Components.
 @import './elements/Element';
@@ -112,6 +110,12 @@ input.input-short, select.input-short {
 
 .title {
   min-width: 8rem;
+}
+
+@include for-tablet-portrait-down {
+  .hide-for-devices {
+    display: none !important;
+  }
 }
 
 

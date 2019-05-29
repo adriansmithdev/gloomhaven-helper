@@ -4,16 +4,11 @@ import {connect} from 'react-redux';
 import ElementList from './elements/ElementList';
 
 import { updateElement, incrementRound } from './../../store/actions/actions';
-import EliteToggle from './../common/EliteToggle';
 import RoundManager from './RoundManager';
 
 
 export class RoomToolbar extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
+  
   render() {
 
     const hasProps = this.props.room !== undefined;

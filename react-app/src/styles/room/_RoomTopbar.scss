@@ -1,23 +1,157 @@
 .room-topbar {
   display: flex;
   position: absolute;
+  flex-wrap: wrap;
   justify-content: space-between;
   width: 100%;
   height: $topbar-height;
-  padding: 1rem;
   z-index: 56;
   background-color: $dark-color;
+  @include padding-x(0.5rem);
 }
 
 .topbar-item {
+}
+
+.topbar-row {
   display: flex;
-  justify-content: space-between;
-  div {
-    margin-right: 0.5rem;
+}
+
+.topbar-title {
+  color: $light-color;
+  font-size: $topbar-title-height/2;
+
+  &:hover {
+    color: darken($light-color, 10%);
   }
+
 }
 
 .room-hash {
-  padding: 6px;
-  min-width: 130px;
+  @include margin-x(1rem);
+  font-size: $topbar-title-height/3.5;
+  color: $light-color;
+}
+
+.connection-monitor {
+  display: inline-block;
+  width: $topbar-title-height/4;
+  height: $topbar-title-height/4;
+  margin-top: $topbar-title-height/2.6;
+  border-radius: 100%;
+  
+  &.open {
+    background-color: green;
+  }
+  &.pending {
+    background-color: gold;
+  }
+  &.closed {
+    background-color: red;
+  }
+}
+
+.add-monster-widget {
+  display: flex;
+  height: $add-monster-height;
+  border-radius: 4px;
+  
+
+  * {
+    font-size: $add-monster-height/2;
+  }
+}
+
+.monster-select {
+  
+  height: $add-monster-height;
+}
+
+.elite-toggle {
+  position: relative;
+  position: block;
+  background-color: $normal-border-color;
+  border: 0;
+  height: $add-monster-height;
+  color: $light-color;
+  cursor: pointer;
+
+  &.elite {
+    background-color: darken($elite-color, 5%);
+
+    .elite-toggle-fill {
+      left: auto;
+      right: 0;
+      
+    }
+    .toggle-text {
+      color: $elite-color;
+    }
+  }
+
+}
+
+.elite-toggle-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+  color: $light-color;
+  height: $add-monster-height;
+  background-color: $ui-background-color;
+  width: 80%;
+  line-height: $add-monster-height;
+  text-align: center;
+  @include padding-x(0.5rem);
+
+
+  transition: left 0.2s, right 0.2s;
+  &:hover {
+    background-color: darken($ui-background-color, 5%);
+  }
+}
+
+.toggle-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: $add-monster-height;
+  text-align: center;
+  width: 100%;
+}
+
+.add-monster-button {
+  
+  position: relative;
+  display: inline-block;
+  color: $light-color;
+  background-color: $ui-background-color;
+  border: 0;
+  height: 100%;
+  white-space: nowrap;
+  @include padding-x(0.5rem);
+
+  &:hover {
+    background-color: darken($ui-background-color, 3.5%);
+  }
+}
+
+.scenario-level, .scenario-number {
+  overflow: hidden;
+  margin-top: (($topbar-height/2) - $add-monster-height)/1.65;
+  height: $add-monster-height;
+  background-color: $ui-background-color;
+  border-radius: 4px;
+  padding-left: 0.5rem;
+}
+
+.scenario-label {
+  color: $light-color;
+  margin-right: 0.5rem;
+  line-height: $add-monster-height;
+}
+
+.scenario-input {
+  float: right;
+  height: 100%;
 }

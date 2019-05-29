@@ -66,7 +66,6 @@
 .monster-statuses {
   max-height: $status-height;
   width: 100%;
-  background-color: darken($ui-background-color, 2.5%);
   div.status-container {
     width: 100%;
     display: flex;

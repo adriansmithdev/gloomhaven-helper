@@ -19,7 +19,6 @@ class AddMonsterWidget extends Component {
   
   render() {
     const isElite = (this.props.eliteToggle)
-
     const buttonText = (isElite) ? 'Elite' : 'Normal';
     const monsterTypes = (this.props.monsters !== undefined) ? 
       this.props.monsters.map((type, index) =>
@@ -34,12 +33,13 @@ class AddMonsterWidget extends Component {
         <span className="themed-font has-text-light is-size-4">Toggle Elite: </span> &nbsp;&nbsp;
         <button className={`elite-toggle ${(isElite ? 'elite' : '')} button is-dark themed-font`}
           onClick={this.props.toggleElite}>
-          {buttonText}
+          <div className="elite-toggle-fill">
+            
+          </div>
+          <p className="toggle-text">{buttonText}</p>
         </button>
-        &nbsp;&nbsp;
-        <span className="themed-font has-text-light is-size-4">Add Monster: </span> &nbsp;&nbsp;
-        <button className="add-monster-button button is-dark themed-font" onClick={this.addMonster}>
-          + Monster
+        <button className="add-monster-button" onClick={this.addMonster}>
+          + <span className="hide-for-devices">Monster</span>
         </button>   
       </div>
     );

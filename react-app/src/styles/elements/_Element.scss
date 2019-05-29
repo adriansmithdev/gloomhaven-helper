@@ -6,32 +6,55 @@
   width: $element-size;
   height: $element-size;
   transition: box-shadow 0.15s;
+  overflow: hidden;
   cursor: pointer;
+  border-radius: 4px;
+}
 
-  div {
-    position: absolute;
-    display: block;
-    bottom: 0;
-    width: $element-size - 3px;
-    max-height: $element-size;
-    transition: height 0.4s;
-    
-  }
-  img {
-    position: absolute;
-    width: $element-size -3px;
-    height: $element-size - 2px;
-  }
+.element-bar {
+  position: absolute;
+  display: block;
+  bottom: 0;
+  width: $element-size;
+  max-height: $element-size;
+  transition: height 0.6s;
+}
 
-  &:hover {
-    -webkit-box-shadow: 0px 0px 3px 0px rgba(255, 255, 255, 1);
-    -moz-box-shadow:    0px 0px 3px 0px rgba(255, 255, 255, 1);
-    box-shadow:         0px 0px 3px 0px rgba(255, 255, 255, 1);
-  }
+.element-image {
+  position: relative;
+  height: 100%;
+}
 
-  &:active {
-    -webkit-box-shadow: 0px 0px 6px 0px rgba(255, 255, 255, 1);
-    -moz-box-shadow:    0px 0px 6px 0px rgba(255, 255, 255, 1);
-    box-shadow:         0px 0px 6px 0px rgba(255, 255, 255, 1);
+@each $element, $color in $element-colors {
+  .element.#{$element} {
+    border: 2px solid darken($color, 15%);
+
+    &:hover {
+      -webkit-box-shadow: 0px 0px 2px 1px $color;
+      -moz-box-shadow:    0px 0px 2px 1px $color;
+      box-shadow:         0px 0px 2px 1px $color;
+    }
+  
+    &:active {
+      -webkit-box-shadow: 0px 0px 6px 1px $color;
+      -moz-box-shadow:    0px 0px 6px 1px $color;
+      box-shadow:         0px 0px 6px 1px $color;
+    }
+
+    .element-bar {
+      background-color: $color;
+
+      &.strength-0 {
+        height: 7.5%;
+      }
+
+      &.strength-1 {
+        height: 50%;
+      }
+
+      &.strength-2 {
+        height: 100%;
+      }
+    }
   }
 }
