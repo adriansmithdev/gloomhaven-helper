@@ -72,3 +72,80 @@
     justify-content: center;
   }
 }
+
+@include for-tablet-portrait-down {
+  .monster-instance {
+    display: block;
+    width: 100%;
+    &.elite {
+      .instance-container {
+        border-color: $elite-color;
+        .monster-token-container .monster-token-input,
+        .progress-title {
+          color: $elite-color;
+        }
+      }
+    }
+  }
+  
+  .instance-container {
+    border: 2px ridge $normal-border-color;
+  }
+  
+  .instance-fields {
+    display: flex;
+    height: $monster-instance-height-device;
+  }
+  
+  
+  .monster-healthbar {
+    min-width: 4rem + 6rem;
+    width: 100%;
+    display: flex;
+  }
+  
+  .monster-controls {
+    display: flex;
+    height: $monster-instance-height-device; 
+    button {
+      min-width: $monster-instance-height-device;
+      color: $light-color;
+      height: $monster-instance-height-device; 
+      font-weight: bold;
+      border: 0;
+      background: $ui-background-color;
+      border-right: 1px solid darken($ui-background-color, 2.5%);
+        
+      &:active {
+        background: darken($ui-background-color, 15%); 
+      }
+      &:hover {
+        background: darken($ui-background-color, 2.5%);
+      }
+      &.status-display-button {
+        width: 5rem;
+      }
+      &.button-remove {
+        width: 3rem; 
+        background: $danger-color;
+        
+        &:active {
+          background: darken($danger-color, 15%); 
+        }
+        &:hover {
+          background: darken($danger-color, 2.5%);
+        }
+      }
+    }
+  }
+  
+  .monster-statuses {
+    max-height: $status-height;
+    width: 100%;
+    div.status-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

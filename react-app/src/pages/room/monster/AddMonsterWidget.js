@@ -30,7 +30,7 @@ class AddMonsterWidget extends Component {
           {monsterTypes || ''}
         </select>
         &nbsp;&nbsp;
-        <span className="themed-font has-text-light is-size-4">Toggle Elite: </span> &nbsp;&nbsp;
+        <span className="themed-font has-text-light is-size-4 hide-for-devices">Toggle Elite: </span> &nbsp;&nbsp;
         <button className={`elite-toggle ${(isElite ? 'elite' : '')} button is-dark themed-font`}
           onClick={this.props.toggleElite}>
           <div className="elite-toggle-fill">

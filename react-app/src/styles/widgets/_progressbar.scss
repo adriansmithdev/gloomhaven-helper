@@ -22,3 +22,30 @@
                 0px 0px 6px #000000;
   }
 }
+
+@include for-tablet-portrait-down {
+  .progress-bar {
+    position: relative;
+    width: 100%;
+    background-color: darken($ui-background-color, 5%);
+    div.progress-bar-progress {
+      position: absolute;
+      height: $monster-instance-height-device;
+      max-width: 100%;
+      transition: background-color 0.5s, width 0.4s;
+    }
+    p.progress-title {
+      
+      color: $light-color;
+      position: absolute;
+      text-align: center;
+      height: $monster-instance-height-device;
+      line-height: $monster-instance-height-device;
+      font-size: 1rem;
+      width: 100%;
+      text-transform: capitalize;
+      text-shadow:0px 0px 6px #000000,
+                  0px 0px 6px #000000;
+    }
+  }
+}
