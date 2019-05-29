@@ -30,11 +30,15 @@ class AddMonsterWidget extends Component {
         <select className="monster-select" ref={this.monsterSelect}>
           {monsterTypes || ''}
         </select>
-        <button className={`elite-toggle ${(isElite ? 'elite' : '')}`}
+        &nbsp;&nbsp;
+        <span className="themed-font has-text-light is-size-4">Toggle Elite: </span> &nbsp;&nbsp;
+        <button className={`elite-toggle ${(isElite ? 'elite' : '')} button is-dark themed-font`}
           onClick={this.props.toggleElite}>
           {buttonText}
         </button>
-        <button className="add-monster-button" onClick={this.addMonster}>
+        &nbsp;&nbsp;
+        <span className="themed-font has-text-light is-size-4">Add Monster: </span> &nbsp;&nbsp;
+        <button className="add-monster-button button is-dark themed-font" onClick={this.addMonster}>
           + Monster
         </button>   
       </div>
