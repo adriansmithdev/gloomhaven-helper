@@ -1,6 +1,7 @@
 package com.subjecttochange.ghhelper.controller;
 
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
+import com.subjecttochange.ghhelper.persistence.model.requestbodies.MonsterIdRequestBody;
 import com.subjecttochange.ghhelper.persistence.model.responsebodies.MonsterActionResponseBody;
 import com.subjecttochange.ghhelper.persistence.model.responsebodies.MonsterResponseBody;
 import com.subjecttochange.ghhelper.persistence.service.MonsterService;
@@ -34,7 +35,7 @@ public class MonsterController {
     @PostMapping("/monster/draw")
     @ResponseBody
     public MonsterActionResponseBody drawAction(@RequestParam(value = "hash") String hash,
-                                                @Valid @RequestBody Long monsterId) {
-        return monsterService.drawAction(hash, monsterId);
+                                                @Valid @RequestBody MonsterIdRequestBody monsterId) {
+        return monsterService.drawAction(hash, monsterId.getMonsterId());
     }
 }
