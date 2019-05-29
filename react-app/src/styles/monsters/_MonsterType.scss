@@ -20,6 +20,7 @@
   width: 100%;
   margin: 0;
   color: $light-color;
+  padding-right: $monster-header-add-button-size + 0.5rem;
 }
 
 .monster-name {
@@ -110,7 +111,7 @@
 .monster-header-add-button {
   color: $light-color;
   background-color: $ui-background-color;
-  height: 3rem;
+  height: $monster-header-add-button-size;
   width: 3rem;
   
 
@@ -134,7 +135,7 @@
 
 @include for-tablet-landscape-up {
   .monster-type {
-    width: $monster-type-width;
+    width: $phone-only;
     margin-left: 1rem;
   }
 }
