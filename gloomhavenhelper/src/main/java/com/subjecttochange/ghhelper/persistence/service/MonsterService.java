@@ -6,6 +6,7 @@ import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.responsebodies.MonsterActionResponseBody;
 import com.subjecttochange.ghhelper.persistence.model.responsebodies.MonsterResponseBody;
+import com.subjecttochange.ghhelper.persistence.model.responsebodies.SingleActionResponseBody;
 import com.subjecttochange.ghhelper.persistence.repository.MonsterRepository;
 import com.subjecttochange.ghhelper.persistence.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,12 +67,16 @@ public class MonsterService {
     }
 
     @Transactional
-    public MonsterActionResponseBody drawAction(String hash, Long id) {
+    public SingleActionResponseBody drawAction(String hash, Long id) {
         Room room = roomRepository.findByHash(hash).orElseThrow(() -> new ResourceNotFoundException(Errors.NO_HASH_ROOM + hash));
         Monster monster = monsterRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Errors.NO_ID_MONSTER + id));
 
         deckService.drawSingleMonsterAction(room, monster);
 
-        return MonsterActionResponseBody.create(room.getDecks().get(monster).getCurrentAction());
+        SingleActionResponseBody singleResponse = SingleActionResponseBody.create(id);
+        MonsterActionResponseBody monsterResponse = MonsterActionResponseBody.create(room.getDecks().get(monster).getCurrentAction());
+        singleResponse.setMonsterActionResponseBody(monsterResponse);
+
+        return singleResponse;
     }
 }

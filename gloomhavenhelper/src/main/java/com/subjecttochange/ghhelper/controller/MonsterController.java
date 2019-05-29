@@ -5,6 +5,7 @@ import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.requestbodies.MonsterIdRequestBody;
 import com.subjecttochange.ghhelper.persistence.model.responsebodies.MonsterActionResponseBody;
 import com.subjecttochange.ghhelper.persistence.model.responsebodies.MonsterResponseBody;
+import com.subjecttochange.ghhelper.persistence.model.responsebodies.SingleActionResponseBody;
 import com.subjecttochange.ghhelper.persistence.service.MonsterService;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +38,9 @@ public class MonsterController {
 
     @PostMapping("/monster/draw")
     @ResponseBody
-    public MonsterActionResponseBody drawAction(@RequestParam(value = "hash") String hash,
+    public SingleActionResponseBody drawAction(@RequestParam(value = "hash") String hash,
                                                 @Valid @RequestBody MonsterIdRequestBody monsterId) {
-        MonsterActionResponseBody response = monsterService.drawAction(hash, monsterId.getMonsterId());
+        SingleActionResponseBody response = monsterService.drawAction(hash, monsterId.getMonsterId());
         eventController.newEvent(EventType.POST_MONSTER_DRAW, hash, response);
         return response;
     }
