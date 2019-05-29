@@ -1,5 +1,6 @@
 package com.subjecttochange.ghhelper.controller;
 
+import com.subjecttochange.ghhelper.persistence.model.EventType;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.requestbodies.MonsterIdRequestBody;
 import com.subjecttochange.ghhelper.persistence.model.responsebodies.MonsterActionResponseBody;
@@ -19,10 +20,12 @@ import javax.validation.Valid;
 public class MonsterController {
 
     private final MonsterService monsterService;
+    private final EventController eventController;
 
     @Autowired
-    public MonsterController(MonsterService monsterService) {
+    public MonsterController(MonsterService monsterService, EventController eventController) {
         this.monsterService = monsterService;
+        this.eventController = eventController;
     }
 
     @GetMapping("/monsters")
@@ -36,6 +39,8 @@ public class MonsterController {
     @ResponseBody
     public MonsterActionResponseBody drawAction(@RequestParam(value = "hash") String hash,
                                                 @Valid @RequestBody MonsterIdRequestBody monsterId) {
-        return monsterService.drawAction(hash, monsterId.getMonsterId());
+        MonsterActionResponseBody response = monsterService.drawAction(hash, monsterId.getMonsterId());
+        eventController.newEvent(EventType.POST_MONSTER_DRAW, hash, response);
+        return response;
     }
 }
