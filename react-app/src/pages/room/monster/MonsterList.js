@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addMonster } from './../../../store/actions/actions';
+import { addMonster, drawAction } from './../../../store/actions/actions';
 
 import MonsterType from './MonsterType';
 
@@ -22,6 +22,7 @@ class MonsterList extends Component {
         type={type}
         eliteToggle={this.props.eliteToggle} 
         addMonster={this.props.addMonster}
+        drawAction={this.props.drawAction}
         
         />
     );
@@ -46,7 +47,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addMonster: (hash, monsterId, isElite) => dispatch(addMonster(hash, monsterId, isElite))
+    addMonster: (hash, monsterId, isElite) => dispatch(addMonster(hash, monsterId, isElite)),
+    drawAction: (hash, monsterId) => dispatch(drawAction(hash, monsterId))
   };
 };
 

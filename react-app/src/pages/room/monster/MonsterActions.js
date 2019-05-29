@@ -9,13 +9,17 @@ class MonsterActions extends Component {
         super(props);
 
         this.monsterSelect = React.createRef();
+        this.drawActionHandler = this.drawActionHandler.bind(this);
     }
 
-    
     reshuffle(shuffle){
         if(shuffle){
             return "Shuffle Deck"
         }
+    }
+
+    drawActionHandler(event) {
+      this.props.drawAction(this.props.hash, this.props.monster.id);
     }
 
     generateAction(action){
@@ -55,11 +59,17 @@ class MonsterActions extends Component {
 
     }
 
+
+
     render() {
         if(this.props.monster.monsterAction === null || this.props.monster.monsterAction === undefined) {
             return (
                 <div className="monster-actions">
-                    <button className="draw-action-button" type="button">Draw Action</button>
+                    <button className="draw-action-button" 
+                      onClick={this.drawActionHandler}
+                      type="button">
+                        Draw Action
+                    </button>
                 </div>
             );
         }

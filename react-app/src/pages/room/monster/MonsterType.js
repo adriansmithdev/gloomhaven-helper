@@ -39,7 +39,10 @@ class MonsterType extends Component{
       <div id={this.props.type.name} className="monster-type">
         <MonsterTypeHeader {...this.props}/>
         <div className="monster-type-body">
-          <MonsterActions monster={this.props.type}/>
+          <MonsterActions 
+            hash={this.props.hash}
+            monster={this.props.type} 
+            drawAction={this.props.drawAction}/>
           <div className="monster-instances">
             {this.generateInstances(eliteInstances)}
             {this.generateInstances(normalInstances)}

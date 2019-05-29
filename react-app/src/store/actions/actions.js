@@ -123,3 +123,17 @@ export const incrementRound = function(room) {
     return response.data;
   }
 };
+
+export const drawAction = function(hash, monsterId) {
+  return async dispatch => {
+    const response = await axios.post(`monster/draw?hash=${hash}`, {monsterId: monsterId})
+      .catch(function (error) {
+        dispatch(addError(error.response));
+        dispatch(setStatus('FAILED_TO_DRAW_ACTION'));
+        toast.error('Failed to draw action!');
+        return error.response.data;
+      });
+    dispatch(setStatus('DRAW_ACTION'));
+    return response.data;
+  }
+}
