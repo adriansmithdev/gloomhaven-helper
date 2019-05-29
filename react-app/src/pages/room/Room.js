@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent as Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -12,7 +12,7 @@ import InitiativeTracker from './initiative/InitiativeTracker';
 import { toast } from 'react-toastify';
 
 // Redux Store Actions.
-import { updateRoom } from './../../store/actions/actions';
+import { updateRoom, addMonster } from './../../store/actions/actions';
 import { setStatus } from './../../store/actions/storeActions';
 import { apiURL } from './../../store/actions/axios.config';
 
@@ -60,7 +60,6 @@ class Room extends Component {
     }
 
     this.eventSource.onmessage = (event) => {
-
       const data = JSON.parse(event.data);
 
       const action = {
@@ -101,10 +100,13 @@ class Room extends Component {
 
        <>
         <RoomTopbar 
-          {...this.props.session.room} 
+          {...this.props.session}
+          eliteToggle={this.props.eliteToggle} 
           confirmLevelChange={this.confirmLevelChange}
           updateScenario={this.updateScenario}
           eventSourceStatus={this.props.eventSourceStatus}
+          addMonster={this.props.addMonster}
+          toggleElite={this.props.toggleElite}
           />
         <div className="room-content">
           <RoomToolbar />
@@ -133,6 +135,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    addMonster: (hash, monsterId, isElite) => dispatch(addMonster(hash, monsterId, isElite)),
     clearSession: () => dispatch({type: 'CLEAR_SESSION'}),
     setStatus: (newStatus) => dispatch(setStatus(newStatus)),
     updateScenario: (room) => dispatch(updateRoom(room)),
@@ -140,7 +143,8 @@ const mapDispatchToProps = (dispatch) => {
     setEventSourceStatus: (newStatus) => dispatch({
       type: 'SET_EVENT_SOURCE_STATUS', 
       data: newStatus
-    })
+    }),
+    toggleElite: () => dispatch({type: 'TOGGLE_ELITE'})
   };
 };
 
