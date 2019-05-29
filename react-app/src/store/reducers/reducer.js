@@ -100,7 +100,13 @@ const reducer = (state = initialState, action) => {
         elements.splice(elementIndex, 1, action.data);
       }
       break;
-    
+    case 'POST_MONSTER_DRAW': {
+        const monsterIndex = newState.session.monsters.findIndex(monster => 
+          monster.id === action.data.monsterId
+        );
+        newState.session.monsters[monsterIndex].monsterAction = action.data.monsterActionResponseBody;
+      };
+      break;
     case 'CLEAR_SESSION':
       newState = {...newState, session: {...initialState.session}};
       break;
