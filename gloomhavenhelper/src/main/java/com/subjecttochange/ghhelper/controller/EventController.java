@@ -19,11 +19,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Controller
 public class EventController {
 
     public static final long FIVE_MINUTES = 300000L;
+
     private final SessionService sessionService;
     private Map<String, LinkedList<SseEmitter>> roomEmitters = new HashMap<>();
     private Map<String, String> roomCache = new HashMap<>();
@@ -36,32 +39,15 @@ public class EventController {
     @GetMapping("/stream")
     public SseEmitter streamSseMvc(@RequestParam(value = "hash") String hash) {
         SseEmitter emitter = new SseEmitter(FIVE_MINUTES);
-
-        emitter.onCompletion(() -> {
-            deleteEmitter(hash, emitter);
-            System.out.println("Emitter has completed");
-        });
-        emitter.onTimeout(() -> {
-            deleteEmitter(hash, emitter);
-            System.out.println("Emitter has timed out");
-        });
-        emitter.onError((e) -> {
-            deleteEmitter(hash, emitter);
-            System.out.println("Emitter has errored");
-        });
-
+        setEmitterEvents(emitter, hash);
         saveEmitter(hash, emitter);
 
-        try {
-            if (!roomCache.containsKey(hash)) {
-                String resultBody = jsonOutput(EventType.GET_SESSION, sessionService.getRooms(hash, null));
-                roomCache.put(hash, resultBody);
-            }
-            sendBroadcast(emitter, roomCache.get(hash), hash);
-        } catch (Exception e) {
-            System.out.println("Error!");
+        if (!roomCache.containsKey(hash)) {
+            String resultBody = jsonOutput(EventType.GET_SESSION, sessionService.getRooms(hash, null));
+            roomCache.put(hash, resultBody);
         }
 
+        sendBroadcast(emitter, roomCache.get(hash), hash);
         return emitter;
     }
 
@@ -85,6 +71,7 @@ public class EventController {
             emitter.send(event);
         } catch (IOException e) {
             deleteEmitter(hash, emitter);
+            emitter.completeWithError(e);
             System.out.println("Status: Deleted old emitter");
         }
     }
@@ -115,5 +102,20 @@ public class EventController {
         } else {
             roomEmitters.put(hash, new LinkedList<>(Collections.singletonList(emitter)));
         }
+    }
+
+    private void setEmitterEvents(SseEmitter sseEmitter, String hash) {
+        sseEmitter.onCompletion(() -> {
+            deleteEmitter(hash, sseEmitter);
+            System.out.println("Emitter has completed");
+        });
+        sseEmitter.onTimeout(() -> {
+            deleteEmitter(hash, sseEmitter);
+            System.out.println("Emitter has timed out");
+        });
+        sseEmitter.onError((e) -> {
+            deleteEmitter(hash, sseEmitter);
+            System.out.println("Emitter has errored");
+        });
     }
 }
