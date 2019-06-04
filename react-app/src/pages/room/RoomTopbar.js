@@ -18,7 +18,7 @@ const RoomTopbar = (props) => {
             Gloomtility
           </a>
           <strong className="room-hash">
-            <span class="hide-for-devices">Room: </span>{props.room.hash}
+            <span className="hide-for-devices">Room: </span>{props.room.hash}
           </strong>
           <ConnectionMonitor status={props.eventSourceStatus}/>
         </div>
