@@ -41,11 +41,6 @@ const RoomTopbar = (props) => {
             scenarioLevel={props.room.scenarioLevel} 
             confirmLevelChange={props.confirmLevelChange}/>
         </div>
-        <div className="topbar-item-row">
-          <ScenarioNumber
-            scenarioNumber={props.room.scenarioNumber} 
-            updateScenario={props.room.updateScenario}/>
-        </div>
       </div>
       
     </nav>
