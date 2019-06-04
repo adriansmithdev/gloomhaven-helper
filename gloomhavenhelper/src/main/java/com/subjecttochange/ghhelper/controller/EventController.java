@@ -19,11 +19,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Controller
 public class EventController {
 
     public static final long FIVE_MINUTES = 300000L;
+
     private final SessionService sessionService;
     private Map<String, LinkedList<SseEmitter>> roomEmitters = new HashMap<>();
     private Map<String, String> roomCache = new HashMap<>();
@@ -36,7 +39,6 @@ public class EventController {
     @GetMapping("/stream")
     public SseEmitter streamSseMvc(@RequestParam(value = "hash") String hash) {
         SseEmitter emitter = new SseEmitter(FIVE_MINUTES);
-
         setEmitterEvents(emitter, hash);
         saveEmitter(hash, emitter);
 
@@ -45,12 +47,7 @@ public class EventController {
             roomCache.put(hash, resultBody);
         }
 
-        try {
-            sendBroadcast(emitter, roomCache.get(hash), hash);
-        } catch (Exception e) {
-            System.out.println("Error sending message!");
-        }
-
+        sendBroadcast(emitter, roomCache.get(hash), hash);
         return emitter;
     }
 
@@ -74,6 +71,7 @@ public class EventController {
             emitter.send(event);
         } catch (IOException e) {
             deleteEmitter(hash, emitter);
+            emitter.completeWithError(e);
             System.out.println("Status: Deleted old emitter");
         }
     }
