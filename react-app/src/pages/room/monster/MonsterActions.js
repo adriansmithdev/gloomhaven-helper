@@ -28,7 +28,7 @@ class MonsterActions extends Component {
 
       const splitted = action.split(' ');
 
-      const parsed = splitted.map(item => {
+      const parsed = splitted.map((item, index) => {
         
 
         // Remove any HTML tags from item.
@@ -41,14 +41,14 @@ class MonsterActions extends Component {
         // If icon is found, use icon.
         if(icon !== undefined) {
           imageCounter++;
-          return <img className="monster-action-icon" src={icon.src} alt={icon.alt}/>;
+          return <img className="monster-action-icon" key={index} src={icon.src} alt={icon.alt}/>;
         } else {
           // If item isn't an image, return text wrapped in span without *'s
           const itemWithoutAsterisks = item.replace(/[*]/g, '');
 
           // If item isn't empty from removing asterisks, wrap in span.
           return (itemWithoutAsterisks.length > 0) ? 
-            <p className="monster-action-text">{itemWithoutAsterisks}</p> :
+            <p className="monster-action-text" key={index}>{itemWithoutAsterisks}</p> :
             '';
         }
       });
@@ -75,10 +75,10 @@ class MonsterActions extends Component {
         }
 
         // Filter out types without any instances   
-        const actions = this.props.monster.monsterAction.actionDeck.map(action =>
-            <div className="monster-action">
-              {this.generateAction(action)}
-            </div>
+        const actions = this.props.monster.monsterAction.actionDeck.map((action, index) =>
+          <div className="monster-action" key={index}>
+            {this.generateAction(action)}
+          </div>
         );
     
         return(
