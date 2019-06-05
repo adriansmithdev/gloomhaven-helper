@@ -49,11 +49,18 @@ public class DeckService {
             monsters.add(monsterInstance.getMonster());
         }
 
+        // Temp set to store monsters while iterating.
+        Set<Monster> monstersToRemove = new HashSet<>();
+
         // Deletes monsters that have been removed since the last run through
         for (Monster monster : decks.keySet()) {
             if (!monsters.contains(monster)) {
-                decks.remove(monster);
+                monstersToRemove.add(monster);
             }
+        }
+
+        for (Monster monster : monstersToRemove) {
+            decks.remove(monster);
         }
 
         for (Monster monster : monsters) {
