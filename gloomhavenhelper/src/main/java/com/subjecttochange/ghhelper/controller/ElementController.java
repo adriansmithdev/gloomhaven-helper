@@ -3,6 +3,7 @@ package com.subjecttochange.ghhelper.controller;
 import com.subjecttochange.ghhelper.persistence.model.EventType;
 import com.subjecttochange.ghhelper.persistence.model.orm.Element;
 import com.subjecttochange.ghhelper.persistence.service.ElementService;
+import com.subjecttochange.ghhelper.persistence.service.StreamService;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,12 +17,12 @@ import javax.validation.Valid;
 public class ElementController {
 
     private final ElementService elementService;
-    private final EventController eventController;
+    private final StreamService streamService;
 
     @Autowired
-    public ElementController(ElementService elementService, EventController eventController) {
+    public ElementController(ElementService elementService, StreamService streamService) {
         this.elementService = elementService;
-        this.eventController = eventController;
+        this.streamService = streamService;
     }
 
     @GetMapping("/elements")
@@ -38,7 +39,7 @@ public class ElementController {
                                  @RequestParam(value = "id") Long id,
                                  @Valid @RequestBody(required = false) Element request) {
         Element element = elementService.updateElement(hash, id, request);
-        eventController.newEvent(EventType.PUT_ELEMENT, hash, element);
+        streamService.newEvent(EventType.PUT_ELEMENT, hash, element);
         return element;
     }
 

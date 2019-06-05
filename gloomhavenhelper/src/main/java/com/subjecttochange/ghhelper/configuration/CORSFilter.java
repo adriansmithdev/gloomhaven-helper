@@ -1,4 +1,4 @@
-package com.subjecttochange.ghhelper.controller;
+package com.subjecttochange.ghhelper.configuration;
 
 import org.springframework.stereotype.Component;
 

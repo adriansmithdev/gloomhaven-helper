@@ -3,15 +3,13 @@ package com.subjecttochange.ghhelper.controller;
 import com.subjecttochange.ghhelper.persistence.model.EventType;
 import com.subjecttochange.ghhelper.persistence.model.orm.monster.Monster;
 import com.subjecttochange.ghhelper.persistence.model.requestbodies.MonsterIdRequestBody;
-import com.subjecttochange.ghhelper.persistence.model.responsebodies.MonsterActionResponseBody;
-import com.subjecttochange.ghhelper.persistence.model.responsebodies.MonsterResponseBody;
 import com.subjecttochange.ghhelper.persistence.model.responsebodies.SingleActionResponseBody;
 import com.subjecttochange.ghhelper.persistence.service.MonsterService;
+import com.subjecttochange.ghhelper.persistence.service.StreamService;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,12 +19,12 @@ import javax.validation.Valid;
 public class MonsterController {
 
     private final MonsterService monsterService;
-    private final EventController eventController;
+    private final StreamService streamService;
 
     @Autowired
-    public MonsterController(MonsterService monsterService, EventController eventController) {
+    public MonsterController(MonsterService monsterService, StreamService streamService) {
         this.monsterService = monsterService;
-        this.eventController = eventController;
+        this.streamService = streamService;
     }
 
     @GetMapping("/monsters")
@@ -41,7 +39,7 @@ public class MonsterController {
     public SingleActionResponseBody drawAction(@RequestParam(value = "hash") String hash,
                                                 @Valid @RequestBody MonsterIdRequestBody monsterId) {
         SingleActionResponseBody response = monsterService.drawAction(hash, monsterId.getMonsterId());
-        eventController.newEvent(EventType.POST_MONSTER_DRAW, hash, response);
+        streamService.newEvent(EventType.POST_MONSTER_DRAW, hash, response);
         return response;
     }
 }

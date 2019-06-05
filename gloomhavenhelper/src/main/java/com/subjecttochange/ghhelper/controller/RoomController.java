@@ -5,6 +5,7 @@ import com.subjecttochange.ghhelper.persistence.model.orm.Room;
 import com.subjecttochange.ghhelper.persistence.model.responsebodies.DeleteHashResponseBody;
 import com.subjecttochange.ghhelper.persistence.service.RoomService;
 import com.subjecttochange.ghhelper.persistence.service.SessionService;
+import com.subjecttochange.ghhelper.persistence.service.StreamService;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,13 +26,13 @@ import javax.validation.Valid;
 public class RoomController {
 
     private final RoomService roomService;
-    private final EventController eventController;
+    private final StreamService streamService;
     private final SessionService sessionService;
 
     @Autowired
-    public RoomController(RoomService roomService, EventController eventController, SessionService sessionService) {
+    public RoomController(RoomService roomService, StreamService streamService, SessionService sessionService) {
         this.roomService = roomService;
-        this.eventController = eventController;
+        this.streamService = streamService;
         this.sessionService = sessionService;
     }
 
@@ -67,7 +68,7 @@ public class RoomController {
     public Room updateRoom(@RequestParam(value = "hash") String hash,
                            @Valid @RequestBody(required = false) Room request) {
         Room room = roomService.updateRoom(hash, request);
-        eventController.newEvent(EventType.PUT_ROOM, hash, sessionService.getRooms(room.getHash(), null));
+        streamService.newEvent(EventType.PUT_ROOM, hash, sessionService.getRooms(room.getHash(), null));
         return room;
     }
 
@@ -79,7 +80,7 @@ public class RoomController {
     @DeleteMapping("/rooms")
     public ResponseEntity<?> deleteRoom(@RequestParam(value = "hash") String hash) {
         ResponseEntity<?> response = roomService.deleteRoom(hash);
-        eventController.newEvent(EventType.DELETE_ROOM, hash, DeleteHashResponseBody.create(hash));
+        streamService.newEvent(EventType.DELETE_ROOM, hash, DeleteHashResponseBody.create(hash));
         return response;
     }
 }
