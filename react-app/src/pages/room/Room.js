@@ -53,13 +53,18 @@ class Room extends Component {
 
   // If room not in store, attempt to pull from hash.
   componentWillMount() {
-    this.eventSource = new EventSource(`${apiURL}stream?hash=${this.props.match.params.hash}`);
+    const eventSource = new EventSource(`${apiURL}stream?hash=${this.props.match.params.hash}`);
+    this.eventSource = eventSource
 
-    this.eventSource.onopen = (event) => {
+    // Counter for failed connection attempts.
+    let attempts = 0;
+
+    eventSource.onopen = (event) => {
+      // Reset failed attempts count.
       this.props.setEventSourceStatus('CONNECTION_STARTED');
     }
 
-    this.eventSource.onmessage = (event) => {
+    eventSource.onmessage = (event) => {
       const data = JSON.parse(event.data);
 
       const action = {
@@ -67,23 +72,41 @@ class Room extends Component {
         data: data.response
       }
 
-      this.props.recieveEvent(action)
+      this.props.recieveEvent(action);
       
     };
 
     const setEventSourceStatus = this.props.setEventSourceStatus;
 
-    this.eventSource.onerror = function(event) {
-      toast.error('Unable to connect to server!');
-      setEventSourceStatus('CONNECTION_LOST');
+    
+
+    eventSource.onerror = function(event) {
+      setEventSourceStatus('CONNECTION_PENDING');
+
+      const timeoutHandler = () => {
+        attempts++;
+        if(eventSource.readyState === 2 || attempts === 3) {
+          toast.error('Unable to connect to server!');
+          setEventSourceStatus('CONNECTION_LOST');
+        } else if(eventSource.readyState === 0 && attempts < 3) {
+          setEventSourceStatus('CONNECTION_PENDING');
+          checkConnection()
+        } else if(eventSource.readyState === 1) {
+          attempts = 0;
+        }
+      }
+
+      const checkConnection = async function() {
+        setTimeout(timeoutHandler, 5000);
+        
+      }
+
+      checkConnection();
+
+      
     }
   }
 
-  componentWillUnmount() {
-    this.eventSource.close();
-    this.props.setEventSourceStatus('NO_CONNECTION');
-    this.props.clearSession();
-  }
 
 
   render() {
@@ -144,7 +167,7 @@ const mapDispatchToProps = (dispatch) => {
       type: 'SET_EVENT_SOURCE_STATUS', 
       data: newStatus
     }),
-    toggleElite: () => dispatch({type: 'TOGGLE_ELITE'})
+    
   };
 };
 
