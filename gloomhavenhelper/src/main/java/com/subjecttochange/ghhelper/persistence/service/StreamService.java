@@ -12,10 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Service
 public class StreamService {
@@ -23,8 +22,8 @@ public class StreamService {
     public static final long FIVE_MINUTES = 300000L;
 
     private final SessionService sessionService;
-    private Map<String, LinkedList<SseEmitter>> roomEmitters = new HashMap<>();
-    private Map<String, String> roomCache = new HashMap<>();
+    private Map<String, ConcurrentLinkedQueue<SseEmitter>> roomEmitters = new HashMap<>();
+    private Map<String, String> roomCache = new ConcurrentHashMap<>();
 
     @Autowired
     public StreamService(SessionService sessionService) {
@@ -92,10 +91,10 @@ public class StreamService {
 
     private void saveEmitter(String hash, SseEmitter emitter) {
         if (roomEmitters.containsKey(hash)) {
-            LinkedList<SseEmitter> emitters = roomEmitters.get(hash);
+            ConcurrentLinkedQueue<SseEmitter> emitters = roomEmitters.get(hash);
             emitters.add(emitter);
         } else {
-            roomEmitters.put(hash, new LinkedList<>(Collections.singletonList(emitter)));
+            roomEmitters.put(hash, new ConcurrentLinkedQueue<>(Collections.singletonList(emitter)));
         }
     }
 
