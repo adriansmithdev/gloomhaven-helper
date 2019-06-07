@@ -1,7 +1,6 @@
 import React from 'react';
 import ConnectionMonitor from './../common/ConnectionMonitor';
 import ScenarioLevel from './../common/ScenarioLevel';
-import ScenarioNumber from './../common/ScenarioNumber';
 import AddMonsterWidget from './monster/AddMonsterWidget';
 
 
