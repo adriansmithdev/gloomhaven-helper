@@ -22,6 +22,8 @@ $action-icon-size: 1.25 * $font-size;
   display: inline-block;
   width: $font-size + 0.5rem;
   height: $font-size + 0.5rem;
+  object-fit: contain;
+  @include margin-x(0.5rem);
 }
 
 .monster-action-text {
