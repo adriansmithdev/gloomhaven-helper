@@ -1,6 +1,6 @@
 .element {
   background-color: $dark-color;
-  margin-left: 4px;
+  margin-left: 2px;
   position: relative;
   display: inline-block;
   width: $element-size;
@@ -56,5 +56,18 @@
         height: 100%;
       }
     }
+  }
+}
+
+@include for-phone-only {
+  $factor: 0.75;
+  .element {
+    width:  $factor * $element-size;
+    height: $factor * $element-size;
+  }
+  
+  .element-bar {
+    width:  $factor * $element-size;
+    max-height: $factor * $element-size;
   }
 }
