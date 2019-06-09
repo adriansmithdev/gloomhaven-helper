@@ -34,16 +34,16 @@ import WoundIcon      from './../../assets/icons/statuses/Wound.svg';
 
 // AOE icons
 //TODO CHANGE ICONS W/ REAL ONES
-import AOECirclewBlack from './../../assets/icons/elements/air.svg';
-import AOEline6withBlack from './../../assets/icons/elements/air.svg';
-import AOE4withBlack from './../../assets/icons/elements/air.svg';
-import AOELine3withBlack from './../../assets/icons/elements/air.svg';
-import AOECircle from './../../assets/icons/elements/air.svg';
-import AOETriangle2SidewithBlack from './../../assets/icons/elements/air.svg';
-import AOEline4withBlack from './../../assets/icons/elements/air.svg';
-import AOETriangle3swcBlack from './../../assets/icons/elements/air.svg';
-import AOETriangle2Side from './../../assets/icons/elements/air.svg';
-import AOECirclewithsideBlack from './../../assets/icons/elements/air.svg';
+import AOECirclewBlack from './../../assets/icons/aoe/aoe-circle-with-middle-black.png';
+import AOEline6withBlack from './../../assets/icons/aoe/aoe-line-6-with-black.png';
+import AOE4withBlack from './../../assets/icons/aoe/aoe-4-with-black.png';
+import AOELine3withBlack from './../../assets/icons/aoe/aoe-line-3-with-black.png';
+import AOECircle from './../../assets/icons/aoe/aoe-circle.png';
+import AOETriangle2SidewithBlack from './../../assets/icons/aoe/aoe-triangle-2-side-with-black.png';
+import AOEline4withBlack from './../../assets/icons/aoe/aoe-line-4-with-black.png';
+import AOETriangle3swcBlack from './../../assets/icons/aoe/aoe-triangle-3-side-with-corner-black.png';
+import AOETriangle2Side from './../../assets/icons/aoe/aoe-triangle-2-side.png';
+import AOECirclewithsideBlack from './../../assets/icons/aoe/aoe-circle-with-side-black.png';
 
 const IconManager = (icon) => {
   switch(icon) {
