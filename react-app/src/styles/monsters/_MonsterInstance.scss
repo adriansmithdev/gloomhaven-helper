@@ -23,7 +23,7 @@
 
 
 .monster-healthbar {
-  min-width: 4rem + 6rem;
+  min-width: 4rem;
   width: 100%;
   display: flex;
 }
@@ -66,12 +66,15 @@
 .monster-statuses {
   max-height: $status-height;
   width: 100%;
-  div.status-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
 }
+
+.status-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+
 
 @include for-tablet-portrait-down {
   .monster-instance {
@@ -99,7 +102,6 @@
   
   
   .monster-healthbar {
-    min-width: 4rem + 6rem;
     width: 100%;
     display: flex;
   }
@@ -142,10 +144,11 @@
   .monster-statuses {
     max-height: $status-height;
     width: 100%;
-    div.status-container {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-    }
+  }
+
+  .status-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 }
