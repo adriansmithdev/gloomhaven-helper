@@ -46,6 +46,23 @@ body {
   
 }
 
+button {
+  background-color: $ui-background-color;
+  -webkit-appearance: none;
+    -moz-appearance: none;
+  &:active {
+    border: 0;
+    outline:0;
+    border-color: $ui-background-color;
+  }
+  &:focus {
+    border: 0;
+    outline:0;
+    border-color: $ui-background-color;
+    
+  }
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
