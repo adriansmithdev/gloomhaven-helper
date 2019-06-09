@@ -158,6 +158,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    toggleElite: () => dispatch({type: 'TOGGLE_ELITE'}),
     addMonster: (hash, monsterId, isElite) => dispatch(addMonster(hash, monsterId, isElite)),
     clearSession: () => dispatch({type: 'CLEAR_SESSION'}),
     setStatus: (newStatus) => dispatch(setStatus(newStatus)),
