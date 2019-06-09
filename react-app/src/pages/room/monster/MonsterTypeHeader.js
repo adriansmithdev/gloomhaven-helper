@@ -11,14 +11,14 @@ class MonsterTypeHeader extends Component {
     this.addMonsterEvent = this.addMonsterEvent.bind(this);
   }
 
-  parseMonsterAttribute(attribute) {
+  parseMonsterAttribute(attribute, key) {
     const splitStat = attribute.split(' ');
 
     const icon = IconManager(`%${splitStat[0].toLowerCase()}%`);
     if(icon !== undefined) {
       const value = (splitStat[1] !== undefined) ?
         splitStat[1].replace(',', '') : '';
-      return <MonsterAttribute src={icon.src} alt={icon.alt} value={value}/>
+      return <MonsterAttribute key={key} src={icon.src} alt={icon.alt} value={value}/>
     } else {
       return <span className="text-attribute">{attribute}</span>;
     }
@@ -85,12 +85,12 @@ class MonsterTypeHeader extends Component {
     
         <div className="monster-attributes">
           <div className="elite-attributes">
-            {monster.eliteAttributes.map(attribute =>
-              this.parseMonsterAttribute(attribute))}
+            {monster.eliteAttributes.map((attribute, index) =>
+              this.parseMonsterAttribute(attribute, index))}
           </div>
           <div className="normal-attributes">
-            {monster.attributes.map(attribute =>
-              this.parseMonsterAttribute(attribute))}
+            {monster.attributes.map((attribute, index) =>
+              this.parseMonsterAttribute(attribute, index))}
           </div>
           
         </div>
