@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 // Components.
 import { Redirect } from 'react-router';
-import RoomTopbar from './RoomTopbar';
-import RoomToolbar from './RoomToolbar';
+import RoomTopbar from './Titlebar';
+import StickyToolbar from './StickyToolbar';
 import MonsterList from './monster/MonsterList';
 import LoadingScreen from './../common/LoadingScreen';
 import InitiativeTracker from './initiative/InitiativeTracker';
@@ -14,7 +14,7 @@ import { toast } from 'react-toastify';
 // Redux Store Actions.
 import { updateRoom, addMonster } from './../../store/actions/actions';
 import { setStatus } from './../../store/actions/storeActions';
-import { apiURL } from './../../store/actions/axios.config';
+import { apiURL } from './../../axios.config';
 
 class Room extends Component {
 
@@ -73,16 +73,14 @@ class Room extends Component {
       }
 
       this.props.recieveEvent(action);
-      
     };
 
     const setEventSourceStatus = this.props.setEventSourceStatus;
 
-    
-
     eventSource.onerror = function(event) {
       setEventSourceStatus('CONNECTION_PENDING');
 
+      // Display error after several attempts.
       const timeoutHandler = () => {
         attempts++;
         if(eventSource.readyState === 2 || attempts === 3) {
@@ -95,19 +93,12 @@ class Room extends Component {
           attempts = 0;
         }
       }
-
       const checkConnection = async function() {
         setTimeout(timeoutHandler, 5000);
-        
       }
-
       checkConnection();
-
-      
     }
   }
-
-
 
   render() {
 
@@ -132,7 +123,7 @@ class Room extends Component {
           toggleElite={this.props.toggleElite}
           />
         <div className="room-content">
-          <RoomToolbar />
+          <StickyToolbar />
           <MonsterList />
 
           <span className="input-group-btn">
