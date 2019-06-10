@@ -123,10 +123,10 @@ class Room extends Component {
         <TopToolbar>
           <AddMonsterWidget 
             addMonster={this.props.addMonster} 
-            monsters={this.props.monsters}
+            monsters={this.props.session.monsters}
             eliteToggle={this.props.eliteToggle} // The State
             toggleElite={this.props.toggleElite} // The function
-            hash={this.props.hash}
+            hash={this.props.session.room.hash}
           />
           <ScenarioLevel
             scenarioLevel={this.props.scenarioLevel} 
