@@ -139,7 +139,7 @@ export const drawAction = function(hash, monsterId) {
 
 export const getSession = function(hash) {
   return async (dispatch) => {
-    const response = await axios.get(`http://localhost:5000/api/sessions?hash=${hash}`)
+    const response = await axios.get(`sessions?hash=${hash}`)
     .then(response => {
       dispatch(setSession(response.data.content[0]));
       dispatch(setStatus('SESSION_FOUND'));
