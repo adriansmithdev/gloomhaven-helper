@@ -74,13 +74,13 @@ class InitiativeTracker extends Component {
       <div className={`initiative-tracker ${this.getHidden()}`}>
         <div className="initiative-tracker-background"></div>
         <div className="initiative-tracker-container">
-          <button type="button" 
+          <span type="button" 
             className="initiative-tracker-toggle" 
             onClick={this.toggleHide}
             title="Display Initiative order"
             >
             {this.getSymbol()}
-          </button>
+          </span>
           <div className="initiative-list">
             {this.renderTypes()}
           </div>

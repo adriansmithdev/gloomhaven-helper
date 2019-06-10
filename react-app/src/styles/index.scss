@@ -77,6 +77,13 @@ button {
   }
 }
 
+button.button {
+  &:active {
+    padding-left: 18px;
+  }
+
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

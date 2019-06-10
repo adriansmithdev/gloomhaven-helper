@@ -4,15 +4,15 @@
 
 // Add margins for initiative tracker
 
-@include for-tablet-portrait-down {
+// @include for-tablet-portrait-down {
   .room-content {
     padding-bottom: $initiative-tracker-width !important;
     padding-right: 1rem;
   }
-}
+// }
 
-@include for-tablet-landscape-up {
-  .room-content {
-    margin-right: $initiative-tracker-width !important;
-  }
-}
+// @include for-tablet-landscape-up {
+//   .room-content {
+//     margin-right: $initiative-tracker-width !important;
+//   }
+// }
