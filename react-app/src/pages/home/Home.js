@@ -64,12 +64,6 @@ class Home extends Component {
   renderNewRoomInputs() {
     return (
       <>
-        <div className="ml-1 mr-2">
-          <label className="label">Scenario Number</label>
-          <input type="text" maxLength={4} className="input scenarioNumInput is-large" autoFocus name="scenarioNum"
-                 defaultValue="0" ref={this.scenarioNum}/>
-        </div>
-        <br/>
         <div className="m-1 mr-2">
           <label className="label">Scenario Level</label>
           <div className="select is-large">
@@ -96,7 +90,7 @@ class Home extends Component {
   }
 
   createRoom() {
-    const newRoom = {scenarioNumber: this.scenarioNum.current.value, scenarioLevel: this.scenarioLvl.current.value};
+    const newRoom = {scenarioNumber: 0, scenarioLevel: this.scenarioLvl.current.value};
     this.props.createRoom(newRoom);
     this.setState({showLevelInput: false});
   }

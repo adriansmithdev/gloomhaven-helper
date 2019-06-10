@@ -41,7 +41,7 @@ class MonsterActions extends Component {
         // If icon is found, use icon.
         if(icon !== undefined) {
           imageCounter++;
-          return <img className="monster-action-icon" key={index} src={icon.src} alt={icon.alt}/>;
+          return <img className="monster-action-icon" key={index} src={icon.src} alt={icon.alt} title={icon.alt}/>;
         } else {
           // If item isn't an image, return text wrapped in span without *'s
           const itemWithoutAsterisks = item.replace(/[*]/g, '');

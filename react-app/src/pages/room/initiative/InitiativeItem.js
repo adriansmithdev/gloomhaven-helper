@@ -21,7 +21,7 @@ const InitiativeItem = (props) => {
   }
   
   return (
-    <div className="initiative-item" title={props.type.name}>
+    <div className="initiative-item" title={props.type.name + " Initiative: " + props.type.monsterAction.initiative}>
       <img src={portrait} alt={props.type.name}/>
       <strong>{props.type.monsterAction.initiative}</strong>
     </div>

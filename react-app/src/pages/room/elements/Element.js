@@ -4,7 +4,7 @@ const Element = (props) => {
 
   const getIcon = () => 
     (props.element && props.element.type !== undefined) ?
-      <img className="element-image" src={require(`./../../../assets/icons/elements/${props.element.type.toLowerCase()}.svg`)} alt={props.element.type} /> :
+      <img className="element-image" src={require(`./../../../assets/icons/elements/${props.element.type.toLowerCase()}.svg`)} alt={props.element.type} title={props.element.type}/> :
       ""
 
   return (

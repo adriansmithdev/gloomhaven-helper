@@ -43,7 +43,7 @@ const ProgressBar = (props) => {
   }
 
   return (
-    <div className="progress-bar">
+    <div className="progress-bar" title={"HP"}>
       <div className="progress-bar-progress" style={barStyles}></div>
       <p className="progress-title">{getTitleText() + getContentText()}</p>
     </div>
