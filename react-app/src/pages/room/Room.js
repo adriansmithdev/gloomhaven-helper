@@ -4,7 +4,10 @@ import { connect } from 'react-redux';
 
 // Components.
 import { Redirect } from 'react-router';
-import RoomTopbar from './Titlebar';
+import Titlebar from './Titlebar';
+import TopToolbar from './TopToolbar';
+import AddMonsterWidget from './monster/AddMonsterWidget';
+import ScenarioLevel from './../common/ScenarioLevel';
 import StickyToolbar from './StickyToolbar';
 import MonsterList from './monster/MonsterList';
 import LoadingScreen from './../common/LoadingScreen';
@@ -113,15 +116,22 @@ class Room extends Component {
       ) : (
 
        <>
-        <RoomTopbar 
-          {...this.props.session}
-          eliteToggle={this.props.eliteToggle} 
-          confirmLevelChange={this.confirmLevelChange}
-          updateScenario={this.updateScenario}
+        <Titlebar 
+          hash={this.props.session.room.hash}
           eventSourceStatus={this.props.eventSourceStatus}
-          addMonster={this.props.addMonster}
-          toggleElite={this.props.toggleElite}
           />
+        <TopToolbar>
+          <AddMonsterWidget 
+            addMonster={this.props.addMonster} 
+            monsters={this.props.monsters}
+            eliteToggle={this.props.eliteToggle} // The State
+            toggleElite={this.props.toggleElite} // The function
+            hash={this.props.hash}
+          />
+          <ScenarioLevel
+            scenarioLevel={this.props.scenarioLevel} 
+            confirmLevelChange={this.props.confirmLevelChange}/>
+        </TopToolbar>
         <div className="room-content">
           <StickyToolbar />
           <MonsterList />

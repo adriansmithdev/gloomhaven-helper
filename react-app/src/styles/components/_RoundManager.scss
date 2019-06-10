@@ -1,0 +1,38 @@
+.round-manager {
+  display: flex;
+  border-radius: 4px;
+  overflow: hidden;
+  max-height: $round-manager-height;
+}
+
+.round-text {
+  display: block;
+  height: 100%;
+  color: $dark-color;
+  background-color: $light-color;
+  @include padding-x(1rem);
+  line-height: $round-manager-height;
+  white-space:nowrap;
+}
+
+.round-increment-button {
+  height: $round-manager-height;
+  width:  $round-manager-height;
+  font-size: $round-manager-height/2.5;
+}
+
+@include for-phone-only {
+  .round-manager {
+    max-height: $sticky-toolbar-device-size-factor * $round-manager-height;
+  }
+
+  .round-text {
+    @include padding-x(0.5rem);
+    line-height: $sticky-toolbar-device-size-factor * $round-manager-height;
+  }
+
+  .round-increment-button {
+    height: $sticky-toolbar-device-size-factor * $round-manager-height;
+    width:  $sticky-toolbar-device-size-factor * $round-manager-height;
+  }
+}

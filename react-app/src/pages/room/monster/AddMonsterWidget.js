@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
-
-
-
 class AddMonsterWidget extends Component {
 
   constructor(props) {
     super(props);
-
     this.monsterSelect = React.createRef();
     this.addMonster = this.addMonster.bind(this);
-
   }
 
   addMonster() {
@@ -29,14 +24,9 @@ class AddMonsterWidget extends Component {
         <select className="monster-select" ref={this.monsterSelect}>
           {monsterTypes || ''}
         </select>
-        &nbsp;&nbsp;
-        <span className="themed-font has-text-light is-size-4 hide-for-devices">Toggle Elite: </span> &nbsp;&nbsp;
-        <button className={`elite-toggle ${(isElite ? 'elite' : '')} button is-dark themed-font`}
+        <button className={`elite-toggle ${(isElite ? 'elite' : '')} themed-font`}
           onClick={this.props.toggleElite}>
-          <div className="elite-toggle-fill">
-            
-          </div>
-          <p className="toggle-text">{buttonText}</p>
+            {buttonText}
         </button>
         <button className="add-monster-button" onClick={this.addMonster}>
           + <span className="hide-for-devices">Monster</span>

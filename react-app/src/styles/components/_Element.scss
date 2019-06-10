@@ -1,6 +1,6 @@
 .element {
   background-color: $dark-color;
-  margin-left: 2px;
+  margin-left: $sticky-toolbar-margin;
   position: relative;
   display: inline-block;
   width: $element-size;
@@ -60,14 +60,13 @@
 }
 
 @include for-phone-only {
-  $factor: 0.75;
   .element {
-    width:  $factor * $element-size;
-    height: $factor * $element-size;
+    width:  $sticky-toolbar-device-size-factor * $element-size;
+    height: $sticky-toolbar-device-size-factor * $element-size;
   }
   
   .element-bar {
-    width:  $factor * $element-size;
-    max-height: $factor * $element-size;
+    width:  $sticky-toolbar-device-size-factor * $element-size;
+    max-height: $sticky-toolbar-device-size-factor * $element-size;
   }
 }

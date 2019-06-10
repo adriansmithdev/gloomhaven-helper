@@ -2,6 +2,7 @@
   display: inline-block;
   width: $status-height;
   height: $status-height;
+  min-width: $status-height;
   opacity: 0.25;
   transition: opacity 0.1s;
 

@@ -27,12 +27,21 @@ sans-serif;
 // Room 
 $room-min-width: 824px;
 
-// Room Topbar
-$topbar-title-height: 3.5rem;
-$add-monster-height: 2rem;
-$topbar-height: $topbar-title-height + $add-monster-height;
+// Titlebar
+$titlebar-height: 3rem;
 
-// Room toolbar
+// TopToolbar
+$top-toolbar-height: 3rem;
+
+// StickyToolbar
+$sticky-toolbar-normal-height: 3rem;
+$element-size: $sticky-toolbar-normal-height;
+$round-manager-height: $sticky-toolbar-normal-height;
+$sticky-toolbar-margin: 2px;
+$sticky-toolbar-device-size-factor: 0.75;
+
+
+
 $header-height: 4rem;
 $header-font-size: $header-height/2;
 $padding: $header-height/4;

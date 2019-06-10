@@ -1,56 +1,34 @@
-.room-topbar {
-  display: flex;
+.titlebar {
+  top: 0;
   position: absolute;
-  flex-wrap: wrap;
-  justify-content: space-between;
   width: 100%;
-  height: $topbar-height;
   z-index: 56;
   background-color: $dark-color;
   @include padding-x(0.5rem);
+  height: $titlebar-height;
 }
 
-.topbar-item {
-}
-
-.topbar-row {
+.titlebar-contents {
+  width: 100%;
+  position: relative;
   display: flex;
+  flex-wrap: nowrap;
 }
 
-.topbar-title {
+.titlebar-title {
   color: $light-color;
-  font-size: $topbar-title-height/2;
-
+  font-size: $titlebar-height/1.5;
+  line-height: $titlebar-height;
   &:hover {
     color: darken($light-color, 10%);
   }
-
 }
 
 .room-hash {
   @include margin-x(1rem);
-  font-size: $topbar-title-height/3.5;
+  font-size: $titlebar-height/2.5;
+  line-height: $titlebar-height;
   color: $light-color;
 }
 
 
-
-.scenario-level, .scenario-number {
-  overflow: hidden;
-  margin-top: (($topbar-height/2) - $add-monster-height)/1.65;
-  height: $add-monster-height;
-  background-color: $ui-background-color;
-  border-radius: 4px;
-  padding-left: 0.5rem;
-}
-
-.scenario-label {
-  color: $light-color;
-  margin-right: 0.5rem;
-  line-height: $add-monster-height;
-}
-
-.scenario-input {
-  float: right;
-  height: 100%;
-}

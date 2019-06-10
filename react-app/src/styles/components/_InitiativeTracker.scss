@@ -92,7 +92,7 @@
     position: fixed;
     width: $initiative-tracker-width;
     min-height: $initiative-tracker-min-height;
-    top: $topbar-height;
+    top: $titlebar-height;
     right: -($scrollbar-buffer-width);
     transition: transform 0.25s;
     &.hide {

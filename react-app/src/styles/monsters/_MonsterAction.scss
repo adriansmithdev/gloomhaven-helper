@@ -3,13 +3,12 @@ $font-size: 1.25rem;
 $action-icon-size: 1.25 * $font-size;
 
 .monster-actions {
-  border-top: 2px solid darken($ui-background-color, 5%);
+  border-top:    2px solid darken($ui-background-color, 5%);
+  border-bottom: 2px solid darken($ui-background-color, 5%);
   @include padding-y(1rem);
   color: white;
   display: flex;
   flex-wrap: wrap;
-  
-  
 }
 
 .monster-action {

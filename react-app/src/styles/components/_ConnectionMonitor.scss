@@ -1,9 +1,10 @@
 .connection-monitor {
-  display: inline-block;
-  width: $topbar-title-height/4;
-  height: $topbar-title-height/4;
-  margin-top: $topbar-title-height/2.6;
+  display: block;
+  width: $titlebar-height/3;
+  height: $titlebar-height/3;
+  min-width: $titlebar-height/3;
   border-radius: 100%;
+  margin-top: $titlebar-height/3;
   
   &.open {
     background-color: green;

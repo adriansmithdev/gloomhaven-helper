@@ -17,13 +17,12 @@ export const RoundManager = (props) => {
   }
 
   return(
-    <div className="round-manager field has-addons">
-        <button type="button" 
-          className="themed-font button has-text-black is-static">
+    <div className="round-manager">
+        <div className="round-text themed-font">
           Round: {(props.room !== undefined) ? props.room.round : ''} 
-        </button>
+        </div>
         <button type="button" 
-          className="button is-dark themed-font round-increment-button" 
+          className="round-increment-button themed-font" 
           onClick={incrementRound}>
           →
         </button>

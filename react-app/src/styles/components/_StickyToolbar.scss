@@ -6,13 +6,13 @@
   z-index: 55;
   max-width: 100vw;
   background-color: $body-backgroung-color;
+  @include margin-y($sticky-toolbar-margin);
 }
 
 .sticky-toolbar-content {
-  padding-top: 4px;
   display: flex !important;
   justify-content: space-between !important;
   margin: 0 !important;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   
 }
