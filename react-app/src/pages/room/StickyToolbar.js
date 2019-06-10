@@ -15,7 +15,7 @@ export class StickyToolbar extends Component {
 
     const { hash, elements } = (hasProps) ? this.props.room : {};
     return (
-      <div className="sticky-toolbar">
+      <div className="sticky-toolbar mr-1">
         <div className="sticky-toolbar-content">   
           <ElementList 
             hash={hash} 

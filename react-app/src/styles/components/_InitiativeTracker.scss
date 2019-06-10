@@ -1,5 +1,5 @@
 
-@include for-tablet-portrait-down {
+// @include for-tablet-portrait-down {
   .initiative-tracker {
     height: $initiative-tracker-width;
     width: 100vw;
@@ -39,6 +39,7 @@
     padding: 0;
     border: 0;
     text-align: center;
+    font-weight: bold;
     cursor: pointer;
   
     &:hover {
@@ -85,93 +86,94 @@
       font-size: $initiative-font-size;
     }
   }
-}
+// }
 
-@include for-tablet-landscape-up {
-  .initiative-tracker {
-    position: fixed;
-    width: $initiative-tracker-width;
-    min-height: $initiative-tracker-min-height;
-    top: $titlebar-height;
-    right: -($scrollbar-buffer-width);
-    transition: transform 0.25s;
-    &.hide {
-      -ms-transform: translate($initiative-item-width, 0); /* IE 9 */
-      -webkit-transform: translate($initiative-item-width, 0); /* Safari */
-      transform: translate($initiative-item-width, 0);
-    }
-  }
+//// Code for initiative sidebar.
+// @include for-tablet-landscape-up {
+//   .initiative-tracker {
+//     position: fixed;
+//     width: $initiative-tracker-width;
+//     min-height: $initiative-tracker-min-height;
+//     top: $titlebar-height + $top-toolbar-height + (2 * $top-toolbar-padding) + $sticky-toolbar-height;
+//     right: -($scrollbar-buffer-width);
+//     transition: transform 0.25s;
+//     &.hide {
+//       -ms-transform: translate($initiative-item-width, 0); /* IE 9 */
+//       -webkit-transform: translate($initiative-item-width, 0); /* Safari */
+//       transform: translate($initiative-item-width, 0);
+//     }
+//   }
   
-  .initiative-tracker-background {
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: $initiative-tracker-background;
-  }
+//   .initiative-tracker-background {
+//     display: block;
+//     position: absolute;
+//     width: 100%;
+//     height: 100%;
+//     background-color: $initiative-tracker-background;
+//   }
   
-  .initiative-tracker-container {
-    display: flex;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
+//   .initiative-tracker-container {
+//     display: flex;
+//     position: absolute;
+//     width: 100%;
+//     height: 100%;
+//     overflow: hidden;
+//   }
   
-  .initiative-tracker-toggle {
-    color: invert($ui-background-color);
-    background-color: $ui-background-color;
-    position: relative;
-    padding: 0;
-    border: 0;
-    min-height: 100%;
-    width: $initiative-tracker-toggle-width;
-    text-align: center;
-    cursor: pointer;
+//   .initiative-tracker-toggle {
+//     color: invert($ui-background-color);
+//     background-color: $ui-background-color;
+//     position: relative;
+//     padding: 0;
+//     border: 0;
+//     min-height: 100%;
+//     width: $initiative-tracker-toggle-width;
+//     text-align: center;
+//     cursor: pointer;
   
-    &:hover {
-      background-color: lighten($ui-background-color, 2.5%);
-    }
-  }
+//     &:hover {
+//       background-color: lighten($ui-background-color, 2.5%);
+//     }
+//   }
   
-  .initiative-list {
-    width: $initiative-item-width + 2rem;
-    position: relative;
-    scroll-behavior: smooth;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    box-sizing: content-box;
-  }
+//   .initiative-list {
+//     width: $initiative-item-width + 2rem;
+//     position: relative;
+//     scroll-behavior: smooth;
+//     overflow-y: scroll;
+//     overflow-x: hidden;
+//     box-sizing: content-box;
+//   }
   
-  .initiative-item {
-    width: $initiative-item-width;
-    height: $initiative-item-width;
-    opacity: 0.8;
-    cursor: pointer;
-    transition: opacity 0.1s;
+//   .initiative-item {
+//     width: $initiative-item-width;
+//     height: $initiative-item-width;
+//     opacity: 0.8;
+//     cursor: pointer;
+//     transition: opacity 0.1s;
     
-    &:hover {
-      opacity: 1;
-    }
+//     &:hover {
+//       opacity: 1;
+//     }
   
-    img {
-      position: absolute;
-      object-fit: cover;
-      width: $initiative-item-width;
-      height: $initiative-item-width;
-    }
+//     img {
+//       position: absolute;
+//       object-fit: cover;
+//       width: $initiative-item-width;
+//       height: $initiative-item-width;
+//     }
   
-    strong {
-      padding-top: 1.25rem;
-      padding-right: 1rem;
-      color: white;
-      width: 100%;
-      text-align: center;
-      display: block;
-      position: absolute;
-      text-shadow: 0px 0px 6px #000000, 0px 0px 6px #000000;
-      font-size: $initiative-font-size;
-    }
+//     strong {
+//       padding-top: 1.25rem;
+//       padding-right: 1rem;
+//       color: white;
+//       width: 100%;
+//       text-align: center;
+//       display: block;
+//       position: absolute;
+//       text-shadow: 0px 0px 6px #000000, 0px 0px 6px #000000;
+//       font-size: $initiative-font-size;
+//     }
   
-  }
-}
+//   }
+// }

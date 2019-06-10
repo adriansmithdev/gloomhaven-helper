@@ -24,7 +24,7 @@
 @import './monsters/MonsterToken';
 
 // Page Styles
-@import './pages/home';
+@import './pages/Home';
 @import './pages/Room';
 
 * {
@@ -48,18 +48,27 @@ body {
 
 button {
   border: 0;
+  padding: default;
   color: $light-color;
   background-color: $ui-background-color;
   -webkit-appearance: none;
     -moz-appearance: none;
   &:active {
+    padding-left: 9px;
     outline:0;
-    border-color: $ui-background-color;
+    outline-color: #00000000;
+    border-color: #00000000;
   }
   &:focus {
     outline:0;
-    border-color: $ui-background-color;
-    
+    outline-color: #00000000;
+    border-color: #00000000;
+  }
+  &::-moz-focus-inner {
+    outline:0;
+    outline-color: #00000000;
+    border: 0;
+    border-color: #00000000;
   }
 }
 

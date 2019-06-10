@@ -1,4 +1,31 @@
 .top-topbar {
   margin-top: $titlebar-height;
   display: flex;
+  justify-content: space-between;
+  padding: $top-toolbar-padding;
+}
+
+.scenario-level {
+  height: $scenario-level-widget-height;
+  display: flex;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.scenario-level-label {
+  color: $light-color;
+  background-color: $ui-background-color;
+  line-height: $scenario-level-widget-height;
+  height: $scenario-level-widget-height;
+  font-size: $scenario-level-widget-height/2;
+  @include padding-x(1.5 * $top-toolbar-padding);
+}
+
+.scenario-input {
+  width: 4rem;
+  border: 0;
+  padding-left: $top-toolbar-padding;
+  line-height: $scenario-level-widget-height;
+  height: $scenario-level-widget-height;
+  font-size: $scenario-level-widget-height/2.25;
 }

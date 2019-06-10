@@ -31,12 +31,17 @@ $room-min-width: 824px;
 $titlebar-height: 3rem;
 
 // TopToolbar
-$top-toolbar-height: 3rem;
+$top-toolbar-height: 2.5rem;
+$top-toolbar-padding: $top-toolbar-height/6;
+$add-monster-widget-height: $top-toolbar-height - $top-toolbar-padding;
+$scenario-level-widget-height: $top-toolbar-height - $top-toolbar-padding;
+$scenario-level-widget-padding: ($top-toolbar-height - $scenario-level-widget-height)/2;
+$top-toolbar-device-size-factor: 1.5;
 
 // StickyToolbar
-$sticky-toolbar-normal-height: 3rem;
-$element-size: $sticky-toolbar-normal-height;
-$round-manager-height: $sticky-toolbar-normal-height;
+$sticky-toolbar-height: 3rem;
+$element-size: $sticky-toolbar-height;
+$round-manager-height: $sticky-toolbar-height;
 $sticky-toolbar-margin: 2px;
 $sticky-toolbar-device-size-factor: 0.75;
 
@@ -56,7 +61,7 @@ $round-size: 3rem;
 // Initiative Tracker
 $initiative-font-size: 1.5rem;
 $initiative-item-width: 5rem;
-$initiative-tracker-toggle-width: 1.15rem;
+$initiative-tracker-toggle-width: 1.75rem;
 $initiative-tracker-width: $initiative-item-width + $initiative-tracker-toggle-width + 2rem;
 $initiative-tracker-min-height: $initiative-item-width * 12;
 

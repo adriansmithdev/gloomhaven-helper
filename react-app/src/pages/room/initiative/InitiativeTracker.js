@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 import InitiativeItem from './InitiativeItem';
 
-const leftArrow = String.fromCharCode(10096);
-const rightArrow = String.fromCharCode(10097);
+const closedArrow = String.fromCharCode(9650);
+const openArroy = String.fromCharCode(9660);
 
 class InitiativeTracker extends Component {
 
@@ -29,7 +29,7 @@ class InitiativeTracker extends Component {
 
   getSymbol() {
     return (this.state.hidden) ?
-      leftArrow : rightArrow;
+    closedArrow : openArroy;
   }
 
   getHidden() {

@@ -132,8 +132,8 @@ class Room extends Component {
             scenarioLevel={this.props.session.room.scenarioLevel} 
             confirmLevelChange={this.confirmLevelChange}/>
         </TopToolbar>
+        <StickyToolbar />
         <div className="room-content">
-          <StickyToolbar />
           <MonsterList />
 
           <span className="input-group-btn">

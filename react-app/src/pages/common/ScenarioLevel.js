@@ -2,15 +2,20 @@ import React from 'react';
 
 const ScenarioLevel = (props) => {
   return (
-    <div className="scenario-level">
-      <label className="scenario-label">
+    <label className="scenario-level mr-1">
+      <span className="scenario-level-label themed-font">
         <span className="hide-for-devices">Scenario </span>
         Level
-        <input className="scenario-input" id="scenarioLevel" type="number" min="1" max="150"
-              defaultValue={props.scenarioLevel} onChange={props.confirmLevelChange}
-      />
-      </label>
-    </div>
+      </span>
+      
+      <input className="scenario-input" 
+        id="scenarioLevel" 
+        type="number" 
+        min="1" 
+        max="150"
+        defaultValue={props.scenarioLevel} onChange={props.confirmLevelChange}
+        />
+    </label>
   );
 }
 

@@ -110,7 +110,7 @@
 
 .monster-header-add-button {
   color: $light-color;
-  background-color: $ui-background-color;
+  background-color: lighten($ui-background-color, 2.5%);
   height: $monster-header-add-button-size;
   width: 3rem;
   
@@ -122,7 +122,7 @@
   text-align:center;
   vertical-align: middle;
   &:hover {
-    background-color: darken($ui-background-color, 4%);
+    background-color: darken($ui-background-color, 2%);
   }
 }
 

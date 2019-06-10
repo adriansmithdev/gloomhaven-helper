@@ -1,0 +1,25 @@
+.add-monster-widget {
+  display: flex;
+  flex-wrap: nowrap;
+  height: $add-monster-widget-height;
+  overflow: hidden;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.monster-select {
+
+}
+
+.elite-toggle {
+
+  &:hover {
+    background-color: darken($ui-background-color, 4%);
+  }
+}
+
+.add-monster-button {
+  &:hover {
+    background-color: darken($ui-background-color, 4%);
+  }
+}
