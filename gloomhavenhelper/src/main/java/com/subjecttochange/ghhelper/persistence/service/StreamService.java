@@ -23,7 +23,7 @@ public class StreamService {
     public static final long FIVE_MINUTES = 300000L;
 
     private final SessionService sessionService;
-    private Map<String, ConcurrentLinkedQueue<SseEmitter>> roomEmitters = new HashMap<>();
+    private Map<String, ConcurrentLinkedQueue<SseEmitter>> roomEmitters = new ConcurrentHashMap<>();
     private Map<String, String> roomCache = new ConcurrentHashMap<>();
 
     @Autowired
