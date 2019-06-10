@@ -58,12 +58,17 @@ button {
     outline:0;
     outline-color: #00000000;
     border-color: #00000000;
+    background-color: darken($ui-background-color, 3%);
   }
   &:focus {
     outline:0;
     outline-color: #00000000;
     border-color: #00000000;
   }
+  &:hover {
+    background-color: darken($ui-background-color, 2.5%);
+  }
+  // Fix for weird black outline that shows up in firefox.
   &::-moz-focus-inner {
     outline:0;
     outline-color: #00000000;

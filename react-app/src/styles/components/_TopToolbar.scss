@@ -3,6 +3,8 @@
   display: flex;
   justify-content: space-between;
   padding: $top-toolbar-padding;
+  background-color: $dark-color;
+  z-index: 56;
 }
 
 .scenario-level {
