@@ -7,6 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.subjecttochange.ghhelper.persistence.model.EventType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -30,7 +31,6 @@ public class StreamService {
         this.sessionService = sessionService;
     }
 
-    @GetMapping("/stream")
     public SseEmitter streamSseMvc(@RequestParam(value = "hash") String hash) {
         SseEmitter emitter = new SseEmitter(FIVE_MINUTES);
         setEmitterEvents(emitter, hash);
@@ -45,6 +45,7 @@ public class StreamService {
         return emitter;
     }
 
+    @Transactional
     public void newEvent(EventType eventType, String hash, Object body) {
         if (roomEmitters.containsKey(hash)) {
             String newRoomResultBody = jsonOutput(EventType.GET_SESSION, sessionService.getRooms(hash, null));
