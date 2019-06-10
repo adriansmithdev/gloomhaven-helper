@@ -1,11 +1,11 @@
 import React from 'react';
-import ConnectionMonitor from './../common/ConnectionMonitor';
-import ScenarioLevel from './../common/ScenarioLevel';
+import ConnectionMonitor from '../common/ConnectionMonitor';
+import ScenarioLevel from '../common/ScenarioLevel';
 import AddMonsterWidget from './monster/AddMonsterWidget';
 
 
 
-const RoomTopbar = (props) => {
+const Titlebar = (props) => {
   
   
   return (
@@ -46,4 +46,4 @@ const RoomTopbar = (props) => {
   );
 }
 
-export default RoomTopbar;
+export default Titlebar;

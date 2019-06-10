@@ -3,11 +3,11 @@ import {connect} from 'react-redux';
 
 import ElementList from './elements/ElementList';
 
-import { updateElement, incrementRound } from './../../store/actions/actions';
+import { updateElement, incrementRound } from '../../store/actions/actions';
 import RoundManager from './RoundManager';
 
 
-export class RoomToolbar extends Component {
+export class StickyToolbar extends Component {
   
   render() {
 
@@ -15,8 +15,8 @@ export class RoomToolbar extends Component {
 
     const { hash, elements } = (hasProps) ? this.props.room : {};
     return (
-      <div className="monster-toolbar">
-        <div className="monster-toolbar-content">   
+      <div className="sticky-toolbar">
+        <div className="sticky-toolbar-content">   
           <ElementList 
             hash={hash} 
             elements={elements} 
@@ -47,4 +47,4 @@ const mapDispachToProps = (dispatch) => {
 }
 
 
-export default connect(mapStateToProps, mapDispachToProps)(RoomToolbar);
+export default connect(mapStateToProps, mapDispachToProps)(StickyToolbar);
