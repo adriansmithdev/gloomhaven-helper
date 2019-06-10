@@ -1,5 +1,5 @@
 
-.monster-toolbar {
+.sticky-toolbar {
   position: -webkit-sticky !important;
   position: sticky !important;
   top: 0;
@@ -8,7 +8,7 @@
   background-color: $body-backgroung-color;
 }
 
-.monster-toolbar-content {
+.sticky-toolbar-content {
   padding-top: 4px;
   display: flex !important;
   justify-content: space-between !important;

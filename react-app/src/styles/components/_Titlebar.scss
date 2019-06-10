@@ -1,0 +1,56 @@
+.room-topbar {
+  display: flex;
+  position: absolute;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  height: $topbar-height;
+  z-index: 56;
+  background-color: $dark-color;
+  @include padding-x(0.5rem);
+}
+
+.topbar-item {
+}
+
+.topbar-row {
+  display: flex;
+}
+
+.topbar-title {
+  color: $light-color;
+  font-size: $topbar-title-height/2;
+
+  &:hover {
+    color: darken($light-color, 10%);
+  }
+
+}
+
+.room-hash {
+  @include margin-x(1rem);
+  font-size: $topbar-title-height/3.5;
+  color: $light-color;
+}
+
+
+
+.scenario-level, .scenario-number {
+  overflow: hidden;
+  margin-top: (($topbar-height/2) - $add-monster-height)/1.65;
+  height: $add-monster-height;
+  background-color: $ui-background-color;
+  border-radius: 4px;
+  padding-left: 0.5rem;
+}
+
+.scenario-label {
+  color: $light-color;
+  margin-right: 0.5rem;
+  line-height: $add-monster-height;
+}
+
+.scenario-input {
+  float: right;
+  height: 100%;
+}

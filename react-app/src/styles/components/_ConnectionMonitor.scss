@@ -1,0 +1,17 @@
+.connection-monitor {
+  display: inline-block;
+  width: $topbar-title-height/4;
+  height: $topbar-title-height/4;
+  margin-top: $topbar-title-height/2.6;
+  border-radius: 100%;
+  
+  &.open {
+    background-color: green;
+  }
+  &.pending {
+    background-color: gold;
+  }
+  &.closed {
+    background-color: red;
+  }
+}

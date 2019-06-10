@@ -2,13 +2,13 @@
   position: relative;
   width: 100%;
   background-color: darken($ui-background-color, 5%);
-  div.progress-bar-progress {
+  .progress-bar-progress {
     position: absolute;
     height: $monster-instance-height;
     max-width: 100%;
     transition: background-color 0.5s, width 0.4s;
   }
-  p.progress-title {
+  .progress-title {
     
     color: $light-color;
     position: absolute;
@@ -28,13 +28,13 @@
     position: relative;
     width: 100%;
     background-color: darken($ui-background-color, 5%);
-    div.progress-bar-progress {
+    .progress-bar-progress {
       position: absolute;
       height: $monster-instance-height-device;
       max-width: 100%;
       transition: background-color 0.5s, width 0.4s;
     }
-    p.progress-title {
+    .progress-title {
       
       color: $light-color;
       position: absolute;

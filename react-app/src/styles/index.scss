@@ -1,31 +1,29 @@
 
 
-@import './core/variables';
-@import './core/mixins';
+@import './variables';
+@import './mixins';
 
-// Widgets
-@import './widgets/Status';
-@import './widgets/ProgressBar';
-@import './widgets/InitiativeTracker';
-
-// Room Components
-@import './room/Room';
-@import './room/RoomTopbar';
+// Components
+@import './components/Status';
+@import './components/ProgressBar';
+@import './components/InitiativeTracker';
+@import './components/Titlebar';
+@import './components/StickyToolbar';
+@import './components/Element';
+@import './components/ElementList';
+@import './components/ConnectionMonitor';
+@import './components/AddMonsterWidget';
 
 // Monster Components
-@import './monsters/MonsterToolbar';
 @import './monsters/MonsterList';
 @import './monsters/MonsterType';
 @import './monsters/MonsterInstance';
 @import './monsters/MonsterAction';
 @import './monsters/MonsterToken';
 
-// Element Components.
-@import './elements/Element';
-@import './elements/ElementList';
-
-//Home Components
-@import './home/home';
+// Page Styles
+@import './pages/home';
+@import './pages/Room';
 
 * {
   -webkit-box-sizing: border-box !important;
