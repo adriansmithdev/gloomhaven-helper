@@ -129,8 +129,8 @@ class Room extends Component {
             hash={this.props.session.room.hash}
           />
           <ScenarioLevel
-            scenarioLevel={this.props.scenarioLevel} 
-            confirmLevelChange={this.props.confirmLevelChange}/>
+            scenarioLevel={this.props.session.room.scenarioLevel} 
+            confirmLevelChange={this.confirmLevelChange}/>
         </TopToolbar>
         <div className="room-content">
           <StickyToolbar />
