@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const apiURL = 'http://localhost:5000/api/'
+export const apiURL = 'http://gloomhaven-helper.us-west-2.elasticbeanstalk.com/api/'
 
 export const configuredAxios = axios.create({
   baseURL: apiURL,

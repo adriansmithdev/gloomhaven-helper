@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {createRoom} from './../../store/actions/actions';
-import {getSession} from './../../store/actions/session';
+import {createRoom, getSession} from './../../store/actions/actions';
 import {clearSession} from './../../store/actions/storeActions';
 import FAQ from './../home/FAQ';
 
