@@ -1,6 +1,4 @@
-
-$font-size: 1.25rem;
-$action-icon-size: 1.25 * $font-size;
+$monster-action-icon-size: $monster-action-font-size + 0.5rem;
 
 .monster-actions {
   border-top:    2px solid darken($ui-background-color, 5%);
@@ -17,18 +15,30 @@ $action-icon-size: 1.25 * $font-size;
 }
 
 .monster-action-icon {
-  bottom: 0;
-  display: inline-block;
-  width: $font-size + 0.5rem;
-  height: $font-size + 0.5rem;
+  left: 0;
+  width: $monster-action-icon-size;
+  height: $monster-action-icon-size;
   object-fit: contain;
-  @include margin-x(0.5rem);
 }
 
 .monster-action-text {
   display: inline-block;
-  font-size: $font-size;
-  
+  font-size: $monster-action-font-size; 
+}
+
+.monster-action-icon-with-overlay {
+  position: relative;
+  width: $monster-action-icon-size;
+  height: $monster-action-icon-size;
+}
+
+.monster-action-icon-overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: $monster-action-icon-size;
+  height: $monster-action-icon-size;
+  object-fit: contain;
 }
 
 .draw-action-button {
@@ -40,7 +50,7 @@ $action-icon-size: 1.25 * $font-size;
   border: 0;
   border-radius: 4px;
 
-  font-size: $font-size;
+  font-size: $monster-action-font-size;
 
   &:hover {
     background-color: lighten($ui-background-color, 5%); 
