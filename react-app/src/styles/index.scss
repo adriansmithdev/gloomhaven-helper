@@ -52,7 +52,9 @@ button {
   color: $light-color;
   background-color: $ui-background-color;
   -webkit-appearance: none;
-    -moz-appearance: none;
+  -moz-appearance: none;
+
+  cursor: pointer;
   &:active {
     padding-left: 9px;
     outline:0;
