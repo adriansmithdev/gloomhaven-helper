@@ -13,14 +13,13 @@
 .elite-toggle {
   width: 4rem;
   position: relative;
-  background-color: $ui-background-color;
   color: $light-color;
   font-size: $add-monster-widget-height/2.25;
   text-align: center;
   border: 2px solid lighten($ui-background-color, 5%);
   overflow: hidden;
   
-  background-color: $dark-color;
+  background-color: darken($ui-background-color, 10%);
   cursor: pointer;
 
   &.elite {
