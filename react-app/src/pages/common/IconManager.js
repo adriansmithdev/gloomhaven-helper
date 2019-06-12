@@ -10,12 +10,14 @@ import RetaliateIcon from './../../assets/icons/stats/retaliate.svg'
 import ShieldIcon    from './../../assets/icons/stats/shield.svg';
 
 // Elements Icons
-import AirIcon   from './../../assets/icons/elements/air.svg';
-import DarkIcon  from './../../assets/icons/elements/dark.svg';
-import EarthIcon from './../../assets/icons/elements/earth.svg';
-import FireIcon  from './../../assets/icons/elements/fire.svg';
-import IceIcon   from './../../assets/icons/elements/ice.svg';
-import LightIcon from './../../assets/icons/elements/light.svg';
+import AirIcon    from './../../assets/icons/elements/filled/air.svg';
+import DarkIcon   from './../../assets/icons/elements/filled/dark.svg';
+import EarthIcon  from './../../assets/icons/elements/filled/earth.svg';
+import FireIcon   from './../../assets/icons/elements/filled/fire.svg';
+import IceIcon    from './../../assets/icons/elements/filled/ice.svg';
+import LightIcon  from './../../assets/icons/elements/filled/light.svg';
+import AnyElement from './../../assets/icons/elements/filled/any-element.svg';
+import UseElement from './../../assets/icons/elements/use-element.svg';
 
 // Statuses Icons
 import BlessIcon      from './../../assets/icons/statuses/Bless.svg';
@@ -83,6 +85,58 @@ const IconManager = (icon) => {
           src: LightIcon,
           alt: 'Light'
         }
+
+    // Use Elements
+    case '%air_use_element%:':
+        return {
+          type: 'element',
+          src: AirIcon,
+          alt: 'Use air element',
+          overlay: UseElement  
+        }
+    case '%dark_use_element%:':
+        return {
+          type: 'element',
+          src: DarkIcon,
+          alt: 'Use fire element',
+          overlay: UseElement  
+        }
+    case '%earth_use_element%:':
+        return {
+          type: 'element',
+          src: EarthIcon,
+          alt: 'Use dark element',
+          overlay: UseElement  
+        }
+    case '%fire_use_element%:':
+        return {
+          type: 'element',
+          src: FireIcon,
+          alt: 'Use earth element',
+          overlay: UseElement  
+        }
+    case '%ice_use_element%:':
+        return {
+          type: 'element',
+          src: IceIcon,
+          alt: 'Use ice element',
+          overlay: UseElement  
+        }
+    case '%light_use_element%:':
+        return {
+          type: 'element',
+          src: LightIcon,
+          alt: 'Use light element',
+          overlay: UseElement  
+        }
+    case '%any_use_element%:':
+        return {
+          type: 'element',
+          src: AnyElement,
+          alt: 'Use Any Element',
+          overlay: UseElement  
+        }
+
       
     // Stats
     case '%attack%':
