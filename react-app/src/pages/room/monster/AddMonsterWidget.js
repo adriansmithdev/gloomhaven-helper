@@ -14,7 +14,6 @@ class AddMonsterWidget extends Component {
   
   render() {
     const isElite = (this.props.eliteToggle)
-    const buttonText = (isElite) ? 'Elite' : 'Normal';
     const monsterTypes = (this.props.monsters !== undefined) ? 
       this.props.monsters.map((type, index) =>
         <option value={type.id} key={index}>{type.name}</option>
