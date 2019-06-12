@@ -29,7 +29,7 @@ class MonsterActions extends Component {
       const splitted = action.split(' ');
 
       const parsed = splitted.map((item, index) => {
-        
+        console.log(item);
 
         // Remove any HTML tags from item.
         const regexForHTMLTags = /(<([^>]+)>)/ig;
@@ -41,12 +41,21 @@ class MonsterActions extends Component {
         // If icon is found, use icon.
         if(icon !== undefined) {
           imageCounter++;
-          return <img className="monster-action-icon" key={index} src={icon.src} alt={icon.alt} title={icon.alt}/>;
+          if(icon.overlay !== undefined) {
+            return (
+              <div className="monster-action-icon-with-overlay ml-1" key={index}>
+                <img className="monster-action-icon" src={icon.src} alt={icon.alt} title={icon.alt}/>
+                <img className="monster-action-icon-overlay" src={icon.overlay} alt={icon.alt} title={icon.alt}/>
+              </div>
+            );
+          } else {
+            return <img className="monster-action-icon ml-1" key={index} src={icon.src} alt={icon.alt} title={icon.alt}/>;
+          }
         } else {
           // If item isn't an image, return text wrapped in span without *'s
           const itemWithoutAsterisks = item.replace(/[*]/g, '');
 
-          // If item isn't empty from removing asterisks, wrap in span.
+          // If item isn't empty from removing asterisks, wrap in p tag.
           return (itemWithoutAsterisks.length > 0) ? 
             <p className="monster-action-text" key={index}>{itemWithoutAsterisks}</p> :
             '';
