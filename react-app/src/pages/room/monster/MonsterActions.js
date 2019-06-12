@@ -29,8 +29,6 @@ class MonsterActions extends Component {
       const splitted = action.split(' ');
 
       const parsed = splitted.map((item, index) => {
-        console.log(item);
-
         // Remove any HTML tags from item.
         const regexForHTMLTags = /(<([^>]+)>)/ig;
         const parsed = item.replace(regexForHTMLTags, '');
@@ -57,7 +55,7 @@ class MonsterActions extends Component {
 
           // If item isn't empty from removing asterisks, wrap in p tag.
           return (itemWithoutAsterisks.length > 0) ? 
-            <p className="monster-action-text" key={index}>{itemWithoutAsterisks}</p> :
+            <p className="monster-action-text mr" key={index}>&nbsp;{itemWithoutAsterisks}</p> :
             '';
         }
       });
