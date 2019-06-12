@@ -45,7 +45,6 @@ public class StreamService {
         return emitter;
     }
 
-    @Transactional
     public void newEvent(EventType eventType, String hash, Object body) {
         if (roomEmitters.containsKey(hash)) {
             String newRoomResultBody = jsonOutput(EventType.GET_SESSION, sessionService.getRooms(hash, null));
