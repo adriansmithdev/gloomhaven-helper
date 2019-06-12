@@ -4,21 +4,71 @@
   height: $add-monster-widget-height;
   overflow: hidden;
   border-radius: 4px;
-  font-weight: bold;
 }
 
 .monster-select {
-
+  min-width: 6rem;
 }
 
 .elite-toggle {
+  width: 4rem;
+  display: inline;
+  position: relative;
+  background-color: $ui-background-color;
+  color: $light-color;
+  font-size: $add-monster-widget-height/2.25;
+  text-align: center;
+  border: 2px solid lighten($ui-background-color, 5%);
+  overflow: hidden;
+  
+  background-color: $dark-color;
+  cursor: pointer;
 
-  &:hover {
-    background-color: darken($ui-background-color, 4%);
+  &.elite {
+    // Move toggle to other side when selected.
+    .elite-toggle-slider {
+      left: 1rem;
+
+    }
+
   }
 }
 
+.elite-toggle-slider {
+  position: absolute;
+  display: flex;
+  left: -2.13rem;
+  height: $add-monster-widget-height;
+  transition: left 0.1s;
+}
+
+.elite-toggle-text {
+  padding-top: $add-monster-widget-height/10;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  
+  &.elite {
+    color: $elite-color;
+  }
+}
+
+.elite-toggle-divider {
+  position: relative;
+  display: block;
+  min-width: 10px;
+  height: $add-monster-widget-height;
+  margin-left: 0.75rem;
+  margin-right: 0.45rem;
+  background-color: lighten($ui-background-color, 35%);
+  
+}
+
 .add-monster-button {
+  min-width: 1.5rem;
   &:hover {
     background-color: darken($ui-background-color, 4%);
   }

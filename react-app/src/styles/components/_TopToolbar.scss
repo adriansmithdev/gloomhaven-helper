@@ -1,6 +1,7 @@
 .top-topbar {
   margin-top: $titlebar-height;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   padding: $top-toolbar-padding;
   background-color: $dark-color;

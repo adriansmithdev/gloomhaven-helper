@@ -24,12 +24,20 @@ class AddMonsterWidget extends Component {
         <select className="monster-select" ref={this.monsterSelect}>
           {monsterTypes || ''}
         </select>
-        <button className={`switch elite-toggle ${(isElite ? 'elite' : '')} themed-font`}
-          onClick={this.props.toggleElite}>
-            {buttonText}
-        </button>
+        <div className={`switch elite-toggle ${(isElite ? 'elite' : '')} themed-font`}
+          onClick={this.props.toggleElite} title="Toggle whether monster is elite or not">
+            <div className="elite-toggle-slider">
+              <div className="elite-toggle-text elite">
+                Elite
+              </div>
+              <div className="elite-toggle-divider"></div>
+              <div className="elite-toggle-text"> 
+                Normal
+              </div>
+            </div>
+        </div>
         <button className="add-monster-button" onClick={this.addMonster}>
-          {String.fromCharCode(10010)} <span className="hide-for-devices">Monster</span>
+          {String.fromCharCode(10010)} <span className="hide-for-devices themed-font">Monster</span>
         </button>   
       </div>
     );
