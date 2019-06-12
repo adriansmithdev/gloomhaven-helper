@@ -489,7 +489,7 @@
       "%move% -1",
       "%attack% +0",
       "%range% 2",
-      "%ice_use_element%: +2 %attack%, +1 %range%"
+      "%ice_use_element%: +2 %attack% +1 %range%"
     ],
     [
       true,
@@ -686,7 +686,7 @@
       "%move% +0",
       "%attack% -1",
       "%target% 2",
-      "%dark_use_element%: +2 %attack%, %disarm%"
+      "%dark_use_element%: +2 %attack% %disarm%"
     ],
     [
       true,
@@ -1263,7 +1263,7 @@
       "14",
       "%attack% +0",
       "%range% +0",
-      "%ice_use_element%: +2 %attack%, %immobilize%",
+      "%ice_use_element%: +2 %attack% %immobilize%",
       "%retaliate% 2",
       "%air%"
     ],
@@ -1329,7 +1329,7 @@
       "41",
       "%move% +0",
       "%attack% -1 %aoe-line-4-with-black% ",
-      "%earth_use_element%: +2 %attack%, %immobilize%"
+      "%earth_use_element%: +2 %attack% %immobilize%"
     ],
     [
       false,
@@ -1469,7 +1469,7 @@
       "09",
       "%move% +1",
       "%attack% -1",
-      "%range% +0, %curse%, %target% 2"
+      "%range% +0, %curse% %target% 2"
     ]
   ],
   "Spitting Drake": [
