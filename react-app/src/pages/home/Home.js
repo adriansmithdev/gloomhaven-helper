@@ -24,20 +24,20 @@ class Home extends Component {
     this.handleKeydown = this.handleKeydown.bind(this);
   }
 
-  renderCreateRoomBtn() {
+  renderCreateRoomBtn(text) {
     return (
       <button className="button is-dark is-large themed-font m-2" id="showLevelInput" type="button"
               onClick={(this.state.showLevelInput ? this.createRoom : this.setShow)}>
-        Create Room
+        {text}
       </button>
     );
   }
 
-  renderJoinRoomBtn() {
+  renderJoinRoomBtn(text) {
     return (
       <button className="button is-dark is-large themed-font m-2" id="showHashInput" type="button"
               onClick={(this.state.showHashInput ? this.joinRoom : this.setShow)}>
-        Join Room
+        {text}
       </button>
     );
   }
@@ -57,7 +57,7 @@ class Home extends Component {
       <>
         <label className="label">Room Code</label>
         <input type="text" className="input is-large" autoFocus name="hash" maxLength={7} ref={this.roomCode} />
-        {this.renderJoinRoomBtn()}
+        {this.renderJoinRoomBtn("Join")}
       </>
     );
   }
@@ -80,7 +80,7 @@ class Home extends Component {
             </select>
           </div>
         </div>
-        {this.renderCreateRoomBtn()}
+        {this.renderCreateRoomBtn("Enter")}
       </>
     );
   }
@@ -132,8 +132,8 @@ class Home extends Component {
 
 
             <div className="columns is-mobile is-centered">
-              <div className="column is-narrow"> {this.renderCreateRoomBtn()}</div>
-              <div className="column is-narrow">{this.renderJoinRoomBtn()}</div>
+              <div className="column is-narrow"> {this.renderCreateRoomBtn("Create Room")}</div>
+              <div className="column is-narrow">{this.renderJoinRoomBtn("Join Room")}</div>
             </div>
             <div className="columns is-centered">
               <div className="column is-narrow"> {this.state.showLevelInput ? this.renderNewRoomInputs() : ''}</div>
