@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 @Service
 public class StreamService {
 
-    public static final long TWO_MINUTES = 150000L;
+    public static final long FIVE_MINUTES = 300000L;
 
     private final SessionService sessionService;
     private Map<String, ConcurrentLinkedQueue<SseEmitter>> roomEmitters = new ConcurrentHashMap<>();
@@ -30,7 +30,7 @@ public class StreamService {
     }
 
     public SseEmitter streamSseMvc(@RequestParam(value = "hash") String hash) {
-        SseEmitter emitter = new SseEmitter(TWO_MINUTES);
+        SseEmitter emitter = new SseEmitter(FIVE_MINUTES);
         setEmitterEvents(emitter, hash);
         saveEmitter(hash, emitter);
 
