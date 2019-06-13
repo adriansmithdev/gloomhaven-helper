@@ -7,8 +7,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.subjecttochange.ghhelper.persistence.model.EventType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -20,7 +18,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 @Service
 public class StreamService {
 
-    public static final long FIVE_MINUTES = 300000L;
+    public static final long TWO_MINUTES = 150000L;
 
     private final SessionService sessionService;
     private Map<String, ConcurrentLinkedQueue<SseEmitter>> roomEmitters = new ConcurrentHashMap<>();
@@ -32,7 +30,7 @@ public class StreamService {
     }
 
     public SseEmitter streamSseMvc(@RequestParam(value = "hash") String hash) {
-        SseEmitter emitter = new SseEmitter(FIVE_MINUTES);
+        SseEmitter emitter = new SseEmitter(TWO_MINUTES);
         setEmitterEvents(emitter, hash);
         saveEmitter(hash, emitter);
 
