@@ -57,6 +57,7 @@ class Home extends Component {
       <>
         <label className="label">Room Code</label>
         <input type="text" className="input is-large" autoFocus name="hash" maxLength={7} ref={this.roomCode} />
+        {this.renderJoinRoomBtn()}
       </>
     );
   }
@@ -79,6 +80,7 @@ class Home extends Component {
             </select>
           </div>
         </div>
+        {this.renderCreateRoomBtn()}
       </>
     );
   }
