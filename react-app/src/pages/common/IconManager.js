@@ -8,6 +8,7 @@ import MoveIcon      from './../../assets/icons/stats/movement.svg';
 import RangeIcon     from './../../assets/icons/stats/range.svg';
 import RetaliateIcon from './../../assets/icons/stats/retaliate.svg'
 import ShieldIcon    from './../../assets/icons/stats/shield.svg';
+import LootIcon      from './../../assets/icons/stats/loot.svg'
 
 // Elements Icons
 import AirIcon    from './../../assets/icons/elements/filled/air.svg';
@@ -29,6 +30,7 @@ import MuddleIcon     from './../../assets/icons/statuses/Muddle.svg';
 import PierceIcon     from './../../assets/icons/statuses/Pierce.svg';
 import PoisonIcon     from './../../assets/icons/statuses/Poison.svg';
 import PushIcon       from './../../assets/icons/statuses/Push.svg';
+import PullIcon       from './../../assets/icons/statuses/Pull.svg';
 import StrengthenIcon from './../../assets/icons/statuses/Strengthen.svg';
 import StunIcon       from './../../assets/icons/statuses/Stun.svg';
 import TargetIcon     from './../../assets/icons/statuses/Target.svg';
@@ -45,6 +47,7 @@ import AOEline4withBlack from './../../assets/icons/aoe/aoe-line-4-with-black.pn
 import AOETriangle3swcBlack from './../../assets/icons/aoe/aoe-triangle-3-side-with-corner-black.png';
 import AOETriangle2Side from './../../assets/icons/aoe/aoe-triangle-2-side.png';
 import AOECirclewithsideBlack from './../../assets/icons/aoe/aoe-circle-with-side-black.png';
+
 
 const IconManager = (icon) => {
   switch(icon) {
@@ -187,6 +190,12 @@ const IconManager = (icon) => {
           src: RetaliateIcon,
           alt: 'Retaliate'
         }
+    case '%loot%':
+        return {
+          type: 'stat',
+          src: LootIcon,
+          alt: 'Loot'
+        }
 
     //Statuses
     case '%bless%':
@@ -242,6 +251,12 @@ const IconManager = (icon) => {
           type: 'status',
           src: PushIcon,
           alt: 'Push'
+        }
+    case '%pull%':
+        return {
+          type: 'status',
+          src: PullIcon,
+          alt: 'Pull'
         }
     case '%strengthen%':
         return {
@@ -311,7 +326,7 @@ const IconManager = (icon) => {
           src: AOEline4withBlack,
           alt: 'AOE line 4 with Black'
         }
-    case '%aoe-triangle-3-side-with-corner-Black%':
+    case '%aoe-triangle-3-side-with-corner-black%':
         return {
           type: 'AOE',
           src: AOETriangle3swcBlack,
