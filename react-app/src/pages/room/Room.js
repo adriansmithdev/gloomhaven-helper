@@ -103,6 +103,14 @@ class Room extends Component {
     }
   }
 
+  componentWillUnmount() {
+    if(this !== undefined && 
+       this.eventSource !== undefined &&
+       this.eventSource.readyState !== 2) {
+      this.eventSource.close();
+    }
+  }
+
   render() {
 
     if(this.props.status === 'SESSION_NOT_FOUND') {
